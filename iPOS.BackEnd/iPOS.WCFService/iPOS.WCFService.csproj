@@ -39,7 +39,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\..\..\..\..\Main Source\Back-End\LogiCodeServices\MonService\bin\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper">
+      <HintPath>..\..\..\..\..\Main Source\Back-End\LogiCodeServices\MonService\bin\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\..\..\..\..\Main Source\Back-End\LogiCodeServices\MonService\bin\AutoMapper.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper">
+      <HintPath>..\..\..\..\..\Main Source\Back-End\LogiCodeServices\MonService\bin\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.ServiceModel.Web">
+      <HintPath>..\..\..\..\..\Main Source\Back-End\LogiCodeServices\MonService\bin\Microsoft.ServiceModel.Web.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -59,17 +74,31 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Service1.svc" />
+    <Content Include="IMCService.svc" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Service1.svc.cs">
-      <DependentUpon>Service1.svc</DependentUpon>
+    <Compile Include="CustomHost\InitIMCService.cs" />
+    <Compile Include="IMCService.svc.cs">
+      <DependentUpon>IMCService.svc</DependentUpon>
     </Compile>
-    <Compile Include="IService1.cs" />
+    <Compile Include="IIMCService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\iPOS.DAO\iPOS.DAO.csproj">
+      <Project>{06966387-f40b-4f28-aab1-ae1aa3497168}</Project>
+      <Name>iPOS.DAO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\iPOS.DCO\iPOS.DCO.csproj">
+      <Project>{3140d810-d6f7-4fb8-a58e-b773995aa5a6}</Project>
+      <Name>iPOS.DCO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\iPOS.DTO\iPOS.DTO.csproj">
+      <Project>{6c470d91-155e-4829-b76d-ca5bf45670b5}</Project>
+      <Name>iPOS.DTO</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

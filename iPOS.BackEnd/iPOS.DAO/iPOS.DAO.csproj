@@ -39,8 +39,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="BaseDAO.cs" />
+    <Compile Include="Product\PRO_tblProvinceDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\iPOS.Core\iPOS.Core.csproj">
+      <Project>{d8c28152-8ebf-491e-8df9-84fd1fa5348c}</Project>
+      <Name>iPOS.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\iPOS.DTO\iPOS.DTO.csproj">
+      <Project>{6c470d91-155e-4829-b76d-ca5bf45670b5}</Project>
+      <Name>iPOS.DTO</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

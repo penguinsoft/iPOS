@@ -1,0 +1,2 @@
+﻿<%@ ServiceHost Language="C#" Debug="false" Service="iPOS.WCFService.IMCService" CodeBehind="IMCService.svc.cs"
+    Factory="iPOS.WCFService.CustomHost.InitIMCService" %>
