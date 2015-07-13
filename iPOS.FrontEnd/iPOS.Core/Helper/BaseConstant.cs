@@ -1,0 +1,11 @@
+﻿using System;
+
+namespace iPOS.Core.Helper
+{
+    public class BaseConstant
+    {
+        public const string PARENT_TEXT = "parent_text";
+        public const string CONTROL_TEXT = "control_text";
+        public const string IMAGE_COMBOBOX_EDIT = "image_combobox_edit";
+    }
+}

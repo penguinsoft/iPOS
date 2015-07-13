@@ -9,5 +9,7 @@ namespace iPOS.DCO.Product
     {
         [DataMember]
         public List<PRO_tblProvinceDCO> ProvinceList { get; set; }
+        [DataMember]
+        public PRO_tblProvinceDCO ProvinceItem { get; set; }
     }
 }

@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6C470D91-155E-4829-B76D-CA5BF45670B5}</ProjectGuid>
+    <ProjectGuid>{AB2BA08D-BEB2-4ACC-BFC7-5617D63928E1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>iPOS.DTO</RootNamespace>
-    <AssemblyName>iPOS.DTO</AssemblyName>
+    <RootNamespace>iPOS.DRO</RootNamespace>
+    <AssemblyName>iPOS.DRO</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,12 +40,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseDTO.cs" />
-    <Compile Include="Product\PRO_tblProvinceDTO.cs" />
+    <Compile Include="BaseDRO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="System\SYS_tblUserDTO.cs" />
+    <Compile Include="System\SYS_tblUserDRO.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\iPOS.DTO\iPOS.DTO.csproj">
+      <Project>{49580846-f792-4556-ad07-a237db2f4761}</Project>
+      <Name>iPOS.DTO</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

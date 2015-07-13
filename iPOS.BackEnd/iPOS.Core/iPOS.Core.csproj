@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helper\BaseConstant.cs" />
     <Compile Include="Helper\Configuration.cs" />
     <Compile Include="Helper\IO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
