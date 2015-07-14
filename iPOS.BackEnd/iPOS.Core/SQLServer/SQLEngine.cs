@@ -39,7 +39,7 @@ namespace iPOS.Core.SQLServer
             }
             catch (Exception ex)
             {
-                //Logger.Logger.Error(ex);
+                logger.Error(ex);
                 return null;
             }
             finally
@@ -72,7 +72,7 @@ namespace iPOS.Core.SQLServer
             }
             catch (Exception ex)
             {
-                //Logger.Logger.Error(ex);
+                logger.Error(ex);
                 return null;
             }
             finally
@@ -146,7 +146,7 @@ namespace iPOS.Core.SQLServer
                 if (mTransaction != null)
                     mTransaction.Dispose();
 
-                //Logger.Logger.Error(ex);
+                logger.Error(ex);
                 return ex.Message;
             }
             finally
@@ -193,7 +193,7 @@ namespace iPOS.Core.SQLServer
                 if (mTransaction != null)
                     mTransaction.Rollback();
 
-                //Logger.Logger.Error(ex);
+                logger.Error(ex);
                 return false;
             }
             finally

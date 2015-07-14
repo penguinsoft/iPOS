@@ -14,6 +14,26 @@ namespace iPOS.Core.Helper
             get { return IOEngine.Read("System", "MessagePath") + ""; }
         }
 
+        public static string LogPath
+        {
+            get { return IOEngine.Read("Extensions", "LogPath") ?? @"C:\iPOSLog"; }
+        }
+
+        public static string IPWAN
+        {
+            get { return IOEngine.Read("Extensions", "IPWAN"); }
+        }
+
+        public static string IPLAN
+        {
+            get { return IOEngine.Read("Extensions", "IPLAN"); }
+        }
+
+        public static string MacAddress
+        {
+            get { return IOEngine.Read("Extensions", "MacAddress"); }
+        }
+
         public static string Language
         {
             get

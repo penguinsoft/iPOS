@@ -84,4 +84,11 @@ namespace iPOS.DCO.System
         [DataMember]
         public string GroupName { get; set; }
     }
+
+    [DataContract]
+    public class SYS_tblUserDRO : BaseDRO
+    {
+        [DataMember]
+        public SYS_tblUserDCO UserItem { get; set; }
+    }
 }

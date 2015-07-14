@@ -82,6 +82,7 @@
             this.btnExit.Size = new System.Drawing.Size(84, 23);
             this.btnExit.TabIndex = 16;
             this.btnExit.Text = "Thoát";
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // lblPassword
             // 
@@ -147,6 +148,8 @@
             this.txtPassword.Properties.UseSystemPasswordChar = true;
             this.txtPassword.Size = new System.Drawing.Size(200, 20);
             this.txtPassword.TabIndex = 13;
+            this.txtPassword.EditValueChanged += new System.EventHandler(this.txtPassword_EditValueChanged);
+            this.txtPassword.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPassword_KeyDown);
             // 
             // txtUsername
             // 

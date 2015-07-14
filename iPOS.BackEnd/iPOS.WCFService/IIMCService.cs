@@ -10,6 +10,24 @@ namespace iPOS.WCFService
     public interface IIMCService
     {
         [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/ManageActionLog",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
+                BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        SYS_tblActionLogDRO ManageActionLog(SYS_tblActionLogDCO actionLog);
+
+        #region [SYS_tblGroupUser]
+        [OperationContract]
+        [WebInvoke(Method = "GET", UriTemplate = "/GetAllGroupUsers?Username={Username}&LanguageID={LanguageID}",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        SYS_tblGroupUserDRO GetAllGroupUsers(string Username, string LanguageID);
+
+        [OperationContract]
+        [WebInvoke(Method = "GET", UriTemplate = "/GetGroupUserByID?Username={Username}&LanguageID={LanguageID}&GroupID={GroupID}",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        SYS_tblGroupUserDRO GetGroupUserByID(string Username, string LanguageID, string GroupID);
+        #endregion
+
+        [OperationContract]
         [WebInvoke(Method = "GET", UriTemplate = "/CheckLogin?Username={Username}&Password={Password}&LanguageID={LanguageID}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         SYS_tblUserDRO CheckLogin(string Username, string Password, string LanguageID);

@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Main Source\Back-End\LogiCodeServices\MonService\bin\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -52,6 +56,10 @@
     <ProjectReference Include="..\iPOS.DAO\iPOS.DAO.csproj">
       <Project>{a23acb5e-a15b-4ec8-9c04-425274966017}</Project>
       <Name>iPOS.DAO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\iPOS.DRO\iPOS.DRO.csproj">
+      <Project>{ab2ba08d-beb2-4acc-bfc7-5617d63928e1}</Project>
+      <Name>iPOS.DRO</Name>
     </ProjectReference>
     <ProjectReference Include="..\iPOS.DTO\iPOS.DTO.csproj">
       <Project>{49580846-f792-4556-ad07-a237db2f4761}</Project>

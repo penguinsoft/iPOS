@@ -43,8 +43,11 @@
     <Compile Include="Helper\BaseConstant.cs" />
     <Compile Include="Helper\CaptionEngine.cs" />
     <Compile Include="Helper\ConfigEngine.cs" />
+    <Compile Include="Helper\FileEngine.cs" />
     <Compile Include="Helper\IOEngine.cs" />
     <Compile Include="Helper\MessageEngine.cs" />
+    <Compile Include="Logger\ILogEngine.cs" />
+    <Compile Include="Logger\LogEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\EcryptEngine.cs" />
   </ItemGroup>

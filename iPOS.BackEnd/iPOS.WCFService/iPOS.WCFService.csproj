@@ -86,6 +86,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\iPOS.Core\iPOS.Core.csproj">
+      <Project>{d8c28152-8ebf-491e-8df9-84fd1fa5348c}</Project>
+      <Name>iPOS.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\iPOS.DAO\iPOS.DAO.csproj">
       <Project>{06966387-f40b-4f28-aab1-ae1aa3497168}</Project>
       <Name>iPOS.DAO</Name>

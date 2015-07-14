@@ -4,7 +4,7 @@ using System.Text;
 
 namespace iPOS.Core.Helper
 {
-    public static class IO
+    public static class IOEngine
     {
         private static string FileName
         {
@@ -40,7 +40,7 @@ namespace iPOS.Core.Helper
             bool flag = false;
             try
             {
-                IO.WritePrivateProfileString(strSection, strKey, strValue, FileName);
+                IOEngine.WritePrivateProfileString(strSection, strKey, strValue, FileName);
                 flag = true;
             }
             catch { flag = false; }

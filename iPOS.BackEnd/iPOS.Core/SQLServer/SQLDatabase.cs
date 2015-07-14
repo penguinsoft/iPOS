@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 using iPOS.Core.Helper;
+using iPOS.Core.Logger;
 
 namespace iPOS.Core.SQLServer
 {
@@ -16,27 +17,29 @@ namespace iPOS.Core.SQLServer
         protected SqlCommand mCommand;
         protected SqlDataReader mDataReader;
         protected SqlTransaction mTransaction;
+        protected ILogEngine logger;
         //protected Helper.Configuration mConfig;
         #endregion
 
         public SQLDatabase()
         {
+            logger = new LogEngine();
             mConnectionString = GetConnectionString();
             try
             {
                 mConn = new SqlConnection(mConnectionString);
             }
-            catch
+            catch (Exception ex)
             {
-
+                logger.Error(@"Can't create new sql database engine because " + ex.Message);
             }
         }
 
         protected string GetConnectionString()
         {
-            if (Configuration.IsEncrypt.Equals("0"))
+            if (ConfigEngine.IsEncrypt.Equals("0"))
             {
-                return string.Format("Data Source={0};Initial Catalog={1};User ID={2};Password={3};", Configuration.ServerName, Configuration.Database, Configuration.UserName, Configuration.Password);
+                return string.Format("Data Source={0};Initial Catalog={1};User ID={2};Password={3};", ConfigEngine.ServerName, ConfigEngine.Database, ConfigEngine.UserName, ConfigEngine.Password);
             }
             else return "";
         }
@@ -51,6 +54,7 @@ namespace iPOS.Core.SQLServer
             }
             catch (Exception ex)
             {
+                logger.Error(ex);
                 return;
             }
         }
@@ -67,6 +71,7 @@ namespace iPOS.Core.SQLServer
             }
             catch (Exception ex)
             {
+                logger.Error(ex);
                 return;
             }
         }

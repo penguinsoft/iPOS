@@ -30,7 +30,7 @@ namespace iPOS.DAO.Product
             //    DescriptionEN = string.Format("Account '{0}' downloaded successfully data of provinces.", username)
             //});
 
-            DataTable data = db.GetDataTable("PRO_spfrmProvince", new string[] { "Activity", "Username", "LanguageID" }, new object[] { BaseConstant.LOAD_ALL_DATA, username, language_id });
+            DataTable data = db.GetDataTable("PRO_spfrmProvince", new string[] { "Activity", "Username", "LanguageID" }, new object[] { BaseConstant.COMMAND_LOAD_ALL_DATA_EN, username, language_id });
             if (data != null)
             {
                 foreach (DataRow dr in data.Rows)
@@ -44,7 +44,7 @@ namespace iPOS.DAO.Product
                         Note = dr["Note"] + "",
                         Rank = dr["Rank"],
                         Used = Convert.ToBoolean(dr["Used"]),
-                        Activity = BaseConstant.LOAD_ALL_DATA,
+                        Activity = BaseConstant.COMMAND_LOAD_ALL_DATA_EN,
                         Username = username,
                         LanguageID = language_id,
                         Visible = Convert.ToBoolean(dr["Visible"]),
@@ -63,7 +63,7 @@ namespace iPOS.DAO.Product
 
         public PRO_tblProvinceDTO GetDataByID(string username, string language_id, string province_id)
         {
-            DataRow dr = db.GetDataRow("PRO_spfrmProvince", new string[] { "Activity", "Username", "LanguageID", "ProvinceID" }, new object[] { BaseConstant.GET_DATA_BY_ID, username, language_id, province_id });
+            DataRow dr = db.GetDataRow("PRO_spfrmProvince", new string[] { "Activity", "Username", "LanguageID", "ProvinceID" }, new object[] { BaseConstant.COMMAND_GET_DATA_BY_ID_EN, username, language_id, province_id });
             if (dr != null)
                 return new PRO_tblProvinceDTO
                 {
@@ -74,7 +74,7 @@ namespace iPOS.DAO.Product
                     Note = dr["Note"] + "",
                     Rank = dr["Rank"],
                     Used = Convert.ToBoolean(dr["Used"]),
-                    Activity = BaseConstant.GET_DATA_BY_ID,
+                    Activity = BaseConstant.COMMAND_GET_DATA_BY_ID_EN,
                     Username = username,
                     LanguageID = language_id,
                     Visible = Convert.ToBoolean(dr["Visible"]),

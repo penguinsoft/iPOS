@@ -40,8 +40,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helper\BaseConstant.cs" />
-    <Compile Include="Helper\Configuration.cs" />
-    <Compile Include="Helper\IO.cs" />
+    <Compile Include="Helper\CommonEngine.cs" />
+    <Compile Include="Helper\ConfigEngine.cs" />
+    <Compile Include="Helper\FileEngine.cs" />
+    <Compile Include="Helper\IOEngine.cs" />
+    <Compile Include="Logger\ILogEngine.cs" />
+    <Compile Include="Logger\LogEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLServer\SQLDatabase.cs" />
     <Compile Include="SQLServer\SQLEngine.cs" />

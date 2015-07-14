@@ -42,6 +42,8 @@
     <Compile Include="BaseDTO.cs" />
     <Compile Include="Product\PRO_tblProvinceDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="System\SYS_tblActionLogDTO.cs" />
+    <Compile Include="System\SYS_tblGroupUserDTO.cs" />
     <Compile Include="System\SYS_tblUserDTO.cs" />
   </ItemGroup>
   <ItemGroup />
