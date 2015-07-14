@@ -25,6 +25,17 @@ namespace iPOS.WCFService
         [WebInvoke(Method = "GET", UriTemplate = "/GetGroupUserByID?Username={Username}&LanguageID={LanguageID}&GroupID={GroupID}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         SYS_tblGroupUserDRO GetGroupUserByID(string Username, string LanguageID, string GroupID);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/InsertUpdateGroupUser",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
+                BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        SYS_tblGroupUserDRO InsertUpdateGroupUser(SYS_tblGroupUserDCO groupUser);
+
+        [OperationContract]
+        [WebInvoke(Method = "GET", UriTemplate = "/DeleteGroupUser?Username={Username}&LanguageID={LanguageID}&GroupUserIDList={GroupUserIDList}&GroupUserCodeList={GroupUserCodeList}",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        SYS_tblGroupUserDRO DeleteGroupUser(string Username, string LanguageID, string GroupUserIDList, string GroupUserCodeList);
         #endregion
 
         [OperationContract]

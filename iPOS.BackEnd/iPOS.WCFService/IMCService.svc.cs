@@ -8,6 +8,7 @@ using System.ServiceModel.Web;
 using System.Text;
 using Autofac;
 using AutoMapper;
+using iPOS.Core.Helper;
 using iPOS.Core.Logger;
 using iPOS.DAO.Product;
 using iPOS.DAO.System;
@@ -161,6 +162,73 @@ namespace iPOS.WCFService
                 result.Message = "Get data failed: " + ex.Message;
                 result.Username = Username;
                 result.TotalItemCount = 0;
+            }
+
+            return result;
+        }
+
+        public SYS_tblGroupUserDRO InsertUpdateGroupUser(SYS_tblGroupUserDCO groupUser)
+        {
+            SYS_tblGroupUserDRO result = new SYS_tblGroupUserDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    string temp = "";
+                    var db = scope.Resolve<ISYS_tblGroupUserDAO>();
+                    var data = Mapper.Map<SYS_tblGroupUserDTO>(groupUser);
+                    if (groupUser.Activity.Equals(BaseConstant.COMMAND_INSERT_EN))
+                        temp = db.InsertGroupUser(data);
+                    else temp = db.UpdateGroupUser(data);
+
+                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
+                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
+                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
+                    result.Username = groupUser.Username;
+                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Insert new group user failed because " + ex.Message;
+                result.Username = groupUser.Username;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public SYS_tblGroupUserDRO DeleteGroupUser(string Username, string LanguageID, string GroupUserIDList, string GroupUserCodeList)
+        {
+            SYS_tblGroupUserDRO result = new SYS_tblGroupUserDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    string temp = "";
+                    var db = scope.Resolve<ISYS_tblGroupUserDAO>();
+                    if (GroupUserIDList.Contains("$"))
+                        temp = db.DeleteGroupUserList(GroupUserIDList, GroupUserCodeList, Username, LanguageID);
+                    else temp = db.DeleteGroupUser(GroupUserIDList, GroupUserCodeList, Username, LanguageID);
+
+                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
+                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
+                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
+                    result.Username = Username;
+                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Delete group user failed because " + ex.Message;
+                result.Username = Username;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
             }
 
             return result;
