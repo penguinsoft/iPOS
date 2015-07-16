@@ -21,8 +21,9 @@ namespace iPOS.DAO.System
 
                 return result;
             }
-            catch
+            catch (Exception ex)
             {
+                logger.Error(ex);
             }
             return null;
         }
