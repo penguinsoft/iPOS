@@ -137,6 +137,25 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="logo.ico" />
+    <None Include="Resources\import_export_method_32.png" />
+    <None Include="Resources\district_32.png" />
+    <None Include="Resources\province_32.png" />
+    <None Include="Resources\units_32.png" />
+    <None Include="Resources\providers_32.png" />
+    <None Include="Resources\product_32.png" />
+    <None Include="Resources\level3_32.png" />
+    <None Include="Resources\level2_32.png" />
+    <None Include="Resources\level1_32.png" />
+    <None Include="Resources\cashier_32.png" />
+    <None Include="Resources\inventory_32.png" />
+    <None Include="Resources\shop_32.png" />
+    <None Include="Resources\refine_database_32.png" />
+    <None Include="Resources\restore_database_32.png" />
+    <None Include="Resources\backup_database_32.png" />
+    <None Include="Resources\permission_32.png" />
+    <None Include="Resources\change_password_32.png" />
+    <None Include="Resources\user_32.png" />
+    <None Include="Resources\group_user_32.png" />
     <None Include="Resources\lockscreen_32.png" />
     <None Include="Resources\restart_32.png" />
     <None Include="Resources\shutdown_32.png" />

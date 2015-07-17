@@ -4,6 +4,7 @@ namespace iPOS.Core.Helper
 {
     public static class ConfigEngine
     {
+        #region [System]
         public static string CaptionPath
         {
             get { return IOEngine.Read("System", "CaptionPath") + ""; }
@@ -13,7 +14,9 @@ namespace iPOS.Core.Helper
         {
             get { return IOEngine.Read("System", "MessagePath") + ""; }
         }
+        #endregion
 
+        #region [Extensions]
         public static string LogPath
         {
             get { return IOEngine.Read("Extensions", "LogPath") ?? @"C:\iPOSLog"; }
@@ -33,7 +36,9 @@ namespace iPOS.Core.Helper
         {
             get { return IOEngine.Read("Extensions", "MacAddress"); }
         }
+        #endregion
 
+        #region [Initialize]
         public static string Language
         {
             get
@@ -54,7 +59,9 @@ namespace iPOS.Core.Helper
         {
             get { return IOEngine.Read("Initialize", "Password"); }
         }
+        #endregion
 
+        #region [Connection]
         public static string Domain
         {
             get { return IOEngine.Read("Connection", "Domain"); }
@@ -69,5 +76,23 @@ namespace iPOS.Core.Helper
         {
             get { return IOEngine.Read("Connection", "ServiceName"); }
         }
+        #endregion
+
+        #region [Format]
+        public static string DateFormat
+        {
+            get { return IOEngine.Read("Format", "DateFormat"); }
+        }
+
+        public static string TimeFormat
+        {
+            get { return IOEngine.Read("Format", "TimeFormat"); }
+        }
+
+        public static string DateTimeFormat
+        {
+            get { return IOEngine.Read("Format", "DateTimeFormat"); }
+        }
+        #endregion
     }
 }

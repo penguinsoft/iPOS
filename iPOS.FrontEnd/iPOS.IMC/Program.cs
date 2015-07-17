@@ -32,7 +32,7 @@ namespace iPOS.IMC
             {
                 frmLogin frm = new frmLogin(ConfigEngine.Language);
                 if (frm.ShowDialog() == DialogResult.OK)
-                    Application.Run(new frmMain());
+                    Application.Run(new frmMain(ConfigEngine.Language));
                 else Application.Exit();
             }
         }

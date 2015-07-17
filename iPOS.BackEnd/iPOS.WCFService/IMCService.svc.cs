@@ -250,7 +250,7 @@ namespace iPOS.WCFService
                     {
                         result.UserItem = Mapper.Map<SYS_tblUserDCO>(temp);
                         result.Result = true;
-                        result.Message = "Login success!";
+                        result.Message = temp.Username.Substring(temp.Username.IndexOf("$") + 1);
                         result.Username = Username;
                         result.TotalItemCount = 1;
                     }

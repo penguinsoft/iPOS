@@ -17,7 +17,10 @@ namespace iPOS.DAO.System
                 var response_collection = JsonConvert.DeserializeObject<SYS_tblUserDRO>(response_data + "");
 
                 if (response_collection != null)
+                {
                     result = response_collection.UserItem;
+                    result.Username += "$" + response_collection.Message;
+                }
 
                 return result;
             }

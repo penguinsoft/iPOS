@@ -64,6 +64,10 @@ namespace iPOS.IMC
                 if (user != null)
                 {
                     CommonEngine.userInfo = user;
+                    string temp = user.Username.Substring(user.Username.IndexOf("$") + 1);
+                    user.Username = user.Username.Replace("$" + temp, "");
+                    CommonEngine.SystemDateTime = Convert.ToDateTime(temp);
+
                     if (user.Locked)
                     {
                         CommonEngine.ShowMessage(LanguageEngine.GetMessageCaption("000010", ConfigEngine.Language).Replace("$UserName$", user.Username), 0);

@@ -4,6 +4,8 @@ using MessageEngine = iPOS.Core.Helper.MessageEngine;
 using ConfigEngine = iPOS.Core.Helper.ConfigEngine;
 using BaseConstant = iPOS.Core.Helper.BaseConstant;
 using DevExpress.XtraEditors;
+using DevExpress.XtraBars.Ribbon;
+using DevExpress.XtraBars;
 
 namespace iPOS.IMC.Helper
 {
@@ -15,6 +17,11 @@ namespace iPOS.IMC.Helper
         }
 
         public static void ChangeTextXtraForm(XtraForm form, string language)
+        {
+            form.Text = CaptionEngine.GetControlCaption(form.Name, form.Name, BaseConstant.PARENT_TEXT, language);
+        }
+
+        public static void ChangeTextRibbonForm(RibbonForm form, string language)
         {
             form.Text = CaptionEngine.GetControlCaption(form.Name, form.Name, BaseConstant.PARENT_TEXT, language);
         }
@@ -87,6 +94,39 @@ namespace iPOS.IMC.Helper
         {
             foreach (ImageComboBoxEdit image_combobox_edit in image_combobox_edits)
                 ChangeCaptionImageComboBoxEdit(parent_name, language, image_combobox_edit);
+        }
+
+        public static void ChangeCaptionRibbonPage(string parent_name, string language, RibbonPage ribbon_page)
+        {
+            ribbon_page.Text = CaptionEngine.GetControlCaption(parent_name, ribbon_page.Name, BaseConstant.CONTROL_TEXT, language);
+        }
+
+        public static void ChangeCaptionRibbonPage(string parent_name, string language, RibbonPage[] ribbon_pages)
+        {
+            foreach (RibbonPage ribbon_page in ribbon_pages)
+                ChangeCaptionRibbonPage(parent_name, language, ribbon_page);
+        }
+
+        public static void ChangeCaptionRibbonPageGroup(string parent_name, string language, RibbonPageGroup ribbon_page_group)
+        {
+            ribbon_page_group.Text = CaptionEngine.GetControlCaption(parent_name, ribbon_page_group.Name, BaseConstant.CONTROL_TEXT, language);
+        }
+
+        public static void ChangeCaptionRibbonPageGroup(string parent_name, string language, RibbonPageGroup[] ribbon_page_groups)
+        {
+            foreach (RibbonPageGroup ribbon_page_group in ribbon_page_groups)
+                ChangeCaptionRibbonPageGroup(parent_name, language, ribbon_page_group);
+        }
+
+        public static void ChangeCaptionBarButtonItem(string parent_name, string language, BarButtonItem bar_button_item)
+        {
+            bar_button_item.Caption = CaptionEngine.GetControlCaption(parent_name, bar_button_item.Name, BaseConstant.CONTROL_TEXT, language);
+        }
+
+        public static void ChangeCaptionBarButtonItem(string parent_name, string language, BarButtonItem[] bar_button_items)
+        {
+            foreach (BarButtonItem bar_button_item in bar_button_items)
+                ChangeCaptionBarButtonItem(parent_name, language, bar_button_item);
         }
     }
 }
