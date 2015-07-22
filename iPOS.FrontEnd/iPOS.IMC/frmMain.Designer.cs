@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.btnShutdown = new DevExpress.XtraBars.BarButtonItem();
@@ -52,6 +53,11 @@
             this.btnProvince = new DevExpress.XtraBars.BarButtonItem();
             this.btnDistrict = new DevExpress.XtraBars.BarButtonItem();
             this.btnImportExport = new DevExpress.XtraBars.BarButtonItem();
+            this.lblSystemDateCaption = new DevExpress.XtraBars.BarStaticItem();
+            this.lblSystemDateValue = new DevExpress.XtraBars.BarStaticItem();
+            this.lblSystemTimeCaption = new DevExpress.XtraBars.BarStaticItem();
+            this.lblSystemTimeValue = new DevExpress.XtraBars.BarStaticItem();
+            this.lblCopyRight = new DevExpress.XtraBars.BarStaticItem();
             this.ribSystemModule = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribSystemPage = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribUserPermissionPage = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -62,12 +68,10 @@
             this.ribProviderUnit = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribProvincePage = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
-            this.lblSystemDateCaption = new DevExpress.XtraBars.BarStaticItem();
-            this.lblSystemDateValue = new DevExpress.XtraBars.BarStaticItem();
-            this.lblSystemTimeCaption = new DevExpress.XtraBars.BarStaticItem();
-            this.lblSystemTimeValue = new DevExpress.XtraBars.BarStaticItem();
-            this.lblCopyRight = new DevExpress.XtraBars.BarStaticItem();
+            this.tmeMain = new System.Windows.Forms.Timer(this.components);
+            this.tabMain = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tabMain)).BeginInit();
             this.SuspendLayout();
             // 
             // ribbon
@@ -152,6 +156,7 @@
             this.btnUserList.LargeGlyph = global::iPOS.IMC.Properties.Resources.user_32;
             this.btnUserList.LargeWidth = 70;
             this.btnUserList.Name = "btnUserList";
+            this.btnUserList.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnUserList_ItemClick);
             // 
             // btnPermission
             // 
@@ -160,6 +165,7 @@
             this.btnPermission.LargeGlyph = global::iPOS.IMC.Properties.Resources.permission_32;
             this.btnPermission.LargeWidth = 75;
             this.btnPermission.Name = "btnPermission";
+            this.btnPermission.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnPermission_ItemClick);
             // 
             // btnChangePassword
             // 
@@ -168,6 +174,7 @@
             this.btnChangePassword.LargeGlyph = global::iPOS.IMC.Properties.Resources.change_password_32;
             this.btnChangePassword.LargeWidth = 70;
             this.btnChangePassword.Name = "btnChangePassword";
+            this.btnChangePassword.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnChangePassword_ItemClick);
             // 
             // btnBackupDatabase
             // 
@@ -289,6 +296,47 @@
             this.btnImportExport.LargeWidth = 80;
             this.btnImportExport.Name = "btnImportExport";
             // 
+            // lblSystemDateCaption
+            // 
+            this.lblSystemDateCaption.Caption = "Ngày hệ thống:";
+            this.lblSystemDateCaption.Glyph = global::iPOS.IMC.Properties.Resources.calendar_16;
+            this.lblSystemDateCaption.Id = 23;
+            this.lblSystemDateCaption.Name = "lblSystemDateCaption";
+            this.lblSystemDateCaption.TextAlignment = System.Drawing.StringAlignment.Near;
+            // 
+            // lblSystemDateValue
+            // 
+            this.lblSystemDateValue.AllowHtmlText = DevExpress.Utils.DefaultBoolean.True;
+            this.lblSystemDateValue.Caption = "24/07/1992";
+            this.lblSystemDateValue.Id = 24;
+            this.lblSystemDateValue.Name = "lblSystemDateValue";
+            this.lblSystemDateValue.TextAlignment = System.Drawing.StringAlignment.Near;
+            // 
+            // lblSystemTimeCaption
+            // 
+            this.lblSystemTimeCaption.Caption = "Giờ hệ thống:";
+            this.lblSystemTimeCaption.Glyph = global::iPOS.IMC.Properties.Resources.clock_16;
+            this.lblSystemTimeCaption.Id = 25;
+            this.lblSystemTimeCaption.Name = "lblSystemTimeCaption";
+            this.lblSystemTimeCaption.TextAlignment = System.Drawing.StringAlignment.Near;
+            // 
+            // lblSystemTimeValue
+            // 
+            this.lblSystemTimeValue.AllowHtmlText = DevExpress.Utils.DefaultBoolean.True;
+            this.lblSystemTimeValue.Caption = "12:00:00 AM";
+            this.lblSystemTimeValue.Id = 26;
+            this.lblSystemTimeValue.Name = "lblSystemTimeValue";
+            this.lblSystemTimeValue.TextAlignment = System.Drawing.StringAlignment.Near;
+            // 
+            // lblCopyRight
+            // 
+            this.lblCopyRight.AllowHtmlText = DevExpress.Utils.DefaultBoolean.True;
+            this.lblCopyRight.Caption = "© Copyright by <b><color=RED>Penguin Software</color></b> Company, 2015. All righ" +
+    "t reserved.";
+            this.lblCopyRight.Id = 27;
+            this.lblCopyRight.Name = "lblCopyRight";
+            this.lblCopyRight.TextAlignment = System.Drawing.StringAlignment.Near;
+            // 
             // ribSystemModule
             // 
             this.ribSystemModule.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -384,42 +432,15 @@
             this.ribbonStatusBar.Ribbon = this.ribbon;
             this.ribbonStatusBar.Size = new System.Drawing.Size(968, 31);
             // 
-            // lblSystemDateCaption
+            // tmeMain
             // 
-            this.lblSystemDateCaption.Caption = "Ngày hệ thống:";
-            this.lblSystemDateCaption.Id = 23;
-            this.lblSystemDateCaption.Name = "lblSystemDateCaption";
-            this.lblSystemDateCaption.TextAlignment = System.Drawing.StringAlignment.Near;
+            this.tmeMain.Enabled = true;
+            this.tmeMain.Interval = 1000;
+            this.tmeMain.Tick += new System.EventHandler(this.tmeMain_Tick);
             // 
-            // lblSystemDateValue
+            // tabMain
             // 
-            this.lblSystemDateValue.Caption = "24/07/1992";
-            this.lblSystemDateValue.Id = 24;
-            this.lblSystemDateValue.Name = "lblSystemDateValue";
-            this.lblSystemDateValue.TextAlignment = System.Drawing.StringAlignment.Near;
-            // 
-            // lblSystemTimeCaption
-            // 
-            this.lblSystemTimeCaption.Caption = "Giờ hệ thống:";
-            this.lblSystemTimeCaption.Id = 25;
-            this.lblSystemTimeCaption.Name = "lblSystemTimeCaption";
-            this.lblSystemTimeCaption.TextAlignment = System.Drawing.StringAlignment.Near;
-            // 
-            // lblSystemTimeValue
-            // 
-            this.lblSystemTimeValue.Caption = "12:00:00 AM";
-            this.lblSystemTimeValue.Id = 26;
-            this.lblSystemTimeValue.Name = "lblSystemTimeValue";
-            this.lblSystemTimeValue.TextAlignment = System.Drawing.StringAlignment.Near;
-            // 
-            // lblCopyRight
-            // 
-            this.lblCopyRight.AllowHtmlText = DevExpress.Utils.DefaultBoolean.True;
-            this.lblCopyRight.Caption = "© Copyright by <b><color=RED>Penguin Software</color></b> Company, 2015. All righ" +
-    "t reserved.";
-            this.lblCopyRight.Id = 27;
-            this.lblCopyRight.Name = "lblCopyRight";
-            this.lblCopyRight.TextAlignment = System.Drawing.StringAlignment.Near;
+            this.tabMain.MdiParent = this;
             // 
             // frmMain
             // 
@@ -429,6 +450,7 @@
             this.Controls.Add(this.ribbonStatusBar);
             this.Controls.Add(this.ribbon);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.IsMdiContainer = true;
             this.Name = "frmMain";
             this.Ribbon = this.ribbon;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -436,6 +458,7 @@
             this.Text = "iPOS Management 1.0";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tabMain)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -480,5 +503,7 @@
         private DevExpress.XtraBars.BarStaticItem lblSystemTimeCaption;
         private DevExpress.XtraBars.BarStaticItem lblSystemTimeValue;
         private DevExpress.XtraBars.BarStaticItem lblCopyRight;
+        private System.Windows.Forms.Timer tmeMain;
+        private DevExpress.XtraTabbedMdi.XtraTabbedMdiManager tabMain;
     }
 }

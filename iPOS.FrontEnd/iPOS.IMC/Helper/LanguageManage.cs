@@ -16,6 +16,11 @@ namespace iPOS.IMC.Helper
             return MessageEngine.GetMessageCaption(name, language);
         }
 
+        public static string GetOpenFormText(string form_name, string language)
+        {
+            return CaptionEngine.GetControlCaption(form_name, form_name, BaseConstant.PARENT_TEXT, language);
+        }
+
         public static void ChangeTextXtraForm(XtraForm form, string language)
         {
             form.Text = CaptionEngine.GetControlCaption(form.Name, form.Name, BaseConstant.PARENT_TEXT, language);
