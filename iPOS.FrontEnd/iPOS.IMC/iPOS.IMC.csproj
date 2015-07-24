@@ -72,6 +72,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="frmLogin.cs">
@@ -173,6 +174,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="logo.ico" />
+    <None Include="Resources\close_16.png" />
+    <None Include="Resources\export_16.png" />
+    <None Include="Resources\import_16.png" />
+    <None Include="Resources\reload_16.png" />
+    <None Include="Resources\print_16.png" />
+    <None Include="Resources\delete_16.png" />
+    <None Include="Resources\update_16.png" />
+    <None Include="Resources\add_16.png" />
     <None Include="Resources\clock_16.png" />
     <None Include="Resources\calendar_16.png" />
     <None Include="Resources\import_export_method_32.png" />

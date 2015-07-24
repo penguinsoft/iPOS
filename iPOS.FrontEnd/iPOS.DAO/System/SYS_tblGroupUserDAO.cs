@@ -16,6 +16,9 @@ namespace iPOS.DAO.System
             {
                 var response_data = await HttpGet(url);
                 var response_collection = JsonConvert.DeserializeObject<SYS_tblGroupUserDRO>(response_data + "");
+
+                if (response_collection != null)
+                    result = response_collection.GroupUserList;
             }
             catch (Exception ex)
             {

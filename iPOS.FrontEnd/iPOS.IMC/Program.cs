@@ -34,6 +34,7 @@ namespace iPOS.IMC
                 if (frm.ShowDialog() == DialogResult.OK)
                     Application.Run(new frmMain(ConfigEngine.Language));
                 else Application.Exit();
+                //iPOS.Core.Helper.CaptionEngine.GetControlCaption("uc_GroupUser", "gridGroupUser", iPOS.Core.Helper.BaseConstant.GRID_CONTROL, "vi");
             }
         }
     }

@@ -6,6 +6,11 @@ using BaseConstant = iPOS.Core.Helper.BaseConstant;
 using DevExpress.XtraEditors;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraBars;
+using DevExpress.XtraGrid;
+using System.Xml.Linq;
+using System.Linq;
+using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraGrid.Columns;
 
 namespace iPOS.IMC.Helper
 {
@@ -132,6 +137,50 @@ namespace iPOS.IMC.Helper
         {
             foreach (BarButtonItem bar_button_item in bar_button_items)
                 ChangeCaptionBarButtonItem(parent_name, language, bar_button_item);
+        }
+
+        public static void ChangeCaptionBarLargeButtonItem(string parent_name, string language, BarLargeButtonItem bar_large_button_item)
+        {
+            bar_large_button_item.Caption = CaptionEngine.GetControlCaption(parent_name, bar_large_button_item.Name, BaseConstant.CONTROL_TEXT, language);
+        }
+
+        public static void ChangeCaptionBarLargeButtonItem(string parent_name, string language, BarLargeButtonItem[] bar_large_button_items)
+        {
+            foreach (BarLargeButtonItem bar_large_button_item in bar_large_button_items)
+                ChangeCaptionBarLargeButtonItem(parent_name, language, bar_large_button_item);
+        }
+
+        public static void ChangeCaptionBarStaticItem(string parent_name, string language, BarStaticItem bar_static_item)
+        {
+            bar_static_item.Caption = CaptionEngine.GetControlCaption(parent_name, bar_static_item.Name, BaseConstant.CONTROL_TEXT, language);
+        }
+
+        public static void ChangeCaptionBarStaticItem(string parent_name, string language, BarStaticItem[] bar_static_items)
+        {
+            foreach (BarStaticItem bar_static_item in bar_static_items)
+                ChangeCaptionBarStaticItem(parent_name, language, bar_static_item);
+        }
+
+        public static void ChangeCaptionGridColumn(string parent_name, string language, GridColumn grid_column)
+        {
+            grid_column.Caption = CaptionEngine.GetControlCaption(parent_name, grid_column.Name, BaseConstant.CONTROL_TEXT, language);
+        }
+
+        public static void ChangeCaptionGridColumn(string parent_name, string language, GridColumn[] grid_columns)
+        {
+            foreach (GridColumn grid_column in grid_columns)
+                ChangeCaptionGridColumn(parent_name, language, grid_column);
+        }
+
+        public static void ChangeCaptionGroupPanelTextGridView(string parent_name, string language, GridView grid_view)
+        {
+            grid_view.GroupPanelText = CaptionEngine.GetControlCaption(parent_name, grid_view.Name, BaseConstant.CONTROL_TEXT, language);
+        }
+
+        public static void ChangeCaptionGroupPanelTextGridView(string parent_name, string language, GridView[] grid_views)
+        {
+            foreach (GridView grid_view in grid_views)
+                ChangeCaptionGroupPanelTextGridView(parent_name, language, grid_view);
         }
     }
 }

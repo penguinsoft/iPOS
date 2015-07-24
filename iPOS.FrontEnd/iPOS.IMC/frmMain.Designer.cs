@@ -424,9 +424,9 @@
             // 
             this.ribbonStatusBar.ItemLinks.Add(this.lblCopyRight);
             this.ribbonStatusBar.ItemLinks.Add(this.lblSystemDateCaption, true);
-            this.ribbonStatusBar.ItemLinks.Add(this.lblSystemDateValue);
+            this.ribbonStatusBar.ItemLinks.Add(this.lblSystemDateValue, true);
             this.ribbonStatusBar.ItemLinks.Add(this.lblSystemTimeCaption, true);
-            this.ribbonStatusBar.ItemLinks.Add(this.lblSystemTimeValue);
+            this.ribbonStatusBar.ItemLinks.Add(this.lblSystemTimeValue, true);
             this.ribbonStatusBar.Location = new System.Drawing.Point(0, 533);
             this.ribbonStatusBar.Name = "ribbonStatusBar";
             this.ribbonStatusBar.Ribbon = this.ribbon;

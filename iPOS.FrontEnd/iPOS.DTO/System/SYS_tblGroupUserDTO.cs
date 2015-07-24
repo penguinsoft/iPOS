@@ -17,5 +17,14 @@ namespace iPOS.DTO.System
         public bool IsDefault { get; set; }
 
         public bool IsRoot { get; set; }
+
+        public string ActiveString
+        {
+            get
+            {
+                if (Active) return "X";
+                else return "";
+            }
+        }
     }
 }

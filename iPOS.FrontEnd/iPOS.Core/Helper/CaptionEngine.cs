@@ -32,7 +32,8 @@ namespace iPOS.Core.Helper
                                                    name = controls.Element("name"),
                                                    type = controls.Element("type"),
                                                    text = controls.Element("text"),
-                                                   items = controls.Element("items")
+                                                   items = controls.Element("items"),
+                                                   gridviews = controls.Element("gridviews")
                                                }).ToList()
                                }).First();
                 if (parents != null)

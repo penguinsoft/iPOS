@@ -16,6 +16,17 @@ namespace iPOS.IMC
     {
         private string language = "";
 
+        private void ChangeCaptionInMdiChildren(Control control)
+        {
+            switch (control.Name.ToLower())
+            {
+                case "uc_groupuser":
+                    uc_GroupUser uc_groupuser = (uc_GroupUser)control;
+                    uc_groupuser.ChangeLanguage(language);
+                    break;
+            }
+        }
+
         private void ChangeCaptionLanguage(string language)
         {
             LanguageEngine.ChangeTextRibbonForm(this, language);
@@ -41,7 +52,7 @@ namespace iPOS.IMC
 
         private void btnGroupUserList_ItemClick(object sender, ItemClickEventArgs e)
         {
-            CommonEngine.OpenMdiChildForm(this, new uc_GroupUser(), tabMain);
+            CommonEngine.OpenMdiChildForm(this, new uc_GroupUser(ConfigEngine.Language), tabMain);
         }
 
         private void tmeMain_Tick(object sender, EventArgs e)
@@ -71,20 +82,13 @@ namespace iPOS.IMC
 
             foreach (DevExpress.XtraEditors.XtraForm frm in this.MdiChildren)
             {
-                MessageBox.Show(frm.Name);
-                Control abc = null;
                 foreach (Control ctl in frm.Controls)
                 {
-                    //MessageBox.Show(ctl.Name + " --- " + ctl.GetType().Name);
-                    if (ctl.Name.StartsWith("uc_User"))
-                        abc = ctl;
-                    break;
-                }
-
-                if (abc != null)
-                {
-                    uc_User abcd = (uc_User)abc;
-                    abcd.Message(language);
+                    if (ctl.Name.StartsWith("uc_"))
+                    {
+                        ChangeCaptionInMdiChildren(ctl);
+                        break;
+                    }
                 }
             }
         }
