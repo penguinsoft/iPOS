@@ -46,8 +46,8 @@
   <ItemGroup>
     <Compile Include="BaseBUS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="System\SYS_tblGroupUserBUS.cs" />
-    <Compile Include="System\SYS_tblUserBUS.cs" />
+    <Compile Include="Systems\SYS_tblGroupUserBUS.cs" />
+    <Compile Include="Systems\SYS_tblUserBUS.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\iPOS.Core\iPOS.Core.csproj">
