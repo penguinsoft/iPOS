@@ -17,6 +17,12 @@ namespace iPOS.DCO.System
         public string GroupName { get; set; }
 
         [DataMember]
+        public string VNName { get; set; }
+
+        [DataMember]
+        public string ENName { get; set; }
+
+        [DataMember]
         public string Note { get; set; }
 
         [DataMember]

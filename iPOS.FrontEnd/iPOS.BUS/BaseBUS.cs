@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using iPOS.Core.Logger;
 using iPOS.DAO;
 using iPOS.DRO.System;
 using iPOS.DTO.System;
@@ -10,14 +11,25 @@ namespace iPOS.BUS
 {
     public class BaseBUS
     {
+        protected static ILogEngine logger = new LogEngine();
+
         public static string GetBaseUrl()
         {
-            string result="";
-            if (!string.IsNullOrEmpty(ConfigEngine.PortNumber))
-                result = ConfigEngine.Domain + ":" + ConfigEngine.PortNumber;
-            else result = ConfigEngine.Domain;
+            string result = "";
+            try
+            {
+                if (!string.IsNullOrEmpty(ConfigEngine.PortNumber))
+                    result = ConfigEngine.Domain + ":" + ConfigEngine.PortNumber;
+                else result = ConfigEngine.Domain;
 
-            return result + "/" + ConfigEngine.ServiceName + ".svc";
+                return result + "/" + ConfigEngine.ServiceName + ".svc";
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+            }
+
+            return "";
         }
 
         public static async Task<string> ManageActionLog(SYS_tblActionLogDTO actionLog)

@@ -2,7 +2,7 @@
 
 namespace iPOS.DTO.System
 {
-    public class SYS_tblGroupUserDTO
+    public class SYS_tblGroupUserDTO : BaseDTO
     {
         public string GroupID { get; set; }
 
@@ -22,20 +22,13 @@ namespace iPOS.DTO.System
 
         public bool IsRoot { get; set; }
 
-        public string Activity { get; set; }
-
-        public string Username { get; set; }
-
-        public string LanguageID { get; set; }
-
-        public bool Visible { get; set; }
-
-        public string Creater { get; set; }
-
-        public DateTime CreateTime { get; set; }
-
-        public string Editer { get; set; }
-
-        public object EditTime { get; set; }
+        public string ActiveString
+        {
+            get
+            {
+                if (Active) return "X";
+                else return "";
+            }
+        }
     }
 }

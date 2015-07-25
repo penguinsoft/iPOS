@@ -11,6 +11,7 @@ using System.Xml.Linq;
 using System.Linq;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Columns;
+using DevExpress.XtraLayout;
 
 namespace iPOS.IMC.Helper
 {
@@ -38,7 +39,7 @@ namespace iPOS.IMC.Helper
 
         public static void ChangeCaptionSimpleButton(string parent_name, string language, SimpleButton simple_button)
         {
-            simple_button.Text = CaptionEngine.GetControlCaption(parent_name, simple_button.Name, BaseConstant.CONTROL_TEXT, language);
+            simple_button.Text = CaptionEngine.GetControlCaption(parent_name, simple_button.Name, BaseConstant.CONTROL_TEXT, language).Replace("$$", "&&");
         }
 
         public static void ChangeCaptionSimpleButton(string parent_name, string language, SimpleButton[] simple_buttons)
@@ -181,6 +182,28 @@ namespace iPOS.IMC.Helper
         {
             foreach (GridView grid_view in grid_views)
                 ChangeCaptionGroupPanelTextGridView(parent_name, language, grid_view);
+        }
+
+        public static void ChangeCaptionLayoutControlGroup(string parent_name, string language, LayoutControlGroup layout_control_group)
+        {
+            layout_control_group.Text = CaptionEngine.GetControlCaption(parent_name, layout_control_group.Name, BaseConstant.CONTROL_TEXT, language);
+        }
+
+        public static void ChangeCaptionLayoutControlGroup(string parent_name, string language, LayoutControlGroup[] layout_control_groups)
+        {
+            foreach (LayoutControlGroup layout_control_group in layout_control_groups)
+                ChangeCaptionLayoutControlGroup(parent_name, language, layout_control_group);
+        }
+
+        public static void ChangeCaptionLayoutControlItem(string parent_name, string language, LayoutControlItem layout_control_item)
+        {
+            layout_control_item.Text = CaptionEngine.GetControlCaption(parent_name, layout_control_item.Name, BaseConstant.CONTROL_TEXT, language);
+        }
+
+        public static void ChangeCaptionLayoutControlItem(string parent_name, string language, LayoutControlItem[] layout_control_items)
+        {
+            foreach (LayoutControlItem layout_control_item in layout_control_items)
+                ChangeCaptionLayoutControlItem(parent_name, language, layout_control_item);
         }
     }
 }

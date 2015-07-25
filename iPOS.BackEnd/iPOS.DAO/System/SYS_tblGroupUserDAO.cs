@@ -123,7 +123,7 @@ namespace iPOS.DAO.System
             string result = "";
             try
             {
-                result = db.sExecuteSQL("SYS_spfrmGroupUser", new string[] { "Activity", "Username", "LanguageID", "GroupCode", "GroupName", "Note", "Active", "IsDefault", "IsRoot" }, new object[] { BaseConstant.COMMAND_INSERT_EN, item.Username, item.LanguageID, item.GroupCode, item.GroupName, item.Note, item.Active, item.IsDefault, item.IsRoot });
+                result = db.sExecuteSQL("SYS_spfrmGroupUser", new string[] { "Activity", "Username", "LanguageID", "GroupCode", "VNName", "ENName", "Note", "Active", "IsDefault", "IsRoot" }, new object[] { BaseConstant.COMMAND_INSERT_EN, item.Username, item.LanguageID, item.GroupCode, item.VNName, item.ENName, item.Note, item.Active, item.IsDefault, item.IsRoot });
 
                 if (string.IsNullOrEmpty(result))
                 {
@@ -159,7 +159,7 @@ namespace iPOS.DAO.System
             string result = "";
             try
             {
-                result = db.sExecuteSQL("SYS_spfrmGroupUser", new string[] { "Activity", "Username", "LanguageID", "GroupID", "GroupCode", "GroupName", "Note", "Active", "IsDefault", "IsRoot" }, new object[] { BaseConstant.COMMAND_UPDATE_EN, item.Username, item.LanguageID, item.GroupID, item.GroupCode, item.GroupName, item.Note, item.Active, item.IsDefault, item.IsRoot });
+                result = db.sExecuteSQL("SYS_spfrmGroupUser", new string[] { "Activity", "Username", "LanguageID", "GroupID", "GroupCode", "VNName", "ENName", "Note", "Active", "IsDefault", "IsRoot" }, new object[] { BaseConstant.COMMAND_UPDATE_EN, item.Username, item.LanguageID, item.GroupID, item.GroupCode, item.VNName, item.ENName, item.Note, item.Active, item.IsDefault, item.IsRoot });
 
                 if (string.IsNullOrEmpty(result))
                 {

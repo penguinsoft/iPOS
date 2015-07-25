@@ -93,6 +93,16 @@ namespace iPOS.IMC.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap cancel_16 {
+            get {
+                object obj = ResourceManager.GetObject("cancel_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap cashier_32 {
             get {
                 object obj = ResourceManager.GetObject("cashier_32", resourceCulture);
@@ -366,6 +376,26 @@ namespace iPOS.IMC.Properties {
         internal static System.Drawing.Bitmap restore_database_32 {
             get {
                 object obj = ResourceManager.GetObject("restore_database_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap save_add_16 {
+            get {
+                object obj = ResourceManager.GetObject("save_add_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap save_end_16 {
+            get {
+                object obj = ResourceManager.GetObject("save_end_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
