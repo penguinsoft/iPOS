@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace iPOS.DTO.System
+namespace iPOS.DTO.Systems
 {
     public class SYS_tblGroupUserDTO : BaseDTO
     {

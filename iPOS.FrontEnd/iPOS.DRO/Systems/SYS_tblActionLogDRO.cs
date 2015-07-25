@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Runtime.Serialization;
-using iPOS.DTO.System;
+using iPOS.DTO.Systems;
 
-namespace iPOS.DRO.System
+namespace iPOS.DRO.Systems
 {
     public class SYS_tblActionLogDRO : BaseDRO
     {

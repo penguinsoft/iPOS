@@ -9,8 +9,8 @@ using DevExpress.XtraEditors;
 using LanguageEngine = iPOS.IMC.Helper.LanguageManage;
 using iPOS.Core.Helper;
 using iPOS.IMC.Helper;
-using iPOS.DTO.System;
-using iPOS.BUS.System;
+using iPOS.DTO.Systems;
+using iPOS.BUS.Systems;
 using System.Threading.Tasks;
 
 public partial class uc_GroupUserDetail : DevExpress.XtraEditors.XtraUserControl

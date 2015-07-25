@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using iPOS.DRO.System;
-using iPOS.DTO.System;
+using iPOS.DRO.Systems;
+using iPOS.DTO.Systems;
 using Newtonsoft.Json;
 
-namespace iPOS.DAO.System
+namespace iPOS.DAO.Systems
 {
     public class SYS_tblGroupUserDAO : BaseDAO
     {

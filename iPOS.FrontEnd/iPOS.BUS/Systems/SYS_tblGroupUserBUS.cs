@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using iPOS.DAO.System;
-using iPOS.DRO.System;
-using iPOS.DTO.System;
+using iPOS.DAO.Systems;
+using iPOS.DRO.Systems;
+using iPOS.DTO.Systems;
 using Newtonsoft.Json;
 
-namespace iPOS.BUS.System
+namespace iPOS.BUS.Systems
 {
     public class SYS_tblGroupUserBUS : BaseBUS
     {

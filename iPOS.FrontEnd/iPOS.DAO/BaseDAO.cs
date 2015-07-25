@@ -3,8 +3,8 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using iPOS.Core.Logger;
-using iPOS.DRO.System;
-using iPOS.DTO.System;
+using iPOS.DRO.Systems;
+using iPOS.DTO.Systems;
 using Newtonsoft.Json;
 
 namespace iPOS.DAO

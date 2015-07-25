@@ -18,6 +18,6 @@ namespace iPOS.DTO
 
         public string Editer { get; set; }
 
-        public object EditTime { get; set; }
+        public System.Nullable<DateTime> EditTime { get; set; }
     }
 }

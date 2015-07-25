@@ -1,7 +1,7 @@
 ﻿using System;
 using iPOS.Core.Helper;
 
-namespace iPOS.DTO.System
+namespace iPOS.DTO.Systems
 {
     public class SYS_tblActionLogDTO : BaseDTO
     {

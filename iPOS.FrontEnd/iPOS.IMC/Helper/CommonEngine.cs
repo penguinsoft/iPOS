@@ -11,7 +11,7 @@ namespace iPOS.IMC.Helper
 {
     public class CommonEngine
     {
-        public static iPOS.DTO.System.SYS_tblUserDTO userInfo;
+        public static iPOS.DTO.Systems.SYS_tblUserDTO userInfo;
         public static DateTime SystemDateTime;
         protected static ILogEngine logger = new LogEngine();
 

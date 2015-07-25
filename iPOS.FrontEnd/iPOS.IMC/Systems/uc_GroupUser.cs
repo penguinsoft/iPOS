@@ -8,8 +8,8 @@ using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using LanguageEngine = iPOS.IMC.Helper.LanguageManage;
 using CommonEngine = iPOS.IMC.Helper.CommonEngine;
-using iPOS.BUS.System;
-using iPOS.DTO.System;
+using iPOS.BUS.Systems;
+using iPOS.DTO.Systems;
 using iPOS.Core.Helper;
 
 public partial class uc_GroupUser : DevExpress.XtraEditors.XtraUserControl
@@ -31,7 +31,7 @@ public partial class uc_GroupUser : DevExpress.XtraEditors.XtraUserControl
         try
         {
             gridGroupUser.DataBindings.Clear();
-            List<iPOS.DTO.System.SYS_tblGroupUserDTO> list = new List<iPOS.DTO.System.SYS_tblGroupUserDTO>();
+            List<iPOS.DTO.Systems.SYS_tblGroupUserDTO> list = new List<iPOS.DTO.Systems.SYS_tblGroupUserDTO>();
             list = await SYS_tblGroupUserBUS.GetAllGroupUsers(CommonEngine.userInfo.UserName, CommonEngine.userInfo.LanguageID);
             gridGroupUser.DataSource = list;
             barBottom.Visible = (list.Count > 0) ? true : false;
@@ -52,7 +52,7 @@ public partial class uc_GroupUser : DevExpress.XtraEditors.XtraUserControl
                 lblCreaterValue.Caption = curItem.Creater;
                 lblCreateTimeValue.Caption = curItem.CreateTime.ToString(ConfigEngine.DateTimeFormat);
                 lblEditerValue.Caption = curItem.Editer;
-                lblEditTimeValue.Caption = curItem.EditTime.ToString(ConfigEngine.DateTimeFormat);
+                //lblEditTimeValue.Caption = curItem.EditTime.ToString(ConfigEngine.DateTimeFormat);
             }
         }
         catch (Exception ex)

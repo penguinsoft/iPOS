@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using iPOS.DAO.System;
-using iPOS.DTO.System;
+using iPOS.DAO.Systems;
+using iPOS.DTO.Systems;
 
-namespace iPOS.BUS.System
+namespace iPOS.BUS.Systems
 {
     public class SYS_tblUserBUS : BaseBUS
     {

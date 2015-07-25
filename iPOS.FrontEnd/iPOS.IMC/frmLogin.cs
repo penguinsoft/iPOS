@@ -12,8 +12,8 @@ using EncryptEngine = iPOS.Core.Security.EcryptEngine;
 using ConfigEngine = iPOS.Core.Helper.ConfigEngine;
 using IOEngine = iPOS.Core.Helper.IOEngine;
 using CommonEngine = iPOS.IMC.Helper.CommonEngine;
-using UserBUS = iPOS.BUS.System.SYS_tblUserBUS;
-using iPOS.DTO.System;
+using UserBUS = iPOS.BUS.Systems.SYS_tblUserBUS;
+using iPOS.DTO.Systems;
 
 namespace iPOS.IMC
 {

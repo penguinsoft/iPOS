@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using iPOS.Core.Logger;
 using iPOS.DAO;
-using iPOS.DRO.System;
-using iPOS.DTO.System;
+using iPOS.DRO.Systems;
+using iPOS.DTO.Systems;
 using Newtonsoft.Json;
 using ConfigEngine = iPOS.Core.Helper.ConfigEngine;
 
