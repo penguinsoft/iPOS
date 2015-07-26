@@ -1,11 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
+using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraTabbedMdi;
+using iPOS.Core.Helper;
 using iPOS.Core.Logger;
+using System.Runtime.Serialization;
 using ConfigEngine = iPOS.Core.Helper.ConfigEngine;
+using DevExpress.XtraGrid.Views.Grid;
+using System.Diagnostics;
 
 namespace iPOS.IMC.Helper
 {
@@ -30,10 +37,35 @@ namespace iPOS.IMC.Helper
             XtraMessageBox.Show(ex.Message, LanguageManage.GetMessageCaption("ERROR_SYSTEM_TITLE_CAPTION", ConfigEngine.Language), MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
+        public static bool ShowConfirmMessageAlert(string message)
+        {
+            if (XtraMessageBox.Show(message, ConfigEngine.Language == "vi" ? "Thông Báo" : "Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+                return true;
+            return false;
+        }
+
         public static void OpenInputForm(XtraUserControl uc, Size size)
         {
             frmOpen frm = new frmOpen();
             frm.Text = LanguageManage.GetOpenFormText(uc.Name, ConfigEngine.Language);
+            frm.Size = size;
+            frm.MaximumSize = size;
+            frm.MinimumSize = size;
+            frm.Controls.Clear();
+            uc.Dock = DockStyle.Fill;
+            frm.Controls.Add(uc);
+            uc.Show();
+            frm.ShowDialog();
+        }
+
+        public static void OpenInputForm(XtraUserControl uc, Size size, bool isEdit)
+        {
+            frmOpen frm = new frmOpen();
+            string temp = "";
+            if (isEdit)
+                temp = (ConfigEngine.Language == "vi") ? "Cập Nhật" : "Update";
+            else temp = (ConfigEngine.Language == "vi") ? "Thêm Mới" : "Add New";
+            frm.Text = string.Format("{0} {1}", temp, LanguageManage.GetOpenFormText(uc.Name, ConfigEngine.Language));
             frm.Size = size;
             frm.MaximumSize = size;
             frm.MinimumSize = size;
@@ -74,6 +106,101 @@ namespace iPOS.IMC.Helper
                 frm.Controls.Add(uc);
                 frm.Show();
             }
+        }
+
+        public static void ChangeDateTimeActionToCurrentData<T>(IEnumerable<T> item, BarStaticItem[] bar_static_items)
+        {
+            try
+            {
+                DataRow temp = ConvertEngine.ConvertObjectListToDataRow<T>(item);
+                if (temp != null)
+                {
+                    bar_static_items[0].Visibility = bar_static_items[1].Visibility = bar_static_items[2].Visibility = bar_static_items[3].Visibility = BarItemVisibility.Always;
+                    bar_static_items[1].Caption = string.Format(@"<b><color=RED>{0}</color></b>", temp["Creater"]);
+                    bar_static_items[3].Caption = string.Format(@"<b><color=RED>{0}</color></b>", Convert.ToDateTime(temp["CreateTime"] + "").ToString(ConfigEngine.DateTimeFormat));
+                    if (!string.IsNullOrEmpty(temp["Editer"] + ""))
+                    {
+                        bar_static_items[4].Visibility = bar_static_items[5].Visibility = bar_static_items[6].Visibility = bar_static_items[7].Visibility = BarItemVisibility.Always;
+                        bar_static_items[5].Caption = string.Format(@"<b><color=RED>{0}</color></b>", temp["Editer"]);
+                        bar_static_items[7].Caption = string.Format(@"<b><color=RED>{0}</color></b>", Convert.ToDateTime(temp["EditTime"] + "").ToString(ConfigEngine.DateTimeFormat));
+                    }
+                    else bar_static_items[4].Visibility = bar_static_items[5].Visibility = bar_static_items[6].Visibility = bar_static_items[7].Visibility = BarItemVisibility.Never;
+                }
+                else foreach (BarStaticItem bar_static_item in bar_static_items)
+                        bar_static_item.Visibility = BarItemVisibility.Never;
+            }
+            catch (Exception ex)
+            {
+                logger.Equals(ex);
+                return;
+            }
+        }
+
+        public static DataTable GetDataTableAfterFilter(DataTable data_source, GridView grid_view)
+        {
+            try
+            {
+                DataView filter_view = new DataView(data_source);
+                filter_view.RowFilter = DevExpress.Data.Filtering.CriteriaToWhereClauseHelper.GetDataSetWhere(grid_view.ActiveFilterCriteria);
+                data_source = filter_view.ToTable();
+
+                return data_source;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                return null;
+            }
+        }
+
+        public static void ExportGridViewData(DataTable data_source, GridView grid_view)
+        {
+            if (data_source != null && data_source.Rows.Count > 0)
+            {
+                SaveFileDialog sDialog = new SaveFileDialog();
+                sDialog.Filter = "Microsoft Excel (*.xls)|*.xls|Microsoft Excel 2007 (*.xlsx)|*.xlsx|PDF (*.pdf)|*.pdf|Rich Text Format (*.rtf)|*.rtf|Webpage (*.html)|*.html|Rich Text File (*.rtf)|*.rtf|Text File (*.txt)|*.txt";
+                sDialog.Title = LanguageManage.GetMessageCaption("000007", ConfigEngine.Language);
+                if (sDialog.ShowDialog() == DialogResult.OK)
+                {
+                    switch (sDialog.FilterIndex)
+                    {
+                        case 1:
+                            grid_view.ExportToXls(sDialog.FileName);
+                            break;
+                        case 2:
+                            grid_view.ExportToXlsx(sDialog.FileName);
+                            break;
+                        case 3:
+                            grid_view.ExportToPdf(sDialog.FileName);
+                            break;
+                        case 4:
+                            grid_view.ExportToText(sDialog.FileName);
+                            break;
+                        case 5:
+                            grid_view.ExportToHtml(sDialog.FileName);
+                            break;
+                        case 6:
+                            grid_view.ExportToRtf(sDialog.FileName);
+                            break;
+                        case 7:
+                            grid_view.ExportToText(sDialog.FileName);
+                            break;
+                    }
+                    if (XtraMessageBox.Show(LanguageManage.GetMessageCaption("000006", ConfigEngine.Language).Replace("$FileName$", sDialog.FileName), (ConfigEngine.Language == "vi") ? "Thông Báo" : "Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+                    {
+                        Process.Start(sDialog.FileName);
+                    }
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        public static void QuickExportGridViewData(DataTable data_source, GridView grid_view)
+        {
+            ExportGridViewData(GetDataTableAfterFilter(data_source, grid_view), grid_view);
         }
     }
 }

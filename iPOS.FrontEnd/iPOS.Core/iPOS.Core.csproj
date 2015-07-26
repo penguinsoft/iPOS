@@ -43,6 +43,7 @@
     <Compile Include="Helper\BaseConstant.cs" />
     <Compile Include="Helper\CaptionEngine.cs" />
     <Compile Include="Helper\ConfigEngine.cs" />
+    <Compile Include="Helper\ConvertEngine.cs" />
     <Compile Include="Helper\FileEngine.cs" />
     <Compile Include="Helper\IOEngine.cs" />
     <Compile Include="Helper\MessageEngine.cs" />

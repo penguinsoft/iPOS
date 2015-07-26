@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace iPOS.DCO.System
+namespace iPOS.DCO.Systems
 {
     [DataContract]
     public class SYS_tblUserDCO

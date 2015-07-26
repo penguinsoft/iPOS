@@ -1,31 +1,33 @@
-﻿partial class uc_ChangePassword
+﻿namespace iPOS.IMC.Systems
 {
-    /// <summary> 
-    /// Required designer variable.
-    /// </summary>
-    private System.ComponentModel.IContainer components = null;
-
-    /// <summary> 
-    /// Clean up any resources being used.
-    /// </summary>
-    /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-    protected override void Dispose(bool disposing)
+    partial class uc_ChangePassword
     {
-        if (disposing && (components != null))
+        /// <summary> 
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
         {
-            components.Dispose();
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
         }
-        base.Dispose(disposing);
-    }
 
-    #region Component Designer generated code
+        #region Component Designer generated code
 
-    /// <summary> 
-    /// Required method for Designer support - do not modify 
-    /// the contents of this method with the code editor.
-    /// </summary>
-    private void InitializeComponent()
-    {
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             this.components = new System.ComponentModel.Container();
             this.depError = new DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider(this.components);
             this.lciButtonCancel = new DevExpress.XtraLayout.LayoutControlItem();
@@ -332,29 +334,30 @@
             ((System.ComponentModel.ISupportInitialize)(this.lciButtonSave)).EndInit();
             this.ResumeLayout(false);
 
+        }
+
+        #endregion
+
+        private DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider depError;
+        private DevExpress.XtraLayout.LayoutControl locMain;
+        private DevExpress.XtraEditors.SimpleButton btnSave;
+        private DevExpress.XtraEditors.SimpleButton btnCancel;
+        private DevExpress.XtraEditors.TextEdit txtConfirmPassword;
+        private DevExpress.XtraEditors.TextEdit txtNewPassword;
+        private DevExpress.XtraEditors.TextEdit txtOldPassword;
+        private DevExpress.XtraEditors.TextEdit txtGroupName;
+        private DevExpress.XtraEditors.TextEdit txtUsername;
+        private DevExpress.XtraEditors.LabelControl lblNote;
+        private DevExpress.XtraLayout.LayoutControlGroup logMain;
+        private DevExpress.XtraLayout.EmptySpaceItem esiFirst;
+        private DevExpress.XtraLayout.LayoutControlGroup logDetail;
+        private DevExpress.XtraLayout.LayoutControlItem lciLabelNote;
+        private DevExpress.XtraLayout.LayoutControlItem lciUsername;
+        private DevExpress.XtraLayout.LayoutControlItem lciGroupName;
+        private DevExpress.XtraLayout.LayoutControlItem lciOldPassword;
+        private DevExpress.XtraLayout.LayoutControlItem lciNewPassword;
+        private DevExpress.XtraLayout.LayoutControlItem lciConfirmPassword;
+        private DevExpress.XtraLayout.LayoutControlItem lciButtonCancel;
+        private DevExpress.XtraLayout.LayoutControlItem lciButtonSave;
     }
-
-    #endregion
-
-    private DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider depError;
-    private DevExpress.XtraLayout.LayoutControl locMain;
-    private DevExpress.XtraEditors.SimpleButton btnSave;
-    private DevExpress.XtraEditors.SimpleButton btnCancel;
-    private DevExpress.XtraEditors.TextEdit txtConfirmPassword;
-    private DevExpress.XtraEditors.TextEdit txtNewPassword;
-    private DevExpress.XtraEditors.TextEdit txtOldPassword;
-    private DevExpress.XtraEditors.TextEdit txtGroupName;
-    private DevExpress.XtraEditors.TextEdit txtUsername;
-    private DevExpress.XtraEditors.LabelControl lblNote;
-    private DevExpress.XtraLayout.LayoutControlGroup logMain;
-    private DevExpress.XtraLayout.EmptySpaceItem esiFirst;
-    private DevExpress.XtraLayout.LayoutControlGroup logDetail;
-    private DevExpress.XtraLayout.LayoutControlItem lciLabelNote;
-    private DevExpress.XtraLayout.LayoutControlItem lciUsername;
-    private DevExpress.XtraLayout.LayoutControlItem lciGroupName;
-    private DevExpress.XtraLayout.LayoutControlItem lciOldPassword;
-    private DevExpress.XtraLayout.LayoutControlItem lciNewPassword;
-    private DevExpress.XtraLayout.LayoutControlItem lciConfirmPassword;
-    private DevExpress.XtraLayout.LayoutControlItem lciButtonCancel;
-    private DevExpress.XtraLayout.LayoutControlItem lciButtonSave;
 }

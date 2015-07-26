@@ -2,7 +2,7 @@
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using iPOS.DCO.Product;
-using iPOS.DCO.System;
+using iPOS.DCO.Systems;
 
 namespace iPOS.WCFService
 {

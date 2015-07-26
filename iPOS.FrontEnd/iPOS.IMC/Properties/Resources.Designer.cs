@@ -83,6 +83,16 @@ namespace iPOS.IMC.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap browse_16 {
+            get {
+                object obj = ResourceManager.GetObject("browse_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap calendar_16 {
             get {
                 object obj = ResourceManager.GetObject("calendar_16", resourceCulture);
@@ -116,6 +126,16 @@ namespace iPOS.IMC.Properties {
         internal static System.Drawing.Bitmap change_password_32 {
             get {
                 object obj = ResourceManager.GetObject("change_password_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap check_16 {
+            get {
+                object obj = ResourceManager.GetObject("check_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -163,6 +183,16 @@ namespace iPOS.IMC.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap download_file_16 {
+            get {
+                object obj = ResourceManager.GetObject("download_file_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap export_16 {
             get {
                 object obj = ResourceManager.GetObject("export_16", resourceCulture);
@@ -193,9 +223,29 @@ namespace iPOS.IMC.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap import_all_16 {
+            get {
+                object obj = ResourceManager.GetObject("import_all_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap import_export_method_32 {
             get {
                 object obj = ResourceManager.GetObject("import_export_method_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap import_file_16 {
+            get {
+                object obj = ResourceManager.GetObject("import_file_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

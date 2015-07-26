@@ -1,31 +1,33 @@
-﻿partial class uc_GroupUser
+﻿namespace iPOS.IMC.Systems
 {
-    /// <summary> 
-    /// Required designer variable.
-    /// </summary>
-    private System.ComponentModel.IContainer components = null;
-
-    /// <summary> 
-    /// Clean up any resources being used.
-    /// </summary>
-    /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-    protected override void Dispose(bool disposing)
+    partial class uc_GroupUser
     {
-        if (disposing && (components != null))
+        /// <summary> 
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
         {
-            components.Dispose();
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
         }
-        base.Dispose(disposing);
-    }
 
-    #region Component Designer generated code
+        #region Component Designer generated code
 
-    /// <summary> 
-    /// Required method for Designer support - do not modify 
-    /// the contents of this method with the code editor.
-    /// </summary>
-    private void InitializeComponent()
-    {
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             this.components = new System.ComponentModel.Container();
             this.barMain = new DevExpress.XtraBars.BarManager(this.components);
             this.barTop = new DevExpress.XtraBars.Bar();
@@ -133,7 +135,7 @@
             // 
             // btnUpdate
             // 
-            this.btnUpdate.Caption = "Sửa Chữa";
+            this.btnUpdate.Caption = "Cập Nhật";
             this.btnUpdate.Glyph = global::iPOS.IMC.Properties.Resources.update_16;
             this.btnUpdate.Id = 1;
             this.btnUpdate.Name = "btnUpdate";
@@ -336,6 +338,7 @@
             this.grvGroupUser.Name = "grvGroupUser";
             this.grvGroupUser.OptionsBehavior.Editable = false;
             this.grvGroupUser.OptionsSelection.MultiSelect = true;
+            this.grvGroupUser.OptionsView.ShowAutoFilterRow = true;
             this.grvGroupUser.CustomDrawRowIndicator += new DevExpress.XtraGrid.Views.Grid.RowIndicatorCustomDrawEventHandler(this.grvGroupUser_CustomDrawRowIndicator);
             this.grvGroupUser.SelectionChanged += new DevExpress.Data.SelectionChangedEventHandler(this.grvGroupUser_SelectionChanged);
             this.grvGroupUser.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.grvGroupUser_FocusedRowChanged);
@@ -347,6 +350,7 @@
             this.gcolGroupCode.Caption = "Mã nhóm";
             this.gcolGroupCode.FieldName = "GroupCode";
             this.gcolGroupCode.Name = "gcolGroupCode";
+            this.gcolGroupCode.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolGroupCode.Visible = true;
             this.gcolGroupCode.VisibleIndex = 0;
             this.gcolGroupCode.Width = 133;
@@ -356,6 +360,7 @@
             this.gcolGroupName.Caption = "Tên nhóm";
             this.gcolGroupName.FieldName = "GroupName";
             this.gcolGroupName.Name = "gcolGroupName";
+            this.gcolGroupName.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolGroupName.Visible = true;
             this.gcolGroupName.VisibleIndex = 1;
             this.gcolGroupName.Width = 393;
@@ -365,24 +370,31 @@
             this.gcolNote.Caption = "Ghi chú";
             this.gcolNote.FieldName = "Note";
             this.gcolNote.Name = "gcolNote";
+            this.gcolNote.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolNote.Visible = true;
             this.gcolNote.VisibleIndex = 4;
             this.gcolNote.Width = 398;
             // 
             // gcolActiveString
             // 
+            this.gcolActiveString.AppearanceCell.Options.UseTextOptions = true;
+            this.gcolActiveString.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.gcolActiveString.Caption = "Kích hoạt?";
             this.gcolActiveString.FieldName = "ActiveString";
             this.gcolActiveString.Name = "gcolActiveString";
+            this.gcolActiveString.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolActiveString.Visible = true;
             this.gcolActiveString.VisibleIndex = 2;
             this.gcolActiveString.Width = 96;
             // 
             // gcolIsDefaultString
             // 
+            this.gcolIsDefaultString.AppearanceCell.Options.UseTextOptions = true;
+            this.gcolIsDefaultString.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.gcolIsDefaultString.Caption = "Mặc định?";
             this.gcolIsDefaultString.FieldName = "IsDefaultString";
             this.gcolIsDefaultString.Name = "gcolIsDefaultString";
+            this.gcolIsDefaultString.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolIsDefaultString.Visible = true;
             this.gcolIsDefaultString.VisibleIndex = 3;
             this.gcolIsDefaultString.Width = 92;
@@ -434,44 +446,45 @@
             ((System.ComponentModel.ISupportInitialize)(this.grvGroupUser)).EndInit();
             this.ResumeLayout(false);
 
+        }
+
+        #endregion
+
+        private DevExpress.XtraBars.BarManager barMain;
+        private DevExpress.XtraBars.Bar barTop;
+        private DevExpress.XtraBars.Bar barBottom;
+        private DevExpress.XtraBars.BarDockControl barDockControlTop;
+        private DevExpress.XtraBars.BarDockControl barDockControlBottom;
+        private DevExpress.XtraBars.BarDockControl barDockControlLeft;
+        private DevExpress.XtraBars.BarDockControl barDockControlRight;
+        private DevExpress.XtraBars.BarLargeButtonItem btnInsert;
+        private DevExpress.XtraBars.BarLargeButtonItem btnUpdate;
+        private DevExpress.XtraBars.BarLargeButtonItem btnDelete;
+        private DevExpress.XtraBars.BarLargeButtonItem btnPrint;
+        private DevExpress.XtraBars.BarLargeButtonItem btnReload;
+        private DevExpress.XtraBars.BarLargeButtonItem btnImport;
+        private DevExpress.XtraBars.BarLargeButtonItem btnExport;
+        private DevExpress.XtraBars.BarLargeButtonItem btnClose;
+        private DevExpress.XtraBars.BarStaticItem lblCreater;
+        private DevExpress.XtraBars.BarStaticItem lblCreaterValue;
+        private DevExpress.XtraBars.BarStaticItem lblEditer;
+        private DevExpress.XtraBars.BarStaticItem lblEditerValue;
+        private DevExpress.XtraBars.BarStaticItem lblCreateTime;
+        private DevExpress.XtraBars.BarStaticItem lblCreateTimeValue;
+        private DevExpress.XtraBars.BarStaticItem lblEditTime;
+        private DevExpress.XtraBars.BarStaticItem lblEditTimeValue;
+        private DevExpress.XtraGrid.GridControl gridGroupUser;
+        private DevExpress.XtraGrid.Views.Grid.GridView grvGroupUser;
+        private DevExpress.XtraGrid.Columns.GridColumn gcolGroupCode;
+        private DevExpress.XtraGrid.Columns.GridColumn gcolGroupName;
+        private DevExpress.XtraGrid.Columns.GridColumn gcolNote;
+        private DevExpress.XtraGrid.Columns.GridColumn gcolActiveString;
+        private DevExpress.XtraGrid.Columns.GridColumn gcolIsDefaultString;
+        private DevExpress.XtraGrid.Columns.GridColumn gcolCreater;
+        private DevExpress.XtraGrid.Columns.GridColumn gcolCreateTime;
+        private DevExpress.XtraGrid.Columns.GridColumn gcolEditer;
+        private DevExpress.XtraGrid.Columns.GridColumn gcolEditTime;
+        private DevExpress.XtraGrid.Columns.GridColumn gcolGroupID;
+
     }
-
-    #endregion
-
-    private DevExpress.XtraBars.BarManager barMain;
-    private DevExpress.XtraBars.Bar barTop;
-    private DevExpress.XtraBars.Bar barBottom;
-    private DevExpress.XtraBars.BarDockControl barDockControlTop;
-    private DevExpress.XtraBars.BarDockControl barDockControlBottom;
-    private DevExpress.XtraBars.BarDockControl barDockControlLeft;
-    private DevExpress.XtraBars.BarDockControl barDockControlRight;
-    private DevExpress.XtraBars.BarLargeButtonItem btnInsert;
-    private DevExpress.XtraBars.BarLargeButtonItem btnUpdate;
-    private DevExpress.XtraBars.BarLargeButtonItem btnDelete;
-    private DevExpress.XtraBars.BarLargeButtonItem btnPrint;
-    private DevExpress.XtraBars.BarLargeButtonItem btnReload;
-    private DevExpress.XtraBars.BarLargeButtonItem btnImport;
-    private DevExpress.XtraBars.BarLargeButtonItem btnExport;
-    private DevExpress.XtraBars.BarLargeButtonItem btnClose;
-    private DevExpress.XtraBars.BarStaticItem lblCreater;
-    private DevExpress.XtraBars.BarStaticItem lblCreaterValue;
-    private DevExpress.XtraBars.BarStaticItem lblEditer;
-    private DevExpress.XtraBars.BarStaticItem lblEditerValue;
-    private DevExpress.XtraBars.BarStaticItem lblCreateTime;
-    private DevExpress.XtraBars.BarStaticItem lblCreateTimeValue;
-    private DevExpress.XtraBars.BarStaticItem lblEditTime;
-    private DevExpress.XtraBars.BarStaticItem lblEditTimeValue;
-    private DevExpress.XtraGrid.GridControl gridGroupUser;
-    private DevExpress.XtraGrid.Views.Grid.GridView grvGroupUser;
-    private DevExpress.XtraGrid.Columns.GridColumn gcolGroupCode;
-    private DevExpress.XtraGrid.Columns.GridColumn gcolGroupName;
-    private DevExpress.XtraGrid.Columns.GridColumn gcolNote;
-    private DevExpress.XtraGrid.Columns.GridColumn gcolActiveString;
-    private DevExpress.XtraGrid.Columns.GridColumn gcolIsDefaultString;
-    private DevExpress.XtraGrid.Columns.GridColumn gcolCreater;
-    private DevExpress.XtraGrid.Columns.GridColumn gcolCreateTime;
-    private DevExpress.XtraGrid.Columns.GridColumn gcolEditer;
-    private DevExpress.XtraGrid.Columns.GridColumn gcolEditTime;
-    private DevExpress.XtraGrid.Columns.GridColumn gcolGroupID;
-
 }

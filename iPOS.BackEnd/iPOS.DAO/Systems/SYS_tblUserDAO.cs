@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Data;
-using iPOS.DTO.System;
+using iPOS.DTO.Systems;
 
-namespace iPOS.DAO.System
+namespace iPOS.DAO.Systems
 {
     public interface ISYS_tblUserDAO
     {

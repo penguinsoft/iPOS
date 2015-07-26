@@ -27,6 +27,15 @@ namespace iPOS.IMC.Helper
             return CaptionEngine.GetControlCaption(form_name, form_name, BaseConstant.PARENT_TEXT, language);
         }
 
+        public static string GetOpenFormText(string form_name, string language, bool isEdit)
+        {
+            string temp = "";
+            if (isEdit)
+                temp = (ConfigEngine.Language == "vi") ? "Cập Nhật" : "Update";
+            else temp = (ConfigEngine.Language == "vi") ? "Thêm Mới" : "Add New";
+            return string.Format("{0} {1}", temp, CaptionEngine.GetControlCaption(form_name, form_name, BaseConstant.PARENT_TEXT, language));
+        }
+
         public static void ChangeTextXtraForm(XtraForm form, string language)
         {
             form.Text = CaptionEngine.GetControlCaption(form.Name, form.Name, BaseConstant.PARENT_TEXT, language);

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using iPOS.Core.Helper;
-using iPOS.DTO.System;
+using iPOS.DTO.Systems;
 
-namespace iPOS.DAO.System
+namespace iPOS.DAO.Systems
 {
     public interface ISYS_tblActionLogDAO
     {

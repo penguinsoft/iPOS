@@ -7,11 +7,11 @@ using System.Text;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 
-namespace iPOS.IMC.Systems
+namespace iPOS.IMC.Tool
 {
-    public partial class uc_ChangePassword : DevExpress.XtraEditors.XtraUserControl
+    public partial class uc_ImportExcel : DevExpress.XtraEditors.XtraUserControl
     {
-        public uc_ChangePassword()
+        public uc_ImportExcel()
         {
             InitializeComponent();
         }

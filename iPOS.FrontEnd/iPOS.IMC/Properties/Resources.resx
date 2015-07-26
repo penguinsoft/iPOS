@@ -121,8 +121,11 @@
   <data name="district_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\district_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="add_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\add_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="cancel_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\cancel_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="save_add_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\save_add_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="user_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\user_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -145,11 +148,11 @@
   <data name="shutdown_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\shutdown_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="download_file_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\download_file_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="cashier_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\cashier_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="backup_database_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\backup_database_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -184,6 +187,9 @@
   <data name="import_export_method_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\import_export_method_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="add_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\add_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="login_banner" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\login_banner.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -199,11 +205,17 @@
   <data name="lockscreen_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\lockscreen_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="import_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\import_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="save_end_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\save_end_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vi_flag_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vi_flag_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="uk_flag_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\uk_flag_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="logout_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\logout_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="province_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\province_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -211,11 +223,17 @@
   <data name="units_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\units_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="vi_flag_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\vi_flag_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="backup_database_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\backup_database_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="update_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\update_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="check_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\check_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="browse_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\browse_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="permission_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\permission_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -226,19 +244,16 @@
   <data name="export_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\export_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="import_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\import_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="restore_database_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\restore_database_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="logout_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\logout_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="import_file_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\import_file_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="cancel_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\cancel_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="save_add_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\save_add_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="save_end_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\save_end_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="import_all_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\import_all_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

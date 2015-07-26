@@ -11,11 +11,11 @@ using AutoMapper;
 using iPOS.Core.Helper;
 using iPOS.Core.Logger;
 using iPOS.DAO.Product;
-using iPOS.DAO.System;
+using iPOS.DAO.Systems;
 using iPOS.DCO.Product;
-using iPOS.DCO.System;
+using iPOS.DCO.Systems;
 using iPOS.DTO.Product;
-using iPOS.DTO.System;
+using iPOS.DTO.Systems;
 
 namespace iPOS.WCFService
 {

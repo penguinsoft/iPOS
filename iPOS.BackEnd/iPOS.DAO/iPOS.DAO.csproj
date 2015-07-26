@@ -45,9 +45,9 @@
     <Compile Include="BaseDAO.cs" />
     <Compile Include="Product\PRO_tblProvinceDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="System\SYS_tblActionLogDAO.cs" />
-    <Compile Include="System\SYS_tblGroupUserDAO.cs" />
-    <Compile Include="System\SYS_tblUserDAO.cs" />
+    <Compile Include="Systems\SYS_tblActionLogDAO.cs" />
+    <Compile Include="Systems\SYS_tblGroupUserDAO.cs" />
+    <Compile Include="Systems\SYS_tblUserDAO.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\iPOS.Core\iPOS.Core.csproj">

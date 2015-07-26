@@ -1,35 +1,39 @@
-﻿partial class uc_GroupUserDetail
+﻿namespace iPOS.IMC.Systems
 {
-    /// <summary> 
-    /// Required designer variable.
-    /// </summary>
-    private System.ComponentModel.IContainer components = null;
-
-    /// <summary> 
-    /// Clean up any resources being used.
-    /// </summary>
-    /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-    protected override void Dispose(bool disposing)
+    partial class uc_GroupUserDetail
     {
-        if (disposing && (components != null))
+        /// <summary> 
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
         {
-            components.Dispose();
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
         }
-        base.Dispose(disposing);
-    }
 
-    #region Component Designer generated code
+        #region Component Designer generated code
 
-    /// <summary> 
-    /// Required method for Designer support - do not modify 
-    /// the contents of this method with the code editor.
-    /// </summary>
-    private void InitializeComponent()
-    {
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             this.components = new System.ComponentModel.Container();
             this.depError = new DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider(this.components);
             this.locMain = new DevExpress.XtraLayout.LayoutControl();
+            this.txtENName = new DevExpress.XtraEditors.TextEdit();
             this.txtGroupID = new DevExpress.XtraEditors.TextEdit();
+            this.btnSaveClose = new DevExpress.XtraEditors.SimpleButton();
             this.btnSaveInsert = new DevExpress.XtraEditors.SimpleButton();
             this.btnCancel = new DevExpress.XtraEditors.SimpleButton();
             this.chkActive = new DevExpress.XtraEditors.CheckEdit();
@@ -44,18 +48,17 @@
             this.lciNote = new DevExpress.XtraLayout.LayoutControlItem();
             this.lciIsDefault = new DevExpress.XtraLayout.LayoutControlItem();
             this.lciActive = new DevExpress.XtraLayout.LayoutControlItem();
+            this.lciENName = new DevExpress.XtraLayout.LayoutControlItem();
+            this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
             this.esiFirst = new DevExpress.XtraLayout.EmptySpaceItem();
             this.lciButtonCancel = new DevExpress.XtraLayout.LayoutControlItem();
             this.lciButtonSaveInsert = new DevExpress.XtraLayout.LayoutControlItem();
-            this.lciGroupID = new DevExpress.XtraLayout.LayoutControlItem();
-            this.txtENName = new DevExpress.XtraEditors.TextEdit();
-            this.lciENName = new DevExpress.XtraLayout.LayoutControlItem();
-            this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
-            this.btnSaveClose = new DevExpress.XtraEditors.SimpleButton();
             this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.lciGroupID = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)(this.depError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.locMain)).BeginInit();
             this.locMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtENName.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtGroupID.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkActive.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkIsDefault.Properties)).BeginInit();
@@ -69,14 +72,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.lciNote)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciIsDefault)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciActive)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lciENName)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.esiFirst)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciButtonCancel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciButtonSaveInsert)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lciGroupID)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtENName.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lciENName)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lciGroupID)).BeginInit();
             this.SuspendLayout();
             // 
             // depError
@@ -104,6 +106,15 @@
             this.locMain.TabIndex = 1;
             this.locMain.Text = "layoutControl1";
             // 
+            // txtENName
+            // 
+            this.txtENName.Location = new System.Drawing.Point(84, 81);
+            this.txtENName.Name = "txtENName";
+            this.txtENName.Size = new System.Drawing.Size(341, 20);
+            this.txtENName.StyleController = this.locMain;
+            this.txtENName.TabIndex = 14;
+            this.txtENName.EditValueChanged += new System.EventHandler(this.txtENName_EditValueChanged);
+            // 
             // txtGroupID
             // 
             this.txtGroupID.Location = new System.Drawing.Point(79, 227);
@@ -111,6 +122,17 @@
             this.txtGroupID.Size = new System.Drawing.Size(50, 20);
             this.txtGroupID.StyleController = this.locMain;
             this.txtGroupID.TabIndex = 13;
+            // 
+            // btnSaveClose
+            // 
+            this.btnSaveClose.Image = global::iPOS.IMC.Properties.Resources.save_end_16;
+            this.btnSaveClose.Location = new System.Drawing.Point(133, 227);
+            this.btnSaveClose.Name = "btnSaveClose";
+            this.btnSaveClose.Size = new System.Drawing.Size(100, 22);
+            this.btnSaveClose.StyleController = this.locMain;
+            this.btnSaveClose.TabIndex = 5;
+            this.btnSaveClose.Text = "Lưu && Đóng";
+            this.btnSaveClose.Click += new System.EventHandler(this.btnSaveClose_Click);
             // 
             // btnSaveInsert
             // 
@@ -121,6 +143,7 @@
             this.btnSaveInsert.StyleController = this.locMain;
             this.btnSaveInsert.TabIndex = 6;
             this.btnSaveInsert.Text = "Lưu && Thêm";
+            this.btnSaveInsert.Click += new System.EventHandler(this.btnSaveInsert_Click);
             // 
             // btnCancel
             // 
@@ -131,6 +154,7 @@
             this.btnCancel.StyleController = this.locMain;
             this.btnCancel.TabIndex = 7;
             this.btnCancel.Text = "Hủy Bỏ";
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // chkActive
             // 
@@ -277,6 +301,29 @@
             this.lciActive.TextToControlDistance = 0;
             this.lciActive.TextVisible = false;
             // 
+            // lciENName
+            // 
+            this.lciENName.Control = this.txtENName;
+            this.lciENName.CustomizationFormText = "Tên nhóm EN:";
+            this.lciENName.Location = new System.Drawing.Point(0, 48);
+            this.lciENName.Name = "lciENName";
+            this.lciENName.Size = new System.Drawing.Size(415, 24);
+            this.lciENName.Text = "Tên nhóm EN:";
+            this.lciENName.TextSize = new System.Drawing.Size(67, 13);
+            // 
+            // emptySpaceItem1
+            // 
+            this.emptySpaceItem1.AllowHotTrack = false;
+            this.emptySpaceItem1.CustomizationFormText = "emptySpaceItem1";
+            this.emptySpaceItem1.Location = new System.Drawing.Point(0, 158);
+            this.emptySpaceItem1.MaxSize = new System.Drawing.Size(104, 24);
+            this.emptySpaceItem1.MinSize = new System.Drawing.Size(104, 24);
+            this.emptySpaceItem1.Name = "emptySpaceItem1";
+            this.emptySpaceItem1.Size = new System.Drawing.Size(104, 24);
+            this.emptySpaceItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            this.emptySpaceItem1.Text = "emptySpaceItem1";
+            this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
+            // 
             // esiFirst
             // 
             this.esiFirst.AllowHotTrack = false;
@@ -314,6 +361,18 @@
             this.lciButtonSaveInsert.TextToControlDistance = 0;
             this.lciButtonSaveInsert.TextVisible = false;
             // 
+            // layoutControlItem5
+            // 
+            this.layoutControlItem5.Control = this.btnSaveClose;
+            this.layoutControlItem5.CustomizationFormText = "layoutControlItem5";
+            this.layoutControlItem5.Location = new System.Drawing.Point(131, 225);
+            this.layoutControlItem5.Name = "layoutControlItem5";
+            this.layoutControlItem5.Size = new System.Drawing.Size(104, 26);
+            this.layoutControlItem5.Text = "layoutControlItem5";
+            this.layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem5.TextToControlDistance = 0;
+            this.layoutControlItem5.TextVisible = false;
+            // 
             // lciGroupID
             // 
             this.lciGroupID.ContentVisible = false;
@@ -330,61 +389,6 @@
             this.lciGroupID.TextToControlDistance = 0;
             this.lciGroupID.TextVisible = false;
             // 
-            // txtENName
-            // 
-            this.txtENName.Location = new System.Drawing.Point(84, 81);
-            this.txtENName.Name = "txtENName";
-            this.txtENName.Size = new System.Drawing.Size(341, 20);
-            this.txtENName.StyleController = this.locMain;
-            this.txtENName.TabIndex = 14;
-            this.txtENName.EditValueChanged += new System.EventHandler(this.txtENName_EditValueChanged);
-            // 
-            // lciENName
-            // 
-            this.lciENName.Control = this.txtENName;
-            this.lciENName.CustomizationFormText = "Tên nhóm EN:";
-            this.lciENName.Location = new System.Drawing.Point(0, 48);
-            this.lciENName.Name = "lciENName";
-            this.lciENName.Size = new System.Drawing.Size(415, 24);
-            this.lciENName.Text = "Tên nhóm EN:";
-            this.lciENName.TextSize = new System.Drawing.Size(67, 13);
-            // 
-            // emptySpaceItem1
-            // 
-            this.emptySpaceItem1.AllowHotTrack = false;
-            this.emptySpaceItem1.CustomizationFormText = "emptySpaceItem1";
-            this.emptySpaceItem1.Location = new System.Drawing.Point(0, 158);
-            this.emptySpaceItem1.MaxSize = new System.Drawing.Size(104, 24);
-            this.emptySpaceItem1.MinSize = new System.Drawing.Size(104, 24);
-            this.emptySpaceItem1.Name = "emptySpaceItem1";
-            this.emptySpaceItem1.Size = new System.Drawing.Size(104, 24);
-            this.emptySpaceItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            this.emptySpaceItem1.Text = "emptySpaceItem1";
-            this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
-            // 
-            // btnSaveClose
-            // 
-            this.btnSaveClose.Image = global::iPOS.IMC.Properties.Resources.save_end_16;
-            this.btnSaveClose.Location = new System.Drawing.Point(133, 227);
-            this.btnSaveClose.Name = "btnSaveClose";
-            this.btnSaveClose.Size = new System.Drawing.Size(100, 22);
-            this.btnSaveClose.StyleController = this.locMain;
-            this.btnSaveClose.TabIndex = 5;
-            this.btnSaveClose.Text = "Lưu && Đóng";
-            this.btnSaveClose.Click += new System.EventHandler(this.btnSaveClose_Click);
-            // 
-            // layoutControlItem5
-            // 
-            this.layoutControlItem5.Control = this.btnSaveClose;
-            this.layoutControlItem5.CustomizationFormText = "layoutControlItem5";
-            this.layoutControlItem5.Location = new System.Drawing.Point(131, 225);
-            this.layoutControlItem5.Name = "layoutControlItem5";
-            this.layoutControlItem5.Size = new System.Drawing.Size(104, 26);
-            this.layoutControlItem5.Text = "layoutControlItem5";
-            this.layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem5.TextToControlDistance = 0;
-            this.layoutControlItem5.TextVisible = false;
-            // 
             // uc_GroupUserDetail
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -395,6 +399,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.depError)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.locMain)).EndInit();
             this.locMain.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.txtENName.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtGroupID.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkActive.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkIsDefault.Properties)).EndInit();
@@ -408,44 +413,44 @@
             ((System.ComponentModel.ISupportInitialize)(this.lciNote)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciIsDefault)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciActive)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lciENName)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.esiFirst)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciButtonCancel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciButtonSaveInsert)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lciGroupID)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtENName.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lciENName)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lciGroupID)).EndInit();
             this.ResumeLayout(false);
 
+        }
+
+        #endregion
+
+        private DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider depError;
+        private DevExpress.XtraLayout.LayoutControl locMain;
+        private DevExpress.XtraEditors.TextEdit txtGroupID;
+        private DevExpress.XtraEditors.SimpleButton btnSaveClose;
+        private DevExpress.XtraEditors.SimpleButton btnSaveInsert;
+        private DevExpress.XtraEditors.SimpleButton btnCancel;
+        private DevExpress.XtraEditors.CheckEdit chkActive;
+        private DevExpress.XtraEditors.CheckEdit chkIsDefault;
+        private DevExpress.XtraEditors.MemoEdit mmoNote;
+        private DevExpress.XtraEditors.TextEdit txtVNName;
+        private DevExpress.XtraEditors.TextEdit txtGroupCode;
+        private DevExpress.XtraLayout.LayoutControlGroup logMain;
+        private DevExpress.XtraLayout.LayoutControlGroup logDetail;
+        private DevExpress.XtraLayout.LayoutControlItem lciGroupCode;
+        private DevExpress.XtraLayout.LayoutControlItem lciVNName;
+        private DevExpress.XtraLayout.LayoutControlItem lciNote;
+        private DevExpress.XtraLayout.LayoutControlItem lciIsDefault;
+        private DevExpress.XtraLayout.LayoutControlItem lciActive;
+        private DevExpress.XtraLayout.EmptySpaceItem esiFirst;
+        private DevExpress.XtraLayout.LayoutControlItem lciButtonCancel;
+        private DevExpress.XtraLayout.LayoutControlItem lciButtonSaveInsert;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
+        private DevExpress.XtraLayout.LayoutControlItem lciGroupID;
+        private DevExpress.XtraEditors.TextEdit txtENName;
+        private DevExpress.XtraLayout.LayoutControlItem lciENName;
+        private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
     }
-
-    #endregion
-
-    private DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider depError;
-    private DevExpress.XtraLayout.LayoutControl locMain;
-    private DevExpress.XtraEditors.TextEdit txtGroupID;
-    private DevExpress.XtraEditors.SimpleButton btnSaveClose;
-    private DevExpress.XtraEditors.SimpleButton btnSaveInsert;
-    private DevExpress.XtraEditors.SimpleButton btnCancel;
-    private DevExpress.XtraEditors.CheckEdit chkActive;
-    private DevExpress.XtraEditors.CheckEdit chkIsDefault;
-    private DevExpress.XtraEditors.MemoEdit mmoNote;
-    private DevExpress.XtraEditors.TextEdit txtVNName;
-    private DevExpress.XtraEditors.TextEdit txtGroupCode;
-    private DevExpress.XtraLayout.LayoutControlGroup logMain;
-    private DevExpress.XtraLayout.LayoutControlGroup logDetail;
-    private DevExpress.XtraLayout.LayoutControlItem lciGroupCode;
-    private DevExpress.XtraLayout.LayoutControlItem lciVNName;
-    private DevExpress.XtraLayout.LayoutControlItem lciNote;
-    private DevExpress.XtraLayout.LayoutControlItem lciIsDefault;
-    private DevExpress.XtraLayout.LayoutControlItem lciActive;
-    private DevExpress.XtraLayout.EmptySpaceItem esiFirst;
-    private DevExpress.XtraLayout.LayoutControlItem lciButtonCancel;
-    private DevExpress.XtraLayout.LayoutControlItem lciButtonSaveInsert;
-    private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
-    private DevExpress.XtraLayout.LayoutControlItem lciGroupID;
-    private DevExpress.XtraEditors.TextEdit txtENName;
-    private DevExpress.XtraLayout.LayoutControlItem lciENName;
-    private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
 }

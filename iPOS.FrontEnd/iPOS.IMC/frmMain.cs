@@ -9,6 +9,7 @@ using DevExpress.XtraBars;
 using LanguageEngine = iPOS.IMC.Helper.LanguageManage;
 using ConfigEngine = iPOS.Core.Helper.ConfigEngine;
 using iPOS.IMC.Helper;
+using iPOS.IMC.Systems;
 
 namespace iPOS.IMC
 {

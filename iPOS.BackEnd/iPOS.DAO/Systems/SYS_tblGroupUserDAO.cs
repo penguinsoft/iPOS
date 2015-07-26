@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Data;
 using iPOS.Core.Helper;
-using iPOS.DTO.System;
+using iPOS.DTO.Systems;
 
-namespace iPOS.DAO.System
+namespace iPOS.DAO.Systems
 {
     public interface ISYS_tblGroupUserDAO
     {
@@ -62,7 +62,7 @@ namespace iPOS.DAO.System
                                 Creater = dr["Creater"] + "",
                                 CreateTime = Convert.ToDateTime(dr["CreateTime"]),
                                 Editer = dr["Editer"] + "",
-                                EditTime = string.IsNullOrEmpty(dr["EditTime"] + "") ? Convert.ToDateTime(dr["EditTime"]) + "" : null
+                                EditTime = (dr["EditTime"] == DBNull.Value) ? (DateTime?)null : (DateTime)dr["EditTime"]
                             });
                     }
                 }
@@ -92,7 +92,8 @@ namespace iPOS.DAO.System
                     {
                         GroupID = dr["GroupID"] + "",
                         GroupCode = dr["GroupCode"] + "",
-                        GroupName = dr["GroupName"] + "",
+                        VNName = dr["VNName"] + "",
+                        ENName = dr["ENName"] + "",
                         Note = dr["Note"] + "",
                         Active = Convert.ToBoolean(dr["Active"]),
                         IsDefault = Convert.ToBoolean(dr["IsDefault"]),
@@ -104,7 +105,7 @@ namespace iPOS.DAO.System
                         Creater = dr["Creater"] + "",
                         CreateTime = Convert.ToDateTime(dr["CreateTime"]),
                         Editer = dr["Editer"] + "",
-                        EditTime = string.IsNullOrEmpty(dr["EditTime"] + "") ? Convert.ToDateTime(dr["EditTime"]) + "" : null
+                        EditTime = (dr["EditTime"] == DBNull.Value) ? (DateTime?)null : (DateTime)dr["EditTime"]
                     };
 
                     return result;

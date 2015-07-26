@@ -16,6 +16,13 @@ namespace iPOS.BUS.Systems
             return await SYS_tblGroupUserDAO.GetAllGroupUsers(url);
         }
 
+        public async static Task<SYS_tblGroupUserDTO> GetGroupUserItem(string username, string language, string group_user_id)
+        {
+            string url = string.Format(@"{0}/GetGroupUserByID?Username={1}&LanguageID={2}&GroupID={3}", GetBaseUrl(), username, language, group_user_id);
+
+            return await SYS_tblGroupUserDAO.GetGroupUserItem(url);
+        }
+
         public async static Task<string> InsertUpdateGroupUser(SYS_tblGroupUserDTO item)
         {
             try
@@ -37,6 +44,21 @@ namespace iPOS.BUS.Systems
                 var json_data = "{\"groupUser\":" + JsonConvert.SerializeObject(postData) + "}";
 
                 return await SYS_tblGroupUserDAO.InsertUpdateGroupUser(url, json_data);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                return ex.Message;
+            }
+        }
+
+        public async static Task<string> DeleteGroupUser(string group_id_list, string group_code_list, string username, string language)
+        {
+            try
+            {
+                string url = string.Format(@"{0}/DeleteGroupUser?Username={1}&LanguageID={2}&GroupUserIDList={3}&GroupUserCodeList={4}", GetBaseUrl(), username, language, group_id_list, group_code_list);
+
+                return await SYS_tblGroupUserDAO.DeleteGroupUser(url);
             }
             catch (Exception ex)
             {

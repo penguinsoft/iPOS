@@ -30,5 +30,14 @@ namespace iPOS.DTO.Systems
                 else return "";
             }
         }
+
+        public string IsDefaultString
+        {
+            get
+            {
+                if (IsDefault) return "X";
+                else return "";
+            }
+        }
     }
 }

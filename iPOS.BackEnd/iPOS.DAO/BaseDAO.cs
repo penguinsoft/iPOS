@@ -1,7 +1,7 @@
 ﻿using System;
 using iPOS.Core.Logger;
 using iPOS.Core.SQLServer;
-using iPOS.DTO.System;
+using iPOS.DTO.Systems;
 
 namespace iPOS.DAO
 {

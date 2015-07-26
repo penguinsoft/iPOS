@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace iPOS.DTO.System
+namespace iPOS.DTO.Systems
 {
     public class SYS_tblGroupUserDTO
     {
@@ -36,6 +36,6 @@ namespace iPOS.DTO.System
 
         public string Editer { get; set; }
 
-        public object EditTime { get; set; }
+        public System.Nullable<DateTime> EditTime { get; set; }
     }
 }
