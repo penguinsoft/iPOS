@@ -4,7 +4,7 @@ namespace iPOS.DTO.Systems
 {
     public class SYS_tblGroupUserDTO
     {
-        public string GroupID { get; set; }
+        public Int32 GroupID { get; set; }
 
         public string GroupCode { get; set; }
 

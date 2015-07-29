@@ -262,6 +262,41 @@ namespace iPOS.WCFService
 
             return result;
         }
+
+        public SYS_tblUserDRO GetAllUsers(string Username, string LanguageID)
+        {
+            SYS_tblUserDRO result = new SYS_tblUserDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    List<SYS_tblUserDTO> temp = new List<SYS_tblUserDTO>();
+                    var db = scope.Resolve<ISYS_tblUserDAO>();
+                    temp = db.LoadAllData(Username, LanguageID);
+                    if (temp != null)
+                    {
+                        result.UserList = Mapper.Map<List<SYS_tblUserDCO>>(temp);
+                        result.Result = true;
+                        result.Status = DCO.ResponseStatus.Success;
+                        result.Message = "Load data success!";
+                        result.Username = Username;
+                        result.TotalItemCount = temp.Count;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.UserList = Mapper.Map<List<SYS_tblUserDCO>>(new List<SYS_tblUserDTO>());
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Load data failed: " + ex.Message;
+                result.Username = Username;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
+            }
+
+            return result;
+        }
         #endregion
 
         #region [PRO_tblProvince]

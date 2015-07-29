@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace iPOS.DCO.Systems
@@ -13,25 +14,25 @@ namespace iPOS.DCO.Systems
         public string Password { get; set; }
 
         [DataMember]
-        public string GroupID { get; set; }
+        public Int32 GroupID { get; set; }
 
         [DataMember]
         public DateTime EffectiveDate { get; set; }
 
         [DataMember]
-        public object ToDate { get; set; }
+        public System.Nullable<DateTime> ToDate { get; set; }
 
         [DataMember]
-        public object DateChangePass { get; set; }
+        public System.Nullable<DateTime> DateChangePass { get; set; }
 
         [DataMember]
         public bool Locked { get; set; }
 
         [DataMember]
-        public object LockDate { get; set; }
+        public System.Nullable<DateTime> LockDate { get; set; }
 
         [DataMember]
-        public object UnlockDate { get; set; }
+        public System.Nullable<DateTime> UnlockDate { get; set; }
 
         [DataMember]
         public bool PassNeverExpired { get; set; }
@@ -79,7 +80,7 @@ namespace iPOS.DCO.Systems
         public string Editer { get; set; }
 
         [DataMember]
-        public object EditTime { get; set; }
+        public System.Nullable<DateTime> EditTime { get; set; }
 
         [DataMember]
         public string GroupName { get; set; }
@@ -88,6 +89,9 @@ namespace iPOS.DCO.Systems
     [DataContract]
     public class SYS_tblUserDRO : BaseDRO
     {
+        [DataMember]
+        public List<SYS_tblUserDCO> UserList { get; set; }
+
         [DataMember]
         public SYS_tblUserDCO UserItem { get; set; }
     }

@@ -8,19 +8,19 @@ namespace iPOS.DTO.Systems
 
         public string Password { get; set; }
 
-        public string GroupID { get; set; }
+        public Int32 GroupID { get; set; }
 
         public DateTime EffectiveDate { get; set; }
 
-        public object ToDate { get; set; }
+        public System.Nullable<DateTime> ToDate { get; set; }
 
-        public object DateChangePass { get; set; }
+        public System.Nullable<DateTime> DateChangePass { get; set; }
 
         public bool Locked { get; set; }
 
-        public object LockDate { get; set; }
+        public System.Nullable<DateTime> LockDate { get; set; }
 
-        public object UnlockDate { get; set; }
+        public System.Nullable<DateTime> UnlockDate { get; set; }
 
         public bool PassNeverExpired { get; set; }
 
@@ -52,7 +52,7 @@ namespace iPOS.DTO.Systems
 
         public string Editer { get; set; }
 
-        public object EditTime { get; set; }
+        public System.Nullable<DateTime> EditTime { get; set; }
 
         public string GroupName { get; set; }
     }

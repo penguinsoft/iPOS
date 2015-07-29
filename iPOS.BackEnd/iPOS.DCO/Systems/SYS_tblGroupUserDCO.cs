@@ -8,7 +8,7 @@ namespace iPOS.DCO.Systems
     public class SYS_tblGroupUserDCO
     {
         [DataMember]
-        public string GroupID { get; set; }
+        public Int32 GroupID { get; set; }
 
         [DataMember]
         public string GroupCode { get; set; }

@@ -45,25 +45,7 @@ namespace iPOS.DAO.Systems
                     DataTable data = db.GetDataTable("SYS_spfrmGroupUser", new string[] { "Activity", "Username", "LanguageID" }, new object[] { BaseConstant.COMMAND_LOAD_ALL_DATA_EN, username, language_id });
                     if (data != null && data.Rows.Count > 0)
                     {
-                        foreach (DataRow dr in data.Rows)
-                            result.Add(new SYS_tblGroupUserDTO
-                            {
-                                GroupID = dr["GroupID"] + "",
-                                GroupCode = dr["GroupCode"] + "",
-                                GroupName = dr["GroupName"] + "",
-                                Note = dr["Note"] + "",
-                                Active = Convert.ToBoolean(dr["Active"]),
-                                IsDefault = Convert.ToBoolean(dr["IsDefault"]),
-                                IsRoot = Convert.ToBoolean(dr["IsRoot"]),
-                                Activity = BaseConstant.COMMAND_LOAD_ALL_DATA_EN,
-                                Username = username,
-                                LanguageID = language_id,
-                                Visible = Convert.ToBoolean(dr["Visible"]),
-                                Creater = dr["Creater"] + "",
-                                CreateTime = Convert.ToDateTime(dr["CreateTime"]),
-                                Editer = dr["Editer"] + "",
-                                EditTime = (dr["EditTime"] == DBNull.Value) ? (DateTime?)null : (DateTime)dr["EditTime"]
-                            });
+                        result = ConvertEngine.ConvertDataTableToObjectList<SYS_tblGroupUserDTO>(data);
                     }
                 }
                 else
@@ -90,7 +72,7 @@ namespace iPOS.DAO.Systems
                 {
                     result = new SYS_tblGroupUserDTO
                     {
-                        GroupID = dr["GroupID"] + "",
+                        GroupID = Convert.ToInt32(dr["GroupID"]),
                         GroupCode = dr["GroupCode"] + "",
                         VNName = dr["VNName"] + "",
                         ENName = dr["ENName"] + "",
