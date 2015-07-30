@@ -1,5 +1,4 @@
 DevExpress.XtraEditors.TextEdit, DevExpress.XtraEditors.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a
-DevExpressReg.LicensePatcher, DevExpressReg, Version=12.2.0.1, Culture=neutral, PublicKeyToken=d6ff4ebaea2d8ac4
 DevExpress.XtraEditors.DateEdit, DevExpress.XtraEditors.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a
 DevExpress.XtraEditors.Repository.RepositoryItemTextEdit, DevExpress.XtraEditors.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a
 DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a
@@ -16,3 +15,4 @@ DevExpress.XtraWizard.WizardControl, DevExpress.XtraWizard.v12.2, Version=12.2.8
 DevExpress.XtraGrid.GridControl, DevExpress.XtraGrid.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a
 DevExpress.XtraTreeList.TreeList, DevExpress.XtraTreeList.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a
 DevExpress.XtraEditors.Repository.RepositoryItemComboBox, DevExpress.XtraEditors.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a
+DevExpressReg.LicensePatcher, DevExpressReg, Version=12.2.0.1, Culture=neutral, PublicKeyToken=d6ff4ebaea2d8ac4

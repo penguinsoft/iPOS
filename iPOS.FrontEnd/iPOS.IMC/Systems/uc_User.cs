@@ -16,7 +16,6 @@ public partial class uc_User : DevExpress.XtraEditors.XtraUserControl
 
     public void Message(string language)
     {
-        MessageBox.Show("Hell Demons: " + simpleButton1.Name + " : " + language);
-        iPOS.IMC.Helper.LanguageManage.ChangeCaptionSimpleButton(this.Name, language, simpleButton1);
+        
     }
 }
