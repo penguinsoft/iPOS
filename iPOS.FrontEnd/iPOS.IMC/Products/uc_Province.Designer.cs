@@ -1,31 +1,33 @@
-﻿partial class uc_User
+﻿namespace iPOS.IMC.Products
 {
-    /// <summary> 
-    /// Required designer variable.
-    /// </summary>
-    private System.ComponentModel.IContainer components = null;
-
-    /// <summary> 
-    /// Clean up any resources being used.
-    /// </summary>
-    /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-    protected override void Dispose(bool disposing)
+    partial class uc_Province
     {
-        if (disposing && (components != null))
+        /// <summary> 
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
         {
-            components.Dispose();
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
         }
-        base.Dispose(disposing);
-    }
 
-    #region Component Designer generated code
+        #region Component Designer generated code
 
-    /// <summary> 
-    /// Required method for Designer support - do not modify 
-    /// the contents of this method with the code editor.
-    /// </summary>
-    private void InitializeComponent()
-    {
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             this.components = new System.ComponentModel.Container();
             this.gcolEditTime = new DevExpress.XtraGrid.Columns.GridColumn();
             this.lblEditTimeValue = new DevExpress.XtraBars.BarStaticItem();
@@ -33,16 +35,17 @@
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
-            this.grvUser = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.gcolUsername = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gcolGroupName = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.grvProvince = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gcolProvinceCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gcolProvinceName = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolNote = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gcolEffectiveDate = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gcolEmail = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gcolRank = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gcolActiveString = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolCreater = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolCreateTime = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolEditer = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridUser = new DevExpress.XtraGrid.GridControl();
+            this.gcolGroupID = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridProvince = new DevExpress.XtraGrid.GridControl();
             this.barMain = new DevExpress.XtraBars.BarManager(this.components);
             this.barTop = new DevExpress.XtraBars.Bar();
             this.btnInsert = new DevExpress.XtraBars.BarLargeButtonItem();
@@ -61,10 +64,8 @@
             this.lblEditer = new DevExpress.XtraBars.BarStaticItem();
             this.lblEditerValue = new DevExpress.XtraBars.BarStaticItem();
             this.lblEditTime = new DevExpress.XtraBars.BarStaticItem();
-            this.gcolFullName = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gcolEmpCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.grvUser)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridUser)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grvProvince)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridProvince)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barMain)).BeginInit();
             this.SuspendLayout();
             // 
@@ -87,69 +88,68 @@
             this.barDockControlLeft.CausesValidation = false;
             this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.barDockControlLeft.Location = new System.Drawing.Point(0, 42);
-            this.barDockControlLeft.Size = new System.Drawing.Size(0, 416);
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 506);
             // 
             // barDockControlRight
             // 
             this.barDockControlRight.CausesValidation = false;
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControlRight.Location = new System.Drawing.Point(933, 42);
-            this.barDockControlRight.Size = new System.Drawing.Size(0, 416);
+            this.barDockControlRight.Location = new System.Drawing.Point(932, 42);
+            this.barDockControlRight.Size = new System.Drawing.Size(0, 506);
             // 
             // barDockControlBottom
             // 
             this.barDockControlBottom.CausesValidation = false;
             this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.barDockControlBottom.Location = new System.Drawing.Point(0, 458);
-            this.barDockControlBottom.Size = new System.Drawing.Size(933, 25);
+            this.barDockControlBottom.Location = new System.Drawing.Point(0, 548);
+            this.barDockControlBottom.Size = new System.Drawing.Size(932, 25);
             // 
             // barDockControlTop
             // 
             this.barDockControlTop.CausesValidation = false;
             this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
-            this.barDockControlTop.Size = new System.Drawing.Size(933, 42);
+            this.barDockControlTop.Size = new System.Drawing.Size(932, 42);
             // 
-            // grvUser
+            // grvProvince
             // 
-            this.grvUser.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
-            this.gcolUsername,
-            this.gcolGroupName,
-            this.gcolFullName,
-            this.gcolEmpCode,
-            this.gcolEffectiveDate,
-            this.gcolEmail,
+            this.grvProvince.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gcolProvinceCode,
+            this.gcolProvinceName,
+            this.gcolRank,
+            this.gcolActiveString,
             this.gcolNote,
             this.gcolCreater,
             this.gcolCreateTime,
             this.gcolEditer,
-            this.gcolEditTime});
-            this.grvUser.GridControl = this.gridUser;
-            this.grvUser.IndicatorWidth = 40;
-            this.grvUser.Name = "grvUser";
-            this.grvUser.OptionsBehavior.Editable = false;
-            this.grvUser.OptionsSelection.MultiSelect = true;
-            this.grvUser.OptionsView.ShowAutoFilterRow = true;
+            this.gcolEditTime,
+            this.gcolGroupID});
+            this.grvProvince.GridControl = this.gridProvince;
+            this.grvProvince.IndicatorWidth = 40;
+            this.grvProvince.Name = "grvProvince";
+            this.grvProvince.OptionsBehavior.Editable = false;
+            this.grvProvince.OptionsSelection.MultiSelect = true;
+            this.grvProvince.OptionsView.ShowAutoFilterRow = true;
             // 
-            // gcolUsername
+            // gcolProvinceCode
             // 
-            this.gcolUsername.Caption = "Tên người dùng";
-            this.gcolUsername.FieldName = "Username";
-            this.gcolUsername.Name = "gcolUsername";
-            this.gcolUsername.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
-            this.gcolUsername.Visible = true;
-            this.gcolUsername.VisibleIndex = 0;
-            this.gcolUsername.Width = 127;
+            this.gcolProvinceCode.Caption = "Mã tỉnh thành";
+            this.gcolProvinceCode.FieldName = "ProvinceCode";
+            this.gcolProvinceCode.Name = "gcolProvinceCode";
+            this.gcolProvinceCode.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gcolProvinceCode.Visible = true;
+            this.gcolProvinceCode.VisibleIndex = 0;
+            this.gcolProvinceCode.Width = 136;
             // 
-            // gcolGroupName
+            // gcolProvinceName
             // 
-            this.gcolGroupName.Caption = "Nhóm người dùng";
-            this.gcolGroupName.FieldName = "GroupName";
-            this.gcolGroupName.Name = "gcolGroupName";
-            this.gcolGroupName.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
-            this.gcolGroupName.Visible = true;
-            this.gcolGroupName.VisibleIndex = 1;
-            this.gcolGroupName.Width = 142;
+            this.gcolProvinceName.Caption = "Tên tỉnh thành";
+            this.gcolProvinceName.FieldName = "ProvinceName";
+            this.gcolProvinceName.Name = "gcolProvinceName";
+            this.gcolProvinceName.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gcolProvinceName.Visible = true;
+            this.gcolProvinceName.VisibleIndex = 1;
+            this.gcolProvinceName.Width = 301;
             // 
             // gcolNote
             // 
@@ -158,31 +158,32 @@
             this.gcolNote.Name = "gcolNote";
             this.gcolNote.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolNote.Visible = true;
-            this.gcolNote.VisibleIndex = 6;
-            this.gcolNote.Width = 346;
+            this.gcolNote.VisibleIndex = 4;
+            this.gcolNote.Width = 310;
             // 
-            // gcolEffectiveDate
+            // gcolRank
             // 
-            this.gcolEffectiveDate.AppearanceCell.Options.UseTextOptions = true;
-            this.gcolEffectiveDate.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.gcolEffectiveDate.Caption = "Ngày hiệu lực";
-            this.gcolEffectiveDate.FieldName = "EffectiveDate";
-            this.gcolEffectiveDate.Name = "gcolEffectiveDate";
-            this.gcolEffectiveDate.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
-            this.gcolEffectiveDate.Visible = true;
-            this.gcolEffectiveDate.VisibleIndex = 4;
-            this.gcolEffectiveDate.Width = 86;
+            this.gcolRank.AppearanceCell.Options.UseTextOptions = true;
+            this.gcolRank.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            this.gcolRank.Caption = "Thứ tự";
+            this.gcolRank.FieldName = "Rank";
+            this.gcolRank.Name = "gcolRank";
+            this.gcolRank.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gcolRank.Visible = true;
+            this.gcolRank.VisibleIndex = 2;
+            this.gcolRank.Width = 73;
             // 
-            // gcolEmail
+            // gcolActiveString
             // 
-            this.gcolEmail.AppearanceCell.Options.UseTextOptions = true;
-            this.gcolEmail.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.gcolEmail.Caption = "Email";
-            this.gcolEmail.FieldName = "Email";
-            this.gcolEmail.Name = "gcolEmail";
-            this.gcolEmail.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
-            this.gcolEmail.Visible = true;
-            this.gcolEmail.VisibleIndex = 5;
+            this.gcolActiveString.AppearanceCell.Options.UseTextOptions = true;
+            this.gcolActiveString.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.gcolActiveString.Caption = "Kích hoạt?";
+            this.gcolActiveString.FieldName = "ActiveString";
+            this.gcolActiveString.Name = "gcolActiveString";
+            this.gcolActiveString.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gcolActiveString.Visible = true;
+            this.gcolActiveString.VisibleIndex = 3;
+            this.gcolActiveString.Width = 70;
             // 
             // gcolCreater
             // 
@@ -202,24 +203,30 @@
             this.gcolEditer.FieldName = "Editer";
             this.gcolEditer.Name = "gcolEditer";
             // 
-            // gridUser
+            // gcolGroupID
             // 
-            this.gridUser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridUser.EmbeddedNavigator.Buttons.Append.Visible = false;
-            this.gridUser.EmbeddedNavigator.Buttons.CancelEdit.Visible = false;
-            this.gridUser.EmbeddedNavigator.Buttons.Edit.Visible = false;
-            this.gridUser.EmbeddedNavigator.Buttons.EndEdit.Visible = false;
-            this.gridUser.EmbeddedNavigator.Buttons.Remove.Visible = false;
-            this.gridUser.EmbeddedNavigator.TextStringFormat = "{0}/{1}";
-            this.gridUser.Location = new System.Drawing.Point(0, 42);
-            this.gridUser.MainView = this.grvUser;
-            this.gridUser.MenuManager = this.barMain;
-            this.gridUser.Name = "gridUser";
-            this.gridUser.Size = new System.Drawing.Size(933, 416);
-            this.gridUser.TabIndex = 5;
-            this.gridUser.UseEmbeddedNavigator = true;
-            this.gridUser.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.grvUser});
+            this.gcolGroupID.Caption = "GroupID";
+            this.gcolGroupID.FieldName = "GroupID";
+            this.gcolGroupID.Name = "gcolGroupID";
+            // 
+            // gridProvince
+            // 
+            this.gridProvince.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridProvince.EmbeddedNavigator.Buttons.Append.Visible = false;
+            this.gridProvince.EmbeddedNavigator.Buttons.CancelEdit.Visible = false;
+            this.gridProvince.EmbeddedNavigator.Buttons.Edit.Visible = false;
+            this.gridProvince.EmbeddedNavigator.Buttons.EndEdit.Visible = false;
+            this.gridProvince.EmbeddedNavigator.Buttons.Remove.Visible = false;
+            this.gridProvince.EmbeddedNavigator.TextStringFormat = "{0}/{1}";
+            this.gridProvince.Location = new System.Drawing.Point(0, 42);
+            this.gridProvince.MainView = this.grvProvince;
+            this.gridProvince.MenuManager = this.barMain;
+            this.gridProvince.Name = "gridProvince";
+            this.gridProvince.Size = new System.Drawing.Size(932, 506);
+            this.gridProvince.TabIndex = 5;
+            this.gridProvince.UseEmbeddedNavigator = true;
+            this.gridProvince.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.grvProvince});
             // 
             // barMain
             // 
@@ -409,79 +416,60 @@
             this.lblEditTime.Name = "lblEditTime";
             this.lblEditTime.TextAlignment = System.Drawing.StringAlignment.Near;
             // 
-            // gcolFullName
-            // 
-            this.gcolFullName.Caption = "Họ và tên";
-            this.gcolFullName.FieldName = "FullName";
-            this.gcolFullName.Name = "gcolFullName";
-            this.gcolFullName.Visible = true;
-            this.gcolFullName.VisibleIndex = 2;
-            this.gcolFullName.Width = 61;
-            // 
-            // gcolEmpCode
-            // 
-            this.gcolEmpCode.Caption = "Mã nhân viên";
-            this.gcolEmpCode.FieldName = "EmpCode";
-            this.gcolEmpCode.Name = "gcolEmpCode";
-            this.gcolEmpCode.Visible = true;
-            this.gcolEmpCode.VisibleIndex = 3;
-            this.gcolEmpCode.Width = 61;
-            // 
-            // uc_User
+            // uc_Province
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.gridUser);
+            this.Controls.Add(this.gridProvince);
             this.Controls.Add(this.barDockControlLeft);
             this.Controls.Add(this.barDockControlRight);
             this.Controls.Add(this.barDockControlBottom);
             this.Controls.Add(this.barDockControlTop);
-            this.Name = "uc_User";
-            this.Size = new System.Drawing.Size(933, 483);
-            ((System.ComponentModel.ISupportInitialize)(this.grvUser)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridUser)).EndInit();
+            this.Name = "uc_Province";
+            this.Size = new System.Drawing.Size(932, 573);
+            ((System.ComponentModel.ISupportInitialize)(this.grvProvince)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridProvince)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barMain)).EndInit();
             this.ResumeLayout(false);
 
+        }
+
+        #endregion
+
+        private DevExpress.XtraGrid.Columns.GridColumn gcolEditTime;
+        private DevExpress.XtraBars.BarStaticItem lblEditTimeValue;
+        private DevExpress.XtraBars.BarDockControl barDockControlLeft;
+        private DevExpress.XtraBars.BarDockControl barDockControlRight;
+        private DevExpress.XtraBars.BarDockControl barDockControlBottom;
+        private DevExpress.XtraBars.BarDockControl barDockControlTop;
+        private DevExpress.XtraGrid.Views.Grid.GridView grvProvince;
+        private DevExpress.XtraGrid.Columns.GridColumn gcolProvinceCode;
+        private DevExpress.XtraGrid.Columns.GridColumn gcolProvinceName;
+        private DevExpress.XtraGrid.Columns.GridColumn gcolNote;
+        private DevExpress.XtraGrid.Columns.GridColumn gcolRank;
+        private DevExpress.XtraGrid.Columns.GridColumn gcolActiveString;
+        private DevExpress.XtraGrid.Columns.GridColumn gcolCreater;
+        private DevExpress.XtraGrid.Columns.GridColumn gcolCreateTime;
+        private DevExpress.XtraGrid.Columns.GridColumn gcolEditer;
+        private DevExpress.XtraGrid.Columns.GridColumn gcolGroupID;
+        private DevExpress.XtraGrid.GridControl gridProvince;
+        private DevExpress.XtraBars.BarManager barMain;
+        private DevExpress.XtraBars.Bar barTop;
+        private DevExpress.XtraBars.BarLargeButtonItem btnInsert;
+        private DevExpress.XtraBars.BarLargeButtonItem btnUpdate;
+        private DevExpress.XtraBars.BarLargeButtonItem btnDelete;
+        private DevExpress.XtraBars.BarLargeButtonItem btnPrint;
+        private DevExpress.XtraBars.BarLargeButtonItem btnReload;
+        private DevExpress.XtraBars.BarLargeButtonItem btnImport;
+        private DevExpress.XtraBars.BarLargeButtonItem btnExport;
+        private DevExpress.XtraBars.BarLargeButtonItem btnClose;
+        private DevExpress.XtraBars.Bar barBottom;
+        private DevExpress.XtraBars.BarStaticItem lblCreater;
+        private DevExpress.XtraBars.BarStaticItem lblCreaterValue;
+        private DevExpress.XtraBars.BarStaticItem lblCreateTime;
+        private DevExpress.XtraBars.BarStaticItem lblCreateTimeValue;
+        private DevExpress.XtraBars.BarStaticItem lblEditer;
+        private DevExpress.XtraBars.BarStaticItem lblEditerValue;
+        private DevExpress.XtraBars.BarStaticItem lblEditTime;
     }
-
-    #endregion
-
-    private DevExpress.XtraGrid.Columns.GridColumn gcolEditTime;
-    private DevExpress.XtraBars.BarStaticItem lblEditTimeValue;
-    private DevExpress.XtraBars.BarDockControl barDockControlLeft;
-    private DevExpress.XtraBars.BarDockControl barDockControlRight;
-    private DevExpress.XtraBars.BarDockControl barDockControlBottom;
-    private DevExpress.XtraBars.BarDockControl barDockControlTop;
-    private DevExpress.XtraGrid.Views.Grid.GridView grvUser;
-    private DevExpress.XtraGrid.Columns.GridColumn gcolUsername;
-    private DevExpress.XtraGrid.Columns.GridColumn gcolGroupName;
-    private DevExpress.XtraGrid.Columns.GridColumn gcolNote;
-    private DevExpress.XtraGrid.Columns.GridColumn gcolEffectiveDate;
-    private DevExpress.XtraGrid.Columns.GridColumn gcolEmail;
-    private DevExpress.XtraGrid.Columns.GridColumn gcolCreater;
-    private DevExpress.XtraGrid.Columns.GridColumn gcolCreateTime;
-    private DevExpress.XtraGrid.Columns.GridColumn gcolEditer;
-    private DevExpress.XtraGrid.GridControl gridUser;
-    private DevExpress.XtraBars.BarManager barMain;
-    private DevExpress.XtraBars.Bar barTop;
-    private DevExpress.XtraBars.BarLargeButtonItem btnInsert;
-    private DevExpress.XtraBars.BarLargeButtonItem btnUpdate;
-    private DevExpress.XtraBars.BarLargeButtonItem btnDelete;
-    private DevExpress.XtraBars.BarLargeButtonItem btnPrint;
-    private DevExpress.XtraBars.BarLargeButtonItem btnReload;
-    private DevExpress.XtraBars.BarLargeButtonItem btnImport;
-    private DevExpress.XtraBars.BarLargeButtonItem btnExport;
-    private DevExpress.XtraBars.BarLargeButtonItem btnClose;
-    private DevExpress.XtraBars.Bar barBottom;
-    private DevExpress.XtraBars.BarStaticItem lblCreater;
-    private DevExpress.XtraBars.BarStaticItem lblCreaterValue;
-    private DevExpress.XtraBars.BarStaticItem lblCreateTime;
-    private DevExpress.XtraBars.BarStaticItem lblCreateTimeValue;
-    private DevExpress.XtraBars.BarStaticItem lblEditer;
-    private DevExpress.XtraBars.BarStaticItem lblEditerValue;
-    private DevExpress.XtraBars.BarStaticItem lblEditTime;
-    private DevExpress.XtraGrid.Columns.GridColumn gcolFullName;
-    private DevExpress.XtraGrid.Columns.GridColumn gcolEmpCode;
-
 }

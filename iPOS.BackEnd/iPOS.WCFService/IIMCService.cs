@@ -42,7 +42,12 @@ namespace iPOS.WCFService
         [OperationContract]
         [WebInvoke(Method = "GET", UriTemplate = "/GetAllUsers?Username={Username}&LanguageID={LanguageID}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        SYS_tblUserDRO GetAllUsers(string Username, string LanguageID); 
+        SYS_tblUserDRO GetAllUsers(string Username, string LanguageID);
+
+        [OperationContract]
+        [WebInvoke(Method = "GET", UriTemplate = "/GetUserByID?Username={Username}&LanguageID={LanguageID}&UsernameOther={UsernameOther}",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        SYS_tblUserDRO GetUserByID(string Username, string LanguageID, string UsernameOther);
         #endregion
 
         [OperationContract]
