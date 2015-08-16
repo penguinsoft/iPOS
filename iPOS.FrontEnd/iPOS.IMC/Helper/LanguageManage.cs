@@ -12,6 +12,7 @@ using System.Linq;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraLayout;
+using DevExpress.XtraWizard;
 
 namespace iPOS.IMC.Helper
 {
@@ -213,6 +214,32 @@ namespace iPOS.IMC.Helper
         {
             foreach (LayoutControlItem layout_control_item in layout_control_items)
                 ChangeCaptionLayoutControlItem(parent_name, language, layout_control_item);
+        }
+
+        public static void ChangeCaptionButtonWizardControl(string parent_name, string language, WizardControl wizard_control)
+        {
+            string result = CaptionEngine.GetControlCaption(parent_name, wizard_control.Name, BaseConstant.WIZARD_CONTROL, language);
+            wizard_control.Text = CaptionEngine.GetControlCaption(parent_name, wizard_control.Name, BaseConstant.CONTROL_TEXT, language);
+            try
+            {
+                string[] arr = result.Split('|');
+                wizard_control.NextText = arr[0] + ">";
+                wizard_control.CancelText = arr[1];
+                wizard_control.FinishText = arr[2];
+                wizard_control.PreviousText = "<" + arr[3];
+            }
+            catch 
+            {
+                wizard_control.NextText = "Next >";
+                wizard_control.CancelText = "Cancel";
+                wizard_control.FinishText = "Finish";
+                wizard_control.PreviousText = "< Back";
+            }
+        }
+
+        public static void ChangeCaptionWelcomeWizardPage(string parent_name, string language, WelcomeWizardPage welcome_page)
+        {
+            welcome_page.Text = CaptionEngine.GetControlCaption(parent_name, welcome_page.Name, BaseConstant.CONTROL_TEXT, language);
         }
     }
 }

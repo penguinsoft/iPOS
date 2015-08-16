@@ -137,7 +137,7 @@ namespace iPOS.IMC.Systems
 
         private void btnImport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            
+            CommonEngine.OpenImportExcelForm("", "", "", "");
         }
 
         private void btnExport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)

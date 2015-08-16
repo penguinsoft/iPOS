@@ -70,6 +70,27 @@ namespace iPOS.Core.Helper
                                 }
                             }
                             return result;
+                        case BaseConstant.WIZARD_CONTROL:
+                            result = "";
+                            var wizard_buttons = (from controls in parents.controls
+                                                  where controls.name.Value.ToLower().Equals(string.Format("{0}_{1}", parent_name, control_name).ToLower())
+                                                  select new
+                                                  {
+                                                      items = (from item in controls.items.Descendants("item")
+                                                               select new
+                                                               {
+                                                                   type = item.Attribute("type").Value,
+                                                                   text = item.Element("text")
+                                                               }).ToList()
+                                                  }).First();
+                            if (wizard_buttons != null)
+                            {
+                                if (wizard_buttons.items != null && wizard_buttons.items.Count > 0)
+                                {
+                                    result = string.Format("{0}|{1}|{2}|{3}", wizard_buttons.items[0].text.Element(language).Value, wizard_buttons.items[1].text.Element(language).Value, wizard_buttons.items[2].text.Element(language).Value, wizard_buttons.items[3].text.Element(language).Value);
+                                }
+                            }
+                            return result;
                     }
                 }
                 return "";

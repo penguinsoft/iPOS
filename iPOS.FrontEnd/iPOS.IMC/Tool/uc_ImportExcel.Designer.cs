@@ -40,19 +40,19 @@
             this.gcolSelectedFileSize = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolSelectedNote = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolSeletedFilePath = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
-            this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
-            this.buttonEdit1 = new DevExpress.XtraEditors.ButtonEdit();
+            this.btnCheckValid = new DevExpress.XtraEditors.SimpleButton();
+            this.btnDownloadTemplate = new DevExpress.XtraEditors.SimpleButton();
+            this.btnBrowseFile = new DevExpress.XtraEditors.ButtonEdit();
             this.logStepOne = new DevExpress.XtraLayout.LayoutControlGroup();
-            this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.lciBrowseFile = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
             this.logSelectedFiles = new DevExpress.XtraLayout.LayoutControlGroup();
             this.lciSelectedFiles = new DevExpress.XtraLayout.LayoutControlItem();
             this.wwpStepTwo = new DevExpress.XtraWizard.WizardPage();
             this.locStepTwo = new DevExpress.XtraLayout.LayoutControl();
-            this.simpleButton4 = new DevExpress.XtraEditors.SimpleButton();
-            this.simpleButton3 = new DevExpress.XtraEditors.SimpleButton();
+            this.btnImportAllFiles = new DevExpress.XtraEditors.SimpleButton();
+            this.btnImportSelectedFile = new DevExpress.XtraEditors.SimpleButton();
             this.gridLookUpEdit1 = new DevExpress.XtraEditors.GridLookUpEdit();
             this.gridLookUpEdit1View = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gridControl1 = new DevExpress.XtraGrid.GridControl();
@@ -60,7 +60,7 @@
             this.logStepTwo = new DevExpress.XtraLayout.LayoutControlGroup();
             this.logGridMainData = new DevExpress.XtraLayout.LayoutControlGroup();
             this.lciGridMainData = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.lciFileList = new DevExpress.XtraLayout.LayoutControlItem();
             this.lciButtonImportFile = new DevExpress.XtraLayout.LayoutControlItem();
             this.lciButtonImportAllFile = new DevExpress.XtraLayout.LayoutControlItem();
             this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
@@ -82,9 +82,9 @@
             this.locStepOne.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridSeletedFiles)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grvSeletedFiles)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.buttonEdit1.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnBrowseFile.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.logStepOne)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lciBrowseFile)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.logSelectedFiles)).BeginInit();
@@ -99,7 +99,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.logStepTwo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.logGridMainData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciGridMainData)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lciFileList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciButtonImportFile)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciButtonImportAllFile)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
@@ -134,9 +134,9 @@
             // locStepOne
             // 
             this.locStepOne.Controls.Add(this.gridSeletedFiles);
-            this.locStepOne.Controls.Add(this.simpleButton2);
-            this.locStepOne.Controls.Add(this.simpleButton1);
-            this.locStepOne.Controls.Add(this.buttonEdit1);
+            this.locStepOne.Controls.Add(this.btnCheckValid);
+            this.locStepOne.Controls.Add(this.btnDownloadTemplate);
+            this.locStepOne.Controls.Add(this.btnBrowseFile);
             this.locStepOne.Dock = System.Windows.Forms.DockStyle.Fill;
             this.locStepOne.Location = new System.Drawing.Point(0, 0);
             this.locStepOne.Name = "locStepOne";
@@ -147,10 +147,10 @@
             // 
             // gridSeletedFiles
             // 
-            this.gridSeletedFiles.Location = new System.Drawing.Point(108, 75);
+            this.gridSeletedFiles.Location = new System.Drawing.Point(15, 66);
             this.gridSeletedFiles.MainView = this.grvSeletedFiles;
             this.gridSeletedFiles.Name = "gridSeletedFiles";
-            this.gridSeletedFiles.Size = new System.Drawing.Size(702, 246);
+            this.gridSeletedFiles.Size = new System.Drawing.Size(804, 264);
             this.gridSeletedFiles.TabIndex = 7;
             this.gridSeletedFiles.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.grvSeletedFiles});
@@ -215,36 +215,36 @@
             this.gcolSeletedFilePath.VisibleIndex = 4;
             this.gcolSeletedFilePath.Width = 600;
             // 
-            // simpleButton2
+            // btnCheckValid
             // 
-            this.simpleButton2.Image = global::iPOS.IMC.Properties.Resources.check_16;
-            this.simpleButton2.Location = new System.Drawing.Point(729, 15);
-            this.simpleButton2.Name = "simpleButton2";
-            this.simpleButton2.Size = new System.Drawing.Size(90, 22);
-            this.simpleButton2.StyleController = this.locStepOne;
-            this.simpleButton2.TabIndex = 6;
-            this.simpleButton2.Text = "Kiểm Tra";
+            this.btnCheckValid.Image = global::iPOS.IMC.Properties.Resources.check_16;
+            this.btnCheckValid.Location = new System.Drawing.Point(729, 15);
+            this.btnCheckValid.Name = "btnCheckValid";
+            this.btnCheckValid.Size = new System.Drawing.Size(90, 22);
+            this.btnCheckValid.StyleController = this.locStepOne;
+            this.btnCheckValid.TabIndex = 6;
+            this.btnCheckValid.Text = "Kiểm Tra";
             // 
-            // simpleButton1
+            // btnDownloadTemplate
             // 
-            this.simpleButton1.Image = global::iPOS.IMC.Properties.Resources.download_file_16;
-            this.simpleButton1.Location = new System.Drawing.Point(590, 15);
-            this.simpleButton1.Name = "simpleButton1";
-            this.simpleButton1.Size = new System.Drawing.Size(129, 22);
-            this.simpleButton1.StyleController = this.locStepOne;
-            this.simpleButton1.TabIndex = 5;
-            this.simpleButton1.Text = "Tải Xuống Mẫu";
+            this.btnDownloadTemplate.Image = global::iPOS.IMC.Properties.Resources.download_file_16;
+            this.btnDownloadTemplate.Location = new System.Drawing.Point(590, 15);
+            this.btnDownloadTemplate.Name = "btnDownloadTemplate";
+            this.btnDownloadTemplate.Size = new System.Drawing.Size(129, 22);
+            this.btnDownloadTemplate.StyleController = this.locStepOne;
+            this.btnDownloadTemplate.TabIndex = 5;
+            this.btnDownloadTemplate.Text = "Tải Xuống Mẫu";
             // 
-            // buttonEdit1
+            // btnBrowseFile
             // 
-            this.buttonEdit1.Location = new System.Drawing.Point(99, 15);
-            this.buttonEdit1.Name = "buttonEdit1";
-            this.buttonEdit1.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            this.btnBrowseFile.Location = new System.Drawing.Point(99, 15);
+            this.btnBrowseFile.Name = "btnBrowseFile";
+            this.btnBrowseFile.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, global::iPOS.IMC.Properties.Resources.browse_16, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "", null, null, true),
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, global::iPOS.IMC.Properties.Resources.import_file_16, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "", null, null, true)});
-            this.buttonEdit1.Size = new System.Drawing.Size(481, 22);
-            this.buttonEdit1.StyleController = this.locStepOne;
-            this.buttonEdit1.TabIndex = 4;
+            this.btnBrowseFile.Size = new System.Drawing.Size(481, 22);
+            this.btnBrowseFile.StyleController = this.locStepOne;
+            this.btnBrowseFile.TabIndex = 4;
             // 
             // logStepOne
             // 
@@ -252,7 +252,7 @@
             this.logStepOne.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
             this.logStepOne.GroupBordersVisible = false;
             this.logStepOne.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.layoutControlItem1,
+            this.lciBrowseFile,
             this.layoutControlItem2,
             this.layoutControlItem3,
             this.logSelectedFiles});
@@ -262,23 +262,23 @@
             this.logStepOne.Text = "logStepOne";
             this.logStepOne.TextVisible = false;
             // 
-            // layoutControlItem1
+            // lciBrowseFile
             // 
-            this.layoutControlItem1.Control = this.buttonEdit1;
-            this.layoutControlItem1.CustomizationFormText = "Chọn file dữ liệu:";
-            this.layoutControlItem1.Location = new System.Drawing.Point(0, 0);
-            this.layoutControlItem1.MaxSize = new System.Drawing.Size(575, 32);
-            this.layoutControlItem1.MinSize = new System.Drawing.Size(575, 32);
-            this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Padding = new DevExpress.XtraLayout.Utils.Padding(5, 5, 5, 5);
-            this.layoutControlItem1.Size = new System.Drawing.Size(575, 32);
-            this.layoutControlItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            this.layoutControlItem1.Text = "Chọn file dữ liệu:";
-            this.layoutControlItem1.TextSize = new System.Drawing.Size(81, 13);
+            this.lciBrowseFile.Control = this.btnBrowseFile;
+            this.lciBrowseFile.CustomizationFormText = "Chọn file dữ liệu:";
+            this.lciBrowseFile.Location = new System.Drawing.Point(0, 0);
+            this.lciBrowseFile.MaxSize = new System.Drawing.Size(575, 32);
+            this.lciBrowseFile.MinSize = new System.Drawing.Size(575, 32);
+            this.lciBrowseFile.Name = "lciBrowseFile";
+            this.lciBrowseFile.Padding = new DevExpress.XtraLayout.Utils.Padding(5, 5, 5, 5);
+            this.lciBrowseFile.Size = new System.Drawing.Size(575, 32);
+            this.lciBrowseFile.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            this.lciBrowseFile.Text = "Chọn file dữ liệu:";
+            this.lciBrowseFile.TextSize = new System.Drawing.Size(81, 13);
             // 
             // layoutControlItem2
             // 
-            this.layoutControlItem2.Control = this.simpleButton1;
+            this.layoutControlItem2.Control = this.btnDownloadTemplate;
             this.layoutControlItem2.CustomizationFormText = "layoutControlItem2";
             this.layoutControlItem2.Location = new System.Drawing.Point(575, 0);
             this.layoutControlItem2.MaxSize = new System.Drawing.Size(139, 32);
@@ -294,7 +294,7 @@
             // 
             // layoutControlItem3
             // 
-            this.layoutControlItem3.Control = this.simpleButton2;
+            this.layoutControlItem3.Control = this.btnCheckValid;
             this.layoutControlItem3.CustomizationFormText = "layoutControlItem3";
             this.layoutControlItem3.Location = new System.Drawing.Point(714, 0);
             this.layoutControlItem3.MaxSize = new System.Drawing.Size(100, 32);
@@ -315,6 +315,7 @@
             this.lciSelectedFiles});
             this.logSelectedFiles.Location = new System.Drawing.Point(0, 32);
             this.logSelectedFiles.Name = "logSelectedFiles";
+            this.logSelectedFiles.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
             this.logSelectedFiles.Size = new System.Drawing.Size(814, 293);
             this.logSelectedFiles.Text = "Tập tin đã chọn từ máy tính";
             // 
@@ -324,9 +325,11 @@
             this.lciSelectedFiles.CustomizationFormText = "layoutControlItem4";
             this.lciSelectedFiles.Location = new System.Drawing.Point(0, 0);
             this.lciSelectedFiles.Name = "lciSelectedFiles";
-            this.lciSelectedFiles.Size = new System.Drawing.Size(790, 250);
+            this.lciSelectedFiles.Size = new System.Drawing.Size(808, 268);
             this.lciSelectedFiles.Text = "lciSelectedFiles";
-            this.lciSelectedFiles.TextSize = new System.Drawing.Size(81, 13);
+            this.lciSelectedFiles.TextSize = new System.Drawing.Size(0, 0);
+            this.lciSelectedFiles.TextToControlDistance = 0;
+            this.lciSelectedFiles.TextVisible = false;
             // 
             // wwpStepTwo
             // 
@@ -337,8 +340,8 @@
             // 
             // locStepTwo
             // 
-            this.locStepTwo.Controls.Add(this.simpleButton4);
-            this.locStepTwo.Controls.Add(this.simpleButton3);
+            this.locStepTwo.Controls.Add(this.btnImportAllFiles);
+            this.locStepTwo.Controls.Add(this.btnImportSelectedFile);
             this.locStepTwo.Controls.Add(this.gridLookUpEdit1);
             this.locStepTwo.Controls.Add(this.gridControl1);
             this.locStepTwo.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -350,25 +353,25 @@
             this.locStepTwo.TabIndex = 0;
             this.locStepTwo.Text = "layoutControl1";
             // 
-            // simpleButton4
+            // btnImportAllFiles
             // 
-            this.simpleButton4.Image = global::iPOS.IMC.Properties.Resources.import_all_16;
-            this.simpleButton4.Location = new System.Drawing.Point(523, 318);
-            this.simpleButton4.Name = "simpleButton4";
-            this.simpleButton4.Size = new System.Drawing.Size(153, 22);
-            this.simpleButton4.StyleController = this.locStepTwo;
-            this.simpleButton4.TabIndex = 7;
-            this.simpleButton4.Text = "Nhập Tất Cả Tập Tin";
+            this.btnImportAllFiles.Image = global::iPOS.IMC.Properties.Resources.import_all_16;
+            this.btnImportAllFiles.Location = new System.Drawing.Point(523, 318);
+            this.btnImportAllFiles.Name = "btnImportAllFiles";
+            this.btnImportAllFiles.Size = new System.Drawing.Size(153, 22);
+            this.btnImportAllFiles.StyleController = this.locStepTwo;
+            this.btnImportAllFiles.TabIndex = 7;
+            this.btnImportAllFiles.Text = "Nhập Tất Cả Tập Tin";
             // 
-            // simpleButton3
+            // btnImportSelectedFile
             // 
-            this.simpleButton3.Image = global::iPOS.IMC.Properties.Resources.import_16;
-            this.simpleButton3.Location = new System.Drawing.Point(686, 318);
-            this.simpleButton3.Name = "simpleButton3";
-            this.simpleButton3.Size = new System.Drawing.Size(143, 22);
-            this.simpleButton3.StyleController = this.locStepTwo;
-            this.simpleButton3.TabIndex = 6;
-            this.simpleButton3.Text = "Nhập Tập Tin Đã Chọn";
+            this.btnImportSelectedFile.Image = global::iPOS.IMC.Properties.Resources.import_16;
+            this.btnImportSelectedFile.Location = new System.Drawing.Point(686, 318);
+            this.btnImportSelectedFile.Name = "btnImportSelectedFile";
+            this.btnImportSelectedFile.Size = new System.Drawing.Size(143, 22);
+            this.btnImportSelectedFile.StyleController = this.locStepTwo;
+            this.btnImportSelectedFile.TabIndex = 6;
+            this.btnImportSelectedFile.Text = "Nhập Tập Tin Đã Chọn";
             // 
             // gridLookUpEdit1
             // 
@@ -390,10 +393,10 @@
             // 
             // gridControl1
             // 
-            this.gridControl1.Location = new System.Drawing.Point(7, 26);
+            this.gridControl1.Location = new System.Drawing.Point(5, 24);
             this.gridControl1.MainView = this.gridView1;
             this.gridControl1.Name = "gridControl1";
-            this.gridControl1.Size = new System.Drawing.Size(820, 280);
+            this.gridControl1.Size = new System.Drawing.Size(824, 284);
             this.gridControl1.TabIndex = 4;
             this.gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
@@ -410,7 +413,7 @@
             this.logStepTwo.GroupBordersVisible = false;
             this.logStepTwo.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.logGridMainData,
-            this.layoutControlItem4,
+            this.lciFileList,
             this.lciButtonImportFile,
             this.lciButtonImportAllFile,
             this.emptySpaceItem1});
@@ -428,7 +431,7 @@
             this.lciGridMainData});
             this.logGridMainData.Location = new System.Drawing.Point(0, 0);
             this.logGridMainData.Name = "logGridMainData";
-            this.logGridMainData.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
+            this.logGridMainData.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
             this.logGridMainData.Size = new System.Drawing.Size(834, 313);
             this.logGridMainData.Text = "logGridMainData";
             // 
@@ -438,29 +441,29 @@
             this.lciGridMainData.CustomizationFormText = "lciGridMainData";
             this.lciGridMainData.Location = new System.Drawing.Point(0, 0);
             this.lciGridMainData.Name = "lciGridMainData";
-            this.lciGridMainData.Size = new System.Drawing.Size(824, 284);
+            this.lciGridMainData.Size = new System.Drawing.Size(828, 288);
             this.lciGridMainData.Text = "lciGridMainData";
             this.lciGridMainData.TextSize = new System.Drawing.Size(0, 0);
             this.lciGridMainData.TextToControlDistance = 0;
             this.lciGridMainData.TextVisible = false;
             // 
-            // layoutControlItem4
+            // lciFileList
             // 
-            this.layoutControlItem4.Control = this.gridLookUpEdit1;
-            this.layoutControlItem4.CustomizationFormText = "Chọn tập tin dữ liệu:";
-            this.layoutControlItem4.Location = new System.Drawing.Point(0, 313);
-            this.layoutControlItem4.MaxSize = new System.Drawing.Size(277, 32);
-            this.layoutControlItem4.MinSize = new System.Drawing.Size(277, 32);
-            this.layoutControlItem4.Name = "layoutControlItem4";
-            this.layoutControlItem4.Padding = new DevExpress.XtraLayout.Utils.Padding(5, 5, 5, 5);
-            this.layoutControlItem4.Size = new System.Drawing.Size(277, 32);
-            this.layoutControlItem4.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            this.layoutControlItem4.Text = "Chọn tập tin dữ liệu:";
-            this.layoutControlItem4.TextSize = new System.Drawing.Size(98, 13);
+            this.lciFileList.Control = this.gridLookUpEdit1;
+            this.lciFileList.CustomizationFormText = "Chọn tập tin dữ liệu:";
+            this.lciFileList.Location = new System.Drawing.Point(0, 313);
+            this.lciFileList.MaxSize = new System.Drawing.Size(277, 32);
+            this.lciFileList.MinSize = new System.Drawing.Size(277, 32);
+            this.lciFileList.Name = "lciFileList";
+            this.lciFileList.Padding = new DevExpress.XtraLayout.Utils.Padding(5, 5, 5, 5);
+            this.lciFileList.Size = new System.Drawing.Size(277, 32);
+            this.lciFileList.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            this.lciFileList.Text = "Chọn tập tin dữ liệu:";
+            this.lciFileList.TextSize = new System.Drawing.Size(98, 13);
             // 
             // lciButtonImportFile
             // 
-            this.lciButtonImportFile.Control = this.simpleButton3;
+            this.lciButtonImportFile.Control = this.btnImportSelectedFile;
             this.lciButtonImportFile.CustomizationFormText = "lciButtonImportFile";
             this.lciButtonImportFile.Location = new System.Drawing.Point(681, 313);
             this.lciButtonImportFile.MaxSize = new System.Drawing.Size(153, 32);
@@ -476,7 +479,7 @@
             // 
             // lciButtonImportAllFile
             // 
-            this.lciButtonImportAllFile.Control = this.simpleButton4;
+            this.lciButtonImportAllFile.Control = this.btnImportAllFiles;
             this.lciButtonImportAllFile.CustomizationFormText = "lciButtonImportAllFile";
             this.lciButtonImportAllFile.Location = new System.Drawing.Point(518, 313);
             this.lciButtonImportAllFile.Name = "lciButtonImportAllFile";
@@ -629,9 +632,9 @@
             this.locStepOne.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridSeletedFiles)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grvSeletedFiles)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.buttonEdit1.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnBrowseFile.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.logStepOne)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lciBrowseFile)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.logSelectedFiles)).EndInit();
@@ -646,7 +649,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.logStepTwo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.logGridMainData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciGridMainData)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lciFileList)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciButtonImportFile)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciButtonImportAllFile)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
@@ -664,11 +667,11 @@
         private DevExpress.XtraWizard.CompletionWizardPage wwpStepThree;
         private DevExpress.XtraLayout.LayoutControl locStepOne;
         private DevExpress.XtraLayout.LayoutControlGroup logStepOne;
-        private DevExpress.XtraEditors.ButtonEdit buttonEdit1;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
-        private DevExpress.XtraEditors.SimpleButton simpleButton1;
+        private DevExpress.XtraEditors.ButtonEdit btnBrowseFile;
+        private DevExpress.XtraLayout.LayoutControlItem lciBrowseFile;
+        private DevExpress.XtraEditors.SimpleButton btnDownloadTemplate;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
-        private DevExpress.XtraEditors.SimpleButton simpleButton2;
+        private DevExpress.XtraEditors.SimpleButton btnCheckValid;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
         private DevExpress.XtraGrid.GridControl gridSeletedFiles;
         private DevExpress.XtraGrid.Views.Grid.GridView grvSeletedFiles;
@@ -687,9 +690,9 @@
         private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
         private DevExpress.XtraLayout.LayoutControlGroup logGridMainData;
         private DevExpress.XtraLayout.LayoutControlItem lciGridMainData;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
-        private DevExpress.XtraEditors.SimpleButton simpleButton4;
-        private DevExpress.XtraEditors.SimpleButton simpleButton3;
+        private DevExpress.XtraLayout.LayoutControlItem lciFileList;
+        private DevExpress.XtraEditors.SimpleButton btnImportAllFiles;
+        private DevExpress.XtraEditors.SimpleButton btnImportSelectedFile;
         private DevExpress.XtraLayout.LayoutControlItem lciButtonImportFile;
         private DevExpress.XtraLayout.LayoutControlItem lciButtonImportAllFile;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;

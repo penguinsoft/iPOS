@@ -6,6 +6,7 @@ using iPOS.Core.Logger;
 using iPOS.DRO.Systems;
 using iPOS.DTO.Systems;
 using Newtonsoft.Json;
+using iPOS.Core.Helper;
 
 namespace iPOS.DAO
 {
@@ -13,16 +14,21 @@ namespace iPOS.DAO
     {
         protected static ILogEngine logger = new LogEngine();
 
-        public static async Task<object> HttpGet(string url)
+        public static async Task<string> HttpGet(string url)
         {
             var result = "";
             try
             {
                 using (HttpClient client = new HttpClient())
-                using (HttpResponseMessage response = await client.GetAsync(url))
-                using (HttpContent content = response.Content)
                 {
-                    result = await content.ReadAsStringAsync();
+                    client.DefaultRequestHeaders.Add("Authorization", "Basic aGVsbGRlbW9uczpfUEBzc3cwcmRz");
+                    using (HttpResponseMessage response = await client.GetAsync(url))
+                    using (HttpContent content = response.Content)
+                    {
+                        result = MessageEngine.GetHTTPStatusCodes(response.StatusCode);
+                        if (string.IsNullOrEmpty(result))
+                            result = await content.ReadAsStringAsync();
+                    }
                 }
             }
             catch (Exception ex)
@@ -33,16 +39,19 @@ namespace iPOS.DAO
             return result;
         }
 
-        public static async Task<object> HttpPost(string url, string json_data)
+        public static async Task<string> HttpPost(string url, string json_data)
         {
             var result = "";
             try
             {
                 using (HttpClient client = new HttpClient())
-                using (HttpResponseMessage response = await client.PostAsync(url, new StringContent(json_data, Encoding.UTF8, "application/json")))
-                using (HttpContent content = response.Content)
                 {
-                    result = await content.ReadAsStringAsync();
+                    client.DefaultRequestHeaders.Add("Authorization", "Basic aGVsbGRlbW9uczpfUEBzc3cwcmRz");
+                    using (HttpResponseMessage response = await client.PostAsync(url, new StringContent(json_data, Encoding.UTF8, "application/json")))
+                    using (HttpContent content = response.Content)
+                    {
+                        result = await content.ReadAsStringAsync();
+                    }
                 }
             }
             catch (Exception ex)

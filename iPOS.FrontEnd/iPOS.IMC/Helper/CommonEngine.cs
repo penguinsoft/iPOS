@@ -76,6 +76,11 @@ namespace iPOS.IMC.Helper
             frm.ShowDialog();
         }
 
+        public static void OpenImportExcelForm(string template_name, string store_procedure, string module_id, string function_id)
+        {
+            OpenInputForm(new iPOS.IMC.Tool.uc_ImportExcel(template_name, store_procedure, module_id, function_id), new Size(900, 600));
+        }
+
         public static void OpenMdiChildForm(RibbonForm index, XtraUserControl uc, XtraTabbedMdiManager tab)
         {
             bool found = false;
