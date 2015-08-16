@@ -113,7 +113,7 @@ namespace iPOS.WCFService
                         result.GroupUserList = Mapper.Map<List<SYS_tblGroupUserDCO>>(temp);
                         result.Result = true;
                         result.Status = DCO.ResponseStatus.Success;
-                        result.Message = "Load data success!";
+                        result.Message = "";
                         result.Username = Username;
                         result.TotalItemCount = temp.Count;
                     }
@@ -148,7 +148,7 @@ namespace iPOS.WCFService
                         result.GroupUserItem = Mapper.Map<SYS_tblGroupUserDCO>(temp);
                         result.Result = true;
                         result.Status = DCO.ResponseStatus.Success;
-                        result.Message = "Get data success!";
+                        result.Message = "";
                         result.Username = Username;
                         result.TotalItemCount = 1;
                     }
@@ -278,7 +278,7 @@ namespace iPOS.WCFService
                         result.UserList = Mapper.Map<List<SYS_tblUserDCO>>(temp);
                         result.Result = true;
                         result.Status = DCO.ResponseStatus.Success;
-                        result.Message = "Load data success!";
+                        result.Message = "";
                         result.Username = Username;
                         result.TotalItemCount = temp.Count;
                     }
