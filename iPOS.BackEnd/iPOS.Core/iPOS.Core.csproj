@@ -30,8 +30,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.ServiceModel.Web">
+      <HintPath>..\iPOS.WCFService\bin\Microsoft.ServiceModel.Web.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Activation" />
+    <Reference Include="System.ServiceModel.Channels" />
+    <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -39,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasicValidation\AuthenticationServiceStub.cs" />
+    <Compile Include="BasicValidation\BasicRequestInterceptor.cs" />
+    <Compile Include="BasicValidation\BasicToken.cs" />
+    <Compile Include="BasicValidation\PrincipalAuthorizationPolicy.cs" />
+    <Compile Include="BasicValidation\RequestContextUtils.cs" />
+    <Compile Include="BasicValidation\SecurityContextManager.cs" />
     <Compile Include="Helper\BaseConstant.cs" />
     <Compile Include="Helper\CommonEngine.cs" />
     <Compile Include="Helper\ConfigEngine.cs" />

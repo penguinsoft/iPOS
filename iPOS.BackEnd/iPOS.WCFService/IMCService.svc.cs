@@ -354,5 +354,11 @@ namespace iPOS.WCFService
             return result;
         }
         #endregion
+
+
+        public SYS_tblUserDRO GetUserByID(string Username, string LanguageID, string UsernameOther)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
