@@ -241,5 +241,15 @@ namespace iPOS.IMC.Helper
         {
             welcome_page.Text = CaptionEngine.GetControlCaption(parent_name, welcome_page.Name, BaseConstant.CONTROL_TEXT, language);
         }
+
+        public static void ChangeCaptionWizardPage(string parent_name, string language, WizardPage wizard_page)
+        {
+            wizard_page.Text = CaptionEngine.GetControlCaption(parent_name, wizard_page.Name, BaseConstant.CONTROL_TEXT, language);
+        }
+
+        public static void ChangeCaptionCompletionWizardPage(string parent_name, string language, CompletionWizardPage complete_page)
+        {
+            complete_page.Text = CaptionEngine.GetControlCaption(parent_name, complete_page.Name, BaseConstant.CONTROL_TEXT, language);
+        }
     }
 }

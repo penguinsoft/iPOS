@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
             this.wzcMain = new DevExpress.XtraWizard.WizardControl();
             this.wwpStepOne = new DevExpress.XtraWizard.WelcomeWizardPage();
             this.locStepOne = new DevExpress.XtraLayout.LayoutControl();
@@ -53,10 +53,10 @@
             this.locStepTwo = new DevExpress.XtraLayout.LayoutControl();
             this.btnImportAllFiles = new DevExpress.XtraEditors.SimpleButton();
             this.btnImportSelectedFile = new DevExpress.XtraEditors.SimpleButton();
-            this.gridLookUpEdit1 = new DevExpress.XtraEditors.GridLookUpEdit();
-            this.gridLookUpEdit1View = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.gridControl1 = new DevExpress.XtraGrid.GridControl();
-            this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gluSeletedFiles = new DevExpress.XtraEditors.GridLookUpEdit();
+            this.gluViewSeletedFiles = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridMainData = new DevExpress.XtraGrid.GridControl();
+            this.grvMainData = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.logStepTwo = new DevExpress.XtraLayout.LayoutControlGroup();
             this.logGridMainData = new DevExpress.XtraLayout.LayoutControlGroup();
             this.lciGridMainData = new DevExpress.XtraLayout.LayoutControlItem();
@@ -75,6 +75,8 @@
             this.lblResult3 = new DevExpress.XtraEditors.LabelControl();
             this.lblResult2 = new DevExpress.XtraEditors.LabelControl();
             this.lblResult1 = new DevExpress.XtraEditors.LabelControl();
+            this.gcolFileName = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gcolTableName = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.wzcMain)).BeginInit();
             this.wzcMain.SuspendLayout();
             this.wwpStepOne.SuspendLayout();
@@ -92,10 +94,10 @@
             this.wwpStepTwo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.locStepTwo)).BeginInit();
             this.locStepTwo.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridLookUpEdit1.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridLookUpEdit1View)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gluSeletedFiles.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gluViewSeletedFiles)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridMainData)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grvMainData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.logStepTwo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.logGridMainData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciGridMainData)).BeginInit();
@@ -123,6 +125,7 @@
             this.wzcMain.Size = new System.Drawing.Size(894, 507);
             this.wzcMain.Text = "Trình hướng dẫn nhập dữ liệu từ file Excel";
             this.wzcMain.WizardStyle = DevExpress.XtraWizard.WizardStyle.WizardAero;
+            this.wzcMain.SelectedPageChanging += new DevExpress.XtraWizard.WizardPageChangingEventHandler(this.wzcMain_SelectedPageChanging);
             // 
             // wwpStepOne
             // 
@@ -147,6 +150,7 @@
             // 
             // gridSeletedFiles
             // 
+            this.gridSeletedFiles.AllowDrop = true;
             this.gridSeletedFiles.Location = new System.Drawing.Point(15, 66);
             this.gridSeletedFiles.MainView = this.grvSeletedFiles;
             this.gridSeletedFiles.Name = "gridSeletedFiles";
@@ -154,6 +158,8 @@
             this.gridSeletedFiles.TabIndex = 7;
             this.gridSeletedFiles.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.grvSeletedFiles});
+            this.gridSeletedFiles.DragDrop += new System.Windows.Forms.DragEventHandler(this.gridSeletedFiles_DragDrop);
+            this.gridSeletedFiles.DragEnter += new System.Windows.Forms.DragEventHandler(this.gridSeletedFiles_DragEnter);
             // 
             // grvSeletedFiles
             // 
@@ -169,6 +175,8 @@
             this.grvSeletedFiles.OptionsBehavior.Editable = false;
             this.grvSeletedFiles.OptionsView.ColumnAutoWidth = false;
             this.grvSeletedFiles.OptionsView.ShowAutoFilterRow = true;
+            this.grvSeletedFiles.CustomDrawRowIndicator += new DevExpress.XtraGrid.Views.Grid.RowIndicatorCustomDrawEventHandler(this.grvSeletedFiles_CustomDrawRowIndicator);
+            this.grvSeletedFiles.KeyDown += new System.Windows.Forms.KeyEventHandler(this.grvSeletedFiles_KeyDown);
             // 
             // gcolSelectedFileName
             // 
@@ -224,6 +232,7 @@
             this.btnCheckValid.StyleController = this.locStepOne;
             this.btnCheckValid.TabIndex = 6;
             this.btnCheckValid.Text = "Kiểm Tra";
+            this.btnCheckValid.Click += new System.EventHandler(this.btnCheckValid_Click);
             // 
             // btnDownloadTemplate
             // 
@@ -234,17 +243,19 @@
             this.btnDownloadTemplate.StyleController = this.locStepOne;
             this.btnDownloadTemplate.TabIndex = 5;
             this.btnDownloadTemplate.Text = "Tải Xuống Mẫu";
+            this.btnDownloadTemplate.Click += new System.EventHandler(this.btnDownloadTemplate_Click);
             // 
             // btnBrowseFile
             // 
             this.btnBrowseFile.Location = new System.Drawing.Point(99, 15);
             this.btnBrowseFile.Name = "btnBrowseFile";
             this.btnBrowseFile.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, global::iPOS.IMC.Properties.Resources.browse_16, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "", null, null, true),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, global::iPOS.IMC.Properties.Resources.import_file_16, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, global::iPOS.IMC.Properties.Resources.browse_16, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject3, "", null, null, true),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, global::iPOS.IMC.Properties.Resources.import_file_16, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject4, "", null, null, true)});
             this.btnBrowseFile.Size = new System.Drawing.Size(481, 22);
             this.btnBrowseFile.StyleController = this.locStepOne;
             this.btnBrowseFile.TabIndex = 4;
+            this.btnBrowseFile.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.btnBrowseFile_ButtonClick);
             // 
             // logStepOne
             // 
@@ -342,8 +353,8 @@
             // 
             this.locStepTwo.Controls.Add(this.btnImportAllFiles);
             this.locStepTwo.Controls.Add(this.btnImportSelectedFile);
-            this.locStepTwo.Controls.Add(this.gridLookUpEdit1);
-            this.locStepTwo.Controls.Add(this.gridControl1);
+            this.locStepTwo.Controls.Add(this.gluSeletedFiles);
+            this.locStepTwo.Controls.Add(this.gridMainData);
             this.locStepTwo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.locStepTwo.Location = new System.Drawing.Point(0, 0);
             this.locStepTwo.Name = "locStepTwo";
@@ -373,38 +384,50 @@
             this.btnImportSelectedFile.TabIndex = 6;
             this.btnImportSelectedFile.Text = "Nhập Tập Tin Đã Chọn";
             // 
-            // gridLookUpEdit1
+            // gluSeletedFiles
             // 
-            this.gridLookUpEdit1.Location = new System.Drawing.Point(106, 318);
-            this.gridLookUpEdit1.Name = "gridLookUpEdit1";
-            this.gridLookUpEdit1.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            this.gluSeletedFiles.Location = new System.Drawing.Point(106, 318);
+            this.gluSeletedFiles.Name = "gluSeletedFiles";
+            this.gluSeletedFiles.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.gridLookUpEdit1.Properties.View = this.gridLookUpEdit1View;
-            this.gridLookUpEdit1.Size = new System.Drawing.Size(166, 20);
-            this.gridLookUpEdit1.StyleController = this.locStepTwo;
-            this.gridLookUpEdit1.TabIndex = 5;
+            this.gluSeletedFiles.Properties.View = this.gluViewSeletedFiles;
+            this.gluSeletedFiles.Size = new System.Drawing.Size(166, 20);
+            this.gluSeletedFiles.StyleController = this.locStepTwo;
+            this.gluSeletedFiles.TabIndex = 5;
+            this.gluSeletedFiles.EditValueChanged += new System.EventHandler(this.gluSeletedFiles_EditValueChanged);
             // 
-            // gridLookUpEdit1View
+            // gluViewSeletedFiles
             // 
-            this.gridLookUpEdit1View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
-            this.gridLookUpEdit1View.Name = "gridLookUpEdit1View";
-            this.gridLookUpEdit1View.OptionsSelection.EnableAppearanceFocusedCell = false;
-            this.gridLookUpEdit1View.OptionsView.ShowGroupPanel = false;
+            this.gluViewSeletedFiles.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gcolFileName,
+            this.gcolTableName});
+            this.gluViewSeletedFiles.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.gluViewSeletedFiles.Name = "gluViewSeletedFiles";
+            this.gluViewSeletedFiles.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.gluViewSeletedFiles.OptionsView.ShowGroupPanel = false;
             // 
-            // gridControl1
+            // gridMainData
             // 
-            this.gridControl1.Location = new System.Drawing.Point(5, 24);
-            this.gridControl1.MainView = this.gridView1;
-            this.gridControl1.Name = "gridControl1";
-            this.gridControl1.Size = new System.Drawing.Size(824, 284);
-            this.gridControl1.TabIndex = 4;
-            this.gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gridView1});
+            this.gridMainData.Location = new System.Drawing.Point(5, 24);
+            this.gridMainData.MainView = this.grvMainData;
+            this.gridMainData.Name = "gridMainData";
+            this.gridMainData.Size = new System.Drawing.Size(824, 284);
+            this.gridMainData.TabIndex = 4;
+            this.gridMainData.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.grvMainData});
             // 
-            // gridView1
+            // grvMainData
             // 
-            this.gridView1.GridControl = this.gridControl1;
-            this.gridView1.Name = "gridView1";
+            this.grvMainData.GridControl = this.gridMainData;
+            this.grvMainData.IndicatorWidth = 40;
+            this.grvMainData.Name = "grvMainData";
+            this.grvMainData.OptionsBehavior.Editable = false;
+            this.grvMainData.OptionsCustomization.AllowColumnMoving = false;
+            this.grvMainData.OptionsCustomization.AllowGroup = false;
+            this.grvMainData.OptionsCustomization.AllowSort = false;
+            this.grvMainData.OptionsView.ColumnAutoWidth = false;
+            this.grvMainData.OptionsView.ShowGroupPanel = false;
+            this.grvMainData.CustomDrawRowIndicator += new DevExpress.XtraGrid.Views.Grid.RowIndicatorCustomDrawEventHandler(this.grvMainData_CustomDrawRowIndicator);
             // 
             // logStepTwo
             // 
@@ -437,7 +460,7 @@
             // 
             // lciGridMainData
             // 
-            this.lciGridMainData.Control = this.gridControl1;
+            this.lciGridMainData.Control = this.gridMainData;
             this.lciGridMainData.CustomizationFormText = "lciGridMainData";
             this.lciGridMainData.Location = new System.Drawing.Point(0, 0);
             this.lciGridMainData.Name = "lciGridMainData";
@@ -449,7 +472,7 @@
             // 
             // lciFileList
             // 
-            this.lciFileList.Control = this.gridLookUpEdit1;
+            this.lciFileList.Control = this.gluSeletedFiles;
             this.lciFileList.CustomizationFormText = "Chọn tập tin dữ liệu:";
             this.lciFileList.Location = new System.Drawing.Point(0, 313);
             this.lciFileList.MaxSize = new System.Drawing.Size(277, 32);
@@ -617,6 +640,22 @@
             this.lblResult1.TabIndex = 10;
             this.lblResult1.Text = "Số tập tin đã chọn: 10 tệp, trong đó có 02 tệp tin lỗi, 08 tệp tin hợp lệ.";
             // 
+            // gcolFileName
+            // 
+            this.gcolFileName.Caption = "Tệp tin";
+            this.gcolFileName.FieldName = "FileName";
+            this.gcolFileName.Name = "gcolFileName";
+            this.gcolFileName.Visible = true;
+            this.gcolFileName.VisibleIndex = 0;
+            // 
+            // gcolTableName
+            // 
+            this.gcolTableName.Caption = "TableName";
+            this.gcolTableName.FieldName = "TableName";
+            this.gcolTableName.Name = "gcolTableName";
+            this.gcolTableName.Visible = true;
+            this.gcolTableName.VisibleIndex = 1;
+            // 
             // uc_ImportExcel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -642,10 +681,10 @@
             this.wwpStepTwo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.locStepTwo)).EndInit();
             this.locStepTwo.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.gridLookUpEdit1.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridLookUpEdit1View)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gluSeletedFiles.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gluViewSeletedFiles)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridMainData)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grvMainData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.logStepTwo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.logGridMainData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciGridMainData)).EndInit();
@@ -684,10 +723,10 @@
         private DevExpress.XtraGrid.Columns.GridColumn gcolSeletedFilePath;
         private DevExpress.XtraLayout.LayoutControl locStepTwo;
         private DevExpress.XtraLayout.LayoutControlGroup logStepTwo;
-        private DevExpress.XtraEditors.GridLookUpEdit gridLookUpEdit1;
-        private DevExpress.XtraGrid.Views.Grid.GridView gridLookUpEdit1View;
-        private DevExpress.XtraGrid.GridControl gridControl1;
-        private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
+        private DevExpress.XtraEditors.GridLookUpEdit gluSeletedFiles;
+        private DevExpress.XtraGrid.Views.Grid.GridView gluViewSeletedFiles;
+        private DevExpress.XtraGrid.GridControl gridMainData;
+        private DevExpress.XtraGrid.Views.Grid.GridView grvMainData;
         private DevExpress.XtraLayout.LayoutControlGroup logGridMainData;
         private DevExpress.XtraLayout.LayoutControlItem lciGridMainData;
         private DevExpress.XtraLayout.LayoutControlItem lciFileList;
@@ -706,6 +745,8 @@
         private DevExpress.XtraEditors.LabelControl lblResult3;
         private DevExpress.XtraEditors.LabelControl lblResult2;
         private DevExpress.XtraEditors.LabelControl lblResult1;
+        private DevExpress.XtraGrid.Columns.GridColumn gcolFileName;
+        private DevExpress.XtraGrid.Columns.GridColumn gcolTableName;
 
     }
 }

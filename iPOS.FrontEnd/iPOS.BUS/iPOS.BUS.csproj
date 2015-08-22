@@ -47,7 +47,10 @@
     <Compile Include="BaseBUS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Systems\SYS_tblGroupUserBUS.cs" />
+    <Compile Include="Systems\SYS_tblImportFileConfigBUS.cs" />
+    <Compile Include="Systems\SYS_tblReportCaptionBUS.cs" />
     <Compile Include="Systems\SYS_tblUserBUS.cs" />
+    <Compile Include="Tools\OBJ_TableColumnBUS.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\iPOS.Core\iPOS.Core.csproj">

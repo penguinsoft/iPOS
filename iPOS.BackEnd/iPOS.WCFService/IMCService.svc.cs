@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
@@ -12,10 +13,13 @@ using iPOS.Core.Helper;
 using iPOS.Core.Logger;
 using iPOS.DAO.Product;
 using iPOS.DAO.Systems;
+using iPOS.DAO.Tools;
 using iPOS.DCO.Product;
 using iPOS.DCO.Systems;
+using iPOS.DCO.Tools;
 using iPOS.DTO.Product;
 using iPOS.DTO.Systems;
+using iPOS.DTO.Tools;
 
 namespace iPOS.WCFService
 {
@@ -41,12 +45,20 @@ namespace iPOS.WCFService
             Mapper.CreateMap<SYS_tblActionLogDCO, SYS_tblActionLogDTO>();
             Mapper.CreateMap<SYS_tblGroupUserDTO, SYS_tblGroupUserDCO>();
             Mapper.CreateMap<SYS_tblGroupUserDCO, SYS_tblGroupUserDTO>();
-
             Mapper.CreateMap<SYS_tblUserDTO, SYS_tblUserDCO>();
             Mapper.CreateMap<SYS_tblUserDCO, SYS_tblUserDTO>();
+            Mapper.CreateMap<SYS_tblReportCaptionDTO, SYS_tblReportCaptionDCO>();
+            Mapper.CreateMap<SYS_tblReportCaptionDCO, SYS_tblReportCaptionDTO>();
+            Mapper.CreateMap<ComboDynamicItemDTO, ComboDynamicItemDCO>();
+            Mapper.CreateMap<ComboDynamicItemDCO, ComboDynamicItemDTO>();
+            Mapper.CreateMap<SYS_tblImportFileConfigDTO, SYS_tblImportFileConfigDCO>();
+            Mapper.CreateMap<SYS_tblImportFileConfigDCO, SYS_tblImportFileConfigDTO>();
 
             Mapper.CreateMap<PRO_tblProvinceDTO, PRO_tblProvinceDCO>();
             Mapper.CreateMap<PRO_tblProvinceDCO, PRO_tblProvinceDTO>();
+
+            Mapper.CreateMap<OBJ_TableColumnDTO, OBJ_TableColumnDCO>();
+            Mapper.CreateMap<OBJ_TableColumnDCO, OBJ_TableColumnDTO>();
 
             Mapper.AssertConfigurationIsValid();
         }
@@ -59,7 +71,12 @@ namespace iPOS.WCFService
             afBuilder.RegisterType<SYS_tblActionLogDAO>().As<ISYS_tblActionLogDAO>();
             afBuilder.RegisterType<SYS_tblGroupUserDAO>().As<ISYS_tblGroupUserDAO>();
             afBuilder.RegisterType<SYS_tblUserDAO>().As<ISYS_tblUserDAO>();
+            afBuilder.RegisterType<SYS_tblReportCaptionDAO>().As<ISYS_tblReportCaptionDAO>();
+            afBuilder.RegisterType<SYS_tblImportFileConfigDAO>().As<ISYS_tblImportFileConfigDAO>();
+
             afBuilder.RegisterType<PRO_tblProvinceDAO>().As<IPRO_tblProvinceDAO>();
+
+            afBuilder.RegisterType<OBJ_TableColumnDAO>().As<IOBJ_TableColumnDAO>();
 
             Container = afBuilder.Build();
         }
@@ -299,6 +316,114 @@ namespace iPOS.WCFService
         }
         #endregion
 
+        #region [SYS_tblReportCaption]
+        public SYS_tblReportCaptionDRO GetReportCaption(string Username, string LanguageID, string FunctionID, bool IsImport)
+        {
+            SYS_tblReportCaptionDRO result = new SYS_tblReportCaptionDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    List<SYS_tblReportCaptionDTO> temp = new List<SYS_tblReportCaptionDTO>();
+                    var db = scope.Resolve<ISYS_tblReportCaptionDAO>();
+                    temp = db.LoadImportCaption(Username, LanguageID, FunctionID, IsImport);
+                    if (temp != null)
+                    {
+                        result.ReportCaptionList = Mapper.Map<List<SYS_tblReportCaptionDCO>>(temp);
+                        result.Result = true;
+                        result.Status = DCO.ResponseStatus.Success;
+                        result.Message = "";
+                        result.Username = Username;
+                        result.TotalItemCount = temp.Count;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.ReportCaptionList = Mapper.Map<List<SYS_tblReportCaptionDCO>>(new List<SYS_tblReportCaptionDTO>());
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Load data failed: " + ex.Message;
+                result.Username = Username;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public SYS_tblReportCaptionDRO GetComboDynamicList(string Username, string LanguageID, string Code, string TableName, string GetBy)
+        {
+            SYS_tblReportCaptionDRO result = new SYS_tblReportCaptionDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    List<ComboDynamicItemDTO> temp = new List<ComboDynamicItemDTO>();
+                    var db = scope.Resolve<ISYS_tblReportCaptionDAO>();
+                    temp = db.LoadComboDynamicList(Username, LanguageID, Code, TableName, GetBy);
+                    if (temp != null)
+                    {
+                        result.ComboDynamicList = Mapper.Map<List<ComboDynamicItemDCO>>(temp);
+                        result.Result = true;
+                        result.Status = DCO.ResponseStatus.Success;
+                        result.Message = "";
+                        result.Username = Username;
+                        result.TotalItemCount = temp.Count;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.ComboDynamicList = Mapper.Map<List<ComboDynamicItemDCO>>(new List<ComboDynamicItemDTO>());
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Load data failed: " + ex.Message;
+                result.Username = Username;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+        #endregion
+
+        #region [SYS_tblImportFileConfig]
+        public SYS_tblImportFileConfigDRO CheckValidImportTemplate(string Username, string LanguageID, string StoreProcedure, string FileName, string ModuleID, string FunctionID)
+        {
+            SYS_tblImportFileConfigDRO result = new SYS_tblImportFileConfigDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    SYS_tblImportFileConfigDTO temp = new SYS_tblImportFileConfigDTO();
+                    var db = scope.Resolve<ISYS_tblImportFileConfigDAO>();
+                    temp = db.CheckValidImportTemplate(Username, LanguageID, StoreProcedure, FileName, ModuleID, FunctionID);
+                    if (temp != null)
+                    {
+                        result.ImportFileConfigItem = Mapper.Map<SYS_tblImportFileConfigDCO>(temp);
+                        result.Result = true;
+                        result.Status = DCO.ResponseStatus.Success;
+                        result.Message = "";
+                        result.Username = Username;
+                        result.TotalItemCount = 1;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.ImportFileConfigItem = Mapper.Map<SYS_tblImportFileConfigDCO>(new SYS_tblImportFileConfigDTO());
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Get data failed: " + ex.Message;
+                result.Username = Username;
+                result.TotalItemCount = 0;
+            }
+
+            return result;
+        }
+        #endregion
+
         #region [PRO_tblProvince]
         public PRO_tblProvinceDRO GetAllProvinces(string Username, string LanguageID)
         {
@@ -355,6 +480,42 @@ namespace iPOS.WCFService
         }
         #endregion
 
+        #region [Tools]
+        public OBJ_TableColumnDRO GetTableColumnList(string Username, string ObjectName)
+        {
+            OBJ_TableColumnDRO result = new OBJ_TableColumnDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    List<OBJ_TableColumnDTO> temp = new List<OBJ_TableColumnDTO>();
+                    var db = scope.Resolve<IOBJ_TableColumnDAO>();
+                    temp = db.GetTableColumnList(ObjectName);
+                    if (temp != null)
+                    {
+                        result.TableColumnObjectList = Mapper.Map<List<OBJ_TableColumnDCO>>(temp);
+                        result.Result = true;
+                        result.Status = DCO.ResponseStatus.Success;
+                        result.Message = "";
+                        result.Username = Username;
+                        result.TotalItemCount = temp.Count;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.TableColumnObjectList = Mapper.Map<List<OBJ_TableColumnDCO>>(new List<OBJ_TableColumnDTO>());
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Load data failed: " + ex.Message;
+                result.Username = Username;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+        #endregion
 
         public SYS_tblUserDRO GetUserByID(string Username, string LanguageID, string UsernameOther)
         {

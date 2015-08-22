@@ -57,6 +57,10 @@
     <ApplicationIcon>logo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aspose.Cells, Version=8.4.2.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Softs\Hell Demons\iPOS\trunk\iPOS\iPOS.Core\bin\Debug\Aspose.Cells.dll</HintPath>
+    </Reference>
     <Reference Include="DevExpress.BonusSkins.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=95fc6c5621878f0a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Data.v12.2, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Printing.v12.2.Core, Version=12.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
@@ -98,6 +102,7 @@
     </Compile>
     <Compile Include="Helper\CommonEngine.cs" />
     <Compile Include="Helper\LanguageManage.cs" />
+    <Compile Include="Helper\ReportEngine.cs" />
     <Compile Include="Products\uc_Province.cs">
       <SubType>UserControl</SubType>
     </Compile>

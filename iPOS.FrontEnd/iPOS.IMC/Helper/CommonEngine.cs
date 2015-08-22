@@ -13,6 +13,8 @@ using System.Runtime.Serialization;
 using ConfigEngine = iPOS.Core.Helper.ConfigEngine;
 using DevExpress.XtraGrid.Views.Grid;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace iPOS.IMC.Helper
 {
@@ -206,6 +208,15 @@ namespace iPOS.IMC.Helper
         public static void QuickExportGridViewData(DataTable data_source, GridView grid_view)
         {
             ExportGridViewData(GetDataTableAfterFilter(data_source, grid_view), grid_view);
+        }
+
+        [DllImport("Shlwapi.dll", CharSet = CharSet.Auto)]
+        public static extern long StrFormatByteSize(long fileSize, [MarshalAs(UnmanagedType.LPTStr)] StringBuilder buffer, int bufferSize);
+        public static string StrFormatByteSize(long filesize)
+        {
+            StringBuilder sb = new StringBuilder(11);
+            StrFormatByteSize(filesize, sb, sb.Capacity);
+            return sb.ToString();
         }
     }
 }

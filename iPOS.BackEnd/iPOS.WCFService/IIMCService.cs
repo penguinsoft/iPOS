@@ -3,6 +3,7 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 using iPOS.DCO.Product;
 using iPOS.DCO.Systems;
+using iPOS.DCO.Tools;
 
 namespace iPOS.WCFService
 {
@@ -50,6 +51,25 @@ namespace iPOS.WCFService
         SYS_tblUserDRO GetUserByID(string Username, string LanguageID, string UsernameOther);
         #endregion
 
+        #region [SYS_tblReportCaption]
+        [OperationContract]
+        [WebInvoke(Method = "GET", UriTemplate = "/GetReportCaption?Username={Username}&LanguageID={LanguageID}&FunctionID={FunctionID}&IsImport={IsImport}",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        SYS_tblReportCaptionDRO GetReportCaption(string Username, string LanguageID, string FunctionID, bool IsImport);
+
+        [OperationContract]
+        [WebInvoke(Method = "GET", UriTemplate = "/GetComboDynamicList?Username={Username}&LanguageID={LanguageID}&Code={Code}&TableName={TableName}&GetBy={GetBy}",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        SYS_tblReportCaptionDRO GetComboDynamicList(string Username, string LanguageID, string Code, string TableName, string GetBy);
+        #endregion
+
+        #region [SYS_tblImportFileConfig]
+        [OperationContract]
+        [WebInvoke(Method = "GET", UriTemplate = "/CheckValidImportTemplate?Username={Username}&LanguageID={LanguageID}&StoreProcedure={StoreProcedure}&FileName={FileName}&ModuleID={ModuleID}&FunctionID={FunctionID}",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        SYS_tblImportFileConfigDRO CheckValidImportTemplate(string Username, string LanguageID, string StoreProcedure, string FileName, string ModuleID, string FunctionID);
+        #endregion
+
         [OperationContract]
         [WebInvoke(Method = "GET", UriTemplate = "/CheckLogin?Username={Username}&Password={Password}&LanguageID={LanguageID}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
@@ -64,5 +84,12 @@ namespace iPOS.WCFService
         [WebInvoke(Method = "GET", UriTemplate = "/GetProvinceByID?Username={Username}&LanguageID={LanguageID}&ProvinceID={ProvinceID}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         PRO_tblProvinceDRO GetProvinceByID(string Username, string LanguageID, string ProvinceID);
+
+        #region [Tools]
+        [OperationContract]
+        [WebInvoke(Method = "GET", UriTemplate = "/GetTableColumnList?Username={Username}&ObjectName={ObjectName}",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        OBJ_TableColumnDRO GetTableColumnList(string Username, string ObjectName);
+        #endregion
     }
 }

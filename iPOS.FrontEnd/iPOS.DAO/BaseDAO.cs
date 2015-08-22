@@ -21,6 +21,7 @@ namespace iPOS.DAO
             {
                 using (HttpClient client = new HttpClient())
                 {
+                    client.DefaultRequestHeaders.Clear();
                     client.DefaultRequestHeaders.Add("Authorization", "Basic aGVsbGRlbW9uczpfUEBzc3cwcmRz");
                     using (HttpResponseMessage response = await client.GetAsync(url))
                     using (HttpContent content = response.Content)
@@ -46,7 +47,8 @@ namespace iPOS.DAO
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    client.DefaultRequestHeaders.Add("Authorization", "Basic aGVsbGRlbW9uczpfUEBzc3cwcmRz");
+                    client.DefaultRequestHeaders.Clear();
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic aGVsbGRlbW9uczpfUEBzc3cwcmRz");
                     using (HttpResponseMessage response = await client.PostAsync(url, new StringContent(json_data, Encoding.UTF8, "application/json")))
                     using (HttpContent content = response.Content)
                     {
