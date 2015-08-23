@@ -6,7 +6,7 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
-using LanguageEngine = iPOS.IMC.Helper.LanguageManage;
+using LanguageEngine = iPOS.IMC.Helper.LanguageEngine;
 using iPOS.Core.Helper;
 using iPOS.IMC.Helper;
 using iPOS.DTO.Systems;

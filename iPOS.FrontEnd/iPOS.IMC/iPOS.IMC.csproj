@@ -101,7 +101,7 @@
       <DependentUpon>frmOpen.cs</DependentUpon>
     </Compile>
     <Compile Include="Helper\CommonEngine.cs" />
-    <Compile Include="Helper\LanguageManage.cs" />
+    <Compile Include="Helper\LanguageEngine.cs" />
     <Compile Include="Helper\ReportEngine.cs" />
     <Compile Include="Products\uc_Province.cs">
       <SubType>UserControl</SubType>

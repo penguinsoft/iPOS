@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using DevExpress.XtraBars;
-using LanguageEngine = iPOS.IMC.Helper.LanguageManage;
+using LanguageEngine = iPOS.IMC.Helper.LanguageEngine;
 using ConfigEngine = iPOS.Core.Helper.ConfigEngine;
 using iPOS.IMC.Helper;
 using iPOS.IMC.Systems;

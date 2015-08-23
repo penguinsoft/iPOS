@@ -7,7 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using System.Threading.Tasks;
-using LanguageEngine = iPOS.IMC.Helper.LanguageManage;
+using LanguageEngine = iPOS.IMC.Helper.LanguageEngine;
 using EncryptEngine = iPOS.Core.Security.EcryptEngine;
 using ConfigEngine = iPOS.Core.Helper.ConfigEngine;
 using IOEngine = iPOS.Core.Helper.IOEngine;

@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
             this.wzcMain = new DevExpress.XtraWizard.WizardControl();
             this.wwpStepOne = new DevExpress.XtraWizard.WelcomeWizardPage();
             this.locStepOne = new DevExpress.XtraLayout.LayoutControl();
@@ -55,6 +55,8 @@
             this.btnImportSelectedFile = new DevExpress.XtraEditors.SimpleButton();
             this.gluSeletedFiles = new DevExpress.XtraEditors.GridLookUpEdit();
             this.gluViewSeletedFiles = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gcolFileName = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gcolTableName = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridMainData = new DevExpress.XtraGrid.GridControl();
             this.grvMainData = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.logStepTwo = new DevExpress.XtraLayout.LayoutControlGroup();
@@ -75,8 +77,6 @@
             this.lblResult3 = new DevExpress.XtraEditors.LabelControl();
             this.lblResult2 = new DevExpress.XtraEditors.LabelControl();
             this.lblResult1 = new DevExpress.XtraEditors.LabelControl();
-            this.gcolFileName = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gcolTableName = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.wzcMain)).BeginInit();
             this.wzcMain.SuspendLayout();
             this.wwpStepOne.SuspendLayout();
@@ -250,8 +250,8 @@
             this.btnBrowseFile.Location = new System.Drawing.Point(99, 15);
             this.btnBrowseFile.Name = "btnBrowseFile";
             this.btnBrowseFile.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, global::iPOS.IMC.Properties.Resources.browse_16, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject3, "", null, null, true),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, global::iPOS.IMC.Properties.Resources.import_file_16, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject4, "", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, global::iPOS.IMC.Properties.Resources.browse_16, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "", null, null, true),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, global::iPOS.IMC.Properties.Resources.import_file_16, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "", null, null, true)});
             this.btnBrowseFile.Size = new System.Drawing.Size(481, 22);
             this.btnBrowseFile.StyleController = this.locStepOne;
             this.btnBrowseFile.TabIndex = 4;
@@ -373,6 +373,7 @@
             this.btnImportAllFiles.StyleController = this.locStepTwo;
             this.btnImportAllFiles.TabIndex = 7;
             this.btnImportAllFiles.Text = "Nhập Tất Cả Tập Tin";
+            this.btnImportAllFiles.Click += new System.EventHandler(this.btnImportAllFiles_Click);
             // 
             // btnImportSelectedFile
             // 
@@ -383,6 +384,7 @@
             this.btnImportSelectedFile.StyleController = this.locStepTwo;
             this.btnImportSelectedFile.TabIndex = 6;
             this.btnImportSelectedFile.Text = "Nhập Tập Tin Đã Chọn";
+            this.btnImportSelectedFile.Click += new System.EventHandler(this.btnImportSelectedFile_Click);
             // 
             // gluSeletedFiles
             // 
@@ -405,6 +407,22 @@
             this.gluViewSeletedFiles.Name = "gluViewSeletedFiles";
             this.gluViewSeletedFiles.OptionsSelection.EnableAppearanceFocusedCell = false;
             this.gluViewSeletedFiles.OptionsView.ShowGroupPanel = false;
+            // 
+            // gcolFileName
+            // 
+            this.gcolFileName.Caption = "Tệp tin";
+            this.gcolFileName.FieldName = "FileName";
+            this.gcolFileName.Name = "gcolFileName";
+            this.gcolFileName.Visible = true;
+            this.gcolFileName.VisibleIndex = 0;
+            // 
+            // gcolTableName
+            // 
+            this.gcolTableName.Caption = "TableName";
+            this.gcolTableName.FieldName = "TableName";
+            this.gcolTableName.Name = "gcolTableName";
+            this.gcolTableName.Visible = true;
+            this.gcolTableName.VisibleIndex = 1;
             // 
             // gridMainData
             // 
@@ -565,9 +583,10 @@
             this.lblSummary6.AllowHtmlString = true;
             this.lblSummary6.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             this.lblSummary6.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
+            this.lblSummary6.LineLocation = DevExpress.XtraEditors.LineLocation.Right;
             this.lblSummary6.Location = new System.Drawing.Point(259, 190);
             this.lblSummary6.Name = "lblSummary6";
-            this.lblSummary6.Size = new System.Drawing.Size(48, 13);
+            this.lblSummary6.Size = new System.Drawing.Size(64, 13);
             this.lblSummary6.TabIndex = 3;
             this.lblSummary6.Text = "12 dòng";
             // 
@@ -585,9 +604,10 @@
             this.lblSummary5.AllowHtmlString = true;
             this.lblSummary5.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             this.lblSummary5.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
+            this.lblSummary5.LineLocation = DevExpress.XtraEditors.LineLocation.Right;
             this.lblSummary5.Location = new System.Drawing.Point(259, 160);
             this.lblSummary5.Name = "lblSummary5";
-            this.lblSummary5.Size = new System.Drawing.Size(48, 13);
+            this.lblSummary5.Size = new System.Drawing.Size(64, 13);
             this.lblSummary5.TabIndex = 5;
             this.lblSummary5.Text = "12 dòng";
             // 
@@ -596,9 +616,10 @@
             this.lblSummary4.AllowHtmlString = true;
             this.lblSummary4.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             this.lblSummary4.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
+            this.lblSummary4.LineLocation = DevExpress.XtraEditors.LineLocation.Right;
             this.lblSummary4.Location = new System.Drawing.Point(259, 130);
             this.lblSummary4.Name = "lblSummary4";
-            this.lblSummary4.Size = new System.Drawing.Size(48, 13);
+            this.lblSummary4.Size = new System.Drawing.Size(64, 13);
             this.lblSummary4.TabIndex = 6;
             this.lblSummary4.Text = "12 dòng";
             // 
@@ -607,9 +628,10 @@
             this.lblSummary3.AllowHtmlString = true;
             this.lblSummary3.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             this.lblSummary3.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
+            this.lblSummary3.LineLocation = DevExpress.XtraEditors.LineLocation.Right;
             this.lblSummary3.Location = new System.Drawing.Point(259, 100);
             this.lblSummary3.Name = "lblSummary3";
-            this.lblSummary3.Size = new System.Drawing.Size(48, 13);
+            this.lblSummary3.Size = new System.Drawing.Size(64, 13);
             this.lblSummary3.TabIndex = 7;
             this.lblSummary3.Text = "12 dòng";
             // 
@@ -639,22 +661,6 @@
             this.lblResult1.Size = new System.Drawing.Size(338, 13);
             this.lblResult1.TabIndex = 10;
             this.lblResult1.Text = "Số tập tin đã chọn: 10 tệp, trong đó có 02 tệp tin lỗi, 08 tệp tin hợp lệ.";
-            // 
-            // gcolFileName
-            // 
-            this.gcolFileName.Caption = "Tệp tin";
-            this.gcolFileName.FieldName = "FileName";
-            this.gcolFileName.Name = "gcolFileName";
-            this.gcolFileName.Visible = true;
-            this.gcolFileName.VisibleIndex = 0;
-            // 
-            // gcolTableName
-            // 
-            this.gcolTableName.Caption = "TableName";
-            this.gcolTableName.FieldName = "TableName";
-            this.gcolTableName.Name = "gcolTableName";
-            this.gcolTableName.Visible = true;
-            this.gcolTableName.VisibleIndex = 1;
             // 
             // uc_ImportExcel
             // 

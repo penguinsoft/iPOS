@@ -2,6 +2,8 @@
 using System.Data;
 using iPOS.Core.Helper;
 using iPOS.DTO.Systems;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace iPOS.DAO.Systems
 {
@@ -9,7 +11,7 @@ namespace iPOS.DAO.Systems
     {
         SYS_tblImportFileConfigDTO CheckValidImportTemplate(string username, string language_id, string store_procedure, string file_name, string module_id, string function_id);
 
-
+        string ImportDataRow(Dictionary<string, string> input, string store_procedure);
     }
 
     public class SYS_tblImportFileConfigDAO : BaseDAO, ISYS_tblImportFileConfigDAO
@@ -36,6 +38,35 @@ namespace iPOS.DAO.Systems
             catch (Exception ex)
             {
                 logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public string ImportDataRow(Dictionary<string, string> input, string store_procedure)
+        {
+            string result = "";
+            try
+            {
+                if (input != null && input.Count > 0)
+                {
+                    string[] parameters = new string[input.Count];
+                    string[] values = new string[input.Count];
+                    int index = 0;
+                    foreach (KeyValuePair<string, string> item in input)
+                    {
+                        parameters[index] = item.Key + "";
+                        values[index] = item.Value + "";
+                        index++;
+                    }
+
+                    result = db.sExecuteSQL(store_procedure, parameters, values);
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                result = ex.Message;
             }
 
             return result;

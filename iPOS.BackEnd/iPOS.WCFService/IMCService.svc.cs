@@ -20,6 +20,7 @@ using iPOS.DCO.Tools;
 using iPOS.DTO.Product;
 using iPOS.DTO.Systems;
 using iPOS.DTO.Tools;
+using Newtonsoft.Json;
 
 namespace iPOS.WCFService
 {
@@ -418,6 +419,38 @@ namespace iPOS.WCFService
                 result.Message = "Get data failed: " + ex.Message;
                 result.Username = Username;
                 result.TotalItemCount = 0;
+            }
+
+            return result;
+        }
+
+        public SYS_tblImportFileConfigDRO ImportDataRow(string Username, string InputData, string StoreProcedure)
+        {
+            SYS_tblImportFileConfigDRO result = new SYS_tblImportFileConfigDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    string temp = "";
+                    var db = scope.Resolve<ISYS_tblImportFileConfigDAO>();
+                    Dictionary<string, string> input = JsonConvert.DeserializeObject<Dictionary<string, string>>(InputData);
+                    temp = db.ImportDataRow(input, StoreProcedure);
+
+                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
+                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
+                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
+                    result.Username = Username;
+                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Import data failed because " + ex.Message;
+                result.Username = Username;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
             }
 
             return result;

@@ -174,15 +174,15 @@ namespace iPOS.IMC.Helper
 
                     try
                     {
-                        for (int i = 0; i < endCol; i++)
+                        for (int i = 1; i < endCol; i++)
                         {
                             string temp3 = "";
                             if (ws.Cells[0, i].Value != null)
                             {
                                 temp3 = ws.Cells[0, i].Value.ToString().Trim();
-                                if (temp1.IndexOf(temp3 + "#") > 0)
+                                if (temp1.IndexOf(temp3 + "|") > 0)
                                     temp2 = "Trùng header: " + temp3;
-                                temp1 += temp3 + "#";
+                                temp1 += temp3 + "|";
                             }
                             dt.Columns.Add(new DataColumn(temp3, typeof(string)));
                         }
@@ -194,7 +194,7 @@ namespace iPOS.IMC.Helper
                             for (int i = 1; i < endCol; i++)
                             {
                                 string value = ws.Cells[j, i].Value == null ? "" : ws.Cells[j, i].Value.ToString().Trim();
-                                if (j == 1) column_array += value + "#";
+                                if (j == 1) column_array += value + "|";
                                 if (ws.Cells[j, i].Value != null && ws.Cells[j, i].Value.GetType().Equals(typeof(DateTime)))
                                     value = ((DateTime)ws.Cells[j, i].Value).ToString(ConfigEngine.DateTimeFormat);
                                 dr[i - 1] = value;

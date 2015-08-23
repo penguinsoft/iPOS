@@ -25,5 +25,23 @@ namespace iPOS.DAO.Systems
 
             return null;
         }
+
+        public async static Task<string> ImportDataRow(string url)
+        {
+            try
+            {
+                var response_data = await HttpGet(url);
+                var response_collection = JsonConvert.DeserializeObject<SYS_tblImportFileConfigDRO>(response_data + "");
+
+                if (response_collection != null)
+                    return response_collection.Message;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+            }
+
+            return "";
+        }
     }
 }

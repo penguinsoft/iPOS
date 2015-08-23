@@ -27,7 +27,7 @@ namespace iPOS.IMC.Helper
         public static void ShowMessage(string message, byte type)
         {
             string title = "";
-            title = LanguageManage.GetMessageCaption((type == 0) ? "ERROR_TITLE_CAPTION" : "MESSAGE_TITLE_CAPTION", ConfigEngine.Language);
+            title = LanguageEngine.GetMessageCaption((type == 0) ? "ERROR_TITLE_CAPTION" : "MESSAGE_TITLE_CAPTION", ConfigEngine.Language);
             if (type == 0)
                 logger.Error(message);
             XtraMessageBox.Show(message, title, MessageBoxButtons.OK, (type == 1) ? MessageBoxIcon.Information : MessageBoxIcon.Error);
@@ -36,7 +36,7 @@ namespace iPOS.IMC.Helper
         public static void ShowExceptionMessage(Exception ex)
         {
             logger.Error(ex);
-            XtraMessageBox.Show(ex.Message, LanguageManage.GetMessageCaption("ERROR_SYSTEM_TITLE_CAPTION", ConfigEngine.Language), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            XtraMessageBox.Show(ex.Message, LanguageEngine.GetMessageCaption("ERROR_SYSTEM_TITLE_CAPTION", ConfigEngine.Language), MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         public static bool ShowConfirmMessageAlert(string message)
@@ -49,7 +49,7 @@ namespace iPOS.IMC.Helper
         public static void OpenInputForm(XtraUserControl uc, Size size)
         {
             frmOpen frm = new frmOpen();
-            frm.Text = LanguageManage.GetOpenFormText(uc.Name, ConfigEngine.Language);
+            frm.Text = LanguageEngine.GetOpenFormText(uc.Name, ConfigEngine.Language);
             frm.Size = size;
             frm.MaximumSize = size;
             frm.MinimumSize = size;
@@ -67,7 +67,7 @@ namespace iPOS.IMC.Helper
             if (isEdit)
                 temp = (ConfigEngine.Language == "vi") ? "Cập Nhật" : "Update";
             else temp = (ConfigEngine.Language == "vi") ? "Thêm Mới" : "Add New";
-            frm.Text = string.Format("{0} {1}", temp, LanguageManage.GetOpenFormText(uc.Name, ConfigEngine.Language));
+            frm.Text = string.Format("{0} {1}", temp, LanguageEngine.GetOpenFormText(uc.Name, ConfigEngine.Language));
             frm.Size = size;
             frm.MaximumSize = size;
             frm.MinimumSize = size;
@@ -96,7 +96,7 @@ namespace iPOS.IMC.Helper
             if (found)
             {
                 foreach (XtraMdiTabPage _tab in tab.Pages)
-                    if (_tab.Text.ToLower().Equals(LanguageManage.GetOpenFormText(uc.Name, ConfigEngine.Language).ToLower()))
+                    if (_tab.Text.ToLower().Equals(LanguageEngine.GetOpenFormText(uc.Name, ConfigEngine.Language).ToLower()))
                     {
                         tab.SelectedPage = _tab;
                         break;
@@ -105,7 +105,7 @@ namespace iPOS.IMC.Helper
             else
             {
                 XtraForm frm = new XtraForm();
-                frm.Text = LanguageManage.GetOpenFormText(uc.Name, ConfigEngine.Language);
+                frm.Text = LanguageEngine.GetOpenFormText(uc.Name, ConfigEngine.Language);
                 frm.Name = uc.Name;
                 frm.MdiParent = index;
                 uc.Dock = DockStyle.Fill;
@@ -166,7 +166,7 @@ namespace iPOS.IMC.Helper
             {
                 SaveFileDialog sDialog = new SaveFileDialog();
                 sDialog.Filter = "Microsoft Excel (*.xls)|*.xls|Microsoft Excel 2007 (*.xlsx)|*.xlsx|PDF (*.pdf)|*.pdf|Rich Text Format (*.rtf)|*.rtf|Webpage (*.html)|*.html|Rich Text File (*.rtf)|*.rtf|Text File (*.txt)|*.txt";
-                sDialog.Title = LanguageManage.GetMessageCaption("000007", ConfigEngine.Language);
+                sDialog.Title = LanguageEngine.GetMessageCaption("000007", ConfigEngine.Language);
                 if (sDialog.ShowDialog() == DialogResult.OK)
                 {
                     switch (sDialog.FilterIndex)
@@ -193,7 +193,7 @@ namespace iPOS.IMC.Helper
                             grid_view.ExportToText(sDialog.FileName);
                             break;
                     }
-                    if (XtraMessageBox.Show(LanguageManage.GetMessageCaption("000006", ConfigEngine.Language).Replace("$FileName$", sDialog.FileName), (ConfigEngine.Language == "vi") ? "Thông Báo" : "Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+                    if (XtraMessageBox.Show(LanguageEngine.GetMessageCaption("000006", ConfigEngine.Language).Replace("$FileName$", sDialog.FileName), (ConfigEngine.Language == "vi") ? "Thông Báo" : "Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
                     {
                         Process.Start(sDialog.FileName);
                     }

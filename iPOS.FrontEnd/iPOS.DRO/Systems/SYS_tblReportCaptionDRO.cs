@@ -5,13 +5,10 @@ using iPOS.DTO.Systems;
 
 namespace iPOS.DRO.Systems
 {
-    [DataContract]
     public class SYS_tblReportCaptionDRO
     {
-        [DataMember]
         public List<SYS_tblReportCaptionDTO> ReportCaptionList { get; set; }
 
-        [DataMember]
         public List<ComboDynamicItemDTO> ComboDynamicList { get; set; }
     }
 

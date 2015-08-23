@@ -5,10 +5,8 @@ using iPOS.DTO.Systems;
 
 namespace iPOS.DRO.Systems
 {
-    [DataContract]
     public class SYS_tblImportFileConfigDRO : BaseDRO
     {
-        [DataMember]
         public SYS_tblImportFileConfigDTO ImportFileConfigItem { get; set; }
     }
 

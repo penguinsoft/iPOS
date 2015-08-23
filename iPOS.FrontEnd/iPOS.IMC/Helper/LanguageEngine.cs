@@ -16,7 +16,7 @@ using DevExpress.XtraWizard;
 
 namespace iPOS.IMC.Helper
 {
-    public class LanguageManage
+    public class LanguageEngine
     {
         public static string GetMessageCaption(string name, string language)
         {
