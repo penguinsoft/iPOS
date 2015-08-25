@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Drawing;
 using iPOS.Core.Helper;
+using Excel = Microsoft.Office.Interop.Excel;
+using System.Runtime.InteropServices;
 
 namespace iPOS.IMC.Helper
 {
@@ -24,12 +26,78 @@ namespace iPOS.IMC.Helper
                 report_name = report_name.Remove(report_name.LastIndexOf('.'));
                 SaveOptions saveOptions = new XlsSaveOptions(isXlsFormat ? SaveFormat.Excel97To2003 : SaveFormat.Xlsx);
                 wb.Worksheets.RemoveAt(wb.Worksheets.Count - 1);
-                wb.Save(string.Format(@"{0}\{1}_{2}_{3}.{4}", Temp, report_name, DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss"), DateTime.Now.Ticks, isXlsFormat ? "xls" : "xlsx"), saveOptions);
+                string str = string.Format(@"{0}\{1}_{2}_{3}.{4}", Temp, report_name, DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss"), DateTime.Now.Ticks, isXlsFormat ? "xls" : "xlsx");
+                wb.Save(str, saveOptions);
+                DeleteAsposeWorksheet(str);
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
                 return;
+            }
+        }
+
+        public static void DeleteAsposeWorksheet(string file_path)
+        {
+            object missing = Type.Missing;
+            Excel.Application oXL = null;
+            Excel.Workbooks oWBs = null;
+            Excel.Workbook oWB = null;
+            Excel.Worksheet oSheet = null;
+            Excel.Range oCells = null;
+            try
+            {
+                oXL = new Excel.Application();
+                oXL.Visible = false;
+
+                oWBs = oXL.Workbooks;
+                oWB = oWBs.Open(file_path, missing, missing, missing, missing, missing, missing, missing, missing, missing, missing, missing, missing, missing, missing);
+
+                oSheet = oWB.ActiveSheet as Excel.Worksheet;
+                oSheet.Name = "Sheet " + oWB.Worksheets.Count;
+                oCells = oSheet.Cells;
+                oCells[5, 1] = "";
+
+                oSheet = oWB.Worksheets[1] as Excel.Worksheet;
+                ((Excel._Worksheet)oSheet).Activate();
+
+                oWB.Save();
+                oWB.Close(missing, missing, missing);
+                oXL.UserControl = true;
+                oXL.Quit();
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                return;
+            }
+            finally
+            {
+                if (oCells != null)
+                {
+                    Marshal.FinalReleaseComObject(oCells);
+                    oCells = null;
+                }
+                if (oSheet != null)
+                {
+                    Marshal.FinalReleaseComObject(oSheet);
+                    oSheet = null;
+                }
+                if (oWB != null)
+                {
+                    Marshal.FinalReleaseComObject(oWB);
+                    oWB = null;
+                }
+                if (oWBs != null)
+                {
+                    Marshal.FinalReleaseComObject(oWBs);
+                    oWBs = null;
+                }
+                if (oXL != null)
+                {
+                    Marshal.FinalReleaseComObject(oXL);
+                    oXL = null;
+                }
             }
         }
 
