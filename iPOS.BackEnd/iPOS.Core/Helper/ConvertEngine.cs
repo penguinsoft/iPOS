@@ -22,7 +22,13 @@ namespace iPOS.Core.Helper
                 var objT = Activator.CreateInstance<T>();
                 foreach (var pro in properties)
                     if (column_names.Contains(pro.Name))
-                        pro.SetValue(objT, row[pro.Name] == DBNull.Value ? null : row[pro.Name]);
+                    {
+                        if (pro.PropertyType.Equals(typeof(Boolean)))
+                        {
+                            pro.SetValue(objT, row[pro.Name] == DBNull.Value ? false : Convert.ToBoolean(row[pro.Name]));
+                        }
+                        else pro.SetValue(objT, row[pro.Name] == DBNull.Value ? null : row[pro.Name]);
+                    }
                 return objT;
             }).ToList();
         }

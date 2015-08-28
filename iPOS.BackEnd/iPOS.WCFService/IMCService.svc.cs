@@ -116,7 +116,7 @@ namespace iPOS.WCFService
         #endregion
 
         #region [SYS_tblGroupUser]
-        public SYS_tblGroupUserDRO GetAllGroupUsers(string Username, string LanguageID)
+        public SYS_tblGroupUserDRO GetAllGroupUsers(string Username, string LanguageID, bool GetComboBox)
         {
             SYS_tblGroupUserDRO result = new SYS_tblGroupUserDRO();
             try
@@ -125,7 +125,9 @@ namespace iPOS.WCFService
                 {
                     List<SYS_tblGroupUserDTO> temp = new List<SYS_tblGroupUserDTO>();
                     var db = scope.Resolve<ISYS_tblGroupUserDAO>();
-                    temp = db.LoadAllData(Username, LanguageID);
+                    if (!GetComboBox)
+                        temp = db.LoadAllData(Username, LanguageID);
+                    else temp = db.GetDataCombobox(Username, LanguageID);
                     if (temp != null)
                     {
                         result.GroupUserList = Mapper.Map<List<SYS_tblGroupUserDCO>>(temp);
@@ -274,8 +276,15 @@ namespace iPOS.WCFService
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                result.UserItem = Mapper.Map<SYS_tblUserDCO>(new SYS_tblUserDTO());
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = " Check login failed: " + ex.Message;
+                result.Username = Username;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
             }
 
             return result;
@@ -308,6 +317,107 @@ namespace iPOS.WCFService
                 result.Result = false;
                 result.Status = DCO.ResponseStatus.Exception;
                 result.Message = "Load data failed: " + ex.Message;
+                result.Username = Username;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public SYS_tblUserDRO GetUserByID(string Username, string LanguageID, string UsernameOther)
+        {
+            SYS_tblUserDRO result = new SYS_tblUserDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    SYS_tblUserDTO temp = new SYS_tblUserDTO();
+                    var db = scope.Resolve<ISYS_tblUserDAO>();
+                    temp = db.GetDataByID(UsernameOther, Username, LanguageID);
+                    if (temp != null)
+                    {
+                        result.UserItem = Mapper.Map<SYS_tblUserDCO>(temp);
+                        result.Result = true;
+                        result.Status = DCO.ResponseStatus.Success;
+                        result.Message = "";
+                        result.Username = Username;
+                        result.TotalItemCount = 1;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.UserItem = Mapper.Map<SYS_tblUserDCO>(new SYS_tblUserDTO());
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Get data failed: " + ex.Message;
+                result.Username = Username;
+                result.TotalItemCount = 0;
+            }
+
+            return result;
+        }
+
+        public SYS_tblUserDRO InsertUpdateUser(SYS_tblUserDCO user)
+        {
+            SYS_tblUserDRO result = new SYS_tblUserDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    string temp = "";
+                    var db = scope.Resolve<ISYS_tblUserDAO>();
+                    var data = Mapper.Map<SYS_tblUserDTO>(user);
+                    if (user.Activity.Equals(BaseConstant.COMMAND_INSERT_EN))
+                        temp = db.InsertUser(data);
+                    else temp = db.UpdateUser(data);
+
+                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
+                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
+                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
+                    result.Username = user.Username;
+                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Insert new user failed because " + ex.Message;
+                result.Username = user.Username;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public SYS_tblUserDRO DeleteUser(string Username, string LanguageID, string UserCodeList)
+        {
+            SYS_tblUserDRO result = new SYS_tblUserDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    string temp = "";
+                    var db = scope.Resolve<ISYS_tblUserDAO>();
+                    if (UserCodeList.Contains("$"))
+                        temp = db.DeleteUserList(UserCodeList, Username, LanguageID);
+                    else temp = db.DeleteUser(UserCodeList, Username, LanguageID);
+
+                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
+                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
+                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
+                    result.Username = Username;
+                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Delete user failed because " + ex.Message;
                 result.Username = Username;
                 result.TotalItemCount = 0;
                 logger.Error(ex);
@@ -549,10 +659,5 @@ namespace iPOS.WCFService
             return result;
         }
         #endregion
-
-        public SYS_tblUserDRO GetUserByID(string Username, string LanguageID, string UsernameOther)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

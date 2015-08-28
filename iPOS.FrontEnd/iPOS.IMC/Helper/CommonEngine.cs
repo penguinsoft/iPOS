@@ -15,6 +15,7 @@ using DevExpress.XtraGrid.Views.Grid;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace iPOS.IMC.Helper
 {
@@ -208,6 +209,29 @@ namespace iPOS.IMC.Helper
         public static void QuickExportGridViewData(DataTable data_source, GridView grid_view)
         {
             ExportGridViewData(GetDataTableAfterFilter(data_source, grid_view), grid_view);
+        }
+
+        public static bool CheckExistsUnicodeChar(string input)
+        {
+            if (Regex.Matches(input, @"[^a-zA-Z_0-9\s]").Count > 0)
+                return true;
+            return false;
+        }
+
+        public static bool CompareDateEdit(DateEdit from, DateEdit to, bool is_time)
+        {
+            if (is_time)
+            {
+                if (from.DateTime > to.DateTime)
+                    return false;
+            }
+            else
+            {
+                if (from.DateTime.Date > to.DateTime.Date)
+                    return false;
+            }
+
+            return true;
         }
 
         [DllImport("Shlwapi.dll", CharSet = CharSet.Auto)]

@@ -39,7 +39,7 @@ namespace iPOS.IMC.Systems
             {
                 gridGroupUser.DataBindings.Clear();
                 List<iPOS.DTO.Systems.SYS_tblGroupUserDTO> list = new List<iPOS.DTO.Systems.SYS_tblGroupUserDTO>();
-                list = await SYS_tblGroupUserBUS.GetAllGroupUsers(CommonEngine.userInfo.UserName, CommonEngine.userInfo.LanguageID);
+                list = await SYS_tblGroupUserBUS.GetAllGroupUsers(CommonEngine.userInfo.UserName, CommonEngine.userInfo.LanguageID, false);
                 gridGroupUser.DataSource = list;
                 barBottom.Visible = (list.Count > 0) ? true : false;
             }
@@ -137,7 +137,7 @@ namespace iPOS.IMC.Systems
 
         private void btnImport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            CommonEngine.OpenImportExcelForm("PRO_Province_FileSelect.xlsx", "PRO_spfrmProvinceImport", "PRO", "8");
+            CommonEngine.OpenImportExcelForm("SYS_GroupUser_FileSelect.xlsx", "SYS_spfrmGroupUserImport", "SYS", "9");
         }
 
         private void btnExport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)

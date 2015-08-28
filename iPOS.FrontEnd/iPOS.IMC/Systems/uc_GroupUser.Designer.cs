@@ -438,6 +438,7 @@
             this.Controls.Add(this.barDockControlRight);
             this.Controls.Add(this.barDockControlBottom);
             this.Controls.Add(this.barDockControlTop);
+            this.DoubleBuffered = true;
             this.Name = "uc_GroupUser";
             this.Size = new System.Drawing.Size(860, 489);
             this.Load += new System.EventHandler(this.uc_GroupUser_Load);

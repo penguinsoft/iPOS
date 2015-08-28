@@ -10,6 +10,8 @@ namespace iPOS.DAO.Systems
     {
         List<SYS_tblGroupUserDTO> LoadAllData(string username, string language_id);
 
+        List<SYS_tblGroupUserDTO> GetDataCombobox(string username, string language_id);
+
         SYS_tblGroupUserDTO GetDataByID(string group_user_id, string username, string language_id);
 
         string InsertGroupUser(SYS_tblGroupUserDTO item);
@@ -52,6 +54,25 @@ namespace iPOS.DAO.Systems
                 {
                     logger.Error(strErr);
                     return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public List<SYS_tblGroupUserDTO> GetDataCombobox(string username, string language_id)
+        {
+            List<SYS_tblGroupUserDTO> result = new List<SYS_tblGroupUserDTO>();
+            try
+            {
+                DataTable data = db.GetDataTable("SYS_spfrmGroupUser", new string[] { "Activity", "Username", "LanguageID" }, new object[] { BaseConstant.COMMAND_GET_COMBO_BOX, username, language_id });
+                if (data != null && data.Rows.Count > 0)
+                {
+                    result = ConvertEngine.ConvertDataTableToObjectList<SYS_tblGroupUserDTO>(data);
                 }
             }
             catch (Exception ex)

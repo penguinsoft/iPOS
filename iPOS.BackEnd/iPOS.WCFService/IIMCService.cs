@@ -18,9 +18,9 @@ namespace iPOS.WCFService
 
         #region [SYS_tblGroupUser]
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/GetAllGroupUsers?Username={Username}&LanguageID={LanguageID}",
+        [WebInvoke(Method = "GET", UriTemplate = "/GetAllGroupUsers?Username={Username}&LanguageID={LanguageID}&GetComboBox={GetComboBox}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        SYS_tblGroupUserDRO GetAllGroupUsers(string Username, string LanguageID);
+        SYS_tblGroupUserDRO GetAllGroupUsers(string Username, string LanguageID, bool GetComboBox);
 
         [OperationContract]
         [WebInvoke(Method = "GET", UriTemplate = "/GetGroupUserByID?Username={Username}&LanguageID={LanguageID}&GroupID={GroupID}",
@@ -49,6 +49,17 @@ namespace iPOS.WCFService
         [WebInvoke(Method = "GET", UriTemplate = "/GetUserByID?Username={Username}&LanguageID={LanguageID}&UsernameOther={UsernameOther}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         SYS_tblUserDRO GetUserByID(string Username, string LanguageID, string UsernameOther);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/InsertUpdateUser",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
+                BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        SYS_tblUserDRO InsertUpdateUser(SYS_tblUserDCO user); 
+
+        [OperationContract]
+        [WebInvoke(Method = "GET", UriTemplate = "/DeleteUser?Username={Username}&LanguageID={LanguageID}&UserCodeList={UserCodeList}",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        SYS_tblUserDRO DeleteUser(string Username, string LanguageID, string UserCodeList); 
         #endregion
 
         #region [SYS_tblReportCaption]

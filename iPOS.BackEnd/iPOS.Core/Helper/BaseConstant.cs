@@ -27,5 +27,7 @@ namespace iPOS.Core.Helper
         public const string COMMAND_DELETE_LIST_VI = "Xóa Danh Sách";
 
         public const string COMMAND_DELETE_LIST_EN = "DeleteList";
+
+        public const string COMMAND_GET_COMBO_BOX = "GetDataCombobox";
     }
 }

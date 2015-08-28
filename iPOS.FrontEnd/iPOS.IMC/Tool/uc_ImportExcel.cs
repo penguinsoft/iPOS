@@ -27,6 +27,7 @@ namespace iPOS.IMC.Tool
         DataSet dsMainData;
         #endregion
 
+        #region [Personal Methods]
         public void ChangeLanguage(string language)
         {
             LanguageEngine.ChangeCaptionLayoutControlGroup(this.Name, language, new DevExpress.XtraLayout.LayoutControlGroup[] { logSelectedFiles, logGridMainData });
@@ -98,8 +99,6 @@ namespace iPOS.IMC.Tool
 
         private void ShowDataTable(DataTable dt)
         {
-            foreach (DevExpress.XtraGrid.Columns.GridColumn column in grvMainData.Columns)
-                if (!column.FieldName.Equals("Return Message")) grvMainData.Columns.Remove(column);
             grvMainData.OptionsBehavior.AutoPopulateColumns = true;
             gridMainData.DataBindings.Clear();
             gridMainData.DataSource = dt;
@@ -206,7 +205,9 @@ namespace iPOS.IMC.Tool
 
             return true;
         }
+        #endregion
 
+        #region [Form Events]
         public uc_ImportExcel()
         {
             InitializeComponent();
@@ -360,6 +361,7 @@ namespace iPOS.IMC.Tool
                     dsMainData.Clear();
                     dsMainData.Tables.Clear();
                     e.Cancel = false;
+                    isImportAnyFile = false;
                 }
                 else e.Cancel = true;
             }
@@ -373,7 +375,7 @@ namespace iPOS.IMC.Tool
                     total_row += dt.Rows.Count;
                     foreach (DataRow dr in dt.Rows)
                     {
-                        switch (dr["Return Message"] + "")
+                        switch ((dr["Return Message"] + "").Trim())
                         {
                             case "Inserted": inserted_row += 1; break;
                             case "Updated": updated_row += 1; break;
@@ -440,5 +442,6 @@ namespace iPOS.IMC.Tool
                 }
             }
         }
+        #endregion
     }
 }

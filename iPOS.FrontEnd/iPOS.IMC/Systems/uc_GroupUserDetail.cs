@@ -45,6 +45,12 @@ namespace iPOS.IMC.Systems
                 txtGroupCode.Focus();
                 return false;
             }
+            if (CommonEngine.CheckExistsUnicodeChar(txtGroupCode.Text))
+            {
+                depError.SetError(txtGroupCode, LanguageEngine.GetMessageCaption("000021", ConfigEngine.Language));
+                txtGroupCode.Focus();
+                return false;
+            }
             if (txtVNName.Text.Trim().Equals(""))
             {
                 depError.SetError(txtVNName, LanguageEngine.GetMessageCaption("000003", ConfigEngine.Language));
@@ -70,6 +76,7 @@ namespace iPOS.IMC.Systems
             mmoNote.EditValue = (item == null) ? null : item.Note;
             chkIsDefault.Checked = (item == null) ? false : item.IsDefault;
             chkActive.Checked = (item == null) ? true : item.Active;
+            txtGroupCode.Properties.ReadOnly = (item == null) ? false : true;
             if (item == null)
             {
                 depError.ClearErrors();
@@ -135,7 +142,11 @@ namespace iPOS.IMC.Systems
         {
             if (txtGroupCode.Text.Contains(" "))
                 depError.SetError(txtGroupCode, LanguageEngine.GetMessageCaption("000004", ConfigEngine.Language));
-            else depError.SetError(txtGroupCode, (string.IsNullOrEmpty(txtGroupCode.Text)) ? LanguageEngine.GetMessageCaption("000003", ConfigEngine.Language) : null);
+            else if (string.IsNullOrEmpty(txtGroupCode.Text))
+                depError.SetError(txtGroupCode, LanguageEngine.GetMessageCaption("000003", ConfigEngine.Language));
+            else if (CommonEngine.CheckExistsUnicodeChar(txtGroupCode.Text))
+                depError.SetError(txtGroupCode, LanguageEngine.GetMessageCaption("000021", ConfigEngine.Language));
+            else depError.SetError(txtGroupCode, null);
         }
 
         private void txtVNName_EditValueChanged(object sender, EventArgs e)

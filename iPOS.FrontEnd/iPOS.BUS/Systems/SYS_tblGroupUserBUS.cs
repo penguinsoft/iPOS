@@ -10,9 +10,10 @@ namespace iPOS.BUS.Systems
 {
     public class SYS_tblGroupUserBUS : BaseBUS
     {
-        public async static Task<List<SYS_tblGroupUserDTO>> GetAllGroupUsers(string username, string language)
+        public async static Task<List<SYS_tblGroupUserDTO>> GetAllGroupUsers(string username, string language, bool is_combobox)
         {
-            string url = string.Format("{0}/GetAllGroupUsers?Username={1}&LanguageID={2}", GetBaseUrl(), username, language);
+            string url = string.Format("{0}/GetAllGroupUsers?Username={1}&LanguageID={2}&GetComboBox={3}", GetBaseUrl(), username, language, is_combobox ? "True" : "False");
+            
             return await SYS_tblGroupUserDAO.GetAllGroupUsers(url);
         }
 

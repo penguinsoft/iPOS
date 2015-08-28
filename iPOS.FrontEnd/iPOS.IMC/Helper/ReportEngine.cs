@@ -11,13 +11,14 @@ using System.Drawing;
 using iPOS.Core.Helper;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace iPOS.IMC.Helper
 {
     public class ReportEngine
     {
         protected static ILogEngine logger = new LogEngine();
-        private static string Temp = @"D:\Working\Hell Demons\iPOS_Old\trunk\iPOS\iPOS_Old\iPOS.Management\Template";
+        private static string Temp = @"D:\Working\Hell Demons\iPOS\trunk\iPOS.FrontEnd\iPOS.Core\Template";
 
         public static void SaveExportCustom(Workbook wb, string report_name, bool isXlsFormat)
         {
@@ -25,10 +26,19 @@ namespace iPOS.IMC.Helper
             {
                 report_name = report_name.Remove(report_name.LastIndexOf('.'));
                 SaveOptions saveOptions = new XlsSaveOptions(isXlsFormat ? SaveFormat.Excel97To2003 : SaveFormat.Xlsx);
-                wb.Worksheets.RemoveAt(wb.Worksheets.Count - 1);
-                string str = string.Format(@"{0}\{1}_{2}_{3}.{4}", Temp, report_name, DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss"), DateTime.Now.Ticks, isXlsFormat ? "xls" : "xlsx");
-                wb.Save(str, saveOptions);
-                DeleteAsposeWorksheet(str);
+                
+                SaveFileDialog sDialog = new SaveFileDialog();
+                string str = string.Format(@"{0}_{1}_{2}", report_name, DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss"), DateTime.Now.Ticks);
+                sDialog.Filter = isXlsFormat ? "Microsoft Excel (*.xls)|*.xls" : "Microsoft Excel 2007 (*.xlsx)";
+                sDialog.Title = LanguageEngine.GetMessageCaption("000007", ConfigEngine.Language);
+                sDialog.InitialDirectory = Temp;
+                sDialog.FileName = str;
+                if (sDialog.ShowDialog() == DialogResult.OK)
+                {
+                    wb.Save(sDialog.FileName, saveOptions);
+                    DeleteAsposeWorksheet(sDialog.FileName);
+                    CommonEngine.ShowMessage(ConfigEngine.Language.Equals("vi") ? "Tải tập tin mẫu thành công!" : "Download template success!", 1);
+                }
             }
             catch (Exception ex)
             {
