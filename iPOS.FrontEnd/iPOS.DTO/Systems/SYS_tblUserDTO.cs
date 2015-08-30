@@ -4,7 +4,7 @@ namespace iPOS.DTO.Systems
 {
     public class SYS_tblUserDTO : BaseDTO
     {
-        public string UserName { get; set; }
+        public string Username { get; set; }
 
         public string Password { get; set; }
 
@@ -12,15 +12,15 @@ namespace iPOS.DTO.Systems
 
         public DateTime EffectiveDate { get; set; }
 
-        public object ToDate { get; set; }
+        public System.Nullable<DateTime> ToDate { get; set; }
 
-        public object DateChangePass { get; set; }
+        public System.Nullable<DateTime> DateChangePass { get; set; }
 
         public bool Locked { get; set; }
 
-        public object LockDate { get; set; }
+        public System.Nullable<DateTime> LockDate { get; set; }
 
-        public object UnlockDate { get; set; }
+        public System.Nullable<DateTime> UnlockDate { get; set; }
 
         public bool PassNeverExpired { get; set; }
 

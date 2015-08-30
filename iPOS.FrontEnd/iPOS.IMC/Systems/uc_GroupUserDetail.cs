@@ -100,10 +100,20 @@ namespace iPOS.IMC.Systems
                     IsDefault = chkIsDefault.Checked,
                     Active = chkActive.Checked,
                     Activity = (isEdit) ? BaseConstant.UPDATE_COMMAND : BaseConstant.INSERT_COMMAND,
-                    Username = CommonEngine.userInfo.Username,
+                    UserID = CommonEngine.userInfo.UserID,
                     LanguageID = ConfigEngine.Language
                 };
-                strErr = await SYS_tblGroupUserBUS.InsertUpdateGroupUser(item);
+                strErr = await SYS_tblGroupUserBUS.InsertUpdateGroupUser(item, new SYS_tblActionLogDTO
+                {
+                    Activity = BaseConstant.COMMAND_INSERT_EN,
+                    UserID = CommonEngine.userInfo.UserID,
+                    LanguageID = ConfigEngine.Language,
+                    ActionEN = (isEdit) ? BaseConstant.COMMAND_UPDATE_EN : BaseConstant.COMMAND_INSERT_EN,
+                    ActionVN = (isEdit) ? BaseConstant.COMMAND_UPDATE_VI : BaseConstant.COMMAND_INSERT_VI,
+                    FunctionID = "9",
+                    DescriptionVN = string.Format("Tài khoản '{0}' vừa thêm mới thành công nhóm người dùng có mã '{1}'.", CommonEngine.userInfo.UserID, txtGroupCode.Text),
+                    DescriptionEN = string.Format("Account '{0}' has inserted new group user successfully with group code is '{1}'.", CommonEngine.userInfo.UserID, txtGroupCode.Text)
+                });
                 if (!string.IsNullOrEmpty(strErr))
                 {
                     CommonEngine.ShowMessage(strErr, 0);

@@ -49,6 +49,9 @@
             this.chkIsEmployee = new DevExpress.XtraEditors.CheckEdit();
             this.gluGroupUser = new DevExpress.XtraEditors.GridLookUpEdit();
             this.gluViewGroupUser = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gcolGroupCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gcolGroupName = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gcolGroupID = new DevExpress.XtraGrid.Columns.GridColumn();
             this.txtPassword = new DevExpress.XtraEditors.TextEdit();
             this.txtUsername = new DevExpress.XtraEditors.TextEdit();
             this.logMain = new DevExpress.XtraLayout.LayoutControlGroup();
@@ -74,9 +77,6 @@
             this.lciButtonSaveClose = new DevExpress.XtraLayout.LayoutControlItem();
             this.esiEmpty1 = new DevExpress.XtraLayout.EmptySpaceItem();
             this.depError = new DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider(this.components);
-            this.gcolGroupCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gcolGroupName = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gcolGroupID = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.locMain)).BeginInit();
             this.locMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mmoNote.Properties)).BeginInit();
@@ -245,6 +245,7 @@
             this.dteUnlockDate.Size = new System.Drawing.Size(117, 20);
             this.dteUnlockDate.StyleController = this.locMain;
             this.dteUnlockDate.TabIndex = 13;
+            this.dteUnlockDate.EditValueChanged += new System.EventHandler(this.dteUnlockDate_EditValueChanged);
             // 
             // dteLockDate
             // 
@@ -281,6 +282,7 @@
             this.dteToDate.Size = new System.Drawing.Size(117, 20);
             this.dteToDate.StyleController = this.locMain;
             this.dteToDate.TabIndex = 10;
+            this.dteToDate.EditValueChanged += new System.EventHandler(this.dteToDate_EditValueChanged);
             // 
             // dteEffectiveDate
             // 
@@ -321,6 +323,7 @@
             this.txtFullName.Size = new System.Drawing.Size(329, 20);
             this.txtFullName.StyleController = this.locMain;
             this.txtFullName.TabIndex = 7;
+            this.txtFullName.EditValueChanged += new System.EventHandler(this.txtFullName_EditValueChanged);
             // 
             // chkIsEmployee
             // 
@@ -356,10 +359,36 @@
             this.gluViewGroupUser.OptionsView.ShowAutoFilterRow = true;
             this.gluViewGroupUser.OptionsView.ShowGroupPanel = false;
             // 
+            // gcolGroupCode
+            // 
+            this.gcolGroupCode.Caption = "Mã nhóm";
+            this.gcolGroupCode.FieldName = "GroupCode";
+            this.gcolGroupCode.Name = "gcolGroupCode";
+            this.gcolGroupCode.Visible = true;
+            this.gcolGroupCode.VisibleIndex = 0;
+            this.gcolGroupCode.Width = 275;
+            // 
+            // gcolGroupName
+            // 
+            this.gcolGroupName.Caption = "Tên nhóm";
+            this.gcolGroupName.FieldName = "GroupName";
+            this.gcolGroupName.Name = "gcolGroupName";
+            this.gcolGroupName.Visible = true;
+            this.gcolGroupName.VisibleIndex = 1;
+            this.gcolGroupName.Width = 843;
+            // 
+            // gcolGroupID
+            // 
+            this.gcolGroupID.Caption = "GroupID";
+            this.gcolGroupID.FieldName = "GroupID";
+            this.gcolGroupID.Name = "gcolGroupID";
+            this.gcolGroupID.Width = 20;
+            // 
             // txtPassword
             // 
             this.txtPassword.Location = new System.Drawing.Point(105, 57);
             this.txtPassword.Name = "txtPassword";
+            this.txtPassword.Properties.UseSystemPasswordChar = true;
             this.txtPassword.Size = new System.Drawing.Size(329, 20);
             this.txtPassword.StyleController = this.locMain;
             this.txtPassword.TabIndex = 4;
@@ -653,31 +682,6 @@
             // depError
             // 
             this.depError.ContainerControl = this;
-            // 
-            // gcolGroupCode
-            // 
-            this.gcolGroupCode.Caption = "Mã nhóm";
-            this.gcolGroupCode.FieldName = "GroupCode";
-            this.gcolGroupCode.Name = "gcolGroupCode";
-            this.gcolGroupCode.Visible = true;
-            this.gcolGroupCode.VisibleIndex = 0;
-            this.gcolGroupCode.Width = 275;
-            // 
-            // gcolGroupName
-            // 
-            this.gcolGroupName.Caption = "Tên nhóm";
-            this.gcolGroupName.FieldName = "GroupName";
-            this.gcolGroupName.Name = "gcolGroupName";
-            this.gcolGroupName.Visible = true;
-            this.gcolGroupName.VisibleIndex = 1;
-            this.gcolGroupName.Width = 843;
-            // 
-            // gcolGroupID
-            // 
-            this.gcolGroupID.Caption = "GroupID";
-            this.gcolGroupID.FieldName = "GroupID";
-            this.gcolGroupID.Name = "gcolGroupID";
-            this.gcolGroupID.Width = 20;
             // 
             // uc_UserDetail
             // 

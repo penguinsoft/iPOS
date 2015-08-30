@@ -21,7 +21,7 @@ namespace iPOS.DAO
             string result = "";
             try
             {
-                result = db.sExecuteSQL("SYS_spfrmActionLog", new string[] { "Activity", "Username", "LanguageID", "FullName", "ComputerName", "AccountWindows", "ActionVN", "ActionEN", "ActionTime", "FunctionID", "FunctionNameVN", "FunctionNameEN", "IPLAN", "IPWAN", "MacAddress", "DescriptionVN", "DescriptionEN" }, new object[] { log.Activity, log.Username, log.LanguageID, log.FullName, log.ComputerName, log.AccountWindows, log.ActionVN, log.ActionEN, DateTime.Now, log.FunctionID, log.FunctionNameVN, log.FunctionNameEN, log.IPLAN, log.IPWAN, log.MacAddress, log.DescriptionVN, log.DescriptionEN });
+                result = db.sExecuteSQL("SYS_spfrmActionLog", new string[] { "Activity", "Username", "LanguageID", "FullName", "ComputerName", "AccountWindows", "ActionVN", "ActionEN", "ActionTime", "FunctionID", "FunctionNameVN", "FunctionNameEN", "IPLAN", "IPWAN", "MacAddress", "DescriptionVN", "DescriptionEN" }, new object[] { log.Activity, log.UserID, log.LanguageID, log.FullName, log.ComputerName, log.AccountWindows, log.ActionVN, log.ActionEN, DateTime.Now, log.FunctionID, log.FunctionNameVN, log.FunctionNameEN, log.IPLAN, log.IPWAN, log.MacAddress, log.DescriptionVN, log.DescriptionEN });
 
                 if (!string.IsNullOrEmpty(result))
                     logger.Error(result);

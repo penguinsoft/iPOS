@@ -48,7 +48,7 @@ namespace iPOS.DAO
                 using (HttpClient client = new HttpClient())
                 {
                     client.DefaultRequestHeaders.Clear();
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic aGVsbGRlbW9uczpfUEBzc3cwcmRz");
+                    client.DefaultRequestHeaders.Add("Authorization", "Basic aGVsbGRlbW9uczpfUEBzc3cwcmRz");
                     using (HttpResponseMessage response = await client.PostAsync(url, new StringContent(json_data, Encoding.UTF8, "application/json")))
                     using (HttpContent content = response.Content)
                     {
@@ -58,26 +58,6 @@ namespace iPOS.DAO
             }
             catch (Exception ex)
             {
-                logger.Error(ex);
-            }
-
-            return result;
-        }
-
-        public static async Task<string> ManageActionLog(string url, string json_data)
-        {
-            string result = "";
-            try
-            {
-                var response_data = await HttpPost(url, json_data) + "";
-                var response_collection = JsonConvert.DeserializeObject<SYS_tblActionLogDRO>(response_data + "");
-
-                if (response_collection != null)
-                    result = "";
-            }
-            catch (Exception ex)
-            {
-                result = ex.Message;
                 logger.Error(ex);
             }
 

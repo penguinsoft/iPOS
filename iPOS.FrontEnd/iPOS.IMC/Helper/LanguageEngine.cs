@@ -13,6 +13,7 @@ using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraLayout;
 using DevExpress.XtraWizard;
+using DevExpress.XtraTreeList.Columns;
 
 namespace iPOS.IMC.Helper
 {
@@ -250,6 +251,23 @@ namespace iPOS.IMC.Helper
         public static void ChangeCaptionCompletionWizardPage(string parent_name, string language, CompletionWizardPage complete_page)
         {
             complete_page.Text = CaptionEngine.GetControlCaption(parent_name, complete_page.Name, BaseConstant.CONTROL_TEXT, language);
+        }
+
+        public static void ChangeCaptionSplitContainerControl(string parent_name, string language, SplitContainerControl split_container_control)
+        {
+            split_container_control.Panel1.Text = CaptionEngine.GetControlCaption(parent_name, split_container_control.Name + "_Panel1", BaseConstant.CONTROL_TEXT, language);
+            split_container_control.Panel2.Text = CaptionEngine.GetControlCaption(parent_name, split_container_control.Name + "_Panel2", BaseConstant.CONTROL_TEXT, language);
+        }
+
+        public static void ChangeCaptionTreeListColumn(string parent_name, string language, TreeListColumn tree_list_column)
+        {
+            tree_list_column.Caption = CaptionEngine.GetControlCaption(parent_name, tree_list_column.Name, BaseConstant.CONTROL_TEXT, language);
+        }
+
+        public static void ChangeCaptionTreeListColumn(string parent_name, string language, TreeListColumn[] tree_list_columns)
+        {
+            foreach (TreeListColumn tree_list_column in tree_list_columns)
+                ChangeCaptionTreeListColumn(parent_name, language, tree_list_column);
         }
     }
 }

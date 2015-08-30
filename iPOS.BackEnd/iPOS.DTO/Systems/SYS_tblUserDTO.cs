@@ -4,7 +4,7 @@ namespace iPOS.DTO.Systems
 {
     public class SYS_tblUserDTO
     {
-        public string UserName { get; set; }
+        public string Username { get; set; }
 
         public string Password { get; set; }
 
@@ -40,7 +40,7 @@ namespace iPOS.DTO.Systems
 
         public string Activity { get; set; }
 
-        public string Username { get; set; }
+        public string UserID { get; set; }
 
         public string LanguageID { get; set; }
 

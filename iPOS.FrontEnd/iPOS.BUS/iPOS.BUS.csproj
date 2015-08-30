@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="BaseBUS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Systems\SYS_tblActionLogBUS.cs" />
     <Compile Include="Systems\SYS_tblGroupUserBUS.cs" />
     <Compile Include="Systems\SYS_tblImportFileConfigBUS.cs" />
     <Compile Include="Systems\SYS_tblReportCaptionBUS.cs" />

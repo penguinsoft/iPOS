@@ -89,12 +89,14 @@
             // 
             // btnCancel
             // 
+            this.btnCancel.Image = global::iPOS.IMC.Properties.Resources.cancel_16;
             this.btnCancel.Location = new System.Drawing.Point(297, 192);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(96, 22);
             this.btnCancel.StyleController = this.locMain;
             this.btnCancel.TabIndex = 6;
             this.btnCancel.Text = "Hủy Bỏ";
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // locMain
             // 
@@ -116,12 +118,14 @@
             // 
             // btnSave
             // 
+            this.btnSave.Image = global::iPOS.IMC.Properties.Resources.save_end_16;
             this.btnSave.Location = new System.Drawing.Point(197, 192);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(96, 22);
             this.btnSave.StyleController = this.locMain;
             this.btnSave.TabIndex = 5;
             this.btnSave.Text = "Lưu Lại";
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // txtConfirmPassword
             // 
@@ -131,6 +135,7 @@
             this.txtConfirmPassword.Size = new System.Drawing.Size(269, 20);
             this.txtConfirmPassword.StyleController = this.locMain;
             this.txtConfirmPassword.TabIndex = 4;
+            this.txtConfirmPassword.EditValueChanged += new System.EventHandler(this.txtConfirmPassword_EditValueChanged);
             // 
             // txtNewPassword
             // 
@@ -140,6 +145,7 @@
             this.txtNewPassword.Size = new System.Drawing.Size(269, 20);
             this.txtNewPassword.StyleController = this.locMain;
             this.txtNewPassword.TabIndex = 3;
+            this.txtNewPassword.EditValueChanged += new System.EventHandler(this.txtNewPassword_EditValueChanged);
             // 
             // txtOldPassword
             // 
@@ -149,6 +155,7 @@
             this.txtOldPassword.Size = new System.Drawing.Size(269, 20);
             this.txtOldPassword.StyleController = this.locMain;
             this.txtOldPassword.TabIndex = 2;
+            this.txtOldPassword.EditValueChanged += new System.EventHandler(this.txtOldPassword_EditValueChanged);
             // 
             // txtGroupName
             // 

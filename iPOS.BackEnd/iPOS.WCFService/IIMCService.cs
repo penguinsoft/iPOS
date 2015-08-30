@@ -10,11 +10,13 @@ namespace iPOS.WCFService
     [ServiceContract]
     public interface IIMCService
     {
+        #region [SYS_tblActionLog]
         [OperationContract]
-        [WebInvoke(Method = "POST", UriTemplate = "/ManageActionLog",
+        [WebInvoke(Method = "POST", UriTemplate = "/InsertUpdateLog",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
                 BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        SYS_tblActionLogDRO ManageActionLog(SYS_tblActionLogDCO actionLog);
+        SYS_tblActionLogDRO InsertUpdateLog(SYS_tblActionLogDCO actionLog);
+        #endregion
 
         #region [SYS_tblGroupUser]
         [OperationContract]
@@ -41,6 +43,11 @@ namespace iPOS.WCFService
 
         #region [SYS_tblUser]
         [OperationContract]
+        [WebInvoke(Method = "GET", UriTemplate = "/CheckLogin?Username={Username}&Password={Password}&LanguageID={LanguageID}",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        SYS_tblUserDRO CheckLogin(string Username, string Password, string LanguageID);
+
+        [OperationContract]
         [WebInvoke(Method = "GET", UriTemplate = "/GetAllUsers?Username={Username}&LanguageID={LanguageID}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         SYS_tblUserDRO GetAllUsers(string Username, string LanguageID);
@@ -60,6 +67,11 @@ namespace iPOS.WCFService
         [WebInvoke(Method = "GET", UriTemplate = "/DeleteUser?Username={Username}&LanguageID={LanguageID}&UserCodeList={UserCodeList}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         SYS_tblUserDRO DeleteUser(string Username, string LanguageID, string UserCodeList); 
+
+        [OperationContract]
+        [WebInvoke(Method = "GET", UriTemplate = "/ChangeUserPassword?Username={Username}&LanguageID={LanguageID}&Password={Password}",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        SYS_tblUserDRO ChangeUserPassword(string Username, string LanguageID, string Password); 
         #endregion
 
         #region [SYS_tblReportCaption]
@@ -85,11 +97,6 @@ namespace iPOS.WCFService
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         SYS_tblImportFileConfigDRO ImportDataRow(string Username, string InputData, string StoreProcedure);
         #endregion
-
-        [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/CheckLogin?Username={Username}&Password={Password}&LanguageID={LanguageID}",
-            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        SYS_tblUserDRO CheckLogin(string Username, string Password, string LanguageID);
 
         [OperationContract]
         [WebInvoke(Method = "GET", UriTemplate = "/GetAllProvinces?Username={Username}&LanguageID={LanguageID}",

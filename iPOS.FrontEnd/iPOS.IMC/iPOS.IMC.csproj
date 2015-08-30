@@ -153,6 +153,7 @@
     <Compile Include="Systems\uc_UserPermission.Designer.cs">
       <DependentUpon>uc_UserPermission.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tool\TreeListChangeChildNodesOperation.cs" />
     <Compile Include="Tool\uc_ImportExcel.cs">
       <SubType>UserControl</SubType>
     </Compile>

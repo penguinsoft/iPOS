@@ -47,6 +47,7 @@
     <Compile Include="Systems\SYS_tblActionLogDCO.cs" />
     <Compile Include="Systems\SYS_tblGroupUserDCO.cs" />
     <Compile Include="Systems\SYS_tblImportFileConfigDCO.cs" />
+    <Compile Include="Systems\SYS_tblPermissionDCO.cs" />
     <Compile Include="Systems\SYS_tblReportCaptionDCO.cs" />
     <Compile Include="Systems\SYS_tblUserDCO.cs" />
     <Compile Include="Tools\OBJ_TableColumnDCO.cs" />

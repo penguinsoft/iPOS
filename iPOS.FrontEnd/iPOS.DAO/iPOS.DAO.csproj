@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="BaseDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Systems\SYS_tblActionLogDAO.cs" />
     <Compile Include="Systems\SYS_tblGroupUserDAO.cs" />
     <Compile Include="Systems\SYS_tblImportFileConfigDAO.cs" />
     <Compile Include="Systems\SYS_tblUserDAO.cs" />

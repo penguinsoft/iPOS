@@ -16,7 +16,7 @@ namespace iPOS.DRO.Systems
     public class SYS_tblUserDCO
     {
         [DataMember]
-        public string UserName { get; set; }
+        public string Username { get; set; }
 
         [DataMember]
         public string Password { get; set; }
@@ -28,19 +28,19 @@ namespace iPOS.DRO.Systems
         public DateTime EffectiveDate { get; set; }
 
         [DataMember]
-        public object ToDate { get; set; }
+        public System.Nullable<DateTime> ToDate { get; set; }
 
         [DataMember]
-        public object DateChangePass { get; set; }
+        public System.Nullable<DateTime> DateChangePass { get; set; }
 
         [DataMember]
         public bool Locked { get; set; }
 
         [DataMember]
-        public object LockDate { get; set; }
+        public System.Nullable<DateTime> LockDate { get; set; }
 
         [DataMember]
-        public object UnlockDate { get; set; }
+        public System.Nullable<DateTime> UnlockDate { get; set; }
 
         [DataMember]
         public bool PassNeverExpired { get; set; }
@@ -73,7 +73,7 @@ namespace iPOS.DRO.Systems
         public string Activity { get; set; }
 
         [DataMember]
-        public string Username { get; set; }
+        public string UserID { get; set; }
 
         [DataMember]
         public string LanguageID { get; set; }

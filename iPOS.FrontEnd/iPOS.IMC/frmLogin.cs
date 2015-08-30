@@ -8,12 +8,13 @@ using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using System.Threading.Tasks;
 using LanguageEngine = iPOS.IMC.Helper.LanguageEngine;
-using EncryptEngine = iPOS.Core.Security.EcryptEngine;
+using EncryptEngine = iPOS.Core.Security.EncryptEngine;
 using ConfigEngine = iPOS.Core.Helper.ConfigEngine;
 using IOEngine = iPOS.Core.Helper.IOEngine;
 using CommonEngine = iPOS.IMC.Helper.CommonEngine;
 using UserBUS = iPOS.BUS.Systems.SYS_tblUserBUS;
 using iPOS.DTO.Systems;
+using iPOS.BUS.Systems;
 
 namespace iPOS.IMC
 {
@@ -64,8 +65,8 @@ namespace iPOS.IMC
                 if (user != null)
                 {
                     CommonEngine.userInfo = user;
-                    string temp = user.Username.Substring(user.Username.IndexOf("$") + 1);
-                    user.Username = user.Username.Replace("$" + temp, "");
+                    string temp = user.Username.Substring(user.Username.IndexOf("|") + 1);
+                    user.Username = user.Username.Replace("|" + temp, "");
                     CommonEngine.SystemDateTime = Convert.ToDateTime(temp);
 
                     if (user.Locked)
@@ -130,7 +131,7 @@ namespace iPOS.IMC
                 IOEngine.Write("Initialize", "Username", username);
                 IOEngine.Write("Initialize", "Password", password);
 
-                string strErr = await UserBUS.ManageActionLog(new SYS_tblActionLogDTO
+                string strErr = await SYS_tblActionLogBUS.InsertUpdateLog(new SYS_tblActionLogDTO
                 {
                     ID = string.Empty,
                     ActionVN = "Đăng Nhập",
@@ -141,14 +142,10 @@ namespace iPOS.IMC
                     FunctionNameEN = "Login",
                     DescriptionVN = string.Format("Account '{0}' has logined to system at {1}.", txtUsername.Text, DateTime.Now),
                     DescriptionEN = string.Format("Tài khoản '{0}' vừa đăng nhập vào hệ thống vào lúc {1}.", txtUsername.Text, DateTime.Now),
+                    FullName = CommonEngine.userInfo.FullName,
                     Activity = "Insert",
-                    Username = CommonEngine.userInfo.UserName,
-                    LanguageID = ConfigEngine.Language,
-                    Visible = true,
-                    Creater = CommonEngine.userInfo.UserName,
-                    CreateTime = DateTime.Now,
-                    Editer = string.Empty,
-                    EditTime = null
+                    UserID = CommonEngine.userInfo.UserID,
+                    LanguageID = ConfigEngine.Language
                 });
 
                 if (!string.IsNullOrEmpty(strErr))

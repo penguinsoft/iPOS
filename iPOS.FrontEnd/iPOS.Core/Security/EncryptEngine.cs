@@ -5,7 +5,7 @@ using System.Text;
 
 namespace iPOS.Core.Security
 {
-    public class EcryptEngine
+    public class EncryptEngine
     {
         protected const string passPhrase = "Pas5pr@se";
         protected const string saltValue = "s@1tValue";

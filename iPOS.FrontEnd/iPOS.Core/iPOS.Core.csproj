@@ -55,7 +55,7 @@
     <Compile Include="Logger\ILogEngine.cs" />
     <Compile Include="Logger\LogEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Security\EcryptEngine.cs" />
+    <Compile Include="Security\EncryptEngine.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

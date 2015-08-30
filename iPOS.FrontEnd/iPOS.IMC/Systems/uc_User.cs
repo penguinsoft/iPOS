@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -38,7 +38,17 @@ namespace iPOS.IMC.Systems
             {
                 gridUser.DataBindings.Clear();
                 List<iPOS.DTO.Systems.SYS_tblUserDTO> list = new List<iPOS.DTO.Systems.SYS_tblUserDTO>();
-                list = await SYS_tblUserBUS.GetAllUsers(CommonEngine.userInfo.UserName, CommonEngine.userInfo.LanguageID);
+                list = await SYS_tblUserBUS.GetAllUsers(CommonEngine.userInfo.UserID, CommonEngine.userInfo.LanguageID, new SYS_tblActionLogDTO
+                {
+                    Activity = BaseConstant.COMMAND_INSERT_EN,
+                    UserID = CommonEngine.userInfo.UserID,
+                    LanguageID = ConfigEngine.Language,
+                    ActionEN = BaseConstant.COMMAND_LOAD_ALL_DATA_EN,
+                    ActionVN = BaseConstant.COMMAND_LOAD_ALL_DATA_VI,
+                    FunctionID = "10",
+                    DescriptionVN = string.Format("Tài khoản '{0}' vừa tải thành công dữ liệu người dùng.", CommonEngine.userInfo.UserID),
+                    DescriptionEN = string.Format("Account '{0}' downloaded successfully data of users.", CommonEngine.userInfo.UserID)
+                });
                 gridUser.DataSource = list;
                 barBottom.Visible = (list.Count > 0) ? true : false;
             }
@@ -65,7 +75,7 @@ namespace iPOS.IMC.Systems
             }
         }
 
-        private async void DeleteGroupUser()
+        private async void DeleteUser()
         {
             string strErr = "ready";
             try
@@ -73,12 +83,32 @@ namespace iPOS.IMC.Systems
                 if (user_code_list.Contains("$"))
                 {
                     if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000012", ConfigEngine.Language).Replace("$Count$", user_code_list.Split('$').Length.ToString())))
-                        strErr = await SYS_tblUserBUS.DeleteUser(user_code_list, CommonEngine.userInfo.Username, ConfigEngine.Language);
+                        strErr = await SYS_tblUserBUS.DeleteUser(user_code_list, CommonEngine.userInfo.Username, ConfigEngine.Language, new SYS_tblActionLogDTO
+                        {
+                            Activity = BaseConstant.COMMAND_INSERT_EN,
+                            UserID = CommonEngine.userInfo.UserID,
+                            LanguageID = ConfigEngine.Language,
+                            ActionVN = BaseConstant.COMMAND_DELETE_VI,
+                            ActionEN = BaseConstant.COMMAND_DELETE_EN,
+                            FunctionID = "10",
+                            DescriptionVN = string.Format("Tài khoản '{0}' vừa xóa thành công người dùng có các tên tài khoản '{1}'.", CommonEngine.userInfo.UserID, user_code_list.Replace("$", ", ")),
+                            DescriptionEN = string.Format("Account '{0}' has deleted user successfully with username are '{1}'.", CommonEngine.userInfo.UserID, user_code_list.Replace("$", ", "))
+                        });
                 }
                 else
                 {
                     if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000005", ConfigEngine.Language)))
-                        strErr = await SYS_tblUserBUS.DeleteUser(user_code_list, CommonEngine.userInfo.Username, ConfigEngine.Language);
+                        strErr = await SYS_tblUserBUS.DeleteUser(user_code_list, CommonEngine.userInfo.Username, ConfigEngine.Language, new SYS_tblActionLogDTO
+                        {
+                            Activity = BaseConstant.COMMAND_INSERT_EN,
+                            UserID = CommonEngine.userInfo.UserID,
+                            LanguageID = ConfigEngine.Language,
+                            ActionVN = BaseConstant.COMMAND_DELETE_VI,
+                            ActionEN = BaseConstant.COMMAND_DELETE_EN,
+                            FunctionID = "10",
+                            DescriptionVN = string.Format("Tài khoản '{0}' vừa xóa thành công người dùng có tên tài khoản '{1}'.", CommonEngine.userInfo.UserID, user_code_list),
+                            DescriptionEN = string.Format("Account '{0}' has deleted user successfully with username is '{1}'.", CommonEngine.userInfo.UserID, user_code_list)
+                        });
                 }
 
                 if (!strErr.Equals("ready"))
@@ -108,14 +138,19 @@ namespace iPOS.IMC.Systems
             CommonEngine.OpenInputForm(new uc_UserDetail(this), new Size(455, 460), false);
         }
 
-        private void btnUpdate_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private async void btnUpdate_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
+            if (curItem.Count > 0)
+            {
+                SYS_tblUserDTO item = await SYS_tblUserBUS.GetUserItem(CommonEngine.userInfo.UserID, ConfigEngine.Language, curItem[0].Username);
+                if (item != null)
+                    CommonEngine.OpenInputForm(new uc_UserDetail(this, item), new Size(455, 460), true);
+            }
         }
 
         private void btnDelete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
+            DeleteUser();
         }
 
         private void btnPrint_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -125,52 +160,57 @@ namespace iPOS.IMC.Systems
 
         private void btnReload_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
+            GetAllUsers();
         }
 
         private void btnImport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
+            CommonEngine.OpenImportExcelForm("SYS_User_FileSelect.xlsx", "SYS_spfrmUserImport", "SYS", "10");
         }
 
         private void btnExport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
+            CommonEngine.QuickExportGridViewData(ConvertEngine.ConvertObjectListToDataTable<SYS_tblGroupUserDTO>(gridUser.DataSource as List<SYS_tblGroupUserDTO>), grvUser);
         }
 
         private void btnClose_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
+            this.ParentForm.Close();
         }
 
         private void uc_User_Load(object sender, EventArgs e)
         {
-
+            GetAllUsers();
         }
 
         private void grvUser_CustomDrawRowIndicator(object sender, DevExpress.XtraGrid.Views.Grid.RowIndicatorCustomDrawEventArgs e)
         {
-
+            if (e.RowHandle >= 0 && e.Info.IsRowIndicator)
+                e.Info.DisplayText = e.RowHandle + 1 + "";
         }
 
         private void grvUser_DoubleClick(object sender, EventArgs e)
         {
-
+            btnUpdate_ItemClick(null, null);
         }
 
         private void grvUser_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
         {
-
+            GetCurrentRow();
         }
 
         private void grvUser_FocusedRowLoaded(object sender, DevExpress.XtraGrid.Views.Base.RowEventArgs e)
         {
-
+            GetCurrentRow();
         }
 
         private void grvUser_SelectionChanged(object sender, DevExpress.Data.SelectionChangedEventArgs e)
         {
+            user_code_list = "";
+            foreach (int index in grvUser.GetSelectedRows())
+                user_code_list += grvUser.GetRowCellDisplayText(index, gcolUsername) + "$";
 
+            if (user_code_list.Length > 0) user_code_list = user_code_list.Substring(0, user_code_list.Length - 1);
         }
     }
 }

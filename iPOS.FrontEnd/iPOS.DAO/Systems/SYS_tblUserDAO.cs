@@ -20,7 +20,6 @@ namespace iPOS.DAO.Systems
                 if (response_collection != null)
                 {
                     result = response_collection.UserItem;
-                    result.Username += "$" + response_collection.Message;
                 }
 
                 return result;
@@ -88,6 +87,25 @@ namespace iPOS.DAO.Systems
         }
 
         public async static Task<string> DeleteUser(string url)
+        {
+            try
+            {
+                var response_data = await HttpGet(url);
+                var response_collection = JsonConvert.DeserializeObject<SYS_tblUserDRO>(response_data + "");
+
+                if (response_collection != null)
+                    return response_collection.Message;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                return ex.Message;
+            }
+
+            return "";
+        }
+
+        public async static Task<string> ChangeUserPassword(string url)
         {
             try
             {

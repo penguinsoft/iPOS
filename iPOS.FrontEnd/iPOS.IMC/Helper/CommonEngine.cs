@@ -213,7 +213,15 @@ namespace iPOS.IMC.Helper
 
         public static bool CheckExistsUnicodeChar(string input)
         {
-            if (Regex.Matches(input, @"[^a-zA-Z_0-9\s]").Count > 0)
+            if (Regex.IsMatch(input, @"[^a-zA-Z_0-9\s]"))
+                return true;
+            return false;
+        }
+
+        public static bool CheckValidEmailAddress(string input)
+        {
+            if (string.IsNullOrEmpty(input)) return true;
+            if (Regex.IsMatch(input, @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$"))
                 return true;
             return false;
         }

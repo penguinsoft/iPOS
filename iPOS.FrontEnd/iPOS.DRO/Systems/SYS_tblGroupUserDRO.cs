@@ -40,7 +40,7 @@ namespace iPOS.DRO.Systems
         public string Activity { get; set; }
 
         [DataMember]
-        public string Username { get; set; }
+        public string UserID { get; set; }
 
         [DataMember]
         public string Language { get; set; }

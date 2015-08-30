@@ -6,7 +6,7 @@ namespace iPOS.DTO
     {
         public string Activity { get; set; }
 
-        public string Username { get; set; }
+        public string UserID { get; set; }
 
         public string LanguageID { get; set; }
 

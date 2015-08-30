@@ -65,33 +65,34 @@ namespace iPOS.IMC
 
         private void btnChangePassword_ItemClick(object sender, ItemClickEventArgs e)
         {
-            CommonEngine.OpenInputForm(new uc_ChangePassword(), new System.Drawing.Size(400, 225));
+            CommonEngine.OpenInputForm(new uc_ChangePassword(false), new System.Drawing.Size(400, 225)); //is expired 250
         }
 
         private void btnUserList_ItemClick(object sender, ItemClickEventArgs e)
         {
-            CommonEngine.OpenMdiChildForm(this, new uc_User(), tabMain);
+            CommonEngine.OpenMdiChildForm(this, new uc_User(ConfigEngine.Language), tabMain);
         }
 
         private void btnPermission_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (language.Equals("vi"))
-                language = "en";
-            else language = "vi";
+            CommonEngine.OpenMdiChildForm(this, new uc_UserPermission(ConfigEngine.Language), tabMain);
+            //if (language.Equals("vi"))
+            //    language = "en";
+            //else language = "vi";
 
-            ChangeCaptionLanguage(language);
+            //ChangeCaptionLanguage(language);
 
-            foreach (DevExpress.XtraEditors.XtraForm frm in this.MdiChildren)
-            {
-                foreach (Control ctl in frm.Controls)
-                {
-                    if (ctl.Name.StartsWith("uc_"))
-                    {
-                        ChangeCaptionInMdiChildren(ctl);
-                        break;
-                    }
-                }
-            }
+            //foreach (DevExpress.XtraEditors.XtraForm frm in this.MdiChildren)
+            //{
+            //    foreach (Control ctl in frm.Controls)
+            //    {
+            //        if (ctl.Name.StartsWith("uc_"))
+            //        {
+            //            ChangeCaptionInMdiChildren(ctl);
+            //            break;
+            //        }
+            //    }
+            //}
         }
     }
 }

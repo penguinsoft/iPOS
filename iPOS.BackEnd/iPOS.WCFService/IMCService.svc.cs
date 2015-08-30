@@ -83,7 +83,7 @@ namespace iPOS.WCFService
         }
 
         #region [SYS_tblActionLog]
-        public SYS_tblActionLogDRO ManageActionLog(SYS_tblActionLogDCO actionLog)
+        public SYS_tblActionLogDRO InsertUpdateLog(SYS_tblActionLogDCO actionLog)
         {
             logger.Info("Start insert new action log");
             SYS_tblActionLogDRO result = new SYS_tblActionLogDRO();
@@ -94,11 +94,11 @@ namespace iPOS.WCFService
                     string temp = "";
                     var db = scope.Resolve<ISYS_tblActionLogDAO>();
                     var data = Mapper.Map<SYS_tblActionLogDTO>(actionLog);
-                    temp = db.ManageActionLog(data);
+                    temp = db.InsertUpdateLog(data);
 
                     result.Result = !string.IsNullOrEmpty(temp) ? false : true;
                     result.Message = !string.IsNullOrEmpty(temp) ? temp : "";
-                    result.Username = actionLog.Username;
+                    result.Username = actionLog.UserID;
                     result.TotalItemCount = !string.IsNullOrEmpty(temp) ? 0 : 1;
                 }
             }
@@ -106,7 +106,7 @@ namespace iPOS.WCFService
             {
                 result.Result = false;
                 result.Message = ex.Message;
-                result.Username = actionLog.Username;
+                result.Username = actionLog.UserID;
                 result.TotalItemCount = 0;
                 logger.Error(ex);
             }
@@ -204,7 +204,7 @@ namespace iPOS.WCFService
                     result.Result = string.IsNullOrEmpty(temp) ? true : false;
                     result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
                     result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
-                    result.Username = groupUser.Username;
+                    result.Username = groupUser.UserID;
                     result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
                 }
             }
@@ -213,7 +213,7 @@ namespace iPOS.WCFService
                 result.Result = false;
                 result.Status = DCO.ResponseStatus.Exception;
                 result.Message = "Insert new group user failed because " + ex.Message;
-                result.Username = groupUser.Username;
+                result.Username = groupUser.UserID;
                 result.TotalItemCount = 0;
                 logger.Error(ex);
             }
@@ -270,7 +270,7 @@ namespace iPOS.WCFService
                     {
                         result.UserItem = Mapper.Map<SYS_tblUserDCO>(temp);
                         result.Result = true;
-                        result.Message = temp.Username.Substring(temp.Username.IndexOf("$") + 1);
+                        result.Message = temp.Username;
                         result.Username = Username;
                         result.TotalItemCount = 1;
                     }
@@ -418,6 +418,37 @@ namespace iPOS.WCFService
                 result.Result = false;
                 result.Status = DCO.ResponseStatus.Exception;
                 result.Message = "Delete user failed because " + ex.Message;
+                result.Username = Username;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public SYS_tblUserDRO ChangeUserPassword(string Username, string LanguageID, string Password)
+        {
+            SYS_tblUserDRO result = new SYS_tblUserDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    string temp = "";
+                    var db = scope.Resolve<ISYS_tblUserDAO>();
+                    temp = db.ChangeUserPassword(Username, LanguageID, Password);
+
+                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
+                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
+                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
+                    result.Username = Username;
+                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Change user password failed because " + ex.Message;
                 result.Username = Username;
                 result.TotalItemCount = 0;
                 logger.Error(ex);

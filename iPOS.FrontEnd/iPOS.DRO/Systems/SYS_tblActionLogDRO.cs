@@ -31,7 +31,7 @@ namespace iPOS.DRO.Systems
         public string ActionEN { get; set; }
 
         [DataMember]
-        public object ActionTime { get; set; }
+        public DateTime ActionTime { get; set; }
 
         [DataMember]
         public string FunctionID { get; set; }
@@ -61,7 +61,7 @@ namespace iPOS.DRO.Systems
         public string Activity { get; set; }
 
         [DataMember]
-        public string Username { get; set; }
+        public string UserID { get; set; }
 
         [DataMember]
         public string LanguageID { get; set; }
@@ -73,12 +73,12 @@ namespace iPOS.DRO.Systems
         public string Creater { get; set; }
 
         [DataMember]
-        public object CreateTime { get; set; }
+        public DateTime CreateTime { get; set; }
 
         [DataMember]
         public string Editer { get; set; }
 
         [DataMember]
-        public object EditTime { get; set; }
+        public System.Nullable<DateTime> EditTime { get; set; }
     }
 }

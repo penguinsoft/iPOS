@@ -8,7 +8,7 @@ namespace iPOS.DCO.Systems
     public class SYS_tblUserDCO
     {
         [DataMember]
-        public string UserName { get; set; }
+        public string Username { get; set; }
 
         [DataMember]
         public string Password { get; set; }
@@ -62,7 +62,7 @@ namespace iPOS.DCO.Systems
         public string Activity { get; set; }
 
         [DataMember]
-        public string Username { get; set; }
+        public string UserID { get; set; }
 
         [DataMember]
         public string LanguageID { get; set; }

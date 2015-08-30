@@ -38,8 +38,18 @@ namespace iPOS.IMC.Systems
             try
             {
                 gridGroupUser.DataBindings.Clear();
-                List<iPOS.DTO.Systems.SYS_tblGroupUserDTO> list = new List<iPOS.DTO.Systems.SYS_tblGroupUserDTO>();
-                list = await SYS_tblGroupUserBUS.GetAllGroupUsers(CommonEngine.userInfo.UserName, CommonEngine.userInfo.LanguageID, false);
+
+                List<iPOS.DTO.Systems.SYS_tblGroupUserDTO> list = await SYS_tblGroupUserBUS.GetAllGroupUsers(CommonEngine.userInfo.UserID, CommonEngine.userInfo.LanguageID, false, new SYS_tblActionLogDTO
+                {
+                    Activity = BaseConstant.COMMAND_INSERT_EN,
+                    UserID = CommonEngine.userInfo.UserID,
+                    LanguageID = ConfigEngine.Language,
+                    ActionEN = BaseConstant.COMMAND_LOAD_ALL_DATA_EN,
+                    ActionVN = BaseConstant.COMMAND_LOAD_ALL_DATA_VI,
+                    FunctionID = "9",
+                    DescriptionVN = string.Format("Tài khoản '{0}' vừa tải thành công dữ liệu nhóm người dùng.", CommonEngine.userInfo.UserID),
+                    DescriptionEN = string.Format("Account '{0}' downloaded successfully data of group users.", CommonEngine.userInfo.UserID)
+                });
                 gridGroupUser.DataSource = list;
                 barBottom.Visible = (list.Count > 0) ? true : false;
             }
@@ -74,12 +84,32 @@ namespace iPOS.IMC.Systems
                 if (group_id_list.Contains("$"))
                 {
                     if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000012", ConfigEngine.Language).Replace("$Count$", group_id_list.Split('$').Length.ToString())))
-                        strErr = await SYS_tblGroupUserBUS.DeleteGroupUser(group_id_list, group_code_list, CommonEngine.userInfo.Username, ConfigEngine.Language);
+                        strErr = await SYS_tblGroupUserBUS.DeleteGroupUser(group_id_list, group_code_list, CommonEngine.userInfo.UserID, ConfigEngine.Language, new SYS_tblActionLogDTO
+                        {
+                            Activity = BaseConstant.COMMAND_INSERT_EN,
+                            UserID = CommonEngine.userInfo.UserID,
+                            LanguageID = ConfigEngine.Language,
+                            ActionEN = BaseConstant.COMMAND_DELETE_LIST_EN,
+                            ActionVN = BaseConstant.COMMAND_DELETE_LIST_VI,
+                            FunctionID = "9",
+                            DescriptionVN = string.Format("Tài khoản '{0}' vừa xóa thành công nhóm người dùng có mã '{1}'.", CommonEngine.userInfo.UserID, group_code_list.Replace("$", ", ")),
+                            DescriptionEN = string.Format("Account '{0}' has deleted group user successfully with group code are '{1}'.", CommonEngine.userInfo.UserID, group_code_list.Replace("$", ", "))
+                        });
                 }
                 else
                 {
                     if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000005", ConfigEngine.Language)))
-                        strErr = await SYS_tblGroupUserBUS.DeleteGroupUser(group_id_list, group_code_list, CommonEngine.userInfo.Username, ConfigEngine.Language);
+                        strErr = await SYS_tblGroupUserBUS.DeleteGroupUser(group_id_list, group_code_list, CommonEngine.userInfo.UserID, ConfigEngine.Language, new SYS_tblActionLogDTO
+                        {
+                            Activity = BaseConstant.COMMAND_DELETE_EN,
+                            UserID = CommonEngine.userInfo.UserID,
+                            LanguageID = ConfigEngine.Language,
+                            ActionEN = BaseConstant.COMMAND_DELETE_EN,
+                            ActionVN = BaseConstant.COMMAND_DELETE_VI,
+                            FunctionID = "9",
+                            DescriptionVN = string.Format("Tài khoản '{0}' vừa xóa thành công nhóm người dùng có mã '{1}'.", CommonEngine.userInfo.UserID, group_code_list),
+                            DescriptionEN = string.Format("Account '{0}' has deleted group user successfully with group code is '{1}'.", CommonEngine.userInfo.UserID, group_code_list)
+                        });
                 }
 
                 if (!strErr.Equals("ready"))

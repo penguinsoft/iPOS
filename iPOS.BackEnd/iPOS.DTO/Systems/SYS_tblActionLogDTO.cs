@@ -16,7 +16,7 @@ namespace iPOS.DTO.Systems
 
         public string ActionEN { get; set; }
 
-        public object ActionTime { get; set; }
+        public DateTime ActionTime { get; set; }
 
         public string FunctionID { get; set; }
 
@@ -36,7 +36,7 @@ namespace iPOS.DTO.Systems
 
         public string Activity { get; set; }
 
-        public string Username { get; set; }
+        public string UserID { get; set; }
 
         public string LanguageID { get; set; }
 
@@ -44,10 +44,10 @@ namespace iPOS.DTO.Systems
 
         public string Creater { get; set; }
 
-        public object CreateTime { get; set; }
+        public DateTime CreateTime { get; set; }
 
         public string Editer { get; set; }
 
-        public object EditTime { get; set; }
+        public System.Nullable<DateTime> EditTime { get; set; }
     }
 }
