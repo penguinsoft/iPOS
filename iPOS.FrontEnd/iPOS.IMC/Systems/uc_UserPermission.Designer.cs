@@ -34,15 +34,7 @@
             this.barTop = new DevExpress.XtraBars.Bar();
             this.btnSave = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnClose = new DevExpress.XtraBars.BarLargeButtonItem();
-            this.bar3 = new DevExpress.XtraBars.Bar();
-            this.lblCreater = new DevExpress.XtraBars.BarStaticItem();
-            this.lblCreaterValue = new DevExpress.XtraBars.BarStaticItem();
-            this.lblCreateTime = new DevExpress.XtraBars.BarStaticItem();
-            this.lblCreateTimeValue = new DevExpress.XtraBars.BarStaticItem();
-            this.lblEditer = new DevExpress.XtraBars.BarStaticItem();
-            this.lblEditerValue = new DevExpress.XtraBars.BarStaticItem();
-            this.lblEditTime = new DevExpress.XtraBars.BarStaticItem();
-            this.lblEditTimeValue = new DevExpress.XtraBars.BarStaticItem();
+            this.barBottom = new DevExpress.XtraBars.Bar();
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
@@ -76,6 +68,10 @@
             this.txtNote = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
             this.tlcID = new DevExpress.XtraTreeList.Columns.TreeListColumn();
             this.tlcFunctionID = new DevExpress.XtraTreeList.Columns.TreeListColumn();
+            this.tlcCreater = new DevExpress.XtraTreeList.Columns.TreeListColumn();
+            this.tlcCreateTime = new DevExpress.XtraTreeList.Columns.TreeListColumn();
+            this.tlcEditer = new DevExpress.XtraTreeList.Columns.TreeListColumn();
+            this.tlcEditTime = new DevExpress.XtraTreeList.Columns.TreeListColumn();
             ((System.ComponentModel.ISupportInitialize)(this.barMain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sccMain)).BeginInit();
             this.sccMain.SuspendLayout();
@@ -98,7 +94,7 @@
             // 
             this.barMain.Bars.AddRange(new DevExpress.XtraBars.Bar[] {
             this.barTop,
-            this.bar3});
+            this.barBottom});
             this.barMain.DockControls.Add(this.barDockControlTop);
             this.barMain.DockControls.Add(this.barDockControlBottom);
             this.barMain.DockControls.Add(this.barDockControlLeft);
@@ -106,18 +102,10 @@
             this.barMain.Form = this;
             this.barMain.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.btnSave,
-            this.btnClose,
-            this.lblCreater,
-            this.lblCreaterValue,
-            this.lblCreateTime,
-            this.lblCreateTimeValue,
-            this.lblEditer,
-            this.lblEditerValue,
-            this.lblEditTime,
-            this.lblEditTimeValue});
+            this.btnClose});
             this.barMain.MainMenu = this.barTop;
             this.barMain.MaxItemId = 10;
-            this.barMain.StatusBar = this.bar3;
+            this.barMain.StatusBar = this.barBottom;
             // 
             // barTop
             // 
@@ -141,6 +129,7 @@
             this.btnSave.Glyph = global::iPOS.IMC.Properties.Resources.save_end_16;
             this.btnSave.Id = 0;
             this.btnSave.Name = "btnSave";
+            this.btnSave.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnSave_ItemClick);
             // 
             // btnClose
             // 
@@ -148,88 +137,20 @@
             this.btnClose.Glyph = global::iPOS.IMC.Properties.Resources.close_16;
             this.btnClose.Id = 1;
             this.btnClose.Name = "btnClose";
+            this.btnClose.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnClose_ItemClick);
             // 
-            // bar3
+            // barBottom
             // 
-            this.bar3.BarName = "Status bar";
-            this.bar3.CanDockStyle = DevExpress.XtraBars.BarCanDockStyle.Bottom;
-            this.bar3.DockCol = 0;
-            this.bar3.DockRow = 0;
-            this.bar3.DockStyle = DevExpress.XtraBars.BarDockStyle.Bottom;
-            this.bar3.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.lblCreater),
-            new DevExpress.XtraBars.LinkPersistInfo(this.lblCreaterValue),
-            new DevExpress.XtraBars.LinkPersistInfo(this.lblCreateTime),
-            new DevExpress.XtraBars.LinkPersistInfo(this.lblCreateTimeValue),
-            new DevExpress.XtraBars.LinkPersistInfo(this.lblEditer),
-            new DevExpress.XtraBars.LinkPersistInfo(this.lblEditerValue),
-            new DevExpress.XtraBars.LinkPersistInfo(this.lblEditTime),
-            new DevExpress.XtraBars.LinkPersistInfo(this.lblEditTimeValue)});
-            this.bar3.OptionsBar.AllowQuickCustomization = false;
-            this.bar3.OptionsBar.DrawDragBorder = false;
-            this.bar3.OptionsBar.UseWholeRow = true;
-            this.bar3.Text = "Status bar";
-            // 
-            // lblCreater
-            // 
-            this.lblCreater.Caption = "Người tạo:";
-            this.lblCreater.Id = 2;
-            this.lblCreater.Name = "lblCreater";
-            this.lblCreater.TextAlignment = System.Drawing.StringAlignment.Near;
-            // 
-            // lblCreaterValue
-            // 
-            this.lblCreaterValue.AllowHtmlText = DevExpress.Utils.DefaultBoolean.True;
-            this.lblCreaterValue.Caption = "<b><color=RED>admin</color></b>";
-            this.lblCreaterValue.Id = 3;
-            this.lblCreaterValue.Name = "lblCreaterValue";
-            this.lblCreaterValue.TextAlignment = System.Drawing.StringAlignment.Near;
-            // 
-            // lblCreateTime
-            // 
-            this.lblCreateTime.Caption = "Ngày tạo:";
-            this.lblCreateTime.Id = 4;
-            this.lblCreateTime.Name = "lblCreateTime";
-            this.lblCreateTime.TextAlignment = System.Drawing.StringAlignment.Near;
-            // 
-            // lblCreateTimeValue
-            // 
-            this.lblCreateTimeValue.AllowHtmlText = DevExpress.Utils.DefaultBoolean.True;
-            this.lblCreateTimeValue.Caption = "<b><color=RED>01/01/2015</color></b>";
-            this.lblCreateTimeValue.Id = 5;
-            this.lblCreateTimeValue.Name = "lblCreateTimeValue";
-            this.lblCreateTimeValue.TextAlignment = System.Drawing.StringAlignment.Near;
-            // 
-            // lblEditer
-            // 
-            this.lblEditer.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
-            this.lblEditer.Caption = "Người cập nhật:";
-            this.lblEditer.Id = 6;
-            this.lblEditer.Name = "lblEditer";
-            this.lblEditer.TextAlignment = System.Drawing.StringAlignment.Near;
-            // 
-            // lblEditerValue
-            // 
-            this.lblEditerValue.AllowHtmlText = DevExpress.Utils.DefaultBoolean.True;
-            this.lblEditerValue.Caption = "<b><color=RED>admin</color></b>";
-            this.lblEditerValue.Id = 7;
-            this.lblEditerValue.Name = "lblEditerValue";
-            this.lblEditerValue.TextAlignment = System.Drawing.StringAlignment.Near;
-            // 
-            // lblEditTime
-            // 
-            this.lblEditTime.Caption = "Ngày cập nhật:";
-            this.lblEditTime.Id = 8;
-            this.lblEditTime.Name = "lblEditTime";
-            this.lblEditTime.TextAlignment = System.Drawing.StringAlignment.Near;
-            // 
-            // lblEditTimeValue
-            // 
-            this.lblEditTimeValue.AllowHtmlText = DevExpress.Utils.DefaultBoolean.True;
-            this.lblEditTimeValue.Caption = "<b><color=RED>01/01/2015</color></b>";
-            this.lblEditTimeValue.Id = 9;
-            this.lblEditTimeValue.Name = "lblEditTimeValue";
-            this.lblEditTimeValue.TextAlignment = System.Drawing.StringAlignment.Near;
+            this.barBottom.BarName = "Status bar";
+            this.barBottom.CanDockStyle = DevExpress.XtraBars.BarCanDockStyle.Bottom;
+            this.barBottom.DockCol = 0;
+            this.barBottom.DockRow = 0;
+            this.barBottom.DockStyle = DevExpress.XtraBars.BarDockStyle.Bottom;
+            this.barBottom.OptionsBar.AllowQuickCustomization = false;
+            this.barBottom.OptionsBar.DrawDragBorder = false;
+            this.barBottom.OptionsBar.UseWholeRow = true;
+            this.barBottom.Text = "Status bar";
+            this.barBottom.Visible = false;
             // 
             // barDockControlTop
             // 
@@ -242,22 +163,22 @@
             // 
             this.barDockControlBottom.CausesValidation = false;
             this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.barDockControlBottom.Location = new System.Drawing.Point(0, 493);
-            this.barDockControlBottom.Size = new System.Drawing.Size(1318, 25);
+            this.barDockControlBottom.Location = new System.Drawing.Point(0, 495);
+            this.barDockControlBottom.Size = new System.Drawing.Size(1318, 23);
             // 
             // barDockControlLeft
             // 
             this.barDockControlLeft.CausesValidation = false;
             this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.barDockControlLeft.Location = new System.Drawing.Point(0, 42);
-            this.barDockControlLeft.Size = new System.Drawing.Size(0, 451);
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 453);
             // 
             // barDockControlRight
             // 
             this.barDockControlRight.CausesValidation = false;
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
             this.barDockControlRight.Location = new System.Drawing.Point(1318, 42);
-            this.barDockControlRight.Size = new System.Drawing.Size(0, 451);
+            this.barDockControlRight.Size = new System.Drawing.Size(0, 453);
             // 
             // sccMain
             // 
@@ -280,7 +201,7 @@
             this.sccMain.Panel2.MinSize = 500;
             this.sccMain.Panel2.ShowCaption = true;
             this.sccMain.Panel2.Text = "Thông Tin Phân Quyền Dữ Liệu";
-            this.sccMain.Size = new System.Drawing.Size(1318, 451);
+            this.sccMain.Size = new System.Drawing.Size(1318, 453);
             this.sccMain.SplitterPosition = 281;
             this.sccMain.TabIndex = 4;
             this.sccMain.Text = "splitContainerControl1";
@@ -307,8 +228,9 @@
             this.trlUser.OptionsView.ShowColumns = false;
             this.trlUser.OptionsView.ShowHorzLines = false;
             this.trlUser.SelectImageList = this.imcGroupUser;
-            this.trlUser.Size = new System.Drawing.Size(277, 428);
+            this.trlUser.Size = new System.Drawing.Size(277, 430);
             this.trlUser.TabIndex = 0;
+            this.trlUser.FocusedNodeChanged += new DevExpress.XtraTreeList.FocusedNodeChangedEventHandler(this.trlUser_FocusedNodeChanged);
             // 
             // tlcName
             // 
@@ -348,7 +270,11 @@
             this.tlcUserLevelID,
             this.tlcNote,
             this.tlcID,
-            this.tlcFunctionID});
+            this.tlcFunctionID,
+            this.tlcCreater,
+            this.tlcCreateTime,
+            this.tlcEditer,
+            this.tlcEditTime});
             this.trlPermission.Dock = System.Windows.Forms.DockStyle.Fill;
             this.trlPermission.Location = new System.Drawing.Point(0, 0);
             this.trlPermission.Name = "trlPermission";
@@ -364,7 +290,7 @@
             this.chkAllowExport,
             this.cboUserLevel,
             this.txtNote});
-            this.trlPermission.Size = new System.Drawing.Size(1028, 428);
+            this.trlPermission.Size = new System.Drawing.Size(1028, 430);
             this.trlPermission.TabIndex = 0;
             // 
             // tlcFunctionName
@@ -372,6 +298,7 @@
             this.tlcFunctionName.Caption = "Chức năng";
             this.tlcFunctionName.FieldName = "FunctionName";
             this.tlcFunctionName.Name = "tlcFunctionName";
+            this.tlcFunctionName.OptionsColumn.AllowEdit = false;
             this.tlcFunctionName.Visible = true;
             this.tlcFunctionName.VisibleIndex = 0;
             this.tlcFunctionName.Width = 374;
@@ -556,6 +483,30 @@
             this.tlcFunctionID.FieldName = "FunctionID";
             this.tlcFunctionID.Name = "tlcFunctionID";
             // 
+            // tlcCreater
+            // 
+            this.tlcCreater.Caption = "Creater";
+            this.tlcCreater.FieldName = "Creater";
+            this.tlcCreater.Name = "tlcCreater";
+            // 
+            // tlcCreateTime
+            // 
+            this.tlcCreateTime.Caption = "CreateTime";
+            this.tlcCreateTime.FieldName = "CreateTime";
+            this.tlcCreateTime.Name = "tlcCreateTime";
+            // 
+            // tlcEditer
+            // 
+            this.tlcEditer.Caption = "Editer";
+            this.tlcEditer.FieldName = "Editer";
+            this.tlcEditer.Name = "tlcEditer";
+            // 
+            // tlcEditTime
+            // 
+            this.tlcEditTime.Caption = "EditTime";
+            this.tlcEditTime.FieldName = "EditTime";
+            this.tlcEditTime.Name = "tlcEditTime";
+            // 
             // uc_UserPermission
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -591,7 +542,7 @@
 
         private DevExpress.XtraBars.BarManager barMain;
         private DevExpress.XtraBars.Bar barTop;
-        private DevExpress.XtraBars.Bar bar3;
+        private DevExpress.XtraBars.Bar barBottom;
         private DevExpress.XtraBars.BarDockControl barDockControlTop;
         private DevExpress.XtraBars.BarDockControl barDockControlBottom;
         private DevExpress.XtraBars.BarDockControl barDockControlLeft;
@@ -625,15 +576,11 @@
         private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit txtNote;
         private DevExpress.XtraTreeList.Columns.TreeListColumn tlcID;
         private DevExpress.XtraTreeList.Columns.TreeListColumn tlcFunctionID;
-        private DevExpress.XtraBars.BarStaticItem lblCreater;
-        private DevExpress.XtraBars.BarStaticItem lblCreaterValue;
-        private DevExpress.XtraBars.BarStaticItem lblCreateTime;
-        private DevExpress.XtraBars.BarStaticItem lblCreateTimeValue;
-        private DevExpress.XtraBars.BarStaticItem lblEditer;
-        private DevExpress.XtraBars.BarStaticItem lblEditerValue;
-        private DevExpress.XtraBars.BarStaticItem lblEditTime;
-        private DevExpress.XtraBars.BarStaticItem lblEditTimeValue;
         private DevExpress.XtraTreeList.Columns.TreeListColumn tlcName;
         private DevExpress.XtraTreeList.Columns.TreeListColumn tlcCode;
+        private DevExpress.XtraTreeList.Columns.TreeListColumn tlcCreater;
+        private DevExpress.XtraTreeList.Columns.TreeListColumn tlcCreateTime;
+        private DevExpress.XtraTreeList.Columns.TreeListColumn tlcEditer;
+        private DevExpress.XtraTreeList.Columns.TreeListColumn tlcEditTime;
     }
 }

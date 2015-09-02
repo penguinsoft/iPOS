@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using iPOS.DCO.Product;
@@ -96,6 +97,19 @@ namespace iPOS.WCFService
         [WebInvoke(Method = "GET", UriTemplate = "/ImportDataRow?Username={Username}&InputData={InputData}&StoreProcedure={StoreProcedure}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         SYS_tblImportFileConfigDRO ImportDataRow(string Username, string InputData, string StoreProcedure);
+        #endregion
+
+        #region [SYS_tblPermission]
+        [OperationContract]
+        [WebInvoke(Method = "GET", UriTemplate = "/GetPermissionList?Username={Username}&LanguageID={LanguageID}&ID={ID}&ParentID={ParentID}&IsUser={IsUser}",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        SYS_tblPermissionDRO GetPermissionList(string Username, string LanguageID, string ID, string ParentID, bool IsUser);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/UpdatePermission",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
+                BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        SYS_tblPermissionDRO UpdatePermission(string Username, string LanguageID, bool IsUser, List<SYS_tblPermissionDCO> permissionList);
         #endregion
 
         [OperationContract]

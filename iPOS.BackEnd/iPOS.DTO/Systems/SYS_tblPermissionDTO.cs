@@ -4,6 +4,8 @@ namespace iPOS.DTO.Systems
 {
     public class SYS_tblPermissionDTO
     {
+        public string ID { get; set; }
+
         public string Username { get; set; }
         
         public string GroupID { get; set; }

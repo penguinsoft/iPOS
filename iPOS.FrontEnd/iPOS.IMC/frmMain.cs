@@ -49,6 +49,8 @@ namespace iPOS.IMC
             InitializeComponent();
             language = ConfigEngine.Language;
             ChangeCaptionLanguage(language);
+
+            ribbon.SelectedPage = ribProductModule;
         }
 
         private void btnGroupUserList_ItemClick(object sender, ItemClickEventArgs e)

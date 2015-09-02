@@ -1,9 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using iPOS.DTO.Systems;
 
-namespace iPOS.DCO.Systems
+namespace iPOS.DRO.Systems
 {
+    [DataContract]
+    public class SYS_tblPermissionDRO : BaseDRO
+    {
+        [DataMember]
+        public List<SYS_tblPermissionDTO> PermissionList { get; set; }
+
+        [DataMember]
+        public SYS_tblPermissionDTO PermissionItem { get; set; }
+    }
+
     [DataContract]
     public class SYS_tblPermissionDCO
     {
@@ -66,15 +77,5 @@ namespace iPOS.DCO.Systems
 
         [DataMember]
         public System.Nullable<DateTime> EditTime { get; set; }
-    }
-
-    [DataContract]
-    public class SYS_tblPermissionDRO : BaseDRO
-    {
-        [DataMember]
-        public List<SYS_tblPermissionDCO> PermissionList { get; set; }
-
-        [DataMember]
-        public SYS_tblPermissionDCO PermissionItem { get; set; }
     }
 }

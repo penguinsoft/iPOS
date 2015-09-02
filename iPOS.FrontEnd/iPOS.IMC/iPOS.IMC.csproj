@@ -153,6 +153,12 @@
     <Compile Include="Systems\uc_UserPermission.Designer.cs">
       <DependentUpon>uc_UserPermission.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tool\frmWaiting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tool\frmWaiting.Designer.cs">
+      <DependentUpon>frmWaiting.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tool\TreeListChangeChildNodesOperation.cs" />
     <Compile Include="Tool\uc_ImportExcel.cs">
       <SubType>UserControl</SubType>
@@ -204,6 +210,9 @@
     <EmbeddedResource Include="Systems\uc_UserPermission.resx">
       <DependentUpon>uc_UserPermission.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Tool\frmWaiting.resx">
+      <DependentUpon>frmWaiting.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Tool\uc_ImportExcel.resx">
       <DependentUpon>uc_ImportExcel.cs</DependentUpon>
     </EmbeddedResource>
@@ -237,6 +246,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="logo.ico" />
+    <None Include="Resources\loading_48.GIF" />
     <None Include="Resources\user_16.png" />
     <None Include="Resources\group_user_16.png" />
     <None Include="Resources\import_all_16.png" />

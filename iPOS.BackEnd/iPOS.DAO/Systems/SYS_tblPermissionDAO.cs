@@ -9,6 +9,8 @@ namespace iPOS.DAO.Systems
     public interface ISYS_tblPermissionDAO
     {
         List<SYS_tblPermissionDTO> GetAllPermisionList(string username, string language_id, string id, string parent_id, bool is_user);
+
+        string UpdatePermission(string username, string language_id, List<SYS_tblPermissionDTO> permissionList, bool is_user);
     }
 
     public class SYS_tblPermissionDAO : BaseDAO, ISYS_tblPermissionDAO
@@ -31,6 +33,29 @@ namespace iPOS.DAO.Systems
             }
 
             return result;
+        }
+
+        public string UpdatePermission(string username, string language_id, List<SYS_tblPermissionDTO> permissionList, bool is_user)
+        {
+            string strParameter = "", strActivity = "", strError = "";
+            try
+            {
+                strParameter = is_user ? "UsernameOther" : "GroupID";
+                strActivity = is_user ? "UpdateUserPermission" : "UpdateGroupUserPermission";
+                foreach (SYS_tblPermissionDTO item in permissionList)
+                {
+                    if (string.IsNullOrEmpty(strError))
+                        strError = db.sExecuteSQL("SYS_spfrmPermission", new string[] { "Activity", "Username", "LanguageID", strParameter, "FunctionID", "AllowInsert", "AllowUpdate", "AllowDelete", "AllowAccess", "AllowPrint", "AllowImport", "AllowExport", "UserLevelID", "Note" }, new object[] { strActivity, username, language_id, item.ID, item.FunctionID, item.AllowInsert, item.AllowUpdate, item.AllowDelete, item.AllowAccess, item.AllowPrint, item.AllowImport, item.AllowExport, item.UserLevelID, item.Note });
+                    else break;
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                return ex.Message;
+            }
+
+            return strError;
         }
     }
 }

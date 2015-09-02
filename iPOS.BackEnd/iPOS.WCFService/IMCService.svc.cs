@@ -54,6 +54,8 @@ namespace iPOS.WCFService
             Mapper.CreateMap<ComboDynamicItemDCO, ComboDynamicItemDTO>();
             Mapper.CreateMap<SYS_tblImportFileConfigDTO, SYS_tblImportFileConfigDCO>();
             Mapper.CreateMap<SYS_tblImportFileConfigDCO, SYS_tblImportFileConfigDTO>();
+            Mapper.CreateMap<SYS_tblPermissionDTO, SYS_tblPermissionDCO>();
+            Mapper.CreateMap<SYS_tblPermissionDCO, SYS_tblPermissionDTO>();
 
             Mapper.CreateMap<PRO_tblProvinceDTO, PRO_tblProvinceDCO>();
             Mapper.CreateMap<PRO_tblProvinceDCO, PRO_tblProvinceDTO>();
@@ -74,6 +76,7 @@ namespace iPOS.WCFService
             afBuilder.RegisterType<SYS_tblUserDAO>().As<ISYS_tblUserDAO>();
             afBuilder.RegisterType<SYS_tblReportCaptionDAO>().As<ISYS_tblReportCaptionDAO>();
             afBuilder.RegisterType<SYS_tblImportFileConfigDAO>().As<ISYS_tblImportFileConfigDAO>();
+            afBuilder.RegisterType<SYS_tblPermissionDAO>().As<ISYS_tblPermissionDAO>();
 
             afBuilder.RegisterType<PRO_tblProvinceDAO>().As<IPRO_tblProvinceDAO>();
 
@@ -589,6 +592,76 @@ namespace iPOS.WCFService
                 result.Result = false;
                 result.Status = DCO.ResponseStatus.Exception;
                 result.Message = "Import data failed because " + ex.Message;
+                result.Username = Username;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+        #endregion
+
+        #region [SYS_tblPermission]
+        public SYS_tblPermissionDRO GetPermissionList(string Username, string LanguageID, string ID, string ParentID, bool IsUser)
+        {
+            if (string.IsNullOrEmpty(ParentID)) ParentID = "";
+            SYS_tblPermissionDRO result = new SYS_tblPermissionDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    List<SYS_tblPermissionDTO> temp = new List<SYS_tblPermissionDTO>();
+                    var db = scope.Resolve<ISYS_tblPermissionDAO>();
+                    temp = db.GetAllPermisionList(Username, LanguageID, ID, ParentID, IsUser);
+                    if (temp != null)
+                    {
+                        result.PermissionList = Mapper.Map<List<SYS_tblPermissionDCO>>(temp);
+                        result.Result = true;
+                        result.Status = DCO.ResponseStatus.Success;
+                        result.Message = "";
+                        result.Username = Username;
+                        result.TotalItemCount = temp.Count;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.PermissionList = Mapper.Map<List<SYS_tblPermissionDCO>>(new List<SYS_tblPermissionDTO>());
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Load permission failed: " + ex.Message;
+                result.Username = Username;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public SYS_tblPermissionDRO UpdatePermission(string Username, string LanguageID, bool IsUser, List<SYS_tblPermissionDCO> permissionList)
+        {
+            SYS_tblPermissionDRO result = new SYS_tblPermissionDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    string temp = "";
+                    var db = scope.Resolve<ISYS_tblPermissionDAO>();
+                    var permissions = Mapper.Map<List<SYS_tblPermissionDTO>>(permissionList);
+                    temp = db.UpdatePermission(Username, LanguageID, permissions, IsUser);
+
+                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
+                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
+                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
+                    result.Username = Username;
+                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Update permission failed because " + ex.Message;
                 result.Username = Username;
                 result.TotalItemCount = 0;
                 logger.Error(ex);

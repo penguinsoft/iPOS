@@ -45,6 +45,7 @@
     <Compile Include="Systems\SYS_tblActionLogDTO.cs" />
     <Compile Include="Systems\SYS_tblGroupUserDTO.cs" />
     <Compile Include="Systems\SYS_tblImportFileConfigDTO.cs" />
+    <Compile Include="Systems\SYS_tblPermissionDTO.cs" />
     <Compile Include="Systems\SYS_tblReportCaptionDTO.cs" />
     <Compile Include="Systems\SYS_tblUserDTO.cs" />
     <Compile Include="Tools\OBJ_TableColumnDTO.cs" />

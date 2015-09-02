@@ -49,6 +49,7 @@
     <Compile Include="Systems\SYS_tblActionLogBUS.cs" />
     <Compile Include="Systems\SYS_tblGroupUserBUS.cs" />
     <Compile Include="Systems\SYS_tblImportFileConfigBUS.cs" />
+    <Compile Include="Systems\SYS_tblPermissionBUS.cs" />
     <Compile Include="Systems\SYS_tblReportCaptionBUS.cs" />
     <Compile Include="Systems\SYS_tblUserBUS.cs" />
     <Compile Include="Tools\OBJ_TableColumnBUS.cs" />

@@ -24,9 +24,9 @@ namespace iPOS.Core.Helper
                     if (column_names.Contains(pro.Name))
                     {
                         if (pro.PropertyType.Equals(typeof(Boolean)))
-                        {
                             pro.SetValue(objT, row[pro.Name] == DBNull.Value ? false : Convert.ToBoolean(row[pro.Name]));
-                        }
+                        else if (pro.PropertyType.Equals(typeof(string)))
+                            pro.SetValue(objT, row[pro.Name] == DBNull.Value ? string.Empty : row[pro.Name] + "");
                         else pro.SetValue(objT, row[pro.Name] == DBNull.Value ? null : row[pro.Name]);
                     }
                 return objT;
