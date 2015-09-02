@@ -290,7 +290,9 @@ namespace iPOS.IMC.Helper
                         while (ws.Cells.Find("$HideColumn$", null, findOptions) != null)
                         {
                             Cell cell = ws.Cells.Find("$HideColumn$", null, findOptions);
-                            dt.Columns.RemoveAt(cell.Column - num);
+                            dt.Columns.RemoveAt(cell.Column - num - 1);
+                            string column = ws.Cells[1, cell.Column].Value.ToString();
+                            column_array = column_array.Replace(column + "|", "");
                             cell.PutValue("");
                             num++;
                         }

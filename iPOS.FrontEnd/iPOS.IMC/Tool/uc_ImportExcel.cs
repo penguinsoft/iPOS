@@ -129,34 +129,41 @@ namespace iPOS.IMC.Tool
 
         private void GetDataToImport()
         {
-            total_file = dtSelectedFile.Rows.Count;
-            correct_file = dtSelectedFile.Select("IsValid=True").Length;
-            invalid_file = total_file - correct_file;
-
-            DataRow[] drDeleted = dtSelectedFile.Select("IsValid=False");
-            foreach (DataRow dr in drDeleted)
-                dr.Delete();
-            dtSelectedFile.AcceptChanges();
-
-            gluSeletedFiles.DataBindings.Clear();
-            gluSeletedFiles.Properties.DataSource = dtSelectedFile;
-            gluSeletedFiles.Properties.ValueMember = "TableName";
-            gluSeletedFiles.Properties.DisplayMember = "FileName";
-            if (dtSelectedFile.Rows.Count > 0) gluSeletedFiles.EditValue = dtSelectedFile.Rows[0]["TableName"];
-
-            DataSet temp = new DataSet();
-            string column_array = "";
-            foreach (DataRow dr in dtSelectedFile.Rows)
+            try
             {
-                column_array = "";
-                ReportEngine.GetDataExcel(ref dsMainData, strFunctionID, dr["FilePath"] + "", dr["TableName"] + "", dr["SheetName"] + "", ref column_array);
-                dr["ColumnArray"] = column_array.Substring(0, column_array.Length - 1);
+                total_file = dtSelectedFile.Rows.Count;
+                correct_file = dtSelectedFile.Select("IsValid=True").Length;
+                invalid_file = total_file - correct_file;
+
+                DataRow[] drDeleted = dtSelectedFile.Select("IsValid=False");
+                foreach (DataRow dr in drDeleted)
+                    dr.Delete();
+                dtSelectedFile.AcceptChanges();
+
+                gluSeletedFiles.DataBindings.Clear();
+                gluSeletedFiles.Properties.DataSource = dtSelectedFile;
+                gluSeletedFiles.Properties.ValueMember = "TableName";
+                gluSeletedFiles.Properties.DisplayMember = "FileName";
+                if (dtSelectedFile.Rows.Count > 0) gluSeletedFiles.EditValue = dtSelectedFile.Rows[0]["TableName"];
+
+                DataSet temp = new DataSet();
+                string column_array = "";
+                foreach (DataRow dr in dtSelectedFile.Rows)
+                {
+                    column_array = "";
+                    ReportEngine.GetDataExcel(ref dsMainData, strFunctionID, dr["FilePath"] + "", dr["TableName"] + "", dr["SheetName"] + "", ref column_array);
+                    dr["ColumnArray"] = column_array.Substring(0, column_array.Length - 1);
+                }
+
+                if (dsMainData.Tables.Count > 0)
+                {
+                    ShowDataTable(dsMainData.Tables[gluSeletedFiles.EditValue + ""]);
+                    ShowRequireColumn();
+                }
             }
-
-            if (dsMainData.Tables.Count > 0)
+            catch (Exception ex)
             {
-                ShowDataTable(dsMainData.Tables[gluSeletedFiles.EditValue + ""]);
-                ShowRequireColumn();
+                CommonEngine.ShowExceptionMessage(ex);
             }
         }
 
@@ -230,7 +237,7 @@ namespace iPOS.IMC.Tool
             {
                 string files = "";
                 OpenFileDialog ofd = new OpenFileDialog();
-                ofd.Filter = "Microsoft Excel 2007 (*.xlsx)|*.xlsx|Microsoft Excel 97 - 2003 (*.xls)|*.xls";
+                ofd.Filter = "Microsoft Excel 97 - 2003 (*.xls)|*.xls|Microsoft Excel 2007 (*.xlsx)|*.xlsx";
                 ofd.Title = ConfigEngine.Language.Equals("vi") ? "Chọn tệp dữ liệu" : "Choose data file";
                 ofd.Multiselect = true;
                 if (ofd.ShowDialog() == DialogResult.OK)
@@ -251,6 +258,7 @@ namespace iPOS.IMC.Tool
                         if (dtSelectedFile.Select("FilePath='" + item + "'").Length == 0)
                             dtSelectedFile.Rows.Add(new object[] { file.Name, file.LastWriteTime, CommonEngine.StrFormatByteSize(file.Length), file.FullName, "", false });
                 }
+                btnBrowseFile.Text = "";
                 wwpStepOne.AllowNext = dtSelectedFile.Rows.Count > 0;
             }
         }

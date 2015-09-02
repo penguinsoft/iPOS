@@ -122,6 +122,7 @@ namespace iPOS.IMC.Systems
         }
         #endregion
 
+        #region [Form Events]
         public uc_User()
         {
             InitializeComponent();
@@ -212,5 +213,6 @@ namespace iPOS.IMC.Systems
 
             if (user_code_list.Length > 0) user_code_list = user_code_list.Substring(0, user_code_list.Length - 1);
         }
+        #endregion
     }
 }
