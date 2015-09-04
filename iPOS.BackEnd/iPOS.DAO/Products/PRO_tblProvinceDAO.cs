@@ -35,26 +35,25 @@ namespace iPOS.DAO.Product
             {
                 foreach (DataRow dr in data.Rows)
                 {
-                    result.Add(new PRO_tblProvinceDTO
-                    {
-                        ProvinceID = dr["ProvinceID"] + "",
-                        ProvinceCode = dr["ProvinceCode"] + "",
-                        VNName = dr["VNName"] + "",
-                        ENName = dr["ENName"] + "",
-                        Note = dr["Note"] + "",
-                        Rank = dr["Rank"],
-                        Used = Convert.ToBoolean(dr["Used"]),
-                        Activity = BaseConstant.COMMAND_LOAD_ALL_DATA_EN,
-                        Username = username,
-                        LanguageID = language_id,
-                        Visible = Convert.ToBoolean(dr["Visible"]),
-                        Creater = dr["Creater"] + "",
-                        CreateTime = Convert.ToDateTime(dr["CreateTime"]),
-                        Editer = dr["Editer"] + "",
-                        EditTime = (!string.IsNullOrEmpty(dr["EditTime"] + "")) ? Convert.ToDateTime(dr["EditTime"]) + "" : null,
-                        ProvinceName = dr["ProvinceName"] + "",
-                        UsedString = dr["UsedString"] + ""
-                    });
+                    //result.Add(new PRO_tblProvinceDTO
+                    //{
+                    //    ProvinceID = dr["ProvinceID"] + "",
+                    //    ProvinceCode = dr["ProvinceCode"] + "",
+                    //    VNName = dr["VNName"] + "",
+                    //    ENName = dr["ENName"] + "",
+                    //    Note = dr["Note"] + "",
+                    //    Rank = dr["Rank"],
+                    //    Used = Convert.ToBoolean(dr["Used"]),
+                    //    Activity = BaseConstant.COMMAND_LOAD_ALL_DATA_EN,
+                    //    Username = username,
+                    //    LanguageID = language_id,
+                    //    Visible = Convert.ToBoolean(dr["Visible"]),
+                    //    Creater = dr["Creater"] + "",
+                    //    CreateTime = Convert.ToDateTime(dr["CreateTime"]),
+                    //    Editer = dr["Editer"] + "",
+                    //    EditTime = (!string.IsNullOrEmpty(dr["EditTime"] + "")) ? Convert.ToDateTime(dr["EditTime"]) + "" : null,
+                    //    ProvinceName = dr["ProvinceName"] + ""
+                    //});
                 }
             }
 
@@ -64,27 +63,26 @@ namespace iPOS.DAO.Product
         public PRO_tblProvinceDTO GetDataByID(string username, string language_id, string province_id)
         {
             DataRow dr = db.GetDataRow("PRO_spfrmProvince", new string[] { "Activity", "Username", "LanguageID", "ProvinceID" }, new object[] { BaseConstant.COMMAND_GET_DATA_BY_ID_EN, username, language_id, province_id });
-            if (dr != null)
-                return new PRO_tblProvinceDTO
-                {
-                    ProvinceID = dr["ProvinceID"] + "",
-                    ProvinceCode = dr["ProvinceCode"] + "",
-                    VNName = dr["VNName"] + "",
-                    ENName = dr["ENName"] + "",
-                    Note = dr["Note"] + "",
-                    Rank = dr["Rank"],
-                    Used = Convert.ToBoolean(dr["Used"]),
-                    Activity = BaseConstant.COMMAND_GET_DATA_BY_ID_EN,
-                    Username = username,
-                    LanguageID = language_id,
-                    Visible = Convert.ToBoolean(dr["Visible"]),
-                    Creater = dr["Creater"] + "",
-                    CreateTime = Convert.ToDateTime(dr["CreateTime"]),
-                    Editer = dr["Editer"] + "",
-                    EditTime = (!string.IsNullOrEmpty(dr["EditTime"] + "")) ? Convert.ToDateTime(dr["EditTime"]) + "" : null,
-                    ProvinceName = dr["ProvinceName"] + "",
-                    UsedString = dr["UsedString"] + ""
-                };
+            //if (dr != null)
+            //    return new PRO_tblProvinceDTO
+            //    {
+            //        ProvinceID = dr["ProvinceID"] + "",
+            //        ProvinceCode = dr["ProvinceCode"] + "",
+            //        VNName = dr["VNName"] + "",
+            //        ENName = dr["ENName"] + "",
+            //        Note = dr["Note"] + "",
+            //        Rank = dr["Rank"],
+            //        Used = Convert.ToBoolean(dr["Used"]),
+            //        Activity = BaseConstant.COMMAND_GET_DATA_BY_ID_EN,
+            //        Username = username,
+            //        LanguageID = language_id,
+            //        Visible = Convert.ToBoolean(dr["Visible"]),
+            //        Creater = dr["Creater"] + "",
+            //        CreateTime = Convert.ToDateTime(dr["CreateTime"]),
+            //        Editer = dr["Editer"] + "",
+            //        EditTime = (!string.IsNullOrEmpty(dr["EditTime"] + "")) ? Convert.ToDateTime(dr["EditTime"]) + "" : null,
+            //        ProvinceName = dr["ProvinceName"] + ""
+            //    };
 
             return null;
         }

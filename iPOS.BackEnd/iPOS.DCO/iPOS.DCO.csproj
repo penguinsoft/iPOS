@@ -41,8 +41,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseDRO.cs" />
+    <Compile Include="Products\PRO_tblDistrictDCO.cs" />
+    <Compile Include="Products\PRO_tblProductGroupLevel1DCO.cs" />
     <Compile Include="Products\PRO_tblProvinceDCO.cs" />
-    <Compile Include="Products\PRO_tblProvinceDRO.cs" />
+    <Compile Include="Products\PRO_tblStallDCO.cs" />
+    <Compile Include="Products\PRO_tblStoreDCO.cs" />
+    <Compile Include="Products\PRO_tblWarehouseDCO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Systems\SYS_tblActionLogDCO.cs" />
     <Compile Include="Systems\SYS_tblGroupUserDCO.cs" />

@@ -1,17 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System.Collections.Generic;
 
-namespace iPOS.DCO.Product
+namespace iPOS.DCO.Products
 {
     [DataContract]
-    public class PRO_tblProvinceDCO
+    public class PRO_tblStallDCO
     {
         [DataMember]
-        public Int32 ProvinceID { get; set; }
+        public Int32 StallID { get; set; }
 
         [DataMember]
-        public string ProvinceCode { get; set; }
+        public string StallCode { get; set; }
 
         [DataMember]
         public string VNName { get; set; }
@@ -29,13 +29,10 @@ namespace iPOS.DCO.Product
         public string Note { get; set; }
 
         [DataMember]
-        public string Activity { get; set; }
+        public Int32 StoreID { get; set; }
 
         [DataMember]
-        public string UserID { get; set; }
-
-        [DataMember]
-        public string LanguageID { get; set; }
+        public Int32 WarehouseID { get; set; }
 
         [DataMember]
         public bool Visible { get; set; }
@@ -53,16 +50,22 @@ namespace iPOS.DCO.Product
         public System.Nullable<DateTime> EditTime { get; set; }
 
         [DataMember]
-        public string ProvinceName { get; set; }
+        public string Activity { get; set; }
+
+        [DataMember]
+        public string UserID { get; set; }
+
+        [DataMember]
+        public string LanguageID { get; set; }
     }
 
     [DataContract]
-    public class PRO_tblProvinceDRO : BaseDRO
+    public class PRO_tblStallDRO : BaseDRO
     {
         [DataMember]
-        public List<PRO_tblProvinceDCO> ProvinceList { get; set; }
+        public List<PRO_tblStallDCO> StallList { get; set; }
 
         [DataMember]
-        public PRO_tblProvinceDCO ProvinceItem { get; set; }
+        public PRO_tblStallDCO StallItem { get; set; }
     }
 }

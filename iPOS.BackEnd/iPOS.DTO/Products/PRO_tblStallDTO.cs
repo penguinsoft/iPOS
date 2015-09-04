@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace iPOS.DTO.Product
+namespace iPOS.DTO.Products
 {
-    public class PRO_tblProvinceDTO
+    public class PRO_tblStallDTO
     {
-        public Int32 ProvinceID { get; set; }
+        public Int32 StallID { get; set; }
 
-        public string ProvinceCode { get; set; }
+        public string StallCode { get; set; }
 
         public string VNName { get; set; }
 
@@ -18,11 +18,9 @@ namespace iPOS.DTO.Product
 
         public string Note { get; set; }
 
-        public string Activity { get; set; }
+        public Int32 StoreID { get; set; }
 
-        public string Username { get; set; }
-
-        public string LanguageID { get; set; }
+        public Int32 WarehouseID { get; set; }
 
         public bool Visible { get; set; }
 
@@ -34,6 +32,10 @@ namespace iPOS.DTO.Product
 
         public System.Nullable<DateTime> EditTime { get; set; }
 
-        public string ProvinceName { get; set; }
+        public string Activity { get; set; }
+
+        public string UserID { get; set; }
+
+        public string LanguageID { get; set; }
     }
 }

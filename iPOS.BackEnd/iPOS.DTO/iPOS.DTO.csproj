@@ -40,7 +40,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseDTO.cs" />
+    <Compile Include="Products\PRO_tblDistrictDTO.cs" />
+    <Compile Include="Products\PRO_tblProductGroupLevel1DTO.cs" />
     <Compile Include="Products\PRO_tblProvinceDTO.cs" />
+    <Compile Include="Products\PRO_tblStallDTO.cs" />
+    <Compile Include="Products\PRO_tblStoreDTO.cs" />
+    <Compile Include="Products\PRO_tblWarehouseDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Systems\SYS_tblActionLogDTO.cs" />
     <Compile Include="Systems\SYS_tblGroupUserDTO.cs" />

@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace iPOS.DCO.Product
+namespace iPOS.DCO.Products
 {
     [DataContract]
-    public class PRO_tblProvinceDCO
+    public class PRO_tblProductGroupLevel1DCO
     {
         [DataMember]
-        public Int32 ProvinceID { get; set; }
+        public Int32 Level1ID { get; set; }
 
         [DataMember]
-        public string ProvinceCode { get; set; }
+        public string Level1Code { get; set; }
+
+        [DataMember]
+        public string Level1ShortCode { get; set; }
 
         [DataMember]
         public string VNName { get; set; }
@@ -29,13 +32,7 @@ namespace iPOS.DCO.Product
         public string Note { get; set; }
 
         [DataMember]
-        public string Activity { get; set; }
-
-        [DataMember]
-        public string UserID { get; set; }
-
-        [DataMember]
-        public string LanguageID { get; set; }
+        public string Description { get; set; }
 
         [DataMember]
         public bool Visible { get; set; }
@@ -53,16 +50,22 @@ namespace iPOS.DCO.Product
         public System.Nullable<DateTime> EditTime { get; set; }
 
         [DataMember]
-        public string ProvinceName { get; set; }
+        public string Activity { get; set; }
+
+        [DataMember]
+        public string UserID { get; set; }
+
+        [DataMember]
+        public string LanguageID { get; set; }
     }
 
     [DataContract]
-    public class PRO_tblProvinceDRO : BaseDRO
+    public class PRO_tblProductGroupLevel1DRO : BaseDRO
     {
         [DataMember]
-        public List<PRO_tblProvinceDCO> ProvinceList { get; set; }
+        public List<PRO_tblProductGroupLevel1DCO> Level1List { get; set; }
 
         [DataMember]
-        public PRO_tblProvinceDCO ProvinceItem { get; set; }
+        public PRO_tblProductGroupLevel1DCO Level1Item { get; set; }
     }
 }
