@@ -23,6 +23,12 @@ namespace iPOS.DCO.Products
         public string ENName { get; set; }
 
         [DataMember]
+        public string StoreName { get; set; }
+
+        [DataMember]
+        public string FullStoreName { get; set; }
+
+        [DataMember]
         public System.Nullable<DateTime> BuildDate { get; set; }
 
         [DataMember]
@@ -74,7 +80,7 @@ namespace iPOS.DCO.Products
         public string Creater { get; set; }
 
         [DataMember]
-        public DateTime CreateTime { get; set; }
+        public System.Nullable<DateTime> CreateTime { get; set; }
 
         [DataMember]
         public string Editer { get; set; }

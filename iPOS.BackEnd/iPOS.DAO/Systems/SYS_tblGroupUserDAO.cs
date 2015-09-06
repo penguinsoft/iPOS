@@ -18,9 +18,9 @@ namespace iPOS.DAO.Systems
 
         string UpdateGroupUser(SYS_tblGroupUserDTO item);
 
-        string DeleteGroupUser(string group_user_id, string group_user_code, string username, string language_id);
+        string DeleteGroupUser(string group_user_id, string username, string language_id);
 
-        string DeleteGroupUserList(string group_user_id_list, string group_user_code_list, string username, string language_id);
+        string DeleteGroupUserList(string group_user_id_list, string username, string language_id);
     }
 
     public class SYS_tblGroupUserDAO : BaseDAO, ISYS_tblGroupUserDAO
@@ -144,7 +144,7 @@ namespace iPOS.DAO.Systems
             return result;
         }
 
-        public string DeleteGroupUser(string group_user_id, string group_user_code, string username, string language_id)
+        public string DeleteGroupUser(string group_user_id, string username, string language_id)
         {
             string result = "";
             try
@@ -165,7 +165,7 @@ namespace iPOS.DAO.Systems
             return result;
         }
 
-        public string DeleteGroupUserList(string group_user_id_list, string group_user_code_list, string username, string language_id)
+        public string DeleteGroupUserList(string group_user_id_list, string username, string language_id)
         {
             string result = "";
             try

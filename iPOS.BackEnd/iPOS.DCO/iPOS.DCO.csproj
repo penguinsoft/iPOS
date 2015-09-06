@@ -43,6 +43,8 @@
     <Compile Include="BaseDRO.cs" />
     <Compile Include="Products\PRO_tblDistrictDCO.cs" />
     <Compile Include="Products\PRO_tblProductGroupLevel1DCO.cs" />
+    <Compile Include="Products\PRO_tblProductGroupLevel2DCO.cs" />
+    <Compile Include="Products\PRO_tblProductGroupLevel3DCO.cs" />
     <Compile Include="Products\PRO_tblProvinceDCO.cs" />
     <Compile Include="Products\PRO_tblStallDCO.cs" />
     <Compile Include="Products\PRO_tblStoreDCO.cs" />

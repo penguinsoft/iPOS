@@ -5,13 +5,16 @@ using System.Runtime.Serialization;
 namespace iPOS.DCO.Products
 {
     [DataContract]
-    public class PRO_tblProvinceDCO
+    public class PRO_tblProductGroupLevel2DCO
     {
         [DataMember]
-        public Int32 ProvinceID { get; set; }
+        public Int32 Level2ID { get; set; }
 
         [DataMember]
-        public string ProvinceCode { get; set; }
+        public string Level2Code { get; set; }
+
+        [DataMember]
+        public string Level2ShortCode { get; set; }
 
         [DataMember]
         public string VNName { get; set; }
@@ -29,13 +32,10 @@ namespace iPOS.DCO.Products
         public string Note { get; set; }
 
         [DataMember]
-        public string Activity { get; set; }
+        public string Description { get; set; }
 
         [DataMember]
-        public string UserID { get; set; }
-
-        [DataMember]
-        public string LanguageID { get; set; }
+        public Int32 Level1ID { get; set; }
 
         [DataMember]
         public bool Visible { get; set; }
@@ -44,7 +44,7 @@ namespace iPOS.DCO.Products
         public string Creater { get; set; }
 
         [DataMember]
-        public System.Nullable<DateTime> CreateTime { get; set; }
+        public DateTime CreateTime { get; set; }
 
         [DataMember]
         public string Editer { get; set; }
@@ -53,16 +53,22 @@ namespace iPOS.DCO.Products
         public System.Nullable<DateTime> EditTime { get; set; }
 
         [DataMember]
-        public string ProvinceName { get; set; }
+        public string Activity { get; set; }
+
+        [DataMember]
+        public string UserID { get; set; }
+
+        [DataMember]
+        public string LanguageID { get; set; }
     }
 
     [DataContract]
-    public class PRO_tblProvinceDRO : BaseDRO
+    public class PRO_tblProductGroupLevel2DRO : BaseDRO
     {
         [DataMember]
-        public List<PRO_tblProvinceDCO> ProvinceList { get; set; }
+        public List<PRO_tblProductGroupLevel2DCO> Level2List { get; set; }
 
         [DataMember]
-        public PRO_tblProvinceDCO ProvinceItem { get; set; }
+        public PRO_tblProductGroupLevel2DCO Level2Item { get; set; }
     }
 }

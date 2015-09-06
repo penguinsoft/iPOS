@@ -12,6 +12,10 @@ namespace iPOS.DTO.Products
 
         public string ENName { get; set; }
 
+        public string WarehouseName { get; set; }
+
+        public string FullWarehouseName { get; set; }
+
         public string AddressVN { get; set; }
 
         public string AddressEN { get; set; }
@@ -36,7 +40,7 @@ namespace iPOS.DTO.Products
 
         public string Creater { get; set; }
 
-        public DateTime CreateTime { get; set; }
+        public System.Nullable<DateTime> CreateTime { get; set; }
 
         public string Editer { get; set; }
 

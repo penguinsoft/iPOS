@@ -20,6 +20,12 @@ namespace iPOS.DCO.Products
         public string ENName { get; set; }
 
         [DataMember]
+        public string StallName { get; set; }
+
+        [DataMember]
+        public string FullStallName { get; set; }
+
+        [DataMember]
         public System.Nullable<Int32> Rank { get; set; }
 
         [DataMember]
@@ -41,7 +47,7 @@ namespace iPOS.DCO.Products
         public string Creater { get; set; }
 
         [DataMember]
-        public DateTime CreateTime { get; set; }
+        public System.Nullable<DateTime> CreateTime { get; set; }
 
         [DataMember]
         public string Editer { get; set; }

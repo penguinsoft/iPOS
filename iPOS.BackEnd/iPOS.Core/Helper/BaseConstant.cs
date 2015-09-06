@@ -29,5 +29,7 @@ namespace iPOS.Core.Helper
         public const string COMMAND_DELETE_LIST_EN = "DeleteList";
 
         public const string COMMAND_GET_COMBO_BOX = "GetDataCombobox";
+
+        public const string COMMAND_GET_DATA_BY_PARENT = "GetDataByParent";
     }
 }

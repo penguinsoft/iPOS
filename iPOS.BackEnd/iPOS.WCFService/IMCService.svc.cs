@@ -11,13 +11,13 @@ using Autofac;
 using AutoMapper;
 using iPOS.Core.Helper;
 using iPOS.Core.Logger;
-using iPOS.DAO.Product;
+using iPOS.DAO.Products;
 using iPOS.DAO.Systems;
 using iPOS.DAO.Tools;
-using iPOS.DCO.Product;
+using iPOS.DCO.Products;
 using iPOS.DCO.Systems;
 using iPOS.DCO.Tools;
-using iPOS.DTO.Product;
+using iPOS.DTO.Products;
 using iPOS.DTO.Systems;
 using iPOS.DTO.Tools;
 using Newtonsoft.Json;
@@ -59,6 +59,14 @@ namespace iPOS.WCFService
 
             Mapper.CreateMap<PRO_tblProvinceDTO, PRO_tblProvinceDCO>();
             Mapper.CreateMap<PRO_tblProvinceDCO, PRO_tblProvinceDTO>();
+            Mapper.CreateMap<PRO_tblDistrictDTO, PRO_tblDistrictDCO>();
+            Mapper.CreateMap<PRO_tblDistrictDCO, PRO_tblDistrictDTO>();
+            Mapper.CreateMap<PRO_tblStoreDTO, PRO_tblStoreDCO>();
+            Mapper.CreateMap<PRO_tblStoreDCO, PRO_tblStoreDTO>();
+            Mapper.CreateMap<PRO_tblWarehouseDTO, PRO_tblWarehouseDCO>();
+            Mapper.CreateMap<PRO_tblWarehouseDCO, PRO_tblWarehouseDTO>();
+            Mapper.CreateMap<PRO_tblStallDTO, PRO_tblStallDCO>();
+            Mapper.CreateMap<PRO_tblStallDCO, PRO_tblStallDTO>();
 
             Mapper.CreateMap<OBJ_TableColumnDTO, OBJ_TableColumnDCO>();
             Mapper.CreateMap<OBJ_TableColumnDCO, OBJ_TableColumnDTO>();
@@ -79,6 +87,10 @@ namespace iPOS.WCFService
             afBuilder.RegisterType<SYS_tblPermissionDAO>().As<ISYS_tblPermissionDAO>();
 
             afBuilder.RegisterType<PRO_tblProvinceDAO>().As<IPRO_tblProvinceDAO>();
+            afBuilder.RegisterType<PRO_tblDistrictDAO>().As<IPRO_tblDistrictDAO>();
+            afBuilder.RegisterType<PRO_tblStoreDAO>().As<IPRO_tblStoreDAO>();
+            afBuilder.RegisterType<PRO_tblWarehouseDAO>().As<IPRO_tblWarehouseDAO>();
+            afBuilder.RegisterType<PRO_tblStallDAO>().As<IPRO_tblStallDAO>();
 
             afBuilder.RegisterType<OBJ_TableColumnDAO>().As<IOBJ_TableColumnDAO>();
 
@@ -147,7 +159,7 @@ namespace iPOS.WCFService
                 result.GroupUserList = Mapper.Map<List<SYS_tblGroupUserDCO>>(new List<SYS_tblGroupUserDTO>());
                 result.Result = false;
                 result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Load data failed: " + ex.Message;
+                result.Message = "Load group user list failed: " + ex.Message;
                 result.Username = Username;
                 result.TotalItemCount = 0;
                 logger.Error(ex);
@@ -224,7 +236,7 @@ namespace iPOS.WCFService
             return result;
         }
 
-        public SYS_tblGroupUserDRO DeleteGroupUser(string Username, string LanguageID, string GroupUserIDList, string GroupUserCodeList)
+        public SYS_tblGroupUserDRO DeleteGroupUser(string Username, string LanguageID, string GroupUserIDList)
         {
             SYS_tblGroupUserDRO result = new SYS_tblGroupUserDRO();
             try
@@ -234,8 +246,8 @@ namespace iPOS.WCFService
                     string temp = "";
                     var db = scope.Resolve<ISYS_tblGroupUserDAO>();
                     if (GroupUserIDList.Contains("$"))
-                        temp = db.DeleteGroupUserList(GroupUserIDList, GroupUserCodeList, Username, LanguageID);
-                    else temp = db.DeleteGroupUser(GroupUserIDList, GroupUserCodeList, Username, LanguageID);
+                        temp = db.DeleteGroupUserList(GroupUserIDList, Username, LanguageID);
+                    else temp = db.DeleteGroupUser(GroupUserIDList, Username, LanguageID);
 
                     result.Result = string.IsNullOrEmpty(temp) ? true : false;
                     result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
@@ -319,7 +331,7 @@ namespace iPOS.WCFService
                 result.UserList = Mapper.Map<List<SYS_tblUserDCO>>(new List<SYS_tblUserDTO>());
                 result.Result = false;
                 result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Load data failed: " + ex.Message;
+                result.Message = "Load user list failed: " + ex.Message;
                 result.Username = Username;
                 result.TotalItemCount = 0;
                 logger.Error(ex);
@@ -672,7 +684,7 @@ namespace iPOS.WCFService
         #endregion
 
         #region [PRO_tblProvince]
-        public PRO_tblProvinceDRO GetAllProvinces(string Username, string LanguageID)
+        public PRO_tblProvinceDRO GetAllProvinces(string Username, string LanguageID, bool GetCombobox)
         {
             PRO_tblProvinceDRO result = new PRO_tblProvinceDRO();
             try
@@ -681,19 +693,29 @@ namespace iPOS.WCFService
                 {
                     List<PRO_tblProvinceDTO> temp = new List<PRO_tblProvinceDTO>();
                     var db = scope.Resolve<IPRO_tblProvinceDAO>();
-                    temp = db.LoadAllData(Username, LanguageID);
+                    if (!GetCombobox)
+                        temp = db.LoadAllData(Username, LanguageID);
+                    else temp = db.GetDataCombobox(Username, LanguageID);
                     if (temp != null)
                     {
                         result.ProvinceList = Mapper.Map<List<PRO_tblProvinceDCO>>(temp);
                         result.Result = true;
-                        result.Message = "Done!";
-                        result.Username = "admin";
+                        result.Status = DCO.ResponseStatus.Success;
+                        result.Message = "";
+                        result.Username = Username;
                         result.TotalItemCount = temp.Count;
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                result.ProvinceList = Mapper.Map<List<PRO_tblProvinceDCO>>(new List<PRO_tblProvinceDTO>());
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Load province list failed: " + ex.Message;
+                result.Username = Username;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
             }
 
             return result;
@@ -706,21 +728,655 @@ namespace iPOS.WCFService
             {
                 using (var scope = Container.BeginLifetimeScope())
                 {
-                    PRO_tblProvinceDTO temp = new PRO_tblProvinceDTO();
                     var db = scope.Resolve<IPRO_tblProvinceDAO>();
-                    temp = db.GetDataByID(Username, LanguageID, ProvinceID);
+                    var temp = db.GetDataByID(ProvinceID, Username, LanguageID);
                     if (temp != null)
                     {
                         result.ProvinceItem = Mapper.Map<PRO_tblProvinceDCO>(temp);
                         result.Result = true;
-                        result.Message = "Done!";
+                        result.Status = DCO.ResponseStatus.Success;
+                        result.Message = "";
                         result.Username = Username;
                         result.TotalItemCount = 1;
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                result.ProvinceItem = Mapper.Map<PRO_tblProvinceDCO>(new PRO_tblProvinceDTO());
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Load province item failed: " + ex.Message;
+                result.Username = Username;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public PRO_tblProvinceDRO InsertUpdateProvince(PRO_tblProvinceDCO province)
+        {
+            PRO_tblProvinceDRO result = new PRO_tblProvinceDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    string temp = "";
+                    var db = scope.Resolve<IPRO_tblProvinceDAO>();
+                    var data = Mapper.Map<PRO_tblProvinceDTO>(province);
+                    if (province.Activity.Equals(BaseConstant.COMMAND_INSERT_EN))
+                        temp = db.InsertProvince(data);
+                    else temp = db.UpdateProvince(data);
+
+                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
+                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
+                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
+                    result.Username = province.UserID;
+                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Insert new province failed because " + ex.Message;
+                result.Username = province.UserID;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public PRO_tblProvinceDRO DeleteProvince(string Username, string LanguageID, string ProvinceIDList)
+        {
+            PRO_tblProvinceDRO result = new PRO_tblProvinceDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    string temp = "";
+                    var db = scope.Resolve<IPRO_tblProvinceDAO>();
+                    if (ProvinceIDList.Contains("$"))
+                        temp = db.DeleteProvinceList(ProvinceIDList, Username, LanguageID);
+                    else temp = db.DeleteProvince(ProvinceIDList, Username, LanguageID);
+
+                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
+                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
+                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
+                    result.Username = Username;
+                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Delete province failed because " + ex.Message;
+                result.Username = Username;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+        #endregion
+
+        #region [PRO_tblDistrict]
+        public PRO_tblDistrictDRO GetAllDistrict(string Username, string LanguageID, string ProvinceID, bool GetCombobox)
+        {
+            PRO_tblDistrictDRO result = new PRO_tblDistrictDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    List<PRO_tblDistrictDTO> temp = new List<PRO_tblDistrictDTO>();
+                    var db = scope.Resolve<IPRO_tblDistrictDAO>();
+                    if (!GetCombobox)
+                        temp = db.LoadAllData(Username, LanguageID, ProvinceID);
+                    else temp = db.GetDataCombobox(Username, LanguageID, ProvinceID);
+                    if (temp != null)
+                    {
+                        result.DistrictList = Mapper.Map<List<PRO_tblDistrictDCO>>(temp);
+                        result.Result = true;
+                        result.Status = DCO.ResponseStatus.Success;
+                        result.Message = "";
+                        result.Username = Username;
+                        result.TotalItemCount = temp.Count;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.DistrictList = Mapper.Map<List<PRO_tblDistrictDCO>>(new List<PRO_tblDistrictDTO>());
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Load district list failed: " + ex.Message;
+                result.Username = Username;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public PRO_tblDistrictDRO GetDistrictByID(string Username, string LanguageID, string DistrictID)
+        {
+            PRO_tblDistrictDRO result = new PRO_tblDistrictDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    var db = scope.Resolve<IPRO_tblDistrictDAO>();
+                    var temp = db.GetDataByID(DistrictID, Username, LanguageID);
+                    if (temp != null)
+                    {
+                        result.DistrictItem = Mapper.Map<PRO_tblDistrictDCO>(temp);
+                        result.Result = true;
+                        result.Status = DCO.ResponseStatus.Success;
+                        result.Message = "";
+                        result.Username = Username;
+                        result.TotalItemCount = 1;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.DistrictItem = Mapper.Map<PRO_tblDistrictDCO>(new PRO_tblDistrictDTO());
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Load district item failed: " + ex.Message;
+                result.Username = Username;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public PRO_tblDistrictDRO InsertUpdateDistrict(PRO_tblDistrictDCO district)
+        {
+            PRO_tblDistrictDRO result = new PRO_tblDistrictDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    string temp = "";
+                    var db = scope.Resolve<IPRO_tblDistrictDAO>();
+                    var data = Mapper.Map<PRO_tblDistrictDTO>(district);
+                    if (district.Activity.Equals(BaseConstant.COMMAND_INSERT_EN))
+                        temp = db.InsertDistrict(data);
+                    else temp = db.UpdateDistrict(data);
+
+                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
+                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
+                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
+                    result.Username = district.UserID;
+                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Insert new district failed because " + ex.Message;
+                result.Username = district.UserID;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public PRO_tblDistrictDRO DeleteDistrict(string Username, string LanguageID, string DistrictIDList)
+        {
+            PRO_tblDistrictDRO result = new PRO_tblDistrictDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    string temp = "";
+                    var db = scope.Resolve<IPRO_tblDistrictDAO>();
+                    if (DistrictIDList.Contains("$"))
+                        temp = db.DeleteDistrictList(DistrictIDList, Username, LanguageID);
+                    else temp = db.DeleteDistrict(DistrictIDList, Username, LanguageID);
+
+                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
+                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
+                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
+                    result.Username = Username;
+                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Delete district failed because " + ex.Message;
+                result.Username = Username;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+        #endregion
+
+        #region [PRO_tblStore]
+        public PRO_tblStoreDRO GetAllStores(string Username, string LanguageID, bool GetCombobox)
+        {
+            PRO_tblStoreDRO result = new PRO_tblStoreDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    List<PRO_tblStoreDTO> temp = new List<PRO_tblStoreDTO>();
+                    var db = scope.Resolve<IPRO_tblStoreDAO>();
+                    if (!GetCombobox)
+                        temp = db.LoadAllData(Username, LanguageID);
+                    else temp = db.GetDataCombobox(Username, LanguageID);
+                    if (temp != null)
+                    {
+                        result.StoreList = Mapper.Map<List<PRO_tblStoreDCO>>(temp);
+                        result.Result = true;
+                        result.Status = DCO.ResponseStatus.Success;
+                        result.Message = "";
+                        result.Username = Username;
+                        result.TotalItemCount = temp.Count;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.StoreList = Mapper.Map<List<PRO_tblStoreDCO>>(new List<PRO_tblStoreDTO>());
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Load store list failed: " + ex.Message;
+                result.Username = Username;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public PRO_tblStoreDRO GetStoreByID(string Username, string LanguageID, string StoreID)
+        {
+            PRO_tblStoreDRO result = new PRO_tblStoreDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    var db = scope.Resolve<IPRO_tblStoreDAO>();
+                    var temp = db.GetDataByID(Username, LanguageID, StoreID);
+                    if (temp != null)
+                    {
+                        result.StoreItem = Mapper.Map<PRO_tblStoreDCO>(temp);
+                        result.Result = true;
+                        result.Status = DCO.ResponseStatus.Success;
+                        result.Message = "";
+                        result.Username = Username;
+                        result.TotalItemCount = 1;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.StoreItem = Mapper.Map<PRO_tblStoreDCO>(new PRO_tblStoreDTO());
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Load store item failed: " + ex.Message;
+                result.Username = Username;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public PRO_tblStoreDRO InsertUpdateStore(PRO_tblStoreDCO store)
+        {
+            PRO_tblStoreDRO result = new PRO_tblStoreDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    string temp = "";
+                    var db = scope.Resolve<IPRO_tblStoreDAO>();
+                    var data = Mapper.Map<PRO_tblStoreDTO>(store);
+                    if (store.Activity.Equals(BaseConstant.COMMAND_INSERT_EN))
+                        temp = db.InsertStore(data);
+                    else temp = db.UpdateStore(data);
+
+                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
+                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
+                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
+                    result.Username = store.UserID;
+                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Insert new store failed because " + ex.Message;
+                result.Username = store.UserID;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public PRO_tblStoreDRO DeleteStore(string Username, string LanguageID, string StoreIDList)
+        {
+            PRO_tblStoreDRO result = new PRO_tblStoreDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    string temp = "";
+                    var db = scope.Resolve<IPRO_tblStoreDAO>();
+                    if (StoreIDList.Contains("$"))
+                        temp = db.DeleteStoreList(StoreIDList, Username, LanguageID);
+                    else temp = db.DeleteStore(StoreIDList, Username, LanguageID);
+
+                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
+                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
+                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
+                    result.Username = Username;
+                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Delete store failed because " + ex.Message;
+                result.Username = Username;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+        #endregion
+
+        #region [PRO_tblWarehouse]
+        public PRO_tblWarehouseDRO GetAllWarehouses(string Username, string LanguageID, string StoreID, string ProvinceID, string DistrictID, bool GetCombobox)
+        {
+            PRO_tblWarehouseDRO result = new PRO_tblWarehouseDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    List<PRO_tblWarehouseDTO> temp = new List<PRO_tblWarehouseDTO>();
+                    var db = scope.Resolve<IPRO_tblWarehouseDAO>();
+                    if (!GetCombobox)
+                        temp = db.LoadAllData(Username, LanguageID, StoreID, ProvinceID, DistrictID);
+                    else temp = db.GetDataCombobox(Username, LanguageID, StoreID);
+                    if (temp != null)
+                    {
+                        result.WarehouseList = Mapper.Map<List<PRO_tblWarehouseDCO>>(temp);
+                        result.Result = true;
+                        result.Status = DCO.ResponseStatus.Success;
+                        result.Message = "";
+                        result.Username = Username;
+                        result.TotalItemCount = temp.Count;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.WarehouseList = Mapper.Map<List<PRO_tblWarehouseDCO>>(new List<PRO_tblWarehouseDTO>());
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Load warehouse list failed: " + ex.Message;
+                result.Username = Username;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public PRO_tblWarehouseDRO GetWarehouseByID(string Username, string LanguageID, string WarehouseID)
+        {
+            PRO_tblWarehouseDRO result = new PRO_tblWarehouseDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    var db = scope.Resolve<IPRO_tblWarehouseDAO>();
+                    var temp = db.GetDataByID(Username, LanguageID, WarehouseID);
+                    if (temp != null)
+                    {
+                        result.WarehouseItem = Mapper.Map<PRO_tblWarehouseDCO>(temp);
+                        result.Result = true;
+                        result.Status = DCO.ResponseStatus.Success;
+                        result.Message = "";
+                        result.Username = Username;
+                        result.TotalItemCount = 1;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.WarehouseItem = Mapper.Map<PRO_tblWarehouseDCO>(new PRO_tblWarehouseDTO());
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Load warehouse item failed: " + ex.Message;
+                result.Username = Username;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public PRO_tblWarehouseDRO InsertUpdateWarehouse(PRO_tblWarehouseDCO warehouse)
+        {
+            PRO_tblWarehouseDRO result = new PRO_tblWarehouseDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    string temp = "";
+                    var db = scope.Resolve<IPRO_tblWarehouseDAO>();
+                    var data = Mapper.Map<PRO_tblWarehouseDTO>(warehouse);
+                    if (warehouse.Activity.Equals(BaseConstant.COMMAND_INSERT_EN))
+                        temp = db.InsertWarehouse(data);
+                    else temp = db.UpdateWarehouse(data);
+
+                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
+                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
+                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
+                    result.Username = warehouse.UserID;
+                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Insert new warehouse failed because " + ex.Message;
+                result.Username = warehouse.UserID;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public PRO_tblWarehouseDRO DeleteWarehouse(string Username, string LanguageID, string WarehouseIDList)
+        {
+            PRO_tblWarehouseDRO result = new PRO_tblWarehouseDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    string temp = "";
+                    var db = scope.Resolve<IPRO_tblWarehouseDAO>();
+                    if (WarehouseIDList.Contains("$"))
+                        temp = db.DeleteWarehouseList(WarehouseIDList, Username, LanguageID);
+                    else temp = db.DeleteWarehouse(WarehouseIDList, Username, LanguageID);
+
+                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
+                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
+                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
+                    result.Username = Username;
+                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Delete warehouse failed because " + ex.Message;
+                result.Username = Username;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+        #endregion
+
+        #region [PRO_tblStall]
+        public PRO_tblStallDRO GetAllStalls(string Username, string LanguageID, string StoreID, string WarehouseID, bool GetCombobox)
+        {
+            PRO_tblStallDRO result = new PRO_tblStallDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    List<PRO_tblStallDTO> temp = new List<PRO_tblStallDTO>();
+                    var db = scope.Resolve<IPRO_tblStallDAO>();
+                    if (!GetCombobox)
+                        temp = db.LoadAllData(Username, LanguageID, StoreID, WarehouseID);
+                    else temp = db.GetDataCombobox(Username, LanguageID, WarehouseID);
+                    if (temp != null)
+                    {
+                        result.StallList = Mapper.Map<List<PRO_tblStallDCO>>(temp);
+                        result.Result = true;
+                        result.Status = DCO.ResponseStatus.Success;
+                        result.Message = "";
+                        result.Username = Username;
+                        result.TotalItemCount = temp.Count;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.StallList = Mapper.Map<List<PRO_tblStallDCO>>(new List<PRO_tblStallDTO>());
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Load stall list failed: " + ex.Message;
+                result.Username = Username;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public PRO_tblStallDRO GetStallByID(string Username, string LanguageID, string StallID)
+        {
+            PRO_tblStallDRO result = new PRO_tblStallDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    var db = scope.Resolve<IPRO_tblStallDAO>();
+                    var temp = db.GetDataByID(Username, LanguageID, StallID);
+                    if (temp != null)
+                    {
+                        result.StallItem = Mapper.Map<PRO_tblStallDCO>(temp);
+                        result.Result = true;
+                        result.Status = DCO.ResponseStatus.Success;
+                        result.Message = "";
+                        result.Username = Username;
+                        result.TotalItemCount = 1;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.StallItem = Mapper.Map<PRO_tblStallDCO>(new PRO_tblStallDTO());
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Load stall item failed: " + ex.Message;
+                result.Username = Username;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public PRO_tblStallDRO InsertUpdateStall(PRO_tblStallDCO stall)
+        {
+            PRO_tblStallDRO result = new PRO_tblStallDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    string temp = "";
+                    var db = scope.Resolve<IPRO_tblStallDAO>();
+                    var data = Mapper.Map<PRO_tblStallDTO>(stall);
+                    if (stall.Activity.Equals(BaseConstant.COMMAND_INSERT_EN))
+                        temp = db.InsertStall(data);
+                    else temp = db.UpdateStall(data);
+
+                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
+                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
+                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
+                    result.Username = stall.UserID;
+                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Insert new stall failed because " + ex.Message;
+                result.Username = stall.UserID;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public PRO_tblStallDRO DeleteStall(string Username, string LanguageID, string StallIDList)
+        {
+            PRO_tblStallDRO result = new PRO_tblStallDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    string temp = "";
+                    var db = scope.Resolve<IPRO_tblStallDAO>();
+                    if (StallIDList.Contains("$"))
+                        temp = db.DeleteStallList(StallIDList, Username, LanguageID);
+                    else temp = db.DeleteStall(StallIDList, Username, LanguageID);
+
+                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
+                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
+                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
+                    result.Username = Username;
+                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Result = false;
+                result.Status = DCO.ResponseStatus.Exception;
+                result.Message = "Delete stall failed because " + ex.Message;
+                result.Username = Username;
+                result.TotalItemCount = 0;
+                logger.Error(ex);
             }
 
             return result;

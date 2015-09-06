@@ -2,13 +2,13 @@
 
 namespace iPOS.DTO.Products
 {
-    public class PRO_tblDistrictDTO
+    public class PRO_tblProductGroupLevel3DTO
     {
-        public Int32 DistrictID { get; set; }
+        public Int32 Level3ID { get; set; }
 
-        public string DistrictCode { get; set; }
+        public string Level3Code { get; set; }
 
-        public Int32 ProvinceID { get; set; }
+        public string Level3ShortCode { get; set; }
 
         public string VNName { get; set; }
 
@@ -20,11 +20,17 @@ namespace iPOS.DTO.Products
 
         public string Note { get; set; }
 
+        public string Description { get; set; }
+
+        public Int32 Level1ID { get; set; }
+
+        public Int32 Level2ID { get; set; }
+
         public bool Visible { get; set; }
 
         public string Creater { get; set; }
 
-        public System.Nullable<DateTime> CreateTime { get; set; }
+        public DateTime CreateTime { get; set; }
 
         public string Editer { get; set; }
 

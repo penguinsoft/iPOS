@@ -38,7 +38,7 @@ namespace iPOS.DCO.Products
         public string Creater { get; set; }
 
         [DataMember]
-        public DateTime CreateTime { get; set; }
+        public System.Nullable<DateTime> CreateTime { get; set; }
 
         [DataMember]
         public string Editer { get; set; }

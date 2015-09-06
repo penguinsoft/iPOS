@@ -43,7 +43,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseDAO.cs" />
+    <Compile Include="Products\PRO_tblDistrictDAO.cs" />
     <Compile Include="Products\PRO_tblProvinceDAO.cs" />
+    <Compile Include="Products\PRO_tblStallDAO.cs" />
+    <Compile Include="Products\PRO_tblStoreDAO.cs" />
+    <Compile Include="Products\PRO_tblWarehouseDAO.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Systems\SYS_tblActionLogDAO.cs" />
     <Compile Include="Systems\SYS_tblGroupUserDAO.cs" />

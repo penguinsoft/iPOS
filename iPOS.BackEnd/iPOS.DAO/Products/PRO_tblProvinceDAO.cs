@@ -2,15 +2,25 @@
 using System.Collections.Generic;
 using System.Data;
 using iPOS.Core.Helper;
-using iPOS.DTO.Product;
+using iPOS.DTO.Products;
 
-namespace iPOS.DAO.Product
+namespace iPOS.DAO.Products
 {
     public interface IPRO_tblProvinceDAO
     {
         List<PRO_tblProvinceDTO> LoadAllData(string username, string language_id);
 
-        PRO_tblProvinceDTO GetDataByID(string username, string language_id, string province_id);
+        List<PRO_tblProvinceDTO> GetDataCombobox(string username, string language_id);
+
+        PRO_tblProvinceDTO GetDataByID(string province_id, string username, string language_id);
+
+        string InsertProvince(PRO_tblProvinceDTO item);
+
+        string UpdateProvince(PRO_tblProvinceDTO item);
+
+        string DeleteProvince(string province_id, string username, string language_id);
+
+        string DeleteProvinceList(string province_id_list, string username, string language_id);
     }
 
     public class PRO_tblProvinceDAO : BaseDAO, IPRO_tblProvinceDAO
@@ -18,73 +28,143 @@ namespace iPOS.DAO.Product
         public List<PRO_tblProvinceDTO> LoadAllData(string username, string language_id)
         {
             List<PRO_tblProvinceDTO> result = new List<PRO_tblProvinceDTO>();
-            //this.InsertActionLog(new SYS_tblActionLogDTO
-            //{
-            //    Activity = "Insert",
-            //    Username = username,
-            //    LanguageID = language_id,
-            //    ActionVN = "Tải Tất Cả Dữ Liệu",
-            //    ActionEN = "Load All Data",
-            //    FunctionID = "8",
-            //    DescriptionVN = string.Format("Tài khoản '{0}' vừa tải thành công dữ liệu tỉnh thành.", username),
-            //    DescriptionEN = string.Format("Account '{0}' downloaded successfully data of provinces.", username)
-            //});
-
-            DataTable data = db.GetDataTable("PRO_spfrmProvince", new string[] { "Activity", "Username", "LanguageID" }, new object[] { BaseConstant.COMMAND_LOAD_ALL_DATA_EN, username, language_id });
-            if (data != null)
+            try
             {
-                foreach (DataRow dr in data.Rows)
+                DataTable data = db.GetDataTable("PRO_spfrmProvince", new string[] { "Activity", "Username", "LanguageID" }, new object[] { BaseConstant.COMMAND_LOAD_ALL_DATA_EN, username, language_id });
+                if (data != null && data.Rows.Count > 0)
                 {
-                    //result.Add(new PRO_tblProvinceDTO
-                    //{
-                    //    ProvinceID = dr["ProvinceID"] + "",
-                    //    ProvinceCode = dr["ProvinceCode"] + "",
-                    //    VNName = dr["VNName"] + "",
-                    //    ENName = dr["ENName"] + "",
-                    //    Note = dr["Note"] + "",
-                    //    Rank = dr["Rank"],
-                    //    Used = Convert.ToBoolean(dr["Used"]),
-                    //    Activity = BaseConstant.COMMAND_LOAD_ALL_DATA_EN,
-                    //    Username = username,
-                    //    LanguageID = language_id,
-                    //    Visible = Convert.ToBoolean(dr["Visible"]),
-                    //    Creater = dr["Creater"] + "",
-                    //    CreateTime = Convert.ToDateTime(dr["CreateTime"]),
-                    //    Editer = dr["Editer"] + "",
-                    //    EditTime = (!string.IsNullOrEmpty(dr["EditTime"] + "")) ? Convert.ToDateTime(dr["EditTime"]) + "" : null,
-                    //    ProvinceName = dr["ProvinceName"] + ""
-                    //});
+                    result = ConvertEngine.ConvertDataTableToObjectList<PRO_tblProvinceDTO>(data);
                 }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
             }
 
             return result;
         }
 
-        public PRO_tblProvinceDTO GetDataByID(string username, string language_id, string province_id)
+        public List<PRO_tblProvinceDTO> GetDataCombobox(string username, string language_id)
         {
-            DataRow dr = db.GetDataRow("PRO_spfrmProvince", new string[] { "Activity", "Username", "LanguageID", "ProvinceID" }, new object[] { BaseConstant.COMMAND_GET_DATA_BY_ID_EN, username, language_id, province_id });
-            //if (dr != null)
-            //    return new PRO_tblProvinceDTO
-            //    {
-            //        ProvinceID = dr["ProvinceID"] + "",
-            //        ProvinceCode = dr["ProvinceCode"] + "",
-            //        VNName = dr["VNName"] + "",
-            //        ENName = dr["ENName"] + "",
-            //        Note = dr["Note"] + "",
-            //        Rank = dr["Rank"],
-            //        Used = Convert.ToBoolean(dr["Used"]),
-            //        Activity = BaseConstant.COMMAND_GET_DATA_BY_ID_EN,
-            //        Username = username,
-            //        LanguageID = language_id,
-            //        Visible = Convert.ToBoolean(dr["Visible"]),
-            //        Creater = dr["Creater"] + "",
-            //        CreateTime = Convert.ToDateTime(dr["CreateTime"]),
-            //        Editer = dr["Editer"] + "",
-            //        EditTime = (!string.IsNullOrEmpty(dr["EditTime"] + "")) ? Convert.ToDateTime(dr["EditTime"]) + "" : null,
-            //        ProvinceName = dr["ProvinceName"] + ""
-            //    };
+            List<PRO_tblProvinceDTO> result = new List<PRO_tblProvinceDTO>();
+            try
+            {
+                DataTable data = db.GetDataTable("PRO_spfrmProvince", new string[] { "Activity", "Username", "LanguageID" }, new object[] { BaseConstant.COMMAND_GET_COMBO_BOX, username, language_id });
+                if (data != null && data.Rows.Count > 0)
+                {
+                    result = ConvertEngine.ConvertDataTableToObjectList<PRO_tblProvinceDTO>(data);
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+            }
 
-            return null;
+            return result;
+        }
+
+        public PRO_tblProvinceDTO GetDataByID(string province_id, string username, string language_id)
+        {
+            PRO_tblProvinceDTO result = new PRO_tblProvinceDTO();
+            try
+            {
+                DataTable data = db.GetDataTable("PRO_spfrmProvince", new string[] { "Activity", "Username", "LanguageID", "ProvinceID" }, new object[] { BaseConstant.COMMAND_GET_DATA_BY_ID_EN, username, language_id, province_id });
+                if (data != null && data.Rows.Count > 0)
+                {
+                    result = ConvertEngine.ConvertDataTableToObjectList<PRO_tblProvinceDTO>(data)[0];
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public string InsertProvince(PRO_tblProvinceDTO item)
+        {
+            string strError = "";
+            try
+            {
+                strError = db.sExecuteSQL("PRO_spfrmProvince", new string[] { "Activity", "Username", "LanguageID", "ProvinceID", "ProvinceCode", "VNName", "ENName", "Rank", "Used", "Note" }, new object[] { item.Activity, item.UserID, item.LanguageID, item.ProvinceID, item.ProvinceCode, item.VNName, item.ENName, item.Rank, item.Used, item.Note });
+                
+                if (!string.IsNullOrEmpty(strError))
+                    logger.Error(strError);
+
+                return strError;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                strError = ex.Message;
+            }
+
+            return strError;
+        }
+
+        public string UpdateProvince(PRO_tblProvinceDTO item)
+        {
+            string strError = "";
+            try
+            {
+                strError = db.sExecuteSQL("PRO_spfrmProvince", new string[] { "Activity", "Username", "LanguageID", "ProvinceID", "ProvinceCode", "VNName", "ENName", "Rank", "Used", "Note" }, new object[] { item.Activity, item.UserID, item.LanguageID, item.ProvinceID, item.ProvinceCode, item.VNName, item.ENName, item.Rank, item.Used, item.Note });
+
+                if (!string.IsNullOrEmpty(strError))
+                    logger.Error(strError);
+
+                return strError;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                strError = ex.Message;
+            }
+
+            return strError;
+        }
+
+        public string DeleteProvince(string province_id, string username, string language_id)
+        {
+            string strError = "";
+            try
+            {
+                strError = db.sExecuteSQL("PRO_spfrmProvince", new string[] { "Activity", "Username", "LanguageID", "ProvinceID" }, new object[] { BaseConstant.COMMAND_DELETE_EN, username, language_id, province_id });
+
+                if (!string.IsNullOrEmpty(strError))
+                    logger.Error(strError);
+
+                return strError;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                strError = ex.Message;
+            }
+
+            return strError;
+        }
+
+        public string DeleteProvinceList(string province_id_list, string username, string language_id)
+        {
+            string strError = "";
+            try
+            {
+                strError = db.sExecuteSQL("PRO_spfrmProvince", new string[] { "Activity", "Username", "LanguageID", "ProvinceIDList" }, new object[] { BaseConstant.COMMAND_DELETE_LIST_EN, username, language_id, province_id_list });
+
+                if (!string.IsNullOrEmpty(strError))
+                    logger.Error(strError);
+
+                return strError;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                strError = ex.Message;
+            }
+
+            return strError;
         }
     }
 }

@@ -109,20 +109,6 @@ namespace iPOS.DAO.Systems
             try
             {
                 strError = db.sExecuteSQL("SYS_spfrmUser", new string[] { "Activity", "Username", "LanguageID", "UsernameOther", "Password", "GroupID", "EffectiveDate", "ToDate", "DateChangePass", "Locked", "LockDate", "UnlockDate", "PassNeverExpired", "ChangePassNextTime", "EmpID", "FullName", "CanNotChangePassword", "Email", "Note" }, new object[] { item.Activity, item.UserID, item.LanguageID, item.Username, item.Password, item.GroupID, item.EffectiveDate, item.ToDate, item.DateChangePass, item.Locked, item.LockDate, item.UnlockDate, item.PassNeverExpired, item.ChangePassNextTime, item.EmpID, item.FullName, item.CanNotChangePassword, item.Email, item.Note });
-                if (strError.Equals(""))
-                {
-                    strError = InsertActionLog(new SYS_tblActionLogDTO
-                    {
-                        Activity = BaseConstant.COMMAND_INSERT_EN,
-                        UserID = item.UserID,
-                        LanguageID = item.LanguageID,
-                        ActionEN = BaseConstant.COMMAND_INSERT_EN,
-                        ActionVN = BaseConstant.COMMAND_INSERT_VI,
-                        FunctionID = "10",
-                        DescriptionVN = string.Format("Tài khoản '{0}' vừa thêm mới thành công người dùng có tên tài khoản '{1}'.", item.UserID, item.Username),
-                        DescriptionEN = string.Format("Account '{0}' has inserted new user successfully with username is '{1}'.", item.UserID, item.Username)
-                    });
-                }
 
                 if (!string.IsNullOrEmpty(strError))
                     logger.Error(strError);
