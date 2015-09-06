@@ -10,6 +10,7 @@ using LanguageEngine = iPOS.IMC.Helper.LanguageEngine;
 using ConfigEngine = iPOS.Core.Helper.ConfigEngine;
 using iPOS.IMC.Helper;
 using iPOS.IMC.Systems;
+using iPOS.IMC.Products;
 
 namespace iPOS.IMC
 {
@@ -95,6 +96,11 @@ namespace iPOS.IMC
             //        }
             //    }
             //}
+        }
+
+        private void btnProvince_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            CommonEngine.OpenMdiChildForm(this, new uc_Province(ConfigEngine.Language), tabMain);
         }
     }
 }

@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseBUS.cs" />
+    <Compile Include="Products\PRO_tblProvinceBUS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Systems\SYS_tblActionLogBUS.cs" />
     <Compile Include="Systems\SYS_tblGroupUserBUS.cs" />
@@ -72,6 +73,7 @@
       <Name>iPOS.DTO</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

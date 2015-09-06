@@ -279,6 +279,7 @@
             this.btnProvince.LargeGlyph = global::iPOS.IMC.Properties.Resources.province_32;
             this.btnProvince.LargeWidth = 70;
             this.btnProvince.Name = "btnProvince";
+            this.btnProvince.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnProvince_ItemClick);
             // 
             // btnDistrict
             // 

@@ -208,7 +208,7 @@ namespace iPOS.WCFService
         [OperationContract]
         [WebInvoke(Method = "GET", UriTemplate = "/GetAllStalls?Username={Username}&LanguageID={LanguageID}&StoreID={StoreID}&WarehouseID={WarehouseID}&GetCombobox={GetCombobox}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        PRO_tblStallDRO GetAllStalls(string Username, string LanguageID, string StoreID, string ProvinceID, bool GetCombobox);
+        PRO_tblStallDRO GetAllStalls(string Username, string LanguageID, string StoreID, string WarehouseID, bool GetCombobox);
 
         [OperationContract]
         [WebInvoke(Method = "GET", UriTemplate = "/GetStallByID?Username={Username}&LanguageID={LanguageID}&StallID={StallID}",

@@ -38,13 +38,13 @@
             this.grvProvince = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gcolProvinceCode = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolProvinceName = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gcolNote = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolRank = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolActiveString = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gcolNote = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolCreater = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolCreateTime = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolEditer = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gcolGroupID = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gcolProvinceID = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridProvince = new DevExpress.XtraGrid.GridControl();
             this.barMain = new DevExpress.XtraBars.BarManager(this.components);
             this.barTop = new DevExpress.XtraBars.Bar();
@@ -113,6 +113,8 @@
             // 
             // grvProvince
             // 
+            this.grvProvince.Appearance.GroupRow.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.grvProvince.Appearance.GroupRow.Options.UseFont = true;
             this.grvProvince.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.gcolProvinceCode,
             this.gcolProvinceName,
@@ -123,13 +125,18 @@
             this.gcolCreateTime,
             this.gcolEditer,
             this.gcolEditTime,
-            this.gcolGroupID});
+            this.gcolProvinceID});
             this.grvProvince.GridControl = this.gridProvince;
             this.grvProvince.IndicatorWidth = 40;
             this.grvProvince.Name = "grvProvince";
             this.grvProvince.OptionsBehavior.Editable = false;
             this.grvProvince.OptionsSelection.MultiSelect = true;
             this.grvProvince.OptionsView.ShowAutoFilterRow = true;
+            this.grvProvince.CustomDrawRowIndicator += new DevExpress.XtraGrid.Views.Grid.RowIndicatorCustomDrawEventHandler(this.grvProvince_CustomDrawRowIndicator);
+            this.grvProvince.SelectionChanged += new DevExpress.Data.SelectionChangedEventHandler(this.grvProvince_SelectionChanged);
+            this.grvProvince.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.grvProvince_FocusedRowChanged);
+            this.grvProvince.FocusedRowLoaded += new DevExpress.XtraGrid.Views.Base.RowEventHandler(this.grvProvince_FocusedRowLoaded);
+            this.grvProvince.DoubleClick += new System.EventHandler(this.grvProvince_DoubleClick);
             // 
             // gcolProvinceCode
             // 
@@ -150,16 +157,6 @@
             this.gcolProvinceName.Visible = true;
             this.gcolProvinceName.VisibleIndex = 1;
             this.gcolProvinceName.Width = 301;
-            // 
-            // gcolNote
-            // 
-            this.gcolNote.Caption = "Ghi chú";
-            this.gcolNote.FieldName = "Note";
-            this.gcolNote.Name = "gcolNote";
-            this.gcolNote.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
-            this.gcolNote.Visible = true;
-            this.gcolNote.VisibleIndex = 4;
-            this.gcolNote.Width = 310;
             // 
             // gcolRank
             // 
@@ -185,6 +182,16 @@
             this.gcolActiveString.VisibleIndex = 3;
             this.gcolActiveString.Width = 70;
             // 
+            // gcolNote
+            // 
+            this.gcolNote.Caption = "Ghi chú";
+            this.gcolNote.FieldName = "Note";
+            this.gcolNote.Name = "gcolNote";
+            this.gcolNote.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gcolNote.Visible = true;
+            this.gcolNote.VisibleIndex = 4;
+            this.gcolNote.Width = 310;
+            // 
             // gcolCreater
             // 
             this.gcolCreater.Caption = "Creater";
@@ -203,11 +210,11 @@
             this.gcolEditer.FieldName = "Editer";
             this.gcolEditer.Name = "gcolEditer";
             // 
-            // gcolGroupID
+            // gcolProvinceID
             // 
-            this.gcolGroupID.Caption = "GroupID";
-            this.gcolGroupID.FieldName = "GroupID";
-            this.gcolGroupID.Name = "gcolGroupID";
+            this.gcolProvinceID.Caption = "ProvinceID";
+            this.gcolProvinceID.FieldName = "ProvinceID";
+            this.gcolProvinceID.Name = "gcolProvinceID";
             // 
             // gridProvince
             // 
@@ -290,6 +297,7 @@
             this.btnInsert.Id = 0;
             this.btnInsert.Name = "btnInsert";
             this.btnInsert.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
+            this.btnInsert.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnInsert_ItemClick);
             // 
             // btnUpdate
             // 
@@ -297,6 +305,7 @@
             this.btnUpdate.Glyph = global::iPOS.IMC.Properties.Resources.update_16;
             this.btnUpdate.Id = 1;
             this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnUpdate_ItemClick);
             // 
             // btnDelete
             // 
@@ -304,6 +313,7 @@
             this.btnDelete.Glyph = global::iPOS.IMC.Properties.Resources.delete_16;
             this.btnDelete.Id = 2;
             this.btnDelete.Name = "btnDelete";
+            this.btnDelete.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnDelete_ItemClick);
             // 
             // btnPrint
             // 
@@ -311,6 +321,7 @@
             this.btnPrint.Glyph = global::iPOS.IMC.Properties.Resources.print_16;
             this.btnPrint.Id = 3;
             this.btnPrint.Name = "btnPrint";
+            this.btnPrint.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnPrint_ItemClick);
             // 
             // btnReload
             // 
@@ -318,6 +329,7 @@
             this.btnReload.Glyph = global::iPOS.IMC.Properties.Resources.reload_16;
             this.btnReload.Id = 4;
             this.btnReload.Name = "btnReload";
+            this.btnReload.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnReload_ItemClick);
             // 
             // btnImport
             // 
@@ -325,6 +337,7 @@
             this.btnImport.Glyph = global::iPOS.IMC.Properties.Resources.import_16;
             this.btnImport.Id = 5;
             this.btnImport.Name = "btnImport";
+            this.btnImport.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnImport_ItemClick);
             // 
             // btnExport
             // 
@@ -332,6 +345,7 @@
             this.btnExport.Glyph = global::iPOS.IMC.Properties.Resources.export_16;
             this.btnExport.Id = 6;
             this.btnExport.Name = "btnExport";
+            this.btnExport.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnExport_ItemClick);
             // 
             // btnClose
             // 
@@ -339,6 +353,7 @@
             this.btnClose.Glyph = global::iPOS.IMC.Properties.Resources.close_16;
             this.btnClose.Id = 7;
             this.btnClose.Name = "btnClose";
+            this.btnClose.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnClose_ItemClick);
             // 
             // barBottom
             // 
@@ -427,6 +442,7 @@
             this.Controls.Add(this.barDockControlTop);
             this.Name = "uc_Province";
             this.Size = new System.Drawing.Size(932, 573);
+            this.Load += new System.EventHandler(this.uc_Province_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grvProvince)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridProvince)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barMain)).EndInit();
@@ -451,7 +467,7 @@
         private DevExpress.XtraGrid.Columns.GridColumn gcolCreater;
         private DevExpress.XtraGrid.Columns.GridColumn gcolCreateTime;
         private DevExpress.XtraGrid.Columns.GridColumn gcolEditer;
-        private DevExpress.XtraGrid.Columns.GridColumn gcolGroupID;
+        private DevExpress.XtraGrid.Columns.GridColumn gcolProvinceID;
         private DevExpress.XtraGrid.GridControl gridProvince;
         private DevExpress.XtraBars.BarManager barMain;
         private DevExpress.XtraBars.Bar barTop;
