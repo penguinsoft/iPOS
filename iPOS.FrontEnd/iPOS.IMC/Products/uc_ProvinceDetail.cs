@@ -20,6 +20,7 @@ namespace iPOS.IMC.Products
         private uc_Province parent_form;
         #endregion
 
+        #region [Personal Methods]
         private void Initialize()
         {
             LanguageEngine.ChangeCaptionLayoutControlGroup(this.Name, ConfigEngine.Language, logDetail);
@@ -110,6 +111,57 @@ namespace iPOS.IMC.Products
             return true;
         }
 
+        private void LoadDataToEdit(PRO_tblProvinceDTO item)
+        {
+            txtProvinceID.EditValue = (item == null) ? null : item.ProvinceID;
+            txtProvinceCode.EditValue = (item == null) ? null : item.ProvinceCode;
+            txtProvinceCode.Properties.ReadOnly = (item == null) ? false : true;
+            txtVNName.EditValue = (item == null) ? null : item.VNName;
+            txtENName.EditValue = (item == null) ? null : item.ENName;
+            speRank.EditValue = (item == null) ? null : item.Rank;
+            chkUsed.Checked = (item == null) ? true : item.Used;
+            mmoNote.EditValue = (item == null) ? null : item.Note;
+            if (item == null)
+            {
+                depError.ClearErrors();
+                this.ParentForm.Text = LanguageEngine.GetOpenFormText(this.Name, ConfigEngine.Language, false);
+                txtProvinceCode.Focus();
+            }
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            BeginInvoke(new MethodInvoker(() =>
+            {
+                if (!string.IsNullOrEmpty(txtProvinceID.Text))
+                    txtVNName.Focus();
+            }));
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == (Keys.Control | Keys.S))
+            {
+                btnSaveClose_Click(null, null);
+                return true;
+            }
+            else if (keyData == (Keys.Control | Keys.Shift | Keys.S))
+            {
+                btnSaveInsert_Click(null, null);
+                return true;
+            }
+            else if (keyData == Keys.Escape)
+            {
+                btnCancel_Click(null, null);
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+
+        }
+        #endregion
+
+        #region [Form Events]
         public uc_ProvinceDetail()
         {
             InitializeComponent();
@@ -119,7 +171,10 @@ namespace iPOS.IMC.Products
         public uc_ProvinceDetail(uc_Province _parent_form, PRO_tblProvinceDTO item = null)
         {
             InitializeComponent();
+            Initialize();
             parent_form = _parent_form;
+            if (item != null)
+                LoadDataToEdit(item);
         }
 
         private void txtProvinceCode_EditValueChanged(object sender, EventArgs e)
@@ -135,12 +190,12 @@ namespace iPOS.IMC.Products
 
         private void txtVNName_EditValueChanged(object sender, EventArgs e)
         {
-            depError.SetError(txtVNName, string.IsNullOrEmpty(txtVNName.Text) ? LanguageEngine.GetMessageCaption("000003", ConfigEngine.Language) : txtVNName.Text.Contains(" ") ? LanguageEngine.GetMessageCaption("000004", ConfigEngine.Language) : null);
+            depError.SetError(txtVNName, string.IsNullOrEmpty(txtVNName.Text) ? LanguageEngine.GetMessageCaption("000003", ConfigEngine.Language) : null);
         }
 
         private void txtENName_EditValueChanged(object sender, EventArgs e)
         {
-            depError.SetError(txtENName, string.IsNullOrEmpty(txtENName.Text) ? LanguageEngine.GetMessageCaption("000003", ConfigEngine.Language) : txtENName.Text.Contains(" ") ? LanguageEngine.GetMessageCaption("000004", ConfigEngine.Language) : null);
+            depError.SetError(txtENName, string.IsNullOrEmpty(txtENName.Text) ? LanguageEngine.GetMessageCaption("000003", ConfigEngine.Language) : null);
         }
 
         private async void btnSaveClose_Click(object sender, EventArgs e)
@@ -150,14 +205,17 @@ namespace iPOS.IMC.Products
                     this.ParentForm.Close();
         }
 
-        private void btnSaveInsert_Click(object sender, EventArgs e)
+        private async void btnSaveInsert_Click(object sender, EventArgs e)
         {
-
+            if (CheckValidate())
+                if (await SaveProvince(!string.IsNullOrEmpty(txtProvinceID.Text)))
+                    LoadDataToEdit(null);
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-
+            this.ParentForm.Close();
         }
+        #endregion
     }
 }

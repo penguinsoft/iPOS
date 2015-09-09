@@ -76,7 +76,7 @@ namespace iPOS.IMC.Products
             }
         }
 
-        private async void DeleteProvince()
+        private async Task DeleteProvince()
         {
             string strErr = "ready";
             try
@@ -123,6 +123,7 @@ namespace iPOS.IMC.Products
         }
         #endregion
 
+        #region [Form Events]
         public uc_Province()
         {
             InitializeComponent();
@@ -139,14 +140,19 @@ namespace iPOS.IMC.Products
             CommonEngine.OpenInputForm(new uc_ProvinceDetail(this), new Size(435, 265), false);
         }
 
-        private void btnUpdate_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private async void btnUpdate_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
+            if (curItem.Count > 0)
+            {
+                PRO_tblProvinceDTO item = await PRO_tblProvinceBUS.GetProvinceItem(CommonEngine.userInfo.UserID, ConfigEngine.Language, curItem[0].ProvinceID);
+                if (item != null)
+                    CommonEngine.OpenInputForm(new uc_ProvinceDetail(this, item), new Size(435, 265), true);
+            }
         }
 
-        private void btnDelete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private async void btnDelete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
+            await DeleteProvince();
         }
 
         private void btnPrint_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -156,22 +162,22 @@ namespace iPOS.IMC.Products
 
         private void btnReload_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
+            GetAllProvinces();
         }
 
         private void btnImport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
+            CommonEngine.OpenImportExcelForm("PRO_Province_FileSelect.xlsx", "PRO_spfrmProvinceImport", "PRO", "8");
         }
 
         private void btnExport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
+            CommonEngine.QuickExportGridViewData(ConvertEngine.ConvertObjectListToDataTable<PRO_tblProvinceDTO>(gridProvince.DataSource as List<PRO_tblProvinceDTO>), grvProvince);
         }
 
         private void btnClose_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
+            this.ParentForm.Close();
         }
 
         private void uc_Province_Load(object sender, EventArgs e)
@@ -213,5 +219,6 @@ namespace iPOS.IMC.Products
             if (province_code_list.Length > 0) province_code_list = province_code_list.Substring(0, province_code_list.Length - 1);
             if (province_id_list.Length > 0) province_id_list = province_id_list.Substring(0, province_id_list.Length - 1);
         }
+        #endregion
     }
 }

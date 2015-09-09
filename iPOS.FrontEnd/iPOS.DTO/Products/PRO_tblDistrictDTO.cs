@@ -4,21 +4,15 @@ namespace iPOS.DTO.Products
 {
     public class PRO_tblDistrictDTO
     {
-        public Int32 DistrictID { get; set; }
+        public string DistrictID { get; set; }
 
         public string DistrictCode { get; set; }
 
-        public Int32 ProvinceID { get; set; }
+        public string ProvinceID { get; set; }
 
         public string VNName { get; set; }
 
         public string ENName { get; set; }
-
-        public string DistrictName { get; set; }
-
-        public string FullDistrictName { get; set; }
-
-        public string ProvinceName { get; set; }
 
         public System.Nullable<Int32> Rank { get; set; }
 
@@ -41,5 +35,15 @@ namespace iPOS.DTO.Products
         public string UserID { get; set; }
 
         public string LanguageID { get; set; }
+
+        public string ActiveString
+        {
+            get
+            {
+                if (Used)
+                    return "X";
+                else return "";
+            }
+        }
     }
 }

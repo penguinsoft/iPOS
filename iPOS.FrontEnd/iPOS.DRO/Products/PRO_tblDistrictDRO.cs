@@ -1,35 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
+using iPOS.DTO.Products;
 using System.Runtime.Serialization;
 
-namespace iPOS.DCO.Products
+namespace iPOS.DRO.Products
 {
+    public class PRO_tblDistrictDRO : BaseDRO
+    {
+        public List<PRO_tblDistrictDTO> DistrictList { get; set; }
+
+        public PRO_tblDistrictDTO DistrictItem { get; set; }
+    }
+
     [DataContract]
     public class PRO_tblDistrictDCO
     {
         [DataMember]
-        public Int32 DistrictID { get; set; }
+        public string DistrictID { get; set; }
 
         [DataMember]
         public string DistrictCode { get; set; }
 
         [DataMember]
-        public Int32 ProvinceID { get; set; }
+        public string ProvinceID { get; set; }
 
         [DataMember]
         public string VNName { get; set; }
 
         [DataMember]
         public string ENName { get; set; }
-
-        [DataMember]
-        public string DistrictName { get; set; }
-
-        [DataMember]
-        public string FullDistrictName { get; set; }
-
-        [DataMember]
-        public string ProvinceName { get; set; }
 
         [DataMember]
         public System.Nullable<Int32> Rank { get; set; }
@@ -63,15 +62,5 @@ namespace iPOS.DCO.Products
 
         [DataMember]
         public string LanguageID { get; set; }
-    }
-
-    [DataContract]
-    public class PRO_tblDistrictDRO : BaseDRO
-    {
-        [DataMember]
-        public List<PRO_tblDistrictDCO> DistrictList { get; set; }
-
-        [DataMember]
-        public PRO_tblDistrictDCO DistrictItem { get; set; } 
     }
 }

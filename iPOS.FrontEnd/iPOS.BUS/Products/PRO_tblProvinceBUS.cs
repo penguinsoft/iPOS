@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using iPOS.BUS.Systems;
 using iPOS.DAO.Products;
+using iPOS.DRO.Products;
 using iPOS.DTO.Products;
 using iPOS.DTO.Systems;
 using Newtonsoft.Json;
@@ -31,7 +32,7 @@ namespace iPOS.BUS.Products
             try
             {
                 string url = string.Format(@"{0}/InsertUpdateProvince", GetBaseUrl());
-                var postData = new PRO_tblProvinceDTO
+                var postData = new PRO_tblProvinceDCO
                 {
                     ProvinceID = item.ProvinceID,
                     ProvinceCode = item.ProvinceCode,

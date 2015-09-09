@@ -103,6 +103,12 @@
     <Compile Include="Helper\CommonEngine.cs" />
     <Compile Include="Helper\LanguageEngine.cs" />
     <Compile Include="Helper\ReportEngine.cs" />
+    <Compile Include="Products\uc_District.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Products\uc_District.Designer.cs">
+      <DependentUpon>uc_District.cs</DependentUpon>
+    </Compile>
     <Compile Include="Products\uc_Province.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -174,6 +180,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmOpen.resx">
       <DependentUpon>frmOpen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Products\uc_District.resx">
+      <DependentUpon>uc_District.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Products\uc_Province.resx">
       <DependentUpon>uc_Province.cs</DependentUpon>

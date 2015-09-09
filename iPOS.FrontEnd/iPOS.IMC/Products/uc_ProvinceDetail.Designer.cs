@@ -92,6 +92,7 @@
             this.locMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.locMain.Location = new System.Drawing.Point(0, 0);
             this.locMain.Name = "locMain";
+            this.locMain.OptionsFocus.EnableAutoTabOrder = false;
             this.locMain.Root = this.logMain;
             this.locMain.Size = new System.Drawing.Size(431, 254);
             this.locMain.TabIndex = 0;
@@ -112,7 +113,7 @@
             this.btnSaveClose.Name = "btnSaveClose";
             this.btnSaveClose.Size = new System.Drawing.Size(96, 22);
             this.btnSaveClose.StyleController = this.locMain;
-            this.btnSaveClose.TabIndex = 12;
+            this.btnSaveClose.TabIndex = 6;
             this.btnSaveClose.Text = "Lưu && Đóng";
             this.btnSaveClose.Click += new System.EventHandler(this.btnSaveClose_Click);
             // 
@@ -123,7 +124,7 @@
             this.btnSaveInsert.Name = "btnSaveInsert";
             this.btnSaveInsert.Size = new System.Drawing.Size(96, 22);
             this.btnSaveInsert.StyleController = this.locMain;
-            this.btnSaveInsert.TabIndex = 11;
+            this.btnSaveInsert.TabIndex = 7;
             this.btnSaveInsert.Text = "Lưu && Thêm";
             this.btnSaveInsert.Click += new System.EventHandler(this.btnSaveInsert_Click);
             // 
@@ -134,7 +135,7 @@
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(96, 22);
             this.btnCancel.StyleController = this.locMain;
-            this.btnCancel.TabIndex = 10;
+            this.btnCancel.TabIndex = 8;
             this.btnCancel.Text = "Hủy Bỏ";
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
@@ -144,17 +145,18 @@
             this.mmoNote.Name = "mmoNote";
             this.mmoNote.Size = new System.Drawing.Size(310, 85);
             this.mmoNote.StyleController = this.locMain;
-            this.mmoNote.TabIndex = 9;
+            this.mmoNote.TabIndex = 5;
             // 
             // chkUsed
             // 
             this.chkUsed.EditValue = true;
+            this.chkUsed.EnterMoveNextControl = true;
             this.chkUsed.Location = new System.Drawing.Point(300, 105);
             this.chkUsed.Name = "chkUsed";
             this.chkUsed.Properties.Caption = "Đang sử dụng?";
             this.chkUsed.Size = new System.Drawing.Size(117, 19);
             this.chkUsed.StyleController = this.locMain;
-            this.chkUsed.TabIndex = 8;
+            this.chkUsed.TabIndex = 4;
             // 
             // speRank
             // 
@@ -163,34 +165,38 @@
             0,
             0,
             0});
+            this.speRank.EnterMoveNextControl = true;
             this.speRank.Location = new System.Drawing.Point(107, 105);
             this.speRank.Name = "speRank";
             this.speRank.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
             this.speRank.Size = new System.Drawing.Size(181, 20);
             this.speRank.StyleController = this.locMain;
-            this.speRank.TabIndex = 7;
+            this.speRank.TabIndex = 3;
             // 
             // txtENName
             // 
+            this.txtENName.EnterMoveNextControl = true;
             this.txtENName.Location = new System.Drawing.Point(107, 81);
             this.txtENName.Name = "txtENName";
             this.txtENName.Size = new System.Drawing.Size(310, 20);
             this.txtENName.StyleController = this.locMain;
-            this.txtENName.TabIndex = 6;
+            this.txtENName.TabIndex = 2;
             this.txtENName.EditValueChanged += new System.EventHandler(this.txtENName_EditValueChanged);
             // 
             // txtVNName
             // 
+            this.txtVNName.EnterMoveNextControl = true;
             this.txtVNName.Location = new System.Drawing.Point(107, 57);
             this.txtVNName.Name = "txtVNName";
             this.txtVNName.Size = new System.Drawing.Size(310, 20);
             this.txtVNName.StyleController = this.locMain;
-            this.txtVNName.TabIndex = 5;
+            this.txtVNName.TabIndex = 1;
             this.txtVNName.EditValueChanged += new System.EventHandler(this.txtVNName_EditValueChanged);
             // 
             // txtProvinceCode
             // 
+            this.txtProvinceCode.EnterMoveNextControl = true;
             this.txtProvinceCode.Location = new System.Drawing.Point(107, 33);
             this.txtProvinceCode.Name = "txtProvinceCode";
             this.txtProvinceCode.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
@@ -198,7 +204,7 @@
             this.txtProvinceCode.Properties.MaxLength = 20;
             this.txtProvinceCode.Size = new System.Drawing.Size(310, 20);
             this.txtProvinceCode.StyleController = this.locMain;
-            this.txtProvinceCode.TabIndex = 4;
+            this.txtProvinceCode.TabIndex = 0;
             this.txtProvinceCode.EditValueChanged += new System.EventHandler(this.txtProvinceCode_EditValueChanged);
             // 
             // logMain
