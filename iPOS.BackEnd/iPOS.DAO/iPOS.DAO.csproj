@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseDAO.cs" />
+    <Compile Include="Products\PRO_tblProductGroupLevel1DAO.cs" />
     <Compile Include="Products\PRO_tblDistrictDAO.cs" />
     <Compile Include="Products\PRO_tblProvinceDAO.cs" />
     <Compile Include="Products\PRO_tblStallDAO.cs" />

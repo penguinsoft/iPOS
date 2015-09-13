@@ -54,6 +54,9 @@ namespace iPOS.DCO.Products
 
         [DataMember]
         public string ProvinceName { get; set; }
+
+        [DataMember]
+        public string FullProvinceName { get; set; }
     }
 
     [DataContract]

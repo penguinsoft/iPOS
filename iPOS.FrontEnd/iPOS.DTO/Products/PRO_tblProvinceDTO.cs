@@ -36,6 +36,8 @@ namespace iPOS.DTO.Products
 
         public string ProvinceName { get; set; }
 
+        public string FullProvinceName { get; set; }
+
         public string ActiveString
         {
             get

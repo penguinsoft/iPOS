@@ -45,5 +45,9 @@ namespace iPOS.DTO.Products
                 else return "";
             }
         }
+
+        public string DistrictName { get; set; }
+
+        public string ProvinceName { get; set; }
     }
 }

@@ -87,6 +87,7 @@
             this.btnInsert.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N));
             this.btnInsert.Name = "btnInsert";
             this.btnInsert.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
+            this.btnInsert.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnInsert_ItemClick);
             // 
             // btnUpdate
             // 
@@ -95,6 +96,7 @@
             this.btnUpdate.Id = 1;
             this.btnUpdate.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F2);
             this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnUpdate_ItemClick);
             // 
             // btnDelete
             // 
@@ -103,6 +105,7 @@
             this.btnDelete.Id = 2;
             this.btnDelete.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.Delete);
             this.btnDelete.Name = "btnDelete";
+            this.btnDelete.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnDelete_ItemClick);
             // 
             // btnPrint
             // 
@@ -111,6 +114,7 @@
             this.btnPrint.Id = 3;
             this.btnPrint.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P));
             this.btnPrint.Name = "btnPrint";
+            this.btnPrint.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnPrint_ItemClick);
             // 
             // btnReload
             // 
@@ -119,6 +123,7 @@
             this.btnReload.Id = 4;
             this.btnReload.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F5);
             this.btnReload.Name = "btnReload";
+            this.btnReload.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnReload_ItemClick);
             // 
             // btnImport
             // 
@@ -127,6 +132,7 @@
             this.btnImport.Id = 5;
             this.btnImport.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I));
             this.btnImport.Name = "btnImport";
+            this.btnImport.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnImport_ItemClick);
             // 
             // barTop
             // 
@@ -159,6 +165,7 @@
             this.btnExport.Id = 6;
             this.btnExport.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E));
             this.btnExport.Name = "btnExport";
+            this.btnExport.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnExport_ItemClick);
             // 
             // btnClose
             // 
@@ -167,6 +174,7 @@
             this.btnClose.Id = 7;
             this.btnClose.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W));
             this.btnClose.Name = "btnClose";
+            this.btnClose.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnClose_ItemClick);
             // 
             // barBottom
             // 
@@ -341,11 +349,17 @@
             this.grvDistrict.GroupCount = 1;
             this.grvDistrict.IndicatorWidth = 40;
             this.grvDistrict.Name = "grvDistrict";
+            this.grvDistrict.OptionsBehavior.AutoExpandAllGroups = true;
             this.grvDistrict.OptionsBehavior.Editable = false;
             this.grvDistrict.OptionsSelection.MultiSelect = true;
             this.grvDistrict.OptionsView.ShowAutoFilterRow = true;
             this.grvDistrict.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.gcolProvinceName, DevExpress.Data.ColumnSortOrder.Ascending)});
+            this.grvDistrict.CustomDrawRowIndicator += new DevExpress.XtraGrid.Views.Grid.RowIndicatorCustomDrawEventHandler(this.grvDistrict_CustomDrawRowIndicator);
+            this.grvDistrict.SelectionChanged += new DevExpress.Data.SelectionChangedEventHandler(this.grvDistrict_SelectionChanged);
+            this.grvDistrict.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.grvDistrict_FocusedRowChanged);
+            this.grvDistrict.FocusedRowLoaded += new DevExpress.XtraGrid.Views.Base.RowEventHandler(this.grvDistrict_FocusedRowLoaded);
+            this.grvDistrict.DoubleClick += new System.EventHandler(this.grvDistrict_DoubleClick);
             // 
             // gcolProvinceName
             // 
@@ -451,6 +465,7 @@
             this.DoubleBuffered = true;
             this.Name = "uc_District";
             this.Size = new System.Drawing.Size(882, 545);
+            this.Load += new System.EventHandler(this.uc_District_Load);
             ((System.ComponentModel.ISupportInitialize)(this.barMain)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridDistrict)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grvDistrict)).EndInit();

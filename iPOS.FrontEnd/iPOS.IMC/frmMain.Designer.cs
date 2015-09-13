@@ -207,6 +207,7 @@
             this.btnStore.LargeGlyph = global::iPOS.IMC.Properties.Resources.shop_32;
             this.btnStore.LargeWidth = 70;
             this.btnStore.Name = "btnStore";
+            this.btnStore.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnStore_ItemClick);
             // 
             // btnWarehouse
             // 
@@ -288,6 +289,7 @@
             this.btnDistrict.LargeGlyph = global::iPOS.IMC.Properties.Resources.district_32;
             this.btnDistrict.LargeWidth = 70;
             this.btnDistrict.Name = "btnDistrict";
+            this.btnDistrict.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnDistrict_ItemClick);
             // 
             // btnImportExport
             // 

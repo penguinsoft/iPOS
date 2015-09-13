@@ -8,45 +8,47 @@ using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using iPOS.IMC.Helper;
 using iPOS.Core.Helper;
-using iPOS.DTO.Products;
 using System.Threading.Tasks;
-using iPOS.BUS.Products;
+using iPOS.DTO.Products;
 
 namespace iPOS.IMC.Products
 {
-    public partial class uc_ProvinceDetail : DevExpress.XtraEditors.XtraUserControl
+    public partial class uc_DistrictDetail : DevExpress.XtraEditors.XtraUserControl
     {
         #region [Declare Variables]
-        private uc_Province parent_form;
+        private uc_District parent_form;
         #endregion
 
         #region [Personal Methods]
-        private void Initialize()
+        private async void Initialize()
         {
+            LanguageEngine.ChangeCaptionLayoutControlItem(this.Name, ConfigEngine.Language, new DevExpress.XtraLayout.LayoutControlItem[] { lciDistrictCode, lciVNName, lciENName, lciProvince, lciNote, lciRank });
             LanguageEngine.ChangeCaptionLayoutControlGroup(this.Name, ConfigEngine.Language, logDetail);
-            LanguageEngine.ChangeCaptionLayoutControlItem(this.Name, ConfigEngine.Language, new DevExpress.XtraLayout.LayoutControlItem[] { lciProvinceCode, lciVNName, lciENName, lciRank, lciNote });
             LanguageEngine.ChangeCaptionCheckEdit(this.Name, ConfigEngine.Language, chkUsed);
             LanguageEngine.ChangeCaptionSimpleButton(this.Name, ConfigEngine.Language, new SimpleButton[] { btnSaveClose, btnSaveInsert, btnCancel });
+            LanguageEngine.ChangeCaptionGridLookUpEdit(this.Name, ConfigEngine.Language, gluProvince);
+
+            await LoadProvince();
         }
 
         private bool CheckValidate()
         {
-            if (string.IsNullOrEmpty(txtProvinceCode.Text))
+            if (string.IsNullOrEmpty(txtDistrictCode.Text))
             {
-                depError.SetError(txtProvinceCode, LanguageEngine.GetMessageCaption("000003", ConfigEngine.Language));
-                txtProvinceCode.Focus();
+                depError.SetError(txtDistrictCode, LanguageEngine.GetMessageCaption("000003",ConfigEngine.Language));
+                txtDistrictCode.Focus();
                 return false;
             }
-            if (txtProvinceCode.Text.Contains(" "))
+            if (txtDistrictCode.Text.Contains(" "))
             {
-                depError.SetError(txtProvinceCode, LanguageEngine.GetMessageCaption("000004", ConfigEngine.Language));
-                txtProvinceCode.Focus();
+                depError.SetError(txtDistrictCode, LanguageEngine.GetMessageCaption("000004", ConfigEngine.Language));
+                txtDistrictCode.Focus();
                 return false;
             }
-            if (CommonEngine.CheckExistsUnicodeChar(txtProvinceCode.Text))
+            if (CommonEngine.CheckExistsUnicodeChar(txtDistrictCode.Text))
             {
-                depError.SetError(txtProvinceCode, LanguageEngine.GetMessageCaption("000021", ConfigEngine.Language));
-                txtProvinceCode.Focus();
+                depError.SetError(txtDistrictCode, LanguageEngine.GetMessageCaption("000021", ConfigEngine.Language));
+                txtDistrictCode.Focus();
                 return false;
             }
             if (string.IsNullOrEmpty(txtVNName.Text.Trim()))
@@ -61,21 +63,36 @@ namespace iPOS.IMC.Products
                 txtENName.Focus();
                 return false;
             }
+            if (string.IsNullOrEmpty(gluProvince.EditValue + "") || gluProvince.EditValue.Equals("0"))
+            {
+                depError.SetError(gluProvince, LanguageEngine.GetMessageCaption("000003", ConfigEngine.Language));
+                gluProvince.Focus();
+                return false;
+            }
 
             return true;
         }
 
-        private async Task<bool> SaveProvince(bool isEdit)
+        private async Task LoadProvince()
+        {
+            gluProvince.DataBindings.Clear();
+            gluProvince.Properties.DataSource = await iPOS.BUS.Products.PRO_tblProvinceBUS.GetAllProvinces(CommonEngine.userInfo.UserID, ConfigEngine.Language, true, null);
+            gluProvince.Properties.ValueMember = "ProvinceID";
+            gluProvince.Properties.DisplayMember = "FullProvinceName";
+        }
+
+        private async Task<bool> SaveDistrict(bool isEdit)
         {
             string strError = "";
             try
             {
-                PRO_tblProvinceDTO item = new PRO_tblProvinceDTO
+                PRO_tblDistrictDTO item = new PRO_tblDistrictDTO
                 {
-                    ProvinceID = isEdit ? txtProvinceID.Text : "0",
-                    ProvinceCode = txtProvinceCode.Text,
+                    DistrictID = isEdit ? txtDistrictID.Text : "0",
+                    DistrictCode = txtDistrictCode.Text,
                     VNName = txtVNName.Text,
                     ENName = txtENName.Text,
+                    ProvinceID = gluProvince.EditValue + "",
                     Rank = speRank.EditValue != null ? Convert.ToInt32(speRank.Value) : (Int32?)null,
                     Used = chkUsed.Checked,
                     Note = mmoNote.Text,
@@ -83,24 +100,24 @@ namespace iPOS.IMC.Products
                     Activity = (isEdit) ? BaseConstant.COMMAND_UPDATE_EN : BaseConstant.COMMAND_INSERT_EN,
                     LanguageID = ConfigEngine.Language
                 };
-                strError = await PRO_tblProvinceBUS.InsertUpdateProvince(item, new DTO.Systems.SYS_tblActionLogDTO
+                strError = await iPOS.BUS.Products.PRO_tblDistrictBUS.InsertUpdateDistrict(item, new DTO.Systems.SYS_tblActionLogDTO
                 {
                     Activity = BaseConstant.COMMAND_INSERT_EN,
                     UserID = CommonEngine.userInfo.UserID,
                     LanguageID = ConfigEngine.Language,
                     ActionEN = isEdit ? BaseConstant.COMMAND_UPDATE_EN : BaseConstant.COMMAND_INSERT_EN,
                     ActionVN = isEdit ? BaseConstant.COMMAND_UPDATE_VI : BaseConstant.COMMAND_INSERT_VI,
-                    FunctionID = "8",
-                    DescriptionVN = string.Format("Tài khoản '{0}' vừa {1} thành công tỉnh thành có mã tỉnh là '{2}'.", item.UserID, isEdit ? "cập nhật" : "thêm mới", txtProvinceCode.Text),
-                    DescriptionEN = string.Format("Account '{0}' has {1} province successfully with province code is '{2}'.", item.UserID, isEdit ? "updated" : "inserted", txtProvinceCode.Text)
+                    FunctionID = "12",
+                    DescriptionVN = string.Format("Tài khoản '{0}' vừa {1} thành công quận huyện có mã quận huyện là '{2}'.", item.UserID, isEdit ? "cập nhật" : "thêm mới", txtDistrictCode.Text),
+                    DescriptionEN = string.Format("Account '{0}' has {1} district successfully with district code is '{2}'.", item.UserID, isEdit ? "updated" : "inserted", txtDistrictCode.Text)
                 });
                 if (!string.IsNullOrEmpty(strError))
                 {
                     CommonEngine.ShowMessage(strError, 0);
-                    txtProvinceCode.Focus();
+                    txtDistrictCode.Focus();
                     return false;
                 }
-                else parent_form.GetAllProvinces();
+                else parent_form.GetAllDistrict();
             }
             catch (Exception ex)
             {
@@ -111,13 +128,14 @@ namespace iPOS.IMC.Products
             return true;
         }
 
-        private void LoadDataToEdit(PRO_tblProvinceDTO item)
+        private void LoadDataToEdit(PRO_tblDistrictDTO item)
         {
-            txtProvinceID.EditValue = (item == null) ? null : item.ProvinceID;
-            txtProvinceCode.EditValue = (item == null) ? null : item.ProvinceCode;
-            txtProvinceCode.Properties.ReadOnly = (item == null) ? false : true;
+            txtDistrictID.EditValue = (item == null) ? null : item.DistrictID;
+            txtDistrictCode.EditValue = (item == null) ? null : item.DistrictCode;
+            txtDistrictCode.Properties.ReadOnly = (item == null) ? false : true;
             txtVNName.EditValue = (item == null) ? null : item.VNName;
             txtENName.EditValue = (item == null) ? null : item.ENName;
+            gluProvince.EditValue = (item == null) ? null : item.ProvinceID;
             speRank.EditValue = (item == null) ? null : item.Rank;
             chkUsed.Checked = (item == null) ? true : item.Used;
             mmoNote.EditValue = (item == null) ? null : item.Note;
@@ -125,7 +143,7 @@ namespace iPOS.IMC.Products
             {
                 depError.ClearErrors();
                 this.ParentForm.Text = LanguageEngine.GetOpenFormText(this.Name, ConfigEngine.Language, false);
-                txtProvinceCode.Focus();
+                txtDistrictCode.Focus();
             }
         }
 
@@ -134,7 +152,7 @@ namespace iPOS.IMC.Products
             base.OnLoad(e);
             BeginInvoke(new MethodInvoker(() =>
             {
-                if (!string.IsNullOrEmpty(txtProvinceID.Text))
+                if (!string.IsNullOrEmpty(txtDistrictID.Text))
                     txtVNName.Focus();
             }));
         }
@@ -162,13 +180,13 @@ namespace iPOS.IMC.Products
         #endregion
 
         #region [Form Events]
-        public uc_ProvinceDetail()
+        public uc_DistrictDetail()
         {
             InitializeComponent();
             Initialize();
         }
 
-        public uc_ProvinceDetail(uc_Province _parent_form, PRO_tblProvinceDTO item = null)
+        public uc_DistrictDetail(uc_District _parent_form, PRO_tblDistrictDTO item = null)
         {
             InitializeComponent();
             Initialize();
@@ -177,15 +195,15 @@ namespace iPOS.IMC.Products
                 LoadDataToEdit(item);
         }
 
-        private void txtProvinceCode_EditValueChanged(object sender, EventArgs e)
+        private void txtDistrictCode_EditValueChanged(object sender, EventArgs e)
         {
-            if (txtProvinceCode.Text.Contains(" "))
-                depError.SetError(txtProvinceCode, LanguageEngine.GetMessageCaption("000004", ConfigEngine.Language));
-            else if (string.IsNullOrEmpty(txtProvinceCode.Text))
-                depError.SetError(txtProvinceCode, LanguageEngine.GetMessageCaption("000003", ConfigEngine.Language));
-            else if (CommonEngine.CheckExistsUnicodeChar(txtProvinceCode.Text))
-                depError.SetError(txtProvinceCode, LanguageEngine.GetMessageCaption("000021", ConfigEngine.Language));
-            else depError.SetError(txtProvinceCode, null);
+            if (txtDistrictCode.Text.Contains(" "))
+                depError.SetError(txtDistrictCode, LanguageEngine.GetMessageCaption("000004", ConfigEngine.Language));
+            else if (string.IsNullOrEmpty(txtDistrictCode.Text))
+                depError.SetError(txtDistrictCode, LanguageEngine.GetMessageCaption("000003", ConfigEngine.Language));
+            else if (CommonEngine.CheckExistsUnicodeChar(txtDistrictCode.Text))
+                depError.SetError(txtDistrictCode, LanguageEngine.GetMessageCaption("000021", ConfigEngine.Language));
+            else depError.SetError(txtDistrictCode, null);
         }
 
         private void txtVNName_EditValueChanged(object sender, EventArgs e)
@@ -198,17 +216,22 @@ namespace iPOS.IMC.Products
             depError.SetError(txtENName, string.IsNullOrEmpty(txtENName.Text.Trim()) ? LanguageEngine.GetMessageCaption("000003", ConfigEngine.Language) : null);
         }
 
+        private void gluProvince_EditValueChanged(object sender, EventArgs e)
+        {
+            depError.SetError(gluProvince, (string.IsNullOrEmpty(gluProvince.EditValue + "") || gluProvince.EditValue.Equals("0")) ? LanguageEngine.GetMessageCaption("000003", ConfigEngine.Language) : null);
+        }
+
         private async void btnSaveClose_Click(object sender, EventArgs e)
         {
             if (CheckValidate())
-                if (await SaveProvince(!string.IsNullOrEmpty(txtProvinceID.Text)))
+                if (await SaveDistrict(!string.IsNullOrEmpty(txtDistrictID.Text)))
                     this.ParentForm.Close();
         }
 
         private async void btnSaveInsert_Click(object sender, EventArgs e)
         {
             if (CheckValidate())
-                if (await SaveProvince(!string.IsNullOrEmpty(txtProvinceID.Text)))
+                if (await SaveDistrict(!string.IsNullOrEmpty(txtDistrictID.Text)))
                     LoadDataToEdit(null);
         }
 

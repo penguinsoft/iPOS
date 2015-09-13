@@ -1,9 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using iPOS.DTO.Products;
 
-namespace iPOS.DCO.Products
+namespace iPOS.DRO.Products
 {
+    [DataContract]
+    public class PRO_tblStoreDRO : BaseDRO
+    {
+        [DataMember]
+        public List<PRO_tblStoreDTO> StoreList { get; set; }
+
+        [DataMember]
+        public PRO_tblStoreDTO StoreItem { get; set; }
+    }
+
     [DataContract]
     public class PRO_tblStoreDCO
     {
@@ -39,9 +50,6 @@ namespace iPOS.DCO.Products
 
         [DataMember]
         public string AddressEN { get; set; }
-
-        [DataMember]
-        public string StoreAddress { get; set; }
 
         [DataMember]
         public string Phone { get; set; }
@@ -99,21 +107,5 @@ namespace iPOS.DCO.Products
 
         [DataMember]
         public string LanguageID { get; set; }
-
-        [DataMember]
-        public string ProvinceName { get; set; }
-
-        [DataMember]
-        public string DistrictName { get; set; }
-    }
-
-    [DataContract]
-    public class PRO_tblStoreDRO : BaseDRO
-    {
-        [DataMember]
-        public List<PRO_tblStoreDCO> StoreList { get; set; }
-
-        [DataMember]
-        public PRO_tblStoreDCO StoreItem { get; set; }
     }
 }

@@ -47,6 +47,7 @@
     <Compile Include="BaseBUS.cs" />
     <Compile Include="Products\PRO_tblDistrictBUS.cs" />
     <Compile Include="Products\PRO_tblProvinceBUS.cs" />
+    <Compile Include="Products\PRO_tblStoreBUS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Systems\SYS_tblActionLogBUS.cs" />
     <Compile Include="Systems\SYS_tblGroupUserBUS.cs" />

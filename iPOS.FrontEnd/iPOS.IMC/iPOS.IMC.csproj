@@ -109,6 +109,12 @@
     <Compile Include="Products\uc_District.Designer.cs">
       <DependentUpon>uc_District.cs</DependentUpon>
     </Compile>
+    <Compile Include="Products\uc_DistrictDetail.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Products\uc_DistrictDetail.Designer.cs">
+      <DependentUpon>uc_DistrictDetail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Products\uc_Province.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -120,6 +126,18 @@
     </Compile>
     <Compile Include="Products\uc_ProvinceDetail.Designer.cs">
       <DependentUpon>uc_ProvinceDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Products\uc_Store.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Products\uc_Store.Designer.cs">
+      <DependentUpon>uc_Store.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Products\uc_StoreDetail.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Products\uc_StoreDetail.Designer.cs">
+      <DependentUpon>uc_StoreDetail.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -184,11 +202,20 @@
     <EmbeddedResource Include="Products\uc_District.resx">
       <DependentUpon>uc_District.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Products\uc_DistrictDetail.resx">
+      <DependentUpon>uc_DistrictDetail.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Products\uc_Province.resx">
       <DependentUpon>uc_Province.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Products\uc_ProvinceDetail.resx">
       <DependentUpon>uc_ProvinceDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Products\uc_Store.resx">
+      <DependentUpon>uc_Store.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Products\uc_StoreDetail.resx">
+      <DependentUpon>uc_StoreDetail.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">

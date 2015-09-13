@@ -35,5 +35,7 @@ namespace iPOS.DTO.Products
         public System.Nullable<DateTime> EditTime { get; set; }
 
         public string ProvinceName { get; set; }
+
+        public string FullProvinceName { get; set; }
     }
 }

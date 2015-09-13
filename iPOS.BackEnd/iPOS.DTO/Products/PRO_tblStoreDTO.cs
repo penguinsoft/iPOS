@@ -26,6 +26,8 @@ namespace iPOS.DTO.Products
 
         public string AddressEN { get; set; }
 
+        public string StoreAddress { get; set; }
+
         public string Phone { get; set; }
 
         public string Fax { get; set; }
@@ -44,9 +46,9 @@ namespace iPOS.DTO.Products
 
         public object Photo { get; set; }
 
-        public Int32 ProvinceID { get; set; }
+        public System.Nullable<Int32> ProvinceID { get; set; }
 
-        public Int32 DistrictID { get; set; }
+        public System.Nullable<Int32> DistrictID { get; set; }
 
         public bool Visible { get; set; }
 
@@ -63,5 +65,9 @@ namespace iPOS.DTO.Products
         public string UserID { get; set; }
 
         public string LanguageID { get; set; }
+
+        public string ProvinceName { get; set; }
+
+        public string DistrictName { get; set; }
     }
 }

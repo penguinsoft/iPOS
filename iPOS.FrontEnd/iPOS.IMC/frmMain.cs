@@ -102,5 +102,15 @@ namespace iPOS.IMC
         {
             CommonEngine.OpenMdiChildForm(this, new uc_Province(ConfigEngine.Language), tabMain);
         }
+
+        private void btnDistrict_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            CommonEngine.OpenMdiChildForm(this, new uc_District(ConfigEngine.Language), tabMain);
+        }
+
+        private void btnStore_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            CommonEngine.OpenMdiChildForm(this, new uc_Store(ConfigEngine.Language), tabMain);
+        }
     }
 }

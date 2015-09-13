@@ -269,5 +269,16 @@ namespace iPOS.IMC.Helper
             foreach (TreeListColumn tree_list_column in tree_list_columns)
                 ChangeCaptionTreeListColumn(parent_name, language, tree_list_column);
         }
+
+        public static void ChangeCaptionGridLookUpEdit(string parent_name, string language, GridLookUpEdit grid_lookup_edit)
+        {
+            grid_lookup_edit.Properties.NullText = "[" + CaptionEngine.GetControlCaption(parent_name, grid_lookup_edit.Name, BaseConstant.CONTROL_TEXT, language) + "]";
+        }
+
+        public static void ChangeCaptionGridLookUpEdit(string parent_name, string language, GridLookUpEdit[] grid_lookup_edits)
+        {
+            foreach (GridLookUpEdit grid_lookup_edit in grid_lookup_edits)
+                ChangeCaptionGridLookUpEdit(parent_name, language, grid_lookup_edit);
+        }
     }
 }
