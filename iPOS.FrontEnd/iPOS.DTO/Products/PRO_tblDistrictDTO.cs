@@ -48,6 +48,8 @@ namespace iPOS.DTO.Products
 
         public string DistrictName { get; set; }
 
+        public string FullDistrictName { get; set; }
+
         public string ProvinceName { get; set; }
     }
 }

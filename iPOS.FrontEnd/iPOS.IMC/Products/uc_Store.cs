@@ -28,16 +28,18 @@ namespace iPOS.IMC.Products
         {
             LanguageEngine.ChangeCaptionBarLargeButtonItem(this.Name, language, new DevExpress.XtraBars.BarLargeButtonItem[] { btnInsert, btnUpdate, btnDelete, btnPrint, btnReload, btnImport, btnExport, btnClose });
             LanguageEngine.ChangeCaptionBarStaticItem(this.Name, language, new DevExpress.XtraBars.BarStaticItem[] { lblCreater, lblCreateTime, lblEditer, lblEditTime });
-            LanguageEngine.ChangeCaptionGroupPanelTextGridView(this.Name, language, grvStore);
-            LanguageEngine.ChangeCaptionGridColumn(this.Name, language, new DevExpress.XtraGrid.Columns.GridColumn[] { gcolStoreCode, gcolShortCode, gcolStoreName, gcolStoreAddress, gcolBuildDate, gcolFax, gcolIsRootString, gcolNote, gcolPhone, gcolRank, gcolProvinceName, gcolRepresentatives, gcolTaxCode, gcolUsedString, gcolDistrictName });
+            LanguageEngine.ChangeCaptionGridView(this.Name, language, grvStore);
         }
 
         public async void GetAllStore()
         {
             try
             {
+
+                System.Drawing.Bitmap bmp = (System.Drawing.Bitmap)System.Drawing.Bitmap.FromFile(@"D:\Desktop.jpg");
+                string tmp = await iPOS.BUS.BaseBUS.Upload(bmp);
                 gridStore.DataBindings.Clear();
-                gridStore.DataSource = await PRO_tblStoreBUS.GetAllStores(CommonEngine.userInfo.UserID, ConfigEngine.Language, false, new SYS_tblActionLogDTO
+                List<PRO_tblStoreDTO> stores = await PRO_tblStoreBUS.GetAllStores(CommonEngine.userInfo.UserID, ConfigEngine.Language, false, new SYS_tblActionLogDTO
                 {
                     Activity = BaseConstant.COMMAND_INSERT_EN,
                     UserID = CommonEngine.userInfo.UserID,
@@ -48,6 +50,8 @@ namespace iPOS.IMC.Products
                     DescriptionVN = string.Format("Tài khoản '{0}' vừa tải thành công dữ liệu cửa hàng.", CommonEngine.userInfo.UserID),
                     DescriptionEN = string.Format("Account '{0}' downloaded successfully data of stores.", CommonEngine.userInfo.UserID)
                 });
+                gridStore.DataSource = stores;
+                barFooter.Visible = (stores.Count > 0) ? true : false;
             }
             catch (Exception ex)
             {
@@ -132,12 +136,17 @@ namespace iPOS.IMC.Products
 
         private void btnInsert_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
+            CommonEngine.OpenInputForm(new uc_StoreDetail(this), new Size(660, 400), false);
         }
 
-        private void btnUpdate_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private async void btnUpdate_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
+            if (curItem.Count > 0)
+            {
+                PRO_tblStoreDTO item = await PRO_tblStoreBUS.GetStoreItem(CommonEngine.userInfo.UserID, ConfigEngine.Language, curItem[0].StoreID);
+                if (item != null)
+                    CommonEngine.OpenInputForm(new uc_StoreDetail(this, item), new Size(660, 400), true);
+            }
         }
 
         private async void btnDelete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)

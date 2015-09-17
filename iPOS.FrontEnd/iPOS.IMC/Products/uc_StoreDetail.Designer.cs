@@ -44,8 +44,16 @@
             this.speRank = new DevExpress.XtraEditors.SpinEdit();
             this.gluDistrict = new DevExpress.XtraEditors.GridLookUpEdit();
             this.gridLookUpEdit2View = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gcolDistrictCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gcolDistrictName = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gcolFullDistrictName = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gcolDistrictID = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gluProvince = new DevExpress.XtraEditors.GridLookUpEdit();
             this.gridLookUpEdit1View = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gcolProvinceCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gcolProvinceName = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gcolFullProvinceName = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gcolProvinceID = new DevExpress.XtraGrid.Columns.GridColumn();
             this.txtTaxCode = new DevExpress.XtraEditors.TextEdit();
             this.txtFax = new DevExpress.XtraEditors.TextEdit();
             this.txtPhone = new DevExpress.XtraEditors.TextEdit();
@@ -82,14 +90,6 @@
             this.esiSecond = new DevExpress.XtraLayout.EmptySpaceItem();
             this.lciStoreID = new DevExpress.XtraLayout.LayoutControlItem();
             this.depError = new DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider(this.components);
-            this.gcolDistrictCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gcolDistrictName = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gcolFullDistrictName = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gcolDistrictID = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gcolProvinceCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gcolProvinceName = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gcolFullProvinceName = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gcolProvinceID = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.lciPhoto)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picPhoto.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.locMain)).BeginInit();
@@ -207,10 +207,14 @@
             this.txtShortCode.EnterMoveNextControl = true;
             this.txtShortCode.Location = new System.Drawing.Point(393, 33);
             this.txtShortCode.Name = "txtShortCode";
+            this.txtShortCode.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.txtShortCode.Properties.Appearance.Options.UseFont = true;
             this.txtShortCode.Properties.MaxLength = 3;
             this.txtShortCode.Size = new System.Drawing.Size(87, 20);
             this.txtShortCode.StyleController = this.locMain;
             this.txtShortCode.TabIndex = 1;
+            this.txtShortCode.EditValueChanged += new System.EventHandler(this.txtShortCode_EditValueChanged);
+            this.txtShortCode.Leave += new System.EventHandler(this.txtShortCode_Leave);
             // 
             // txtStoreID
             // 
@@ -229,6 +233,7 @@
             this.btnCancel.StyleController = this.locMain;
             this.btnCancel.TabIndex = 21;
             this.btnCancel.Text = "Hủy Bỏ";
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // btnSaveInsert
             // 
@@ -239,6 +244,7 @@
             this.btnSaveInsert.StyleController = this.locMain;
             this.btnSaveInsert.TabIndex = 20;
             this.btnSaveInsert.Text = "Lưu && Thêm";
+            this.btnSaveInsert.Click += new System.EventHandler(this.btnSaveInsert_Click);
             // 
             // btnSaveClose
             // 
@@ -249,6 +255,7 @@
             this.btnSaveClose.StyleController = this.locMain;
             this.btnSaveClose.TabIndex = 19;
             this.btnSaveClose.Text = "Lưu && Đóng";
+            this.btnSaveClose.Click += new System.EventHandler(this.btnSaveClose_Click);
             // 
             // mmoNote
             // 
@@ -282,10 +289,10 @@
             // txtRepresentives
             // 
             this.txtRepresentives.EnterMoveNextControl = true;
-            this.txtRepresentives.Location = new System.Drawing.Point(354, 225);
+            this.txtRepresentives.Location = new System.Drawing.Point(348, 225);
             this.txtRepresentives.Name = "txtRepresentives";
             this.txtRepresentives.Properties.MaxLength = 150;
-            this.txtRepresentives.Size = new System.Drawing.Size(286, 20);
+            this.txtRepresentives.Size = new System.Drawing.Size(292, 20);
             this.txtRepresentives.StyleController = this.locMain;
             this.txtRepresentives.TabIndex = 15;
             // 
@@ -301,7 +308,7 @@
             this.speRank.Name = "speRank";
             this.speRank.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
-            this.speRank.Size = new System.Drawing.Size(138, 20);
+            this.speRank.Size = new System.Drawing.Size(132, 20);
             this.speRank.StyleController = this.locMain;
             this.speRank.TabIndex = 14;
             // 
@@ -331,6 +338,40 @@
             this.gridLookUpEdit2View.OptionsView.ShowAutoFilterRow = true;
             this.gridLookUpEdit2View.OptionsView.ShowGroupPanel = false;
             // 
+            // gcolDistrictCode
+            // 
+            this.gcolDistrictCode.Caption = "Mã quận huyện";
+            this.gcolDistrictCode.FieldName = "DistrictCode";
+            this.gcolDistrictCode.Name = "gcolDistrictCode";
+            this.gcolDistrictCode.OptionsColumn.AllowMove = false;
+            this.gcolDistrictCode.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gcolDistrictCode.Visible = true;
+            this.gcolDistrictCode.VisibleIndex = 0;
+            this.gcolDistrictCode.Width = 499;
+            // 
+            // gcolDistrictName
+            // 
+            this.gcolDistrictName.Caption = "Tên quận huyện";
+            this.gcolDistrictName.FieldName = "DistrictName";
+            this.gcolDistrictName.Name = "gcolDistrictName";
+            this.gcolDistrictName.OptionsColumn.AllowMove = false;
+            this.gcolDistrictName.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gcolDistrictName.Visible = true;
+            this.gcolDistrictName.VisibleIndex = 1;
+            this.gcolDistrictName.Width = 613;
+            // 
+            // gcolFullDistrictName
+            // 
+            this.gcolFullDistrictName.Caption = "FullDistrictName";
+            this.gcolFullDistrictName.FieldName = "FullDistrictName";
+            this.gcolFullDistrictName.Name = "gcolFullDistrictName";
+            // 
+            // gcolDistrictID
+            // 
+            this.gcolDistrictID.Caption = "DistrictID";
+            this.gcolDistrictID.FieldName = "DistrictID";
+            this.gcolDistrictID.Name = "gcolDistrictID";
+            // 
             // gluProvince
             // 
             this.gluProvince.EnterMoveNextControl = true;
@@ -343,6 +384,7 @@
             this.gluProvince.Size = new System.Drawing.Size(220, 20);
             this.gluProvince.StyleController = this.locMain;
             this.gluProvince.TabIndex = 8;
+            this.gluProvince.EditValueChanged += new System.EventHandler(this.gluProvince_EditValueChanged);
             // 
             // gridLookUpEdit1View
             // 
@@ -357,6 +399,40 @@
             this.gridLookUpEdit1View.OptionsSelection.EnableAppearanceFocusedCell = false;
             this.gridLookUpEdit1View.OptionsView.ShowAutoFilterRow = true;
             this.gridLookUpEdit1View.OptionsView.ShowGroupPanel = false;
+            // 
+            // gcolProvinceCode
+            // 
+            this.gcolProvinceCode.Caption = "Mã tỉnh thành";
+            this.gcolProvinceCode.FieldName = "ProvinceCode";
+            this.gcolProvinceCode.Name = "gcolProvinceCode";
+            this.gcolProvinceCode.OptionsColumn.AllowMove = false;
+            this.gcolProvinceCode.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gcolProvinceCode.Visible = true;
+            this.gcolProvinceCode.VisibleIndex = 0;
+            this.gcolProvinceCode.Width = 469;
+            // 
+            // gcolProvinceName
+            // 
+            this.gcolProvinceName.Caption = "Tên tỉnh thành";
+            this.gcolProvinceName.FieldName = "ProvinceName";
+            this.gcolProvinceName.Name = "gcolProvinceName";
+            this.gcolProvinceName.OptionsColumn.AllowMove = false;
+            this.gcolProvinceName.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gcolProvinceName.Visible = true;
+            this.gcolProvinceName.VisibleIndex = 1;
+            this.gcolProvinceName.Width = 643;
+            // 
+            // gcolFullProvinceName
+            // 
+            this.gcolFullProvinceName.Caption = "FullProvinceName";
+            this.gcolFullProvinceName.FieldName = "FullProvinceName";
+            this.gcolFullProvinceName.Name = "gcolFullProvinceName";
+            // 
+            // gcolProvinceID
+            // 
+            this.gcolProvinceID.Caption = "ProvinceID";
+            this.gcolProvinceID.FieldName = "ProvinceID";
+            this.gcolProvinceID.Name = "gcolProvinceID";
             // 
             // txtTaxCode
             // 
@@ -421,6 +497,7 @@
             this.dteEndDate.Size = new System.Drawing.Size(117, 20);
             this.dteEndDate.StyleController = this.locMain;
             this.dteEndDate.TabIndex = 5;
+            this.dteEndDate.EditValueChanged += new System.EventHandler(this.dteEndDate_EditValueChanged);
             // 
             // dteBuildDate
             // 
@@ -445,6 +522,7 @@
             this.txtENName.Size = new System.Drawing.Size(348, 20);
             this.txtENName.StyleController = this.locMain;
             this.txtENName.TabIndex = 3;
+            this.txtENName.EditValueChanged += new System.EventHandler(this.txtENName_EditValueChanged);
             // 
             // txtVNName
             // 
@@ -455,18 +533,18 @@
             this.txtVNName.Size = new System.Drawing.Size(348, 20);
             this.txtVNName.StyleController = this.locMain;
             this.txtVNName.TabIndex = 2;
+            this.txtVNName.EditValueChanged += new System.EventHandler(this.txtVNName_EditValueChanged);
             // 
             // txtStoreCode
             // 
             this.txtStoreCode.EnterMoveNextControl = true;
             this.txtStoreCode.Location = new System.Drawing.Point(132, 33);
             this.txtStoreCode.Name = "txtStoreCode";
-            this.txtStoreCode.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.txtStoreCode.Properties.Appearance.Options.UseFont = true;
             this.txtStoreCode.Properties.MaxLength = 20;
             this.txtStoreCode.Size = new System.Drawing.Size(199, 20);
             this.txtStoreCode.StyleController = this.locMain;
             this.txtStoreCode.TabIndex = 0;
+            this.txtStoreCode.EditValueChanged += new System.EventHandler(this.txtStoreCode_EditValueChanged);
             // 
             // logMain
             // 
@@ -650,7 +728,7 @@
             this.lciRank.CustomizationFormText = "Thứ tự:";
             this.lciRank.Location = new System.Drawing.Point(0, 192);
             this.lciRank.Name = "lciRank";
-            this.lciRank.Size = new System.Drawing.Size(260, 24);
+            this.lciRank.Size = new System.Drawing.Size(254, 24);
             this.lciRank.Text = "Thứ tự:";
             this.lciRank.TextSize = new System.Drawing.Size(115, 13);
             // 
@@ -658,10 +736,10 @@
             // 
             this.lciRepresentives.Control = this.txtRepresentives;
             this.lciRepresentives.CustomizationFormText = "Người đại diện:";
-            this.lciRepresentives.Location = new System.Drawing.Point(260, 192);
+            this.lciRepresentives.Location = new System.Drawing.Point(254, 192);
             this.lciRepresentives.Name = "lciRepresentives";
             this.lciRepresentives.Padding = new DevExpress.XtraLayout.Utils.Padding(5, 2, 2, 2);
-            this.lciRepresentives.Size = new System.Drawing.Size(370, 24);
+            this.lciRepresentives.Size = new System.Drawing.Size(376, 24);
             this.lciRepresentives.Text = "Người đại diện:";
             this.lciRepresentives.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
             this.lciRepresentives.TextSize = new System.Drawing.Size(72, 13);
@@ -776,74 +854,6 @@
             // depError
             // 
             this.depError.ContainerControl = this;
-            // 
-            // gcolDistrictCode
-            // 
-            this.gcolDistrictCode.Caption = "Mã quận huyện";
-            this.gcolDistrictCode.FieldName = "DistrictCode";
-            this.gcolDistrictCode.Name = "gcolDistrictCode";
-            this.gcolDistrictCode.OptionsColumn.AllowMove = false;
-            this.gcolDistrictCode.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
-            this.gcolDistrictCode.Visible = true;
-            this.gcolDistrictCode.VisibleIndex = 0;
-            this.gcolDistrictCode.Width = 459;
-            // 
-            // gcolDistrictName
-            // 
-            this.gcolDistrictName.Caption = "Tên quận huyện";
-            this.gcolDistrictName.FieldName = "DistrictName";
-            this.gcolDistrictName.Name = "gcolDistrictName";
-            this.gcolDistrictName.OptionsColumn.AllowMove = false;
-            this.gcolDistrictName.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
-            this.gcolDistrictName.Visible = true;
-            this.gcolDistrictName.VisibleIndex = 1;
-            this.gcolDistrictName.Width = 653;
-            // 
-            // gcolFullDistrictName
-            // 
-            this.gcolFullDistrictName.Caption = "FullDistrictName";
-            this.gcolFullDistrictName.FieldName = "FullDistrictName";
-            this.gcolFullDistrictName.Name = "gcolFullDistrictName";
-            // 
-            // gcolDistrictID
-            // 
-            this.gcolDistrictID.Caption = "DistrictID";
-            this.gcolDistrictID.FieldName = "DistrictID";
-            this.gcolDistrictID.Name = "gcolDistrictID";
-            // 
-            // gcolProvinceCode
-            // 
-            this.gcolProvinceCode.Caption = "Mã tỉnh thành";
-            this.gcolProvinceCode.FieldName = "ProvinceCode";
-            this.gcolProvinceCode.Name = "gcolProvinceCode";
-            this.gcolProvinceCode.OptionsColumn.AllowMove = false;
-            this.gcolProvinceCode.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
-            this.gcolProvinceCode.Visible = true;
-            this.gcolProvinceCode.VisibleIndex = 0;
-            this.gcolProvinceCode.Width = 428;
-            // 
-            // gcolProvinceName
-            // 
-            this.gcolProvinceName.Caption = "Tên tỉnh thành";
-            this.gcolProvinceName.FieldName = "ProvinceName";
-            this.gcolProvinceName.Name = "gcolProvinceName";
-            this.gcolProvinceName.OptionsColumn.AllowMove = false;
-            this.gcolProvinceName.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
-            this.gcolProvinceName.Visible = true;
-            this.gcolProvinceName.VisibleIndex = 1;
-            this.gcolProvinceName.Width = 684;
-            // 
-            // gcolFullProvinceName
-            // 
-            this.gcolFullProvinceName.Caption = "FullProvinceName";
-            this.gcolFullProvinceName.FieldName = "FullProvinceName";
-            this.gcolFullProvinceName.Name = "gcolFullProvinceName";
-            // 
-            // gcolProvinceID
-            // 
-            this.gcolProvinceID.Caption = "ProvinceID";
-            this.gcolProvinceID.FieldName = "ProvinceID";
-            this.gcolProvinceID.Name = "gcolProvinceID";
             // 
             // uc_StoreDetail
             // 

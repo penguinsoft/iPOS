@@ -4,7 +4,7 @@ namespace iPOS.DTO.Products
 {
     public class PRO_tblStoreDTO
     {
-        public Int32 StoreID { get; set; }
+        public string StoreID { get; set; }
 
         public string StoreCode { get; set; }
 
@@ -44,11 +44,11 @@ namespace iPOS.DTO.Products
 
         public string Note { get; set; }
 
-        public object Photo { get; set; }
+        public byte[] Photo { get; set; }
 
-        public System.Nullable<Int32> ProvinceID { get; set; }
+        public string ProvinceID { get; set; }
 
-        public System.Nullable<Int32> DistrictID { get; set; }
+        public string DistrictID { get; set; }
 
         public bool Visible { get; set; }
 

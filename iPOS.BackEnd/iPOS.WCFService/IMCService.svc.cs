@@ -1418,6 +1418,44 @@ namespace iPOS.WCFService
 
             return result;
         }
+
+        public iPOS.DCO.BaseDRO FileUpload(OBJ_ImageDCO bitmap)
+        {
+            iPOS.DCO.BaseDRO result=new DCO.BaseDRO();
+            var m = new System.IO.MemoryStream(Convert.FromBase64String(bitmap.Image));
+            System.Drawing.Bitmap _bitmap = (System.Drawing.Bitmap)System.Drawing.Bitmap.FromStream(m);
+
+            //if (System.IO.Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + @"\Data\Images"))
+            //{
+            //    using (System.IO.FileStream file = new System.IO.FileStream(AppDomain.CurrentDomain.BaseDirectory + @"\Data\Images\abc.png", System.IO.FileMode.Create, System.IO.FileAccess.Write))
+            //    {
+            //        m.WriteTo(file);
+            //    }
+            //}
+            //else
+            //{
+
+            //}
+
+            //using (var scope = Container.BeginLifetimeScope())
+            //{
+            //    var db = scope.Resolve<IPRO_tblStoreDAO>();
+            //    string tmp = db.UpdateStore(new PRO_tblStoreDTO
+            //    {
+            //        StoreID = 7,
+            //        StoreCode = "delete3",
+            //        ShortCode = "007",
+            //        Photo = _bitmap
+            //    });
+            //}
+            result.Result = true;
+            result.Status = DCO.ResponseStatus.Success;
+            result.Message = "";
+            result.Username = "";
+            result.TotalItemCount = 1;
+
+            return result;
+        }
         #endregion
     }
 }

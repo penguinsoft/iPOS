@@ -25,6 +25,13 @@ namespace iPOS.Core.Helper
             }
         }
 
+        public static T Read<T>(string strSection, string strKey, T default_value)
+        {
+            string tmp = Read(strSection, strKey);
+            if (string.IsNullOrEmpty(tmp)) return default_value;
+            else return (T)(object)tmp;
+        }
+
         public static bool Write(string strSection, string strKey, string strValue)
         {
             bool flag = false;

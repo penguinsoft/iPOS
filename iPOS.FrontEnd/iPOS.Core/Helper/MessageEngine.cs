@@ -20,13 +20,20 @@ namespace iPOS.Core.Helper
         {
             var message_source = ReadFileSource();
             string result = "";
-            if (!string.IsNullOrEmpty(message_source))
+            try
             {
-                var _message = (from message in XDocument.Parse(message_source).Descendants("message")
-                                where message.Attribute("name").Value.ToLower().Equals(name.ToLower())
-                                select message).First();
-                if (_message != null)
-                    result = _message.Element(language).Value + "";
+                if (!string.IsNullOrEmpty(message_source))
+                {
+                    var _message = (from message in XDocument.Parse(message_source).Descendants("message")
+                                    where message.Attribute("name").Value.ToLower().Equals(name.ToLower())
+                                    select message).First();
+                    if (_message != null)
+                        result = _message.Element(language).Value + "";
+                }
+            }
+            catch
+            {
+                return "";
             }
 
             return result;

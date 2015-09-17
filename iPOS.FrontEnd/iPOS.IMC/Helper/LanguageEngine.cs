@@ -195,6 +195,29 @@ namespace iPOS.IMC.Helper
                 ChangeCaptionGroupPanelTextGridView(parent_name, language, grid_view);
         }
 
+        public static void ChangeCaptionGridView(string parent_name, string language, GridView grid_view)
+        {
+            grid_view.GroupPanelText = CaptionEngine.GetControlCaption(parent_name, grid_view.Name, BaseConstant.CONTROL_TEXT, language);
+            var columnList = CaptionEngine.GetControlCaptionList(parent_name, grid_view.Name, BaseConstant.GRID_COLUMN, language);
+            if (columnList != null && columnList.Count > 0)
+            {
+                foreach (GridColumn column in grid_view.Columns)
+                {
+                    var caption = (from item in columnList
+                                   where item.Name.ToLower().Equals(column.Name.ToLower())
+                                   select item.Caption).FirstOrDefault();
+                    if (!string.IsNullOrEmpty(caption))
+                        column.Caption = caption;
+                }
+            }
+        }
+
+        public static void ChangeCaptionGridView(string parent_name, string language, GridView[] grid_views)
+        {
+            foreach (GridView grid_view in grid_views)
+                ChangeCaptionGridView(parent_name, language, grid_view);
+        }
+
         public static void ChangeCaptionLayoutControlGroup(string parent_name, string language, LayoutControlGroup layout_control_group)
         {
             layout_control_group.Text = CaptionEngine.GetControlCaption(parent_name, layout_control_group.Name, BaseConstant.CONTROL_TEXT, language);
@@ -273,12 +296,35 @@ namespace iPOS.IMC.Helper
         public static void ChangeCaptionGridLookUpEdit(string parent_name, string language, GridLookUpEdit grid_lookup_edit)
         {
             grid_lookup_edit.Properties.NullText = "[" + CaptionEngine.GetControlCaption(parent_name, grid_lookup_edit.Name, BaseConstant.CONTROL_TEXT, language) + "]";
+            var columnList = CaptionEngine.GetControlCaptionList(parent_name, grid_lookup_edit.Name, BaseConstant.GRID_COLUMN, language);
+            if (columnList != null && columnList.Count > 0)
+            {
+                foreach (GridColumn column in grid_lookup_edit.Properties.View.Columns)
+                {
+                    var caption = (from item in columnList
+                                   where item.Name.ToLower().Equals(column.Name.ToLower())
+                                   select item.Caption).FirstOrDefault();
+                    if (!string.IsNullOrEmpty(caption))
+                        column.Caption = caption;
+                }
+            }
         }
 
         public static void ChangeCaptionGridLookUpEdit(string parent_name, string language, GridLookUpEdit[] grid_lookup_edits)
         {
             foreach (GridLookUpEdit grid_lookup_edit in grid_lookup_edits)
                 ChangeCaptionGridLookUpEdit(parent_name, language, grid_lookup_edit);
+        }
+
+        public static void ChangeCaptionPictureEdit(string parent_name, string language, PictureEdit picture_edit)
+        {
+            picture_edit.Properties.NullText = "[" + CaptionEngine.GetControlCaption(parent_name, picture_edit.Name, BaseConstant.CONTROL_TEXT, language) + "]";
+        }
+
+        public static void ChangeCaptionPictureEdit(string parent_name, string language, PictureEdit[] picture_edits)
+        {
+            foreach (PictureEdit picture_edit in picture_edits)
+                ChangeCaptionPictureEdit(parent_name, language, picture_edit);
         }
     }
 }

@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,6 +52,7 @@
     <Compile Include="Systems\SYS_tblPermissionDTO.cs" />
     <Compile Include="Systems\SYS_tblReportCaptionDTO.cs" />
     <Compile Include="Systems\SYS_tblUserDTO.cs" />
+    <Compile Include="Tools\OBJ_ImageDTO.cs" />
     <Compile Include="Tools\OBJ_TableColumnDTO.cs" />
   </ItemGroup>
   <ItemGroup>

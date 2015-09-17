@@ -226,6 +226,11 @@ namespace iPOS.IMC.Helper
             return false;
         }
 
+        public static string OnlyGetNumberText(string input)
+        {
+            return Regex.Replace(input, @"[^0-9]", "");
+        }
+
         public static bool CompareDateEdit(DateEdit from, DateEdit to, bool is_time)
         {
             if (is_time)

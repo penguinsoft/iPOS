@@ -19,7 +19,7 @@ namespace iPOS.DRO.Products
     public class PRO_tblStoreDCO
     {
         [DataMember]
-        public Int32 StoreID { get; set; }
+        public string StoreID { get; set; }
 
         [DataMember]
         public string StoreCode { get; set; }
@@ -79,10 +79,10 @@ namespace iPOS.DRO.Products
         public object Photo { get; set; }
 
         [DataMember]
-        public System.Nullable<Int32> ProvinceID { get; set; }
+        public string ProvinceID { get; set; }
 
         [DataMember]
-        public System.Nullable<Int32> DistrictID { get; set; }
+        public string DistrictID { get; set; }
 
         [DataMember]
         public bool Visible { get; set; }

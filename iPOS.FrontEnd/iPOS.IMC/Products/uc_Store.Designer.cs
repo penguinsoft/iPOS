@@ -52,9 +52,13 @@
             this.btnClose = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barFooter = new DevExpress.XtraBars.Bar();
             this.lblCreater = new DevExpress.XtraBars.BarStaticItem();
+            this.lblCreaterValue = new DevExpress.XtraBars.BarStaticItem();
             this.lblCreateTime = new DevExpress.XtraBars.BarStaticItem();
+            this.lblCreateTimeValue = new DevExpress.XtraBars.BarStaticItem();
             this.lblEditer = new DevExpress.XtraBars.BarStaticItem();
+            this.lblEditerValue = new DevExpress.XtraBars.BarStaticItem();
             this.lblEditTime = new DevExpress.XtraBars.BarStaticItem();
+            this.lblEditTimeValue = new DevExpress.XtraBars.BarStaticItem();
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             this.barDockControl9 = new DevExpress.XtraBars.BarDockControl();
             this.barDockControl10 = new DevExpress.XtraBars.BarDockControl();
@@ -80,10 +84,6 @@
             this.gcolCreateTime = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolEditer = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolStoreID = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.lblCreaterValue = new DevExpress.XtraBars.BarStaticItem();
-            this.lblCreateTimeValue = new DevExpress.XtraBars.BarStaticItem();
-            this.lblEditerValue = new DevExpress.XtraBars.BarStaticItem();
-            this.lblEditTimeValue = new DevExpress.XtraBars.BarStaticItem();
             ((System.ComponentModel.ISupportInitialize)(this.barMain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridStore)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grvStore)).BeginInit();
@@ -319,6 +319,14 @@
             this.lblCreater.Name = "lblCreater";
             this.lblCreater.TextAlignment = System.Drawing.StringAlignment.Near;
             // 
+            // lblCreaterValue
+            // 
+            this.lblCreaterValue.AllowHtmlText = DevExpress.Utils.DefaultBoolean.True;
+            this.lblCreaterValue.Caption = "admin";
+            this.lblCreaterValue.Id = 12;
+            this.lblCreaterValue.Name = "lblCreaterValue";
+            this.lblCreaterValue.TextAlignment = System.Drawing.StringAlignment.Near;
+            // 
             // lblCreateTime
             // 
             this.lblCreateTime.AllowHtmlText = DevExpress.Utils.DefaultBoolean.True;
@@ -326,6 +334,14 @@
             this.lblCreateTime.Id = 9;
             this.lblCreateTime.Name = "lblCreateTime";
             this.lblCreateTime.TextAlignment = System.Drawing.StringAlignment.Near;
+            // 
+            // lblCreateTimeValue
+            // 
+            this.lblCreateTimeValue.AllowHtmlText = DevExpress.Utils.DefaultBoolean.True;
+            this.lblCreateTimeValue.Caption = "01/01/2015";
+            this.lblCreateTimeValue.Id = 13;
+            this.lblCreateTimeValue.Name = "lblCreateTimeValue";
+            this.lblCreateTimeValue.TextAlignment = System.Drawing.StringAlignment.Near;
             // 
             // lblEditer
             // 
@@ -336,6 +352,14 @@
             this.lblEditer.Name = "lblEditer";
             this.lblEditer.TextAlignment = System.Drawing.StringAlignment.Near;
             // 
+            // lblEditerValue
+            // 
+            this.lblEditerValue.AllowHtmlText = DevExpress.Utils.DefaultBoolean.True;
+            this.lblEditerValue.Caption = "admin";
+            this.lblEditerValue.Id = 14;
+            this.lblEditerValue.Name = "lblEditerValue";
+            this.lblEditerValue.TextAlignment = System.Drawing.StringAlignment.Near;
+            // 
             // lblEditTime
             // 
             this.lblEditTime.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
@@ -344,6 +368,14 @@
             this.lblEditTime.Id = 11;
             this.lblEditTime.Name = "lblEditTime";
             this.lblEditTime.TextAlignment = System.Drawing.StringAlignment.Near;
+            // 
+            // lblEditTimeValue
+            // 
+            this.lblEditTimeValue.AllowHtmlText = DevExpress.Utils.DefaultBoolean.True;
+            this.lblEditTimeValue.Caption = "01012015";
+            this.lblEditTimeValue.Id = 15;
+            this.lblEditTimeValue.Name = "lblEditTimeValue";
+            this.lblEditTimeValue.TextAlignment = System.Drawing.StringAlignment.Near;
             // 
             // barDockControlTop
             // 
@@ -599,38 +631,6 @@
             this.gcolStoreID.Caption = "StoreID";
             this.gcolStoreID.FieldName = "StoreID";
             this.gcolStoreID.Name = "gcolStoreID";
-            // 
-            // lblCreaterValue
-            // 
-            this.lblCreaterValue.AllowHtmlText = DevExpress.Utils.DefaultBoolean.True;
-            this.lblCreaterValue.Caption = "admin";
-            this.lblCreaterValue.Id = 12;
-            this.lblCreaterValue.Name = "lblCreaterValue";
-            this.lblCreaterValue.TextAlignment = System.Drawing.StringAlignment.Near;
-            // 
-            // lblCreateTimeValue
-            // 
-            this.lblCreateTimeValue.AllowHtmlText = DevExpress.Utils.DefaultBoolean.True;
-            this.lblCreateTimeValue.Caption = "01/01/2015";
-            this.lblCreateTimeValue.Id = 13;
-            this.lblCreateTimeValue.Name = "lblCreateTimeValue";
-            this.lblCreateTimeValue.TextAlignment = System.Drawing.StringAlignment.Near;
-            // 
-            // lblEditerValue
-            // 
-            this.lblEditerValue.AllowHtmlText = DevExpress.Utils.DefaultBoolean.True;
-            this.lblEditerValue.Caption = "admin";
-            this.lblEditerValue.Id = 14;
-            this.lblEditerValue.Name = "lblEditerValue";
-            this.lblEditerValue.TextAlignment = System.Drawing.StringAlignment.Near;
-            // 
-            // lblEditTimeValue
-            // 
-            this.lblEditTimeValue.AllowHtmlText = DevExpress.Utils.DefaultBoolean.True;
-            this.lblEditTimeValue.Caption = "01012015";
-            this.lblEditTimeValue.Id = 15;
-            this.lblEditTimeValue.Name = "lblEditTimeValue";
-            this.lblEditTimeValue.TextAlignment = System.Drawing.StringAlignment.Near;
             // 
             // uc_Store
             // 

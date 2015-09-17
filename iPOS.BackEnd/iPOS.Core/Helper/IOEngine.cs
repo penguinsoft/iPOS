@@ -11,16 +11,6 @@ namespace iPOS.Core.Helper
             get { return AppDomain.CurrentDomain.BaseDirectory + "Config.ini"; }
         }
 
-        //public IO()
-        //{
-        //    FileName = AppDomain.CurrentDomain.BaseDirectory + "Config.ini";
-        //}
-
-        //public IO(string strFileName)
-        //{
-        //    FileName = AppDomain.CurrentDomain.BaseDirectory + strFileName;
-        //}
-
         public static string Read(string strSection, string strKey)
         {
             try
@@ -33,6 +23,13 @@ namespace iPOS.Core.Helper
             {
                 return "";
             }
+        }
+
+        public static T Read<T>(string strSection, string strKey, T default_value)
+        {
+            string tmp = Read(strSection, strKey);
+            if (string.IsNullOrEmpty(tmp)) return default_value;
+            else return (T)(object)tmp;
         }
 
         public static bool Write(string strSection, string strKey, string strValue)

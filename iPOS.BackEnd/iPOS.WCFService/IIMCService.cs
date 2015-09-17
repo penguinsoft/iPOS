@@ -232,6 +232,12 @@ namespace iPOS.WCFService
         [WebInvoke(Method = "GET", UriTemplate = "/GetTableColumnList?Username={Username}&ObjectName={ObjectName}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         OBJ_TableColumnDRO GetTableColumnList(string Username, string ObjectName);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/FileUpload", 
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
+                BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        iPOS.DCO.BaseDRO FileUpload(OBJ_ImageDCO bitmap);
         #endregion
     }
 }

@@ -27,7 +27,7 @@ namespace iPOS.IMC.Products
             LanguageEngine.ChangeCaptionCheckEdit(this.Name, ConfigEngine.Language, chkUsed);
             LanguageEngine.ChangeCaptionSimpleButton(this.Name, ConfigEngine.Language, new SimpleButton[] { btnSaveClose, btnSaveInsert, btnCancel });
             LanguageEngine.ChangeCaptionGridLookUpEdit(this.Name, ConfigEngine.Language, gluProvince);
-
+            
             await LoadProvince();
         }
 

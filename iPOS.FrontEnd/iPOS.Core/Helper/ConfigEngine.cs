@@ -43,7 +43,7 @@ namespace iPOS.Core.Helper
         {
             get
             {
-                var language = IOEngine.Read("Initialize", "Language") + "";
+                var language = IOEngine.Read<string>("Initialize", "Language", "vi-VN");
                 if (language.ToLower().Equals("vi-vn"))
                     return "vi";
                 else return "en";
@@ -52,12 +52,12 @@ namespace iPOS.Core.Helper
 
         public static string Username
         {
-            get { return IOEngine.Read("Initialize", "Username"); }
+            get { return IOEngine.Read<string>("Initialize", "Username", ""); }
         }
 
         public static string Password
         {
-            get { return IOEngine.Read("Initialize", "Password"); }
+            get { return IOEngine.Read<string>("Initialize", "Password", ""); }
         }
         #endregion
 
@@ -81,17 +81,17 @@ namespace iPOS.Core.Helper
         #region [Format]
         public static string DateFormat
         {
-            get { return IOEngine.Read("Format", "DateFormat"); }
+            get { return IOEngine.Read<string>("Format", "DateFormat", "dd/MM/yyyy"); }
         }
 
         public static string TimeFormat
         {
-            get { return IOEngine.Read("Format", "TimeFormat"); }
+            get { return IOEngine.Read("Format", "TimeFormat", "HH:mm:ss tt"); }
         }
 
         public static string DateTimeFormat
         {
-            get { return IOEngine.Read("Format", "DateTimeFormat"); }
+            get { return IOEngine.Read("Format", "DateTimeFormat", "dd/MM/yyyy HH:mm:ss tt"); }
         }
         #endregion
     }

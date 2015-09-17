@@ -30,5 +30,17 @@ namespace iPOS.Core.Helper
                 f.Close();
             }
         }
+
+        public static string CreateFileName(string type)
+        {
+            string extension = "";
+            string fileName = string.Format(@"{0:D4}{1:D2}{2:D2}{3:D2}{4:D2}{5:D2}{6}.{extension}", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Ticks);
+            switch (type)
+            {
+                case "image": extension = "png"; break;
+            }
+
+            return fileName.Replace("{extension}", extension);
+        }
     }
 }

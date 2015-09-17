@@ -8,6 +8,7 @@ namespace iPOS.Core.Helper
         public const string CONTROL_TEXT = "control_text";
         public const string IMAGE_COMBOBOX_EDIT = "image_combobox_edit";
         public const string WIZARD_CONTROL = "wizard_control";
+        public const string GRID_COLUMN = "grid_column";
 
         public const string INSERT_COMMAND = "Insert";
         public const string UPDATE_COMMAND = "Update";
