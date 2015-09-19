@@ -15,7 +15,6 @@ namespace iPOS.DAO.Systems
             string result = "";
             try
             {
-                //Angel Phung Hoang
                 var response_data = await HttpPost(url, json_data) + "";
                 var response_collection = JsonConvert.DeserializeObject<SYS_tblActionLogDRO>(response_data + "");
 
