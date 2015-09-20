@@ -34,6 +34,10 @@
     <Reference Include="Aspose.Cells">
       <HintPath>..\..\..\..\..\..\Softs\Hell Demons\iPOS\trunk\iPOS\iPOS.Core\bin\Debug\Aspose.Cells.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\iPOS.BUS\bin\Debug\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -45,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\AsposeCellsStyle.cs" />
+    <Compile Include="Extensions\ImageConverter.cs" />
     <Compile Include="Helper\BaseConstant.cs" />
     <Compile Include="Helper\CaptionEngine.cs" />
     <Compile Include="Helper\ConfigEngine.cs" />
@@ -56,6 +61,9 @@
     <Compile Include="Logger\LogEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\EncryptEngine.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

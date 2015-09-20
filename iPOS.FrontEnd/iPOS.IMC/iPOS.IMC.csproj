@@ -139,6 +139,18 @@
     <Compile Include="Products\uc_StoreDetail.Designer.cs">
       <DependentUpon>uc_StoreDetail.cs</DependentUpon>
     </Compile>
+    <Compile Include="Products\uc_Warehouse.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Products\uc_Warehouse.Designer.cs">
+      <DependentUpon>uc_Warehouse.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Products\uc_WarehouseDetail.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Products\uc_WarehouseDetail.Designer.cs">
+      <DependentUpon>uc_WarehouseDetail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Systems\uc_ChangePassword.cs">
@@ -216,6 +228,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Products\uc_StoreDetail.resx">
       <DependentUpon>uc_StoreDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Products\uc_Warehouse.resx">
+      <DependentUpon>uc_Warehouse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Products\uc_WarehouseDetail.resx">
+      <DependentUpon>uc_WarehouseDetail.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">

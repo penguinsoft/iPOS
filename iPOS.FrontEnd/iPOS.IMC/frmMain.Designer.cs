@@ -216,6 +216,7 @@
             this.btnWarehouse.LargeGlyph = global::iPOS.IMC.Properties.Resources.inventory_32;
             this.btnWarehouse.LargeWidth = 70;
             this.btnWarehouse.Name = "btnWarehouse";
+            this.btnWarehouse.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnWarehouse_ItemClick);
             // 
             // btnStall
             // 

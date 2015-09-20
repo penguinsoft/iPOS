@@ -52,8 +52,8 @@ namespace iPOS.BUS.Products
                     Representatives = item.Representatives,
                     Note = item.Note,
                     Photo = item.Photo,
-                    ProvinceID = item.ProvinceID,
-                    DistrictID = item.DistrictID,
+                    ProvinceID = string.IsNullOrEmpty(item.ProvinceID) ? null : item.ProvinceID,
+                    DistrictID = string.IsNullOrEmpty(item.DistrictID) ? null : item.DistrictID,
                     UserID = item.UserID,
                     Activity = item.Activity,
                     LanguageID = item.LanguageID

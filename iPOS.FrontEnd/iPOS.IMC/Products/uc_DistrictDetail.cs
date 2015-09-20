@@ -132,7 +132,7 @@ namespace iPOS.IMC.Products
         {
             txtDistrictID.EditValue = (item == null) ? null : item.DistrictID;
             txtDistrictCode.EditValue = (item == null) ? null : item.DistrictCode;
-            txtDistrictCode.Properties.ReadOnly = (item == null) ? false : true;
+            //txtDistrictCode.Properties.ReadOnly = (item == null) ? false : true;
             txtVNName.EditValue = (item == null) ? null : item.VNName;
             txtENName.EditValue = (item == null) ? null : item.ENName;
             gluProvince.EditValue = (item == null) ? null : item.ProvinceID;

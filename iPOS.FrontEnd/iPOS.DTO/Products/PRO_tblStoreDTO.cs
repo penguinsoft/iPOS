@@ -44,7 +44,15 @@ namespace iPOS.DTO.Products
 
         public string Note { get; set; }
 
-        public byte[] Photo { get; set; }
+        public string Photo { get; set; }
+
+        public string PhotoUri
+        {
+            get
+            {
+                return iPOS.Core.Helper.ConfigEngine.ServerUri(false) + Photo.Replace("\\", "//");
+            }
+        }
 
         public string ProvinceID { get; set; }
 

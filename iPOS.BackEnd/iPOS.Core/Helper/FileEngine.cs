@@ -34,13 +34,36 @@ namespace iPOS.Core.Helper
         public static string CreateFileName(string type)
         {
             string extension = "";
-            string fileName = string.Format(@"{0:D4}{1:D2}{2:D2}{3:D2}{4:D2}{5:D2}{6}.{extension}", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Ticks);
             switch (type)
             {
                 case "image": extension = "png"; break;
             }
+            string fileName = string.Format(@"{0:D4}{1:D2}{2:D2}{3:D2}{4:D2}{5:D2}{6}.{7}", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Ticks, extension);
 
-            return fileName.Replace("{extension}", extension);
+            return fileName;
+        }
+
+        public static string CreateFile(string data, string type, string owner)
+        {
+            string result = "", directory = AppDomain.CurrentDomain.BaseDirectory;
+            switch (type)
+            {
+                case "image": 
+                    result = @"Data\Images\" + owner;
+                    directory += result;
+                    break;
+            }
+            CreateDirectory(directory);
+            string tmp = @"\" + CreateFileName(type);
+            result += tmp;
+            directory += tmp;
+            using (System.IO.FileStream file = new System.IO.FileStream(directory, System.IO.FileMode.Create, System.IO.FileAccess.Write))
+            {
+                var m = new System.IO.MemoryStream(Convert.FromBase64String(data));
+                m.WriteTo(file);
+            }
+
+            return result;
         }
     }
 }

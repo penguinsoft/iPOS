@@ -41,5 +41,9 @@ namespace iPOS.DTO.Products
         public string UserID { get; set; }
 
         public string LanguageID { get; set; }
+
+        public string StoreName { get; set; }
+
+        public string WarehouseName { get; set; }
     }
 }

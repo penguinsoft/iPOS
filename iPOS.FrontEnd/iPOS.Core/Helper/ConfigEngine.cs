@@ -74,7 +74,21 @@ namespace iPOS.Core.Helper
 
         public static string ServiceName
         {
-            get { return IOEngine.Read("Connection", "ServiceName"); }
+            get { return IOEngine.Read("Connection", "ServiceName") + ".svc"; }
+        }
+
+        public static string ServerUri(bool is_service = true)
+        {
+            string result = "";
+            if (!string.IsNullOrEmpty(PortNumber))
+                result = Domain + ":" + PortNumber;
+            else result = Domain;
+
+            result += "/";
+            if (is_service)
+                result += ServiceName;
+
+            return result;
         }
         #endregion
 

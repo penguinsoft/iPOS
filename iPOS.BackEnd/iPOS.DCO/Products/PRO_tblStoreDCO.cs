@@ -68,7 +68,7 @@ namespace iPOS.DCO.Products
         public string Note { get; set; }
 
         [DataMember]
-        public object Photo { get; set; }
+        public string Photo { get; set; }
 
         [DataMember]
         public System.Nullable<Int32> ProvinceID { get; set; }

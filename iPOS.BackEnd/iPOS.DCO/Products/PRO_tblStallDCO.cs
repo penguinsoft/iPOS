@@ -63,6 +63,12 @@ namespace iPOS.DCO.Products
 
         [DataMember]
         public string LanguageID { get; set; }
+
+        [DataMember]
+        public string StoreName { get; set; }
+
+        [DataMember]
+        public string WarehouseName { get; set; }
     }
 
     [DataContract]

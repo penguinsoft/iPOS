@@ -88,6 +88,8 @@ namespace iPOS.DAO.Products
             string strError = "";
             try
             {
+                if (string.IsNullOrEmpty(item.Photo))
+                    item.Photo = @"Data\Images\no_image.png";
                 strError = db.sExecuteSQL("PRO_spfrmStore", new string[] { "Activity", "Username", "LanguageID", "StoreID", "StoreCode", "ShortCode", "VNName", "ENName", "BuildDate", "EndDate", "AddressVN", "AddressEN", "Phone", "Fax", "Rank", "TaxCode", "Used", "IsRoot", "Representives", "Note", "Photo", "ProvinceID", "DistrictID" }, new object[] { item.Activity, item.UserID, item.LanguageID, item.StoreID, item.StoreCode, item.ShortCode, item.VNName, item.ENName, item.BuildDate, item.EndDate, item.AddressVN, item.AddressEN, item.Phone, item.Fax, item.Rank, item.TaxCode, item.Used, item.IsRoot, item.Representatives, item.Note, item.Photo, item.ProvinceID, item.DistrictID });
 
                 if (!string.IsNullOrEmpty(strError))
@@ -109,6 +111,8 @@ namespace iPOS.DAO.Products
             string strError = "";
             try
             {
+                if (string.IsNullOrEmpty(item.Photo))
+                    item.Photo = @"Data\Images\no_image.png";
                 strError = db.sExecuteSQL("PRO_spfrmStore", new string[] { "Activity", "Username", "LanguageID", "StoreID", "StoreCode", "ShortCode", "VNName", "ENName", "BuildDate", "EndDate", "AddressVN", "AddressEN", "Phone", "Fax", "Rank", "TaxCode", "Used", "IsRoot", "Representives", "Note", "Photo", "ProvinceID", "DistrictID" }, new object[] { item.Activity, item.UserID, item.LanguageID, item.StoreID, item.StoreCode, item.ShortCode, item.VNName, item.ENName, item.BuildDate, item.EndDate, item.AddressVN, item.AddressEN, item.Phone, item.Fax, item.Rank, item.TaxCode, item.Used, item.IsRoot, item.Representatives, item.Note, item.Photo, item.ProvinceID, item.DistrictID });
 
                 if (!string.IsNullOrEmpty(strError))

@@ -140,6 +140,8 @@
             // 
             // gcolProvinceCode
             // 
+            this.gcolProvinceCode.AppearanceCell.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.gcolProvinceCode.AppearanceCell.Options.UseFont = true;
             this.gcolProvinceCode.Caption = "Mã tỉnh thành";
             this.gcolProvinceCode.FieldName = "ProvinceCode";
             this.gcolProvinceCode.Name = "gcolProvinceCode";

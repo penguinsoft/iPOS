@@ -5,13 +5,10 @@ using iPOS.DTO.Products;
 
 namespace iPOS.DRO.Products
 {
-    [DataContract]
     public class PRO_tblStoreDRO : BaseDRO
     {
-        [DataMember]
         public List<PRO_tblStoreDTO> StoreList { get; set; }
 
-        [DataMember]
         public PRO_tblStoreDTO StoreItem { get; set; }
     }
 
@@ -76,7 +73,7 @@ namespace iPOS.DRO.Products
         public string Note { get; set; }
 
         [DataMember]
-        public object Photo { get; set; }
+        public string Photo { get; set; }
 
         [DataMember]
         public string ProvinceID { get; set; }

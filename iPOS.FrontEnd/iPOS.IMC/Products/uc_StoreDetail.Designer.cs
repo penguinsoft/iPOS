@@ -163,10 +163,12 @@
             this.picPhoto.Name = "picPhoto";
             this.picPhoto.Properties.NullText = "[Chọn ảnh logo]";
             this.picPhoto.Properties.PictureStoreMode = DevExpress.XtraEditors.Controls.PictureStoreMode.ByteArray;
+            this.picPhoto.Properties.ShowMenu = false;
             this.picPhoto.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Squeeze;
             this.picPhoto.Size = new System.Drawing.Size(156, 140);
             this.picPhoto.StyleController = this.locMain;
             this.picPhoto.TabIndex = 10;
+            this.picPhoto.DoubleClick += new System.EventHandler(this.picPhoto_DoubleClick);
             // 
             // locMain
             // 
@@ -540,6 +542,8 @@
             this.txtStoreCode.EnterMoveNextControl = true;
             this.txtStoreCode.Location = new System.Drawing.Point(132, 33);
             this.txtStoreCode.Name = "txtStoreCode";
+            this.txtStoreCode.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.txtStoreCode.Properties.Appearance.Options.UseFont = true;
             this.txtStoreCode.Properties.MaxLength = 20;
             this.txtStoreCode.Size = new System.Drawing.Size(199, 20);
             this.txtStoreCode.StyleController = this.locMain;

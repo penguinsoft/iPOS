@@ -53,10 +53,10 @@ namespace iPOS.DCO.Products
         public Int32 StoreID { get; set; }
 
         [DataMember]
-        public Int32 ProvinceID { get; set; }
+        public System.Nullable<Int32> ProvinceID { get; set; }
 
         [DataMember]
-        public Int32 DistrictID { get; set; }
+        public System.Nullable<Int32> DistrictID { get; set; }
 
         [DataMember]
         public string Creater { get; set; }
@@ -78,6 +78,15 @@ namespace iPOS.DCO.Products
 
         [DataMember]
         public string LanguageID { get; set; }
+
+        [DataMember]
+        public string StoreName { get; set; }
+
+        [DataMember]
+        public string ProvinceName { get; set; }
+
+        [DataMember]
+        public string DistrictName { get; set; }
     }
 
     [DataContract]

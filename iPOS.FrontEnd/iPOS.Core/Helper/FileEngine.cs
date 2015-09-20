@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 
 namespace iPOS.Core.Helper
 {
@@ -29,6 +31,12 @@ namespace iPOS.Core.Helper
                 f.Flush();
                 f.Close();
             }
+        }
+
+        public static string GetImageFilterOpenFile()
+        {
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageEncoders();
+            return string.Format("({0})|{0}", string.Join(";", codecs.Select(codec => codec.FilenameExtension.ToLower()).ToArray())).Replace(";", "; ");
         }
     }
 }

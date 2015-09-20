@@ -237,7 +237,7 @@ namespace iPOS.WCFService
         [WebInvoke(Method = "POST", UriTemplate = "/FileUpload", 
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
                 BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        iPOS.DCO.BaseDRO FileUpload(OBJ_ImageDCO bitmap);
+        iPOS.DCO.BaseDRO FileUpload(OBJ_FileDCO file);
         #endregion
     }
 }

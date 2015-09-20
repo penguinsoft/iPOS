@@ -34,9 +34,9 @@ namespace iPOS.DTO.Products
 
         public Int32 StoreID { get; set; }
 
-        public Int32 ProvinceID { get; set; }
+        public System.Nullable<Int32> ProvinceID { get; set; }
 
-        public Int32 DistrictID { get; set; }
+        public System.Nullable<Int32> DistrictID { get; set; }
 
         public string Creater { get; set; }
 
@@ -51,5 +51,11 @@ namespace iPOS.DTO.Products
         public string UserID { get; set; }
 
         public string LanguageID { get; set; }
+
+        public string StoreName { get; set; }
+
+        public string ProvinceName { get; set; }
+
+        public string DistrictName { get; set; }
     }
 }

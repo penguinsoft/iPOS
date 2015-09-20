@@ -471,6 +471,8 @@
             // 
             // gcolStoreCode
             // 
+            this.gcolStoreCode.AppearanceCell.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.gcolStoreCode.AppearanceCell.Options.UseFont = true;
             this.gcolStoreCode.Caption = "Mã cửa hàng";
             this.gcolStoreCode.FieldName = "StoreCode";
             this.gcolStoreCode.Fixed = DevExpress.XtraGrid.Columns.FixedStyle.Left;
@@ -482,6 +484,8 @@
             // 
             // gcolShortCode
             // 
+            this.gcolShortCode.AppearanceCell.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.gcolShortCode.AppearanceCell.Options.UseFont = true;
             this.gcolShortCode.Caption = "Mã nội bộ";
             this.gcolShortCode.FieldName = "ShortCode";
             this.gcolShortCode.Fixed = DevExpress.XtraGrid.Columns.FixedStyle.Left;

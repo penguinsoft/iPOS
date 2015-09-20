@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseDRO.cs" />
-    <Compile Include="Products\OBJ_ImageDCO.cs" />
+    <Compile Include="Tools\OBJ_FileDCO.cs" />
     <Compile Include="Products\PRO_tblDistrictDCO.cs" />
     <Compile Include="Products\PRO_tblProductGroupLevel1DCO.cs" />
     <Compile Include="Products\PRO_tblProductGroupLevel2DCO.cs" />

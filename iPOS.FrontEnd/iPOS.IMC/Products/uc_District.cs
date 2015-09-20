@@ -82,7 +82,7 @@ namespace iPOS.IMC.Products
                 if (district_id_list.Contains("$"))
                 {
                     if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000012", ConfigEngine.Language).Replace("$Count$", district_id_list.Split('$').Length.ToString())))
-                        strErr = await PRO_tblDistrictBUS.DeleteDistrict(district_id_list, CommonEngine.userInfo.Username, ConfigEngine.Language, new SYS_tblActionLogDTO
+                        strErr = await PRO_tblDistrictBUS.DeleteDistrict(CommonEngine.userInfo.Username, ConfigEngine.Language, district_id_list, new SYS_tblActionLogDTO
                         {
                             Activity = BaseConstant.COMMAND_INSERT_EN,
                             UserID = CommonEngine.userInfo.UserID,
@@ -97,7 +97,7 @@ namespace iPOS.IMC.Products
                 else
                 {
                     if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000005", ConfigEngine.Language)))
-                        strErr = await PRO_tblDistrictBUS.DeleteDistrict(district_id_list, CommonEngine.userInfo.Username, ConfigEngine.Language, new SYS_tblActionLogDTO
+                        strErr = await PRO_tblDistrictBUS.DeleteDistrict(CommonEngine.userInfo.Username, ConfigEngine.Language, district_id_list, new SYS_tblActionLogDTO
                         {
                             Activity = BaseConstant.COMMAND_INSERT_EN,
                             UserID = CommonEngine.userInfo.UserID,

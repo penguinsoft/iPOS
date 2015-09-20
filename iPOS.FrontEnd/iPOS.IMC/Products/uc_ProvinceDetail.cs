@@ -115,7 +115,7 @@ namespace iPOS.IMC.Products
         {
             txtProvinceID.EditValue = (item == null) ? null : item.ProvinceID;
             txtProvinceCode.EditValue = (item == null) ? null : item.ProvinceCode;
-            txtProvinceCode.Properties.ReadOnly = (item == null) ? false : true;
+            //txtProvinceCode.Properties.ReadOnly = (item == null) ? false : true;
             txtVNName.EditValue = (item == null) ? null : item.VNName;
             txtENName.EditValue = (item == null) ? null : item.ENName;
             speRank.EditValue = (item == null) ? null : item.Rank;

@@ -35,9 +35,6 @@ namespace iPOS.IMC.Products
         {
             try
             {
-
-                System.Drawing.Bitmap bmp = (System.Drawing.Bitmap)System.Drawing.Bitmap.FromFile(@"D:\Desktop.jpg");
-                string tmp = await iPOS.BUS.BaseBUS.Upload(bmp);
                 gridStore.DataBindings.Clear();
                 List<PRO_tblStoreDTO> stores = await PRO_tblStoreBUS.GetAllStores(CommonEngine.userInfo.UserID, ConfigEngine.Language, false, new SYS_tblActionLogDTO
                 {
@@ -84,7 +81,7 @@ namespace iPOS.IMC.Products
                 if (store_id_list.Contains("$"))
                 {
                     if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000012", ConfigEngine.Language).Replace("$Count$", store_id_list.Split('$').Length.ToString())))
-                        strErr = await PRO_tblStoreBUS.DeleteStore(store_id_list, CommonEngine.userInfo.Username, ConfigEngine.Language, new SYS_tblActionLogDTO
+                        strErr = await PRO_tblStoreBUS.DeleteStore(CommonEngine.userInfo.Username, ConfigEngine.Language, store_id_list, new SYS_tblActionLogDTO
                         {
                             Activity = BaseConstant.COMMAND_INSERT_EN,
                             UserID = CommonEngine.userInfo.UserID,
@@ -99,7 +96,7 @@ namespace iPOS.IMC.Products
                 else
                 {
                     if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000005", ConfigEngine.Language)))
-                        strErr = await PRO_tblDistrictBUS.DeleteDistrict(store_id_list, CommonEngine.userInfo.Username, ConfigEngine.Language, new SYS_tblActionLogDTO
+                        strErr = await PRO_tblStoreBUS.DeleteStore(CommonEngine.userInfo.Username, ConfigEngine.Language, store_id_list, new SYS_tblActionLogDTO
                         {
                             Activity = BaseConstant.COMMAND_INSERT_EN,
                             UserID = CommonEngine.userInfo.UserID,
@@ -166,7 +163,7 @@ namespace iPOS.IMC.Products
 
         private void btnImport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
+            CommonEngine.OpenImportExcelForm("PRO_Store_FileSelect.xlsx", "PRO_spfrmStoreImport", "PRO", "13");
         }
 
         private void btnExport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -207,7 +204,17 @@ namespace iPOS.IMC.Products
 
         private void grvStore_SelectionChanged(object sender, DevExpress.Data.SelectionChangedEventArgs e)
         {
+            store_code_list = "";
+            store_id_list = "";
 
+            foreach (int index in grvStore.GetSelectedRows())
+            {
+                store_code_list = string.Join("$", store_code_list, grvStore.GetRowCellDisplayText(index, gcolStoreCode));
+                store_id_list = string.Join("$", store_id_list, grvStore.GetRowCellDisplayText(index, gcolStoreID));
+            }
+
+            if (store_code_list.Length > 0) store_code_list = store_code_list.Substring(1);
+            if (store_id_list.Length > 0) store_id_list = store_id_list.Substring(1);
         }
     }
 }

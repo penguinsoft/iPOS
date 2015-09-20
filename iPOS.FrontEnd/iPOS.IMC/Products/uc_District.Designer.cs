@@ -371,6 +371,8 @@
             // 
             // gcolDistrictCode
             // 
+            this.gcolDistrictCode.AppearanceCell.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.gcolDistrictCode.AppearanceCell.Options.UseFont = true;
             this.gcolDistrictCode.Caption = "Mã quận huyện";
             this.gcolDistrictCode.FieldName = "DistrictCode";
             this.gcolDistrictCode.Name = "gcolDistrictCode";

@@ -16,6 +16,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Drawing.Imaging;
 
 namespace iPOS.IMC.Helper
 {
@@ -245,6 +246,19 @@ namespace iPOS.IMC.Helper
             }
 
             return true;
+        }
+
+        public static void ChooseImage(ref PictureEdit picture_edit, ref string file_name)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = FileEngine.GetImageFilterOpenFile();
+            ofd.Multiselect = false;
+            ofd.Title = ConfigEngine.Language.Equals("vi") ? "Chọn hình ảnh" : "Choose an image";
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                picture_edit.Image = Image.FromFile(ofd.FileName);
+                file_name = ofd.FileName;
+            }
         }
 
         [DllImport("Shlwapi.dll", CharSet = CharSet.Auto)]

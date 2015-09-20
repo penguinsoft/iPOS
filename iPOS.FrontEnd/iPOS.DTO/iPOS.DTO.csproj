@@ -43,7 +43,9 @@
   <ItemGroup>
     <Compile Include="BaseDTO.cs" />
     <Compile Include="Products\PRO_tblDistrictDTO.cs" />
+    <Compile Include="Products\PRO_tblStallDTO.cs" />
     <Compile Include="Products\PRO_tblStoreDTO.cs" />
+    <Compile Include="Products\PRO_tblWarehouseDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Products\PRO_tblProvinceDTO.cs" />
     <Compile Include="Systems\SYS_tblActionLogDTO.cs" />
@@ -52,7 +54,7 @@
     <Compile Include="Systems\SYS_tblPermissionDTO.cs" />
     <Compile Include="Systems\SYS_tblReportCaptionDTO.cs" />
     <Compile Include="Systems\SYS_tblUserDTO.cs" />
-    <Compile Include="Tools\OBJ_ImageDTO.cs" />
+    <Compile Include="Tools\OBJ_FileDTO.cs" />
     <Compile Include="Tools\OBJ_TableColumnDTO.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -18,6 +18,8 @@ namespace iPOS.IMC.Products
     {
         #region [Declare Variables]
         private uc_Store parent_form;
+
+        private string new_file_path = "";
         #endregion
 
         #region [Personal Methods]
@@ -99,9 +101,15 @@ namespace iPOS.IMC.Products
 
         private async Task<bool> SaveStore(bool isEdit)
         {
-            string strError = "";
+            string strError = "", file_name = "";
             try
             {
+                if (!string.IsNullOrEmpty(new_file_path))
+                {
+                    Bitmap image = (Bitmap)Bitmap.FromFile(new_file_path);
+                    file_name = await iPOS.BUS.Tools.OBJ_FileBUS.UploadImageFile(image, "Stores");
+                }
+
                 strError = await PRO_tblStoreBUS.InsertUpdateStore(new PRO_tblStoreDTO
                 {
                     StoreID = isEdit ? txtStoreID.Text : "0",
@@ -123,7 +131,7 @@ namespace iPOS.IMC.Products
                     IsRoot = chkIsRoot.Checked,
                     Used = chkUsed.Checked,
                     Note = mmoNote.Text,
-                    Photo = DevExpress.XtraEditors.Controls.ByteImageConverter.ToByteArray(picPhoto.Image, System.Drawing.Imaging.ImageFormat.Png),
+                    Photo = file_name,
                     UserID = CommonEngine.userInfo.UserID,
                     LanguageID = ConfigEngine.Language,
                     Activity = isEdit ? BaseConstant.COMMAND_UPDATE_EN : BaseConstant.COMMAND_INSERT_EN
@@ -159,6 +167,7 @@ namespace iPOS.IMC.Products
         {
             txtStoreID.EditValue = (item == null) ? null : item.StoreID;
             txtStoreCode.EditValue = (item == null) ? null : item.StoreCode;
+            //txtStoreCode.Properties.ReadOnly = (item == null) ? false : true;
             txtShortCode.EditValue = (item == null) ? null : item.ShortCode;
             txtVNName.EditValue = (item == null) ? null : item.VNName;
             txtENName.EditValue = (item == null) ? null : item.ENName;
@@ -176,8 +185,9 @@ namespace iPOS.IMC.Products
             chkIsRoot.Checked = (item == null) ? false : item.IsRoot;
             chkUsed.Checked = (item == null) ? true : item.Used;
             mmoNote.EditValue = (item == null) ? null : item.Note;
-            //picPhoto.EditValue = (item == null) ? null : item.Photo;
-            picPhoto.LoadAsync("http://localhost:6149/Data/Images/abc.png");
+            if (item != null && !string.IsNullOrEmpty(item.PhotoUri))
+                picPhoto.LoadAsync(item.PhotoUri);
+            else picPhoto.EditValue = null;
             if (item == null)
             {
                 depError.ClearErrors();
@@ -218,6 +228,7 @@ namespace iPOS.IMC.Products
         }
         #endregion
 
+        #region [Form Events]
         public uc_StoreDetail()
         {
             InitializeComponent();
@@ -274,6 +285,11 @@ namespace iPOS.IMC.Products
                 LoadDistrictByProvince(gluProvince.EditValue + "");
         }
 
+        private void picPhoto_DoubleClick(object sender, EventArgs e)
+        {
+            CommonEngine.ChooseImage(ref picPhoto, ref new_file_path);
+        }
+
         private async void btnSaveClose_Click(object sender, EventArgs e)
         {
             if (CheckValidate())
@@ -281,14 +297,17 @@ namespace iPOS.IMC.Products
                     this.ParentForm.Close();
         }
 
-        private void btnSaveInsert_Click(object sender, EventArgs e)
+        private async void btnSaveInsert_Click(object sender, EventArgs e)
         {
-
+            if (CheckValidate())
+                if (await SaveStore(!string.IsNullOrEmpty(txtStoreID.Text)))
+                    LoadDataToEdit(null);
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-
+            this.ParentForm.Close();
         }
+        #endregion
     }
 }

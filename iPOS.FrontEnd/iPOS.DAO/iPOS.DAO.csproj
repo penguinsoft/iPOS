@@ -47,7 +47,9 @@
     <Compile Include="BaseDAO.cs" />
     <Compile Include="Products\PRO_tblDistrictDAO.cs" />
     <Compile Include="Products\PRO_tblProvinceDAO.cs" />
+    <Compile Include="Products\PRO_tblStallDAO.cs" />
     <Compile Include="Products\PRO_tblStoreDAO.cs" />
+    <Compile Include="Products\PRO_tblWarehouseDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Systems\SYS_tblActionLogDAO.cs" />
     <Compile Include="Systems\SYS_tblGroupUserDAO.cs" />
@@ -55,6 +57,7 @@
     <Compile Include="Systems\SYS_tblPermissionDAO.cs" />
     <Compile Include="Systems\SYS_tblUserDAO.cs" />
     <Compile Include="Systems\SYS_tblReportCaptionDAO.cs" />
+    <Compile Include="Tools\OBJ_FileDAO.cs" />
     <Compile Include="Tools\OBJ_TableColumnDAO.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -44,7 +44,7 @@ namespace iPOS.DTO.Products
 
         public string Note { get; set; }
 
-        public object Photo { get; set; }
+        public string Photo { get; set; }
 
         public System.Nullable<Int32> ProvinceID { get; set; }
 
