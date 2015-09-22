@@ -29,6 +29,7 @@ namespace iPOS.IMC.Products
             LanguageEngine.ChangeCaptionBarLargeButtonItem(this.Name, language, new DevExpress.XtraBars.BarLargeButtonItem[] { btnInsert, btnUpdate, btnDelete, btnReload, btnPrint, btnImport, btnExport, btnClose });
             LanguageEngine.ChangeCaptionBarStaticItem(this.Name, language, new DevExpress.XtraBars.BarStaticItem[] { lblCreater, lblCreateTime, lblEditer, lblEditTime });
             LanguageEngine.ChangeCaptionGridView(this.Name, language, grvWarehouse);
+            GetAllWarehouse("");
         }
 
         public async void GetAllWarehouse(string store_id)
@@ -129,7 +130,6 @@ namespace iPOS.IMC.Products
         {
             InitializeComponent();
             ChangeLanguage(language);
-            GetAllWarehouse("");
         }
 
         private void btnInsert_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)

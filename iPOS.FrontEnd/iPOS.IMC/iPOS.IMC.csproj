@@ -127,6 +127,18 @@
     <Compile Include="Products\uc_ProvinceDetail.Designer.cs">
       <DependentUpon>uc_ProvinceDetail.cs</DependentUpon>
     </Compile>
+    <Compile Include="Products\uc_Stall.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Products\uc_Stall.Designer.cs">
+      <DependentUpon>uc_Stall.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Products\uc_StallDetail.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Products\uc_StallDetail.Designer.cs">
+      <DependentUpon>uc_StallDetail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Products\uc_Store.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -222,6 +234,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Products\uc_ProvinceDetail.resx">
       <DependentUpon>uc_ProvinceDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Products\uc_Stall.resx">
+      <DependentUpon>uc_Stall.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Products\uc_StallDetail.resx">
+      <DependentUpon>uc_StallDetail.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Products\uc_Store.resx">
       <DependentUpon>uc_Store.cs</DependentUpon>

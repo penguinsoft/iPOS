@@ -225,6 +225,7 @@
             this.btnStall.LargeGlyph = global::iPOS.IMC.Properties.Resources.cashier_32;
             this.btnStall.LargeWidth = 70;
             this.btnStall.Name = "btnStall";
+            this.btnStall.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnStall_ItemClick);
             // 
             // btnLevel1
             // 

@@ -48,6 +48,7 @@
     <Compile Include="BaseBUS.cs" />
     <Compile Include="Products\PRO_tblDistrictBUS.cs" />
     <Compile Include="Products\PRO_tblProvinceBUS.cs" />
+    <Compile Include="Products\PRO_tblStallBUS.cs" />
     <Compile Include="Products\PRO_tblStoreBUS.cs" />
     <Compile Include="Products\PRO_tblWarehouseBUS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

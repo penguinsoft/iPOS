@@ -117,5 +117,10 @@ namespace iPOS.IMC
         {
             CommonEngine.OpenMdiChildForm(this, new uc_Warehouse(ConfigEngine.Language), tabMain);
         }
+
+        private void btnStall_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            CommonEngine.OpenMdiChildForm(this, new uc_Stall(ConfigEngine.Language), tabMain);
+        }
     }
 }

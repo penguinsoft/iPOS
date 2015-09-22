@@ -47,6 +47,7 @@ namespace iPOS.BUS.Products
                     DistrictID = string.IsNullOrEmpty(item.DistrictID) ? null : item.DistrictID,
                     Rank = item.Rank,
                     Used = item.Used,
+                    Note = item.Note,
                     UserID = item.UserID,
                     Activity = item.Activity,
                     LanguageID = item.LanguageID
