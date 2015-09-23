@@ -16,7 +16,7 @@ namespace iPOS.DTO.Products
 
         public string FullStallName { get; set; }
 
-        public System.Nullable<Int32> Rank { get; set; }
+        public string Rank { get; set; }
 
         public bool Used { get; set; }
 

@@ -33,7 +33,7 @@
             this.lciButtonSaveClose = new DevExpress.XtraLayout.LayoutControlItem();
             this.btnSaveClose = new DevExpress.XtraEditors.SimpleButton();
             this.locMain = new DevExpress.XtraLayout.LayoutControl();
-            this.gridLookUpEdit1 = new DevExpress.XtraEditors.GridLookUpEdit();
+            this.gluStore = new DevExpress.XtraEditors.GridLookUpEdit();
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gcolStoreCode = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolShortCode = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -72,7 +72,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.lciButtonSaveClose)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.locMain)).BeginInit();
             this.locMain.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridLookUpEdit1.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gluStore.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtStallID.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mmoNote.Properties)).BeginInit();
@@ -108,7 +108,7 @@
             this.lciButtonSaveClose.CustomizationFormText = "lciButtonSaveClose";
             this.lciButtonSaveClose.Location = new System.Drawing.Point(92, 253);
             this.lciButtonSaveClose.Name = "lciButtonSaveClose";
-            this.lciButtonSaveClose.Size = new System.Drawing.Size(99, 26);
+            this.lciButtonSaveClose.Size = new System.Drawing.Size(100, 26);
             this.lciButtonSaveClose.Text = "lciButtonSaveClose";
             this.lciButtonSaveClose.TextSize = new System.Drawing.Size(0, 0);
             this.lciButtonSaveClose.TextToControlDistance = 0;
@@ -116,16 +116,18 @@
             // 
             // btnSaveClose
             // 
+            this.btnSaveClose.Image = global::iPOS.IMC.Properties.Resources.save_end_16;
             this.btnSaveClose.Location = new System.Drawing.Point(94, 255);
             this.btnSaveClose.Name = "btnSaveClose";
-            this.btnSaveClose.Size = new System.Drawing.Size(95, 22);
+            this.btnSaveClose.Size = new System.Drawing.Size(96, 22);
             this.btnSaveClose.StyleController = this.locMain;
             this.btnSaveClose.TabIndex = 7;
             this.btnSaveClose.Text = "Lưu && Đóng";
+            this.btnSaveClose.Click += new System.EventHandler(this.btnSaveClose_Click);
             // 
             // locMain
             // 
-            this.locMain.Controls.Add(this.gridLookUpEdit1);
+            this.locMain.Controls.Add(this.gluStore);
             this.locMain.Controls.Add(this.txtStallID);
             this.locMain.Controls.Add(this.btnSaveInsert);
             this.locMain.Controls.Add(this.btnSaveClose);
@@ -145,18 +147,19 @@
             this.locMain.TabIndex = 1;
             this.locMain.Text = "layoutControl1";
             // 
-            // gridLookUpEdit1
+            // gluStore
             // 
-            this.gridLookUpEdit1.Location = new System.Drawing.Point(82, 105);
-            this.gridLookUpEdit1.Name = "gridLookUpEdit1";
-            this.gridLookUpEdit1.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            this.gluStore.Location = new System.Drawing.Point(82, 105);
+            this.gluStore.Name = "gluStore";
+            this.gluStore.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.gridLookUpEdit1.Properties.NullText = "[Chọn cửa hàng]";
-            this.gridLookUpEdit1.Properties.PopupFormSize = new System.Drawing.Size(400, 0);
-            this.gridLookUpEdit1.Properties.View = this.gridView1;
-            this.gridLookUpEdit1.Size = new System.Drawing.Size(296, 20);
-            this.gridLookUpEdit1.StyleController = this.locMain;
-            this.gridLookUpEdit1.TabIndex = 15;
+            this.gluStore.Properties.NullText = "[Chọn cửa hàng]";
+            this.gluStore.Properties.PopupFormSize = new System.Drawing.Size(400, 0);
+            this.gluStore.Properties.View = this.gridView1;
+            this.gluStore.Size = new System.Drawing.Size(296, 20);
+            this.gluStore.StyleController = this.locMain;
+            this.gluStore.TabIndex = 15;
+            this.gluStore.EditValueChanged += new System.EventHandler(this.gluStore_EditValueChanged);
             // 
             // gridView1
             // 
@@ -220,21 +223,25 @@
             // 
             // btnSaveInsert
             // 
-            this.btnSaveInsert.Location = new System.Drawing.Point(193, 255);
+            this.btnSaveInsert.Image = global::iPOS.IMC.Properties.Resources.save_add_16;
+            this.btnSaveInsert.Location = new System.Drawing.Point(194, 255);
             this.btnSaveInsert.Name = "btnSaveInsert";
             this.btnSaveInsert.Size = new System.Drawing.Size(96, 22);
             this.btnSaveInsert.StyleController = this.locMain;
             this.btnSaveInsert.TabIndex = 8;
             this.btnSaveInsert.Text = "Lưu && Thêm";
+            this.btnSaveInsert.Click += new System.EventHandler(this.btnSaveInsert_Click);
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(293, 255);
+            this.btnCancel.Image = global::iPOS.IMC.Properties.Resources.cancel_16;
+            this.btnCancel.Location = new System.Drawing.Point(294, 255);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(97, 22);
+            this.btnCancel.Size = new System.Drawing.Size(96, 22);
             this.btnCancel.StyleController = this.locMain;
             this.btnCancel.TabIndex = 9;
             this.btnCancel.Text = "Hủy Bỏ";
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // mmoNote
             // 
@@ -286,6 +293,7 @@
             this.gluWarehouse.Size = new System.Drawing.Size(296, 20);
             this.gluWarehouse.StyleController = this.locMain;
             this.gluWarehouse.TabIndex = 3;
+            this.gluWarehouse.EditValueChanged += new System.EventHandler(this.gluWarehouse_EditValueChanged);
             // 
             // gridLookUpEdit1View
             // 
@@ -347,6 +355,7 @@
             this.txtENName.Size = new System.Drawing.Size(296, 20);
             this.txtENName.StyleController = this.locMain;
             this.txtENName.TabIndex = 2;
+            this.txtENName.EditValueChanged += new System.EventHandler(this.txtENName_EditValueChanged);
             // 
             // txtVNName
             // 
@@ -357,6 +366,7 @@
             this.txtVNName.Size = new System.Drawing.Size(296, 20);
             this.txtVNName.StyleController = this.locMain;
             this.txtVNName.TabIndex = 1;
+            this.txtVNName.EditValueChanged += new System.EventHandler(this.txtVNName_EditValueChanged);
             // 
             // txtStallCode
             // 
@@ -369,6 +379,7 @@
             this.txtStallCode.Size = new System.Drawing.Size(296, 20);
             this.txtStallCode.StyleController = this.locMain;
             this.txtStallCode.TabIndex = 0;
+            this.txtStallCode.EditValueChanged += new System.EventHandler(this.txtStallCode_EditValueChanged);
             // 
             // logMain
             // 
@@ -483,7 +494,7 @@
             // 
             // lciStore
             // 
-            this.lciStore.Control = this.gridLookUpEdit1;
+            this.lciStore.Control = this.gluStore;
             this.lciStore.CustomizationFormText = "layoutControlItem1";
             this.lciStore.Location = new System.Drawing.Point(0, 72);
             this.lciStore.Name = "lciStore";
@@ -495,9 +506,9 @@
             // 
             this.lciButtonCancel.Control = this.btnCancel;
             this.lciButtonCancel.CustomizationFormText = "lciButtonCancel";
-            this.lciButtonCancel.Location = new System.Drawing.Point(291, 253);
+            this.lciButtonCancel.Location = new System.Drawing.Point(292, 253);
             this.lciButtonCancel.Name = "lciButtonCancel";
-            this.lciButtonCancel.Size = new System.Drawing.Size(101, 26);
+            this.lciButtonCancel.Size = new System.Drawing.Size(100, 26);
             this.lciButtonCancel.Text = "lciButtonCancel";
             this.lciButtonCancel.TextSize = new System.Drawing.Size(0, 0);
             this.lciButtonCancel.TextToControlDistance = 0;
@@ -507,7 +518,7 @@
             // 
             this.lciButtonSaveInsert.Control = this.btnSaveInsert;
             this.lciButtonSaveInsert.CustomizationFormText = "lciButtonSaveInsert";
-            this.lciButtonSaveInsert.Location = new System.Drawing.Point(191, 253);
+            this.lciButtonSaveInsert.Location = new System.Drawing.Point(192, 253);
             this.lciButtonSaveInsert.Name = "lciButtonSaveInsert";
             this.lciButtonSaveInsert.Size = new System.Drawing.Size(100, 26);
             this.lciButtonSaveInsert.Text = "lciButtonSaveInsert";
@@ -543,7 +554,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.lciButtonSaveClose)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.locMain)).EndInit();
             this.locMain.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.gridLookUpEdit1.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gluStore.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtStallID.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mmoNote.Properties)).EndInit();
@@ -604,7 +615,7 @@
         private DevExpress.XtraLayout.LayoutControlItem lciButtonSaveClose;
         private DevExpress.XtraLayout.LayoutControlItem lciButtonSaveInsert;
         private DevExpress.XtraLayout.LayoutControlItem lciStallID;
-        private DevExpress.XtraEditors.GridLookUpEdit gridLookUpEdit1;
+        private DevExpress.XtraEditors.GridLookUpEdit gluStore;
         private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
         private DevExpress.XtraLayout.LayoutControlItem lciStore;
         private DevExpress.XtraGrid.Columns.GridColumn gcolStoreCode;

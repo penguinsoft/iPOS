@@ -34,7 +34,7 @@ namespace iPOS.DRO.Products
         public string FullStallName { get; set; }
 
         [DataMember]
-        public System.Nullable<Int32> Rank { get; set; }
+        public string Rank { get; set; }
 
         [DataMember]
         public bool Used { get; set; }

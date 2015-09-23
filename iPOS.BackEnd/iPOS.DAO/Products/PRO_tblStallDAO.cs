@@ -91,7 +91,7 @@ namespace iPOS.DAO.Products
             string strError = "";
             try
             {
-                strError = db.sExecuteSQL("PRO_spfrmStall", new string[] { "Activity", "Username", "LanguageID", "StallID", "VNName", "ENName", "Rank", "Used", "Note", "StoreID", "WarehouseID" }, new object[] { item.Activity, item.UserID, item.LanguageID, item.StallID, item.StallCode, item.VNName, item.ENName, item.Rank, item.Used, item.Note, item.StoreID, item.WarehouseID });
+                strError = db.sExecuteSQL("PRO_spfrmStall", new string[] { "Activity", "Username", "LanguageID", "StallID", "StallCode", "VNName", "ENName", "Rank", "Used", "Note", "StoreID", "WarehouseID" }, new object[] { item.Activity, item.UserID, item.LanguageID, item.StallID, item.StallCode, item.VNName, item.ENName, item.Rank, item.Used, item.Note, item.StoreID, item.WarehouseID });
 
                 if (!string.IsNullOrEmpty(strError))
                     logger.Error(strError);
@@ -112,7 +112,7 @@ namespace iPOS.DAO.Products
             string strError = "";
             try
             {
-                strError = db.sExecuteSQL("PRO_spfrmStall", new string[] { "Activity", "Username", "LanguageID", "StallID", "VNName", "ENName", "Rank", "Used", "Note", "StoreID", "WarehouseID" }, new object[] { item.Activity, item.UserID, item.LanguageID, item.StallID, item.StallCode, item.VNName, item.ENName, item.Rank, item.Used, item.Note, item.StoreID, item.WarehouseID });
+                strError = db.sExecuteSQL("PRO_spfrmStall", new string[] { "Activity", "Username", "LanguageID", "StallID", "StallCode", "VNName", "ENName", "Rank", "Used", "Note", "StoreID", "WarehouseID" }, new object[] { item.Activity, item.UserID, item.LanguageID, item.StallID, item.StallCode, item.VNName, item.ENName, item.Rank, item.Used, item.Note, item.StoreID, item.WarehouseID });
 
                 if (!string.IsNullOrEmpty(strError))
                     logger.Error(strError);

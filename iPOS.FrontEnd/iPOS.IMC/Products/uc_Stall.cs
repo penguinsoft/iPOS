@@ -136,14 +136,19 @@ namespace iPOS.IMC.Products
             CommonEngine.OpenInputForm(new uc_StallDetail(this), new Size(395, 300), false);
         }
 
-        private void btnUpdate_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private async void btnUpdate_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
+            if (curItem.Count > 0)
+            {
+                PRO_tblStallDTO item = await PRO_tblStallBUS.GetStallItem(CommonEngine.userInfo.UserID, ConfigEngine.Language, curItem[0].StallID);
+                if (item != null)
+                    CommonEngine.OpenInputForm(new uc_StallDetail(this, item), new Size(395, 300), true);
+            }
         }
 
-        private void btnDelete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private async void btnDelete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
+            await DeleteStall();
         }
 
         private void btnPrint_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -153,52 +158,62 @@ namespace iPOS.IMC.Products
 
         private void btnReload_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
+            GetAllStall("", "");
         }
 
         private void btnImport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
+            CommonEngine.OpenImportExcelForm("PRO_Stall_FileSelect.xlsx", "PRO_spfrmStallImport", "PRO", "19");
         }
 
         private void btnExport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
+            CommonEngine.QuickExportGridViewData(ConvertEngine.ConvertObjectListToDataTable<PRO_tblStallDTO>(gridStall.DataSource as List<PRO_tblStallDTO>), grvStall);
         }
 
         private void btnClose_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
+            this.ParentForm.Close();
         }
 
         private void uc_Stall_Load(object sender, EventArgs e)
         {
-
+            GetAllStall("", "");
         }
 
         private void grvStall_CustomDrawRowIndicator(object sender, DevExpress.XtraGrid.Views.Grid.RowIndicatorCustomDrawEventArgs e)
         {
-
+            if (e.Info.IsRowIndicator && e.RowHandle >= 0)
+                e.Info.DisplayText = e.RowHandle + 1 + "";
         }
 
         private void grvStall_DoubleClick(object sender, EventArgs e)
         {
-
+            btnUpdate_ItemClick(null, null);
         }
 
         private void grvStall_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
         {
-
+            GetCurrentRow();
         }
 
         private void grvStall_FocusedRowLoaded(object sender, DevExpress.XtraGrid.Views.Base.RowEventArgs e)
         {
-
+            GetCurrentRow();
         }
 
         private void grvStall_SelectionChanged(object sender, DevExpress.Data.SelectionChangedEventArgs e)
         {
+            stall_code_list = "";
+            stall_id_list = "";
+            foreach (int index in grvStall.GetSelectedRows())
+            {
+                stall_code_list = string.Join("$", stall_code_list, grvStall.GetRowCellDisplayText(index, gcolStallCode));
+                stall_id_list = string.Join("$", stall_id_list, grvStall.GetRowCellDisplayText(index, gcolStallID));
+            }
 
+            if (stall_code_list.Length > 0) stall_code_list = stall_code_list.Substring(1);
+            if (stall_id_list.Length > 0) stall_id_list = stall_id_list.Substring(1);
         }
     }
 }
