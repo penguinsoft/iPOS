@@ -113,7 +113,8 @@
             this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribSystemModule,
             this.ribProductModule});
-            this.ribbon.Size = new System.Drawing.Size(968, 144);
+            this.ribbon.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.Office2007;
+            this.ribbon.Size = new System.Drawing.Size(968, 143);
             this.ribbon.StatusBar = this.ribbonStatusBar;
             // 
             // btnShutdown
@@ -465,6 +466,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabMain)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

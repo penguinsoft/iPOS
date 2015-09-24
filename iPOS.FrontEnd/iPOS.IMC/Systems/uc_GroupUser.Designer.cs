@@ -97,7 +97,7 @@
             this.lblEditTime,
             this.lblEditTimeValue});
             this.barMain.MainMenu = this.barTop;
-            this.barMain.MaxItemId = 16;
+            this.barMain.MaxItemId = 17;
             this.barMain.StatusBar = this.barBottom;
             // 
             // barTop
@@ -260,6 +260,7 @@
             // 
             // lblEditTime
             // 
+            this.lblEditTime.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
             this.lblEditTime.Caption = "Ngày cập nhật:";
             this.lblEditTime.Id = 14;
             this.lblEditTime.Name = "lblEditTime";
@@ -267,6 +268,7 @@
             // 
             // lblEditTimeValue
             // 
+            this.lblEditTimeValue.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
             this.lblEditTimeValue.AllowHtmlText = DevExpress.Utils.DefaultBoolean.True;
             this.lblEditTimeValue.Caption = "<b><color=RED>01/01/2015</color></b>";
             this.lblEditTimeValue.Id = 15;
@@ -278,7 +280,7 @@
             this.barDockControlTop.CausesValidation = false;
             this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
-            this.barDockControlTop.Size = new System.Drawing.Size(860, 42);
+            this.barDockControlTop.Size = new System.Drawing.Size(860, 40);
             // 
             // barDockControlBottom
             // 
@@ -291,15 +293,15 @@
             // 
             this.barDockControlLeft.CausesValidation = false;
             this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
-            this.barDockControlLeft.Location = new System.Drawing.Point(0, 42);
-            this.barDockControlLeft.Size = new System.Drawing.Size(0, 422);
+            this.barDockControlLeft.Location = new System.Drawing.Point(0, 40);
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 424);
             // 
             // barDockControlRight
             // 
             this.barDockControlRight.CausesValidation = false;
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControlRight.Location = new System.Drawing.Point(860, 42);
-            this.barDockControlRight.Size = new System.Drawing.Size(0, 422);
+            this.barDockControlRight.Location = new System.Drawing.Point(860, 40);
+            this.barDockControlRight.Size = new System.Drawing.Size(0, 424);
             // 
             // gridGroupUser
             // 
@@ -310,11 +312,11 @@
             this.gridGroupUser.EmbeddedNavigator.Buttons.EndEdit.Visible = false;
             this.gridGroupUser.EmbeddedNavigator.Buttons.Remove.Visible = false;
             this.gridGroupUser.EmbeddedNavigator.TextStringFormat = "{0}/{1}";
-            this.gridGroupUser.Location = new System.Drawing.Point(0, 42);
+            this.gridGroupUser.Location = new System.Drawing.Point(0, 40);
             this.gridGroupUser.MainView = this.grvGroupUser;
             this.gridGroupUser.MenuManager = this.barMain;
             this.gridGroupUser.Name = "gridGroupUser";
-            this.gridGroupUser.Size = new System.Drawing.Size(860, 422);
+            this.gridGroupUser.Size = new System.Drawing.Size(860, 424);
             this.gridGroupUser.TabIndex = 4;
             this.gridGroupUser.UseEmbeddedNavigator = true;
             this.gridGroupUser.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -337,22 +339,26 @@
             this.grvGroupUser.IndicatorWidth = 40;
             this.grvGroupUser.Name = "grvGroupUser";
             this.grvGroupUser.OptionsBehavior.Editable = false;
+            this.grvGroupUser.OptionsSelection.CheckBoxSelectorColumnWidth = 30;
             this.grvGroupUser.OptionsSelection.MultiSelect = true;
+            this.grvGroupUser.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CheckBoxRowSelect;
+            this.grvGroupUser.OptionsSelection.ShowCheckBoxSelectorInGroupRow = DevExpress.Utils.DefaultBoolean.True;
             this.grvGroupUser.OptionsView.ShowAutoFilterRow = true;
             this.grvGroupUser.CustomDrawRowIndicator += new DevExpress.XtraGrid.Views.Grid.RowIndicatorCustomDrawEventHandler(this.grvGroupUser_CustomDrawRowIndicator);
-            this.grvGroupUser.SelectionChanged += new DevExpress.Data.SelectionChangedEventHandler(this.grvGroupUser_SelectionChanged);
             this.grvGroupUser.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.grvGroupUser_FocusedRowChanged);
             this.grvGroupUser.FocusedRowLoaded += new DevExpress.XtraGrid.Views.Base.RowEventHandler(this.grvGroupUser_FocusedRowLoaded);
             this.grvGroupUser.DoubleClick += new System.EventHandler(this.grvGroupUser_DoubleClick);
             // 
             // gcolGroupCode
             // 
+            this.gcolGroupCode.AppearanceCell.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.gcolGroupCode.AppearanceCell.Options.UseFont = true;
             this.gcolGroupCode.Caption = "Mã nhóm";
             this.gcolGroupCode.FieldName = "GroupCode";
             this.gcolGroupCode.Name = "gcolGroupCode";
             this.gcolGroupCode.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolGroupCode.Visible = true;
-            this.gcolGroupCode.VisibleIndex = 0;
+            this.gcolGroupCode.VisibleIndex = 1;
             this.gcolGroupCode.Width = 133;
             // 
             // gcolGroupName
@@ -362,7 +368,7 @@
             this.gcolGroupName.Name = "gcolGroupName";
             this.gcolGroupName.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolGroupName.Visible = true;
-            this.gcolGroupName.VisibleIndex = 1;
+            this.gcolGroupName.VisibleIndex = 2;
             this.gcolGroupName.Width = 393;
             // 
             // gcolNote
@@ -372,7 +378,7 @@
             this.gcolNote.Name = "gcolNote";
             this.gcolNote.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolNote.Visible = true;
-            this.gcolNote.VisibleIndex = 4;
+            this.gcolNote.VisibleIndex = 5;
             this.gcolNote.Width = 398;
             // 
             // gcolActiveString
@@ -384,7 +390,7 @@
             this.gcolActiveString.Name = "gcolActiveString";
             this.gcolActiveString.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolActiveString.Visible = true;
-            this.gcolActiveString.VisibleIndex = 2;
+            this.gcolActiveString.VisibleIndex = 3;
             this.gcolActiveString.Width = 96;
             // 
             // gcolIsDefaultString
@@ -396,7 +402,7 @@
             this.gcolIsDefaultString.Name = "gcolIsDefaultString";
             this.gcolIsDefaultString.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolIsDefaultString.Visible = true;
-            this.gcolIsDefaultString.VisibleIndex = 3;
+            this.gcolIsDefaultString.VisibleIndex = 4;
             this.gcolIsDefaultString.Width = 92;
             // 
             // gcolCreater
@@ -446,6 +452,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridGroupUser)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grvGroupUser)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

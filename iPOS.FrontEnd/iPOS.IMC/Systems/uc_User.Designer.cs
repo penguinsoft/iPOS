@@ -88,15 +88,15 @@
             // 
             this.barDockControlLeft.CausesValidation = false;
             this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
-            this.barDockControlLeft.Location = new System.Drawing.Point(0, 42);
-            this.barDockControlLeft.Size = new System.Drawing.Size(0, 416);
+            this.barDockControlLeft.Location = new System.Drawing.Point(0, 40);
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 418);
             // 
             // barDockControlRight
             // 
             this.barDockControlRight.CausesValidation = false;
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControlRight.Location = new System.Drawing.Point(933, 42);
-            this.barDockControlRight.Size = new System.Drawing.Size(0, 416);
+            this.barDockControlRight.Location = new System.Drawing.Point(933, 40);
+            this.barDockControlRight.Size = new System.Drawing.Size(0, 418);
             // 
             // barDockControlBottom
             // 
@@ -110,7 +110,7 @@
             this.barDockControlTop.CausesValidation = false;
             this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
-            this.barDockControlTop.Size = new System.Drawing.Size(933, 42);
+            this.barDockControlTop.Size = new System.Drawing.Size(933, 40);
             // 
             // grvUser
             // 
@@ -139,13 +139,14 @@
             this.grvUser.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.gcolGroupName, DevExpress.Data.ColumnSortOrder.Ascending)});
             this.grvUser.CustomDrawRowIndicator += new DevExpress.XtraGrid.Views.Grid.RowIndicatorCustomDrawEventHandler(this.grvUser_CustomDrawRowIndicator);
-            this.grvUser.SelectionChanged += new DevExpress.Data.SelectionChangedEventHandler(this.grvUser_SelectionChanged);
             this.grvUser.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.grvUser_FocusedRowChanged);
             this.grvUser.FocusedRowLoaded += new DevExpress.XtraGrid.Views.Base.RowEventHandler(this.grvUser_FocusedRowLoaded);
             this.grvUser.DoubleClick += new System.EventHandler(this.grvUser_DoubleClick);
             // 
             // gcolUsername
             // 
+            this.gcolUsername.AppearanceCell.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.gcolUsername.AppearanceCell.Options.UseFont = true;
             this.gcolUsername.Caption = "Tên người dùng";
             this.gcolUsername.FieldName = "Username";
             this.gcolUsername.Name = "gcolUsername";
@@ -156,12 +157,14 @@
             // 
             // gcolGroupName
             // 
+            this.gcolGroupName.AppearanceCell.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.gcolGroupName.AppearanceCell.Options.UseFont = true;
             this.gcolGroupName.Caption = "Nhóm người dùng";
             this.gcolGroupName.FieldName = "GroupName";
             this.gcolGroupName.Name = "gcolGroupName";
             this.gcolGroupName.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolGroupName.Visible = true;
-            this.gcolGroupName.VisibleIndex = 0;
+            this.gcolGroupName.VisibleIndex = 1;
             this.gcolGroupName.Width = 140;
             // 
             // gcolFullName
@@ -241,11 +244,11 @@
             this.gridUser.EmbeddedNavigator.Buttons.EndEdit.Visible = false;
             this.gridUser.EmbeddedNavigator.Buttons.Remove.Visible = false;
             this.gridUser.EmbeddedNavigator.TextStringFormat = "{0}/{1}";
-            this.gridUser.Location = new System.Drawing.Point(0, 42);
+            this.gridUser.Location = new System.Drawing.Point(0, 40);
             this.gridUser.MainView = this.grvUser;
             this.gridUser.MenuManager = this.barMain;
             this.gridUser.Name = "gridUser";
-            this.gridUser.Size = new System.Drawing.Size(933, 416);
+            this.gridUser.Size = new System.Drawing.Size(933, 418);
             this.gridUser.TabIndex = 5;
             this.gridUser.UseEmbeddedNavigator = true;
             this.gridUser.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -464,6 +467,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridUser)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barMain)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

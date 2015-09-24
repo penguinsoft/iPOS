@@ -202,6 +202,7 @@ namespace iPOS.IMC.Systems
         }
         #endregion
 
+        #region [Form Events]
         public uc_UserDetail()
         {
             InitializeComponent();
@@ -297,5 +298,6 @@ namespace iPOS.IMC.Systems
         {
             this.ParentForm.Close();
         }
+        #endregion
     }
 }

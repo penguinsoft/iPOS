@@ -78,6 +78,19 @@ namespace iPOS.IMC.Systems
 
         private async void DeleteGroupUser()
         {
+            group_code_list = "";
+            group_id_list = "";
+            foreach (int index in grvGroupUser.GetSelectedRows())
+            {
+                group_code_list += grvGroupUser.GetRowCellDisplayText(index, gcolGroupCode) + "$";
+                group_id_list += grvGroupUser.GetRowCellDisplayText(index, gcolGroupID) + "$";
+            }
+
+            if (group_code_list.Length > 0)
+                group_code_list = group_code_list.Substring(0, group_code_list.Length - 1);
+            if (group_id_list.Length > 0)
+                group_id_list = group_id_list.Substring(0, group_id_list.Length - 1);
+
             string strErr = "ready";
             try
             {
@@ -205,23 +218,6 @@ namespace iPOS.IMC.Systems
         {
             GetCurrentRow();
         }
-
-        private void grvGroupUser_SelectionChanged(object sender, DevExpress.Data.SelectionChangedEventArgs e)
-        {
-            group_code_list = "";
-            group_id_list = "";
-            foreach (int index in grvGroupUser.GetSelectedRows())
-            {
-                group_code_list += grvGroupUser.GetRowCellDisplayText(index, gcolGroupCode) + "$";
-                group_id_list += grvGroupUser.GetRowCellDisplayText(index, gcolGroupID) + "$";
-            }
-
-            if (group_code_list.Length > 0)
-                group_code_list = group_code_list.Substring(0, group_code_list.Length - 1);
-            if (group_id_list.Length > 0)
-                group_id_list = group_id_list.Substring(0, group_id_list.Length - 1);
-        }
         #endregion
     }
-
 }

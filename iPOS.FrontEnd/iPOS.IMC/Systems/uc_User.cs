@@ -77,6 +77,12 @@ namespace iPOS.IMC.Systems
 
         private async void DeleteUser()
         {
+            user_code_list = "";
+            foreach (int index in grvUser.GetSelectedRows())
+                user_code_list += grvUser.GetRowCellDisplayText(index, gcolUsername) + "$";
+
+            if (user_code_list.Length > 0) user_code_list = user_code_list.Substring(0, user_code_list.Length - 1);
+
             string strErr = "ready";
             try
             {
@@ -203,15 +209,6 @@ namespace iPOS.IMC.Systems
         private void grvUser_FocusedRowLoaded(object sender, DevExpress.XtraGrid.Views.Base.RowEventArgs e)
         {
             GetCurrentRow();
-        }
-
-        private void grvUser_SelectionChanged(object sender, DevExpress.Data.SelectionChangedEventArgs e)
-        {
-            user_code_list = "";
-            foreach (int index in grvUser.GetSelectedRows())
-                user_code_list += grvUser.GetRowCellDisplayText(index, gcolUsername) + "$";
-
-            if (user_code_list.Length > 0) user_code_list = user_code_list.Substring(0, user_code_list.Length - 1);
         }
         #endregion
     }
