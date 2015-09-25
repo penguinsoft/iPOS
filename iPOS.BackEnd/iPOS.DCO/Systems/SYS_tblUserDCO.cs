@@ -17,7 +17,7 @@ namespace iPOS.DCO.Systems
         public Int32 GroupID { get; set; }
 
         [DataMember]
-        public DateTime EffectiveDate { get; set; }
+        public System.Nullable<DateTime> EffectiveDate { get; set; }
 
         [DataMember]
         public System.Nullable<DateTime> ToDate { get; set; }
@@ -74,7 +74,7 @@ namespace iPOS.DCO.Systems
         public string Creater { get; set; }
 
         [DataMember]
-        public DateTime CreateTime { get; set; }
+        public System.Nullable<DateTime> CreateTime { get; set; }
 
         [DataMember]
         public string Editer { get; set; }

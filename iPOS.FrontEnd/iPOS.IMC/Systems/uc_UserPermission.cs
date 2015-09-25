@@ -183,8 +183,8 @@ namespace iPOS.IMC.Systems
                     DescriptionEN = strMessage.Replace("$IsError$", "successfully")
                 });
                 if (string.IsNullOrEmpty(strError))
-                    CommonEngine.ShowMessage(strMessage.Replace("$IsError$", ConfigEngine.Language.Equals("vi") ? "thành công" : "successfully").Trim(), 1);
-                else CommonEngine.ShowMessage(strMessage.Replace("$IsError$", ConfigEngine.Language.Equals("vi") ? "thất bại" : "failed").Trim(), 0);
+                    CommonEngine.ShowMessage(strMessage.Replace("$IsError$", ConfigEngine.Language.Equals("vi") ? "thành công" : "successfully").Trim(), MessageType.Success);
+                else CommonEngine.ShowMessage(strMessage.Replace("$IsError$", ConfigEngine.Language.Equals("vi") ? "thất bại" : "failed").Trim(), MessageType.Error);
             }
             catch (Exception ex)
             {

@@ -39,7 +39,8 @@ namespace iPOS.IMC.Products
             try
             {
                 gridDistrict.DataBindings.Clear();
-                gridDistrict.DataSource = await PRO_tblDistrictBUS.GetAllDistricts(CommonEngine.userInfo.UserID, ConfigEngine.Language, false, "", new SYS_tblActionLogDTO
+                List<PRO_tblDistrictDTO> list = new List<PRO_tblDistrictDTO>();
+                list = await PRO_tblDistrictBUS.GetAllDistricts(CommonEngine.userInfo.UserID, ConfigEngine.Language, false, "", new SYS_tblActionLogDTO
                 {
                     Activity = BaseConstant.COMMAND_INSERT_EN,
                     UserID = CommonEngine.userInfo.UserID,
@@ -50,6 +51,8 @@ namespace iPOS.IMC.Products
                     DescriptionVN = string.Format("Tài khoản '{0}' vừa tải thành công dữ liệu quận huyện.", CommonEngine.userInfo.UserID),
                     DescriptionEN = string.Format("Account '{0}' downloaded successfully data of districts.", CommonEngine.userInfo.UserID)
                 });
+                gridDistrict.DataSource = list;
+                barBottom.Visible = (list != null && list.Count > 0) ? true : false;
             }
             catch (Exception ex)
             {
@@ -76,6 +79,18 @@ namespace iPOS.IMC.Products
 
         private async Task DeleteDistrict()
         {
+            district_code_list = "";
+            district_id_list = "";
+
+            foreach (int index in grvDistrict.GetSelectedRows())
+            {
+                district_code_list = string.Join("$", district_code_list, grvDistrict.GetRowCellDisplayText(index, gcolDistrictCode));
+                district_id_list = string.Join("$", district_id_list, grvDistrict.GetRowCellDisplayText(index, gcolDistrictID));
+            }
+
+            if (district_code_list.Length > 0) district_code_list = district_code_list.Substring(1);
+            if (district_id_list.Length > 0) district_id_list = district_id_list.Substring(1);
+
             string strErr = "ready";
             try
             {
@@ -170,7 +185,7 @@ namespace iPOS.IMC.Products
 
         private void btnExport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            CommonEngine.QuickExportGridViewData(ConvertEngine.ConvertObjectListToDataTable<PRO_tblDistrictDTO>(gridDistrict.DataSource as List<PRO_tblDistrictDTO>), grvDistrict);
+            CommonEngine.QuickExportGridViewData(ConvertEngine.ConvertObjectListToDataTable<PRO_tblDistrictDTO>(gridDistrict.DataSource as List<PRO_tblDistrictDTO>), grvDistrict, "District");
         }
 
         private void btnClose_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -202,21 +217,6 @@ namespace iPOS.IMC.Products
         private void grvDistrict_FocusedRowLoaded(object sender, DevExpress.XtraGrid.Views.Base.RowEventArgs e)
         {
             GetCurrentRow();
-        }
-
-        private void grvDistrict_SelectionChanged(object sender, DevExpress.Data.SelectionChangedEventArgs e)
-        {
-            district_code_list = "";
-            district_id_list = "";
-
-            foreach (int index in grvDistrict.GetSelectedRows())
-            {
-                district_code_list = string.Join("$", district_code_list, grvDistrict.GetRowCellDisplayText(index, gcolDistrictCode));
-                district_id_list = string.Join("$", district_id_list, grvDistrict.GetRowCellDisplayText(index, gcolDistrictID));
-            }
-
-            if (district_code_list.Length > 0) district_code_list = district_code_list.Substring(1);
-            if (district_id_list.Length > 0) district_id_list = district_id_list.Substring(1);
         }
         #endregion
     }

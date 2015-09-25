@@ -41,7 +41,7 @@ namespace iPOS.BUS.Systems
                     Active = item.Active,
                     Activity = item.Activity,
                     UserID = item.UserID,
-                    Language = item.LanguageID
+                    LanguageID = item.LanguageID
                 };
                 var json_data = "{\"groupUser\":" + JsonConvert.SerializeObject(postData, new JsonSerializerSettings
                 {

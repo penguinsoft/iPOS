@@ -71,12 +71,12 @@ namespace iPOS.IMC.Systems
         {
             txtGroupID.EditValue = (item == null) ? null : item.GroupID;
             txtGroupCode.EditValue = (item == null) ? null : item.GroupCode;
+            //txtGroupCode.Properties.ReadOnly = (item == null) ? false : true;
             txtVNName.EditValue = (item == null) ? null : item.VNName;
             txtENName.EditValue = (item == null) ? null : item.ENName;
             mmoNote.EditValue = (item == null) ? null : item.Note;
             chkIsDefault.Checked = (item == null) ? false : item.IsDefault;
             chkActive.Checked = (item == null) ? true : item.Active;
-            txtGroupCode.Properties.ReadOnly = (item == null) ? false : true;
             if (item == null)
             {
                 depError.ClearErrors();

@@ -49,7 +49,7 @@ namespace iPOS.IMC.Products
                     DescriptionEN = string.Format("Account '{0}' downloaded successfully data of warehouses.", CommonEngine.userInfo.UserID)
                 });
                 gridWarehouse.DataSource = warehouses;
-                barFooter.Visible = (warehouses.Count > 0) ? true : false;
+                barFooter.Visible = (warehouses != null && warehouses.Count > 0) ? true : false;
             }
             catch (Exception ex)
             {
@@ -76,6 +76,17 @@ namespace iPOS.IMC.Products
 
         private async Task DeleteWarehouse()
         {
+            warehouse_code_list = "";
+            warehouse_id_list = "";
+            foreach (int index in grvWarehouse.GetSelectedRows())
+            {
+                warehouse_code_list = string.Join("$", warehouse_code_list, grvWarehouse.GetRowCellDisplayText(index, gcolWarehouseCode));
+                warehouse_id_list = string.Join("$", warehouse_id_list, grvWarehouse.GetRowCellDisplayText(index, gcolWarehouseID));
+            }
+
+            if (warehouse_code_list.Length > 0) warehouse_code_list = warehouse_code_list.Substring(1);
+            if (warehouse_id_list.Length > 0) warehouse_id_list = warehouse_id_list.Substring(1);
+
             string strErr = "ready";
             try
             {
@@ -121,6 +132,7 @@ namespace iPOS.IMC.Products
         }
         #endregion
 
+        #region [Form Events]
         public uc_Warehouse()
         {
             InitializeComponent();
@@ -169,7 +181,7 @@ namespace iPOS.IMC.Products
 
         private void btnExport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            CommonEngine.QuickExportGridViewData(ConvertEngine.ConvertObjectListToDataTable<PRO_tblWarehouseDTO>(gridWarehouse.DataSource as List<PRO_tblWarehouseDTO>), grvWarehouse);
+            CommonEngine.QuickExportGridViewData(ConvertEngine.ConvertObjectListToDataTable<PRO_tblWarehouseDTO>(gridWarehouse.DataSource as List<PRO_tblWarehouseDTO>), grvWarehouse, "Warehouse");
         }
 
         private void btnClose_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -202,19 +214,6 @@ namespace iPOS.IMC.Products
         {
             GetCurrentRow();
         }
-
-        private void grvWarehouse_SelectionChanged(object sender, DevExpress.Data.SelectionChangedEventArgs e)
-        {
-            warehouse_code_list = "";
-            warehouse_id_list = "";
-            foreach (int index in grvWarehouse.GetSelectedRows())
-            {
-                warehouse_code_list = string.Join("$", warehouse_code_list, grvWarehouse.GetRowCellDisplayText(index, gcolWarehouseCode));
-                warehouse_id_list = string.Join("$", warehouse_id_list, grvWarehouse.GetRowCellDisplayText(index, gcolWarehouseID));
-            }
-
-            if (warehouse_code_list.Length > 0) warehouse_code_list = warehouse_code_list.Substring(1);
-            if (warehouse_id_list.Length > 0) warehouse_id_list = warehouse_id_list.Substring(1);
-        }
+        #endregion
     }
 }

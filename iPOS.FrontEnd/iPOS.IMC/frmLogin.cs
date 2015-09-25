@@ -15,6 +15,7 @@ using CommonEngine = iPOS.IMC.Helper.CommonEngine;
 using UserBUS = iPOS.BUS.Systems.SYS_tblUserBUS;
 using iPOS.DTO.Systems;
 using iPOS.BUS.Systems;
+using iPOS.IMC.Helper;
 
 namespace iPOS.IMC
 {
@@ -49,13 +50,13 @@ namespace iPOS.IMC
         {
             if (string.IsNullOrEmpty(txtUsername.Text))
             {
-                CommonEngine.ShowMessage(LanguageEngine.GetMessageCaption("000011", ConfigEngine.Language), 0);
+                CommonEngine.ShowMessage(LanguageEngine.GetMessageCaption("000011", ConfigEngine.Language), MessageType.Error);
                 txtUsername.Focus();
                 return false;
             }
             if (string.IsNullOrEmpty(txtPassword.Text))
             {
-                CommonEngine.ShowMessage(LanguageEngine.GetMessageCaption("000011", ConfigEngine.Language), 0);
+                CommonEngine.ShowMessage(LanguageEngine.GetMessageCaption("000011", ConfigEngine.Language), MessageType.Error);
                 txtPassword.Focus();
                 return false;
             }
@@ -71,14 +72,14 @@ namespace iPOS.IMC
 
                     if (user.Locked)
                     {
-                        CommonEngine.ShowMessage(LanguageEngine.GetMessageCaption("000010", ConfigEngine.Language).Replace("$UserName$", user.Username), 0);
+                        CommonEngine.ShowMessage(LanguageEngine.GetMessageCaption("000010", ConfigEngine.Language).Replace("$UserName$", user.Username), MessageType.Error);
                         txtUsername.Focus();
                         return false;
                     }
                 }
                 else
                 {
-                    CommonEngine.ShowMessage(LanguageEngine.GetMessageCaption("000009", ConfigEngine.Language), 0);
+                    CommonEngine.ShowMessage(LanguageEngine.GetMessageCaption("000009", ConfigEngine.Language), MessageType.Error);
                     txtUsername.Focus();
                     return false;
                 }

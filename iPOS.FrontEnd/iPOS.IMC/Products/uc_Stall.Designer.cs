@@ -245,6 +245,7 @@
             // 
             // lblEditerValue
             // 
+            this.lblEditerValue.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
             this.lblEditerValue.Caption = "admin";
             this.lblEditerValue.Id = 14;
             this.lblEditerValue.Name = "lblEditerValue";
@@ -252,6 +253,7 @@
             // 
             // lblEditTime
             // 
+            this.lblEditTime.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
             this.lblEditTime.Caption = "Ngày cập nhật:";
             this.lblEditTime.Id = 15;
             this.lblEditTime.Name = "lblEditTime";
@@ -259,6 +261,7 @@
             // 
             // lblEditTimeValue
             // 
+            this.lblEditTimeValue.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
             this.lblEditTimeValue.Caption = "01/01/2015";
             this.lblEditTimeValue.Id = 16;
             this.lblEditTimeValue.Name = "lblEditTimeValue";
@@ -269,7 +272,7 @@
             this.barDockControlTop.CausesValidation = false;
             this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
-            this.barDockControlTop.Size = new System.Drawing.Size(908, 42);
+            this.barDockControlTop.Size = new System.Drawing.Size(908, 40);
             // 
             // barDockControlBottom
             // 
@@ -282,24 +285,24 @@
             // 
             this.barDockControlLeft.CausesValidation = false;
             this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
-            this.barDockControlLeft.Location = new System.Drawing.Point(0, 42);
-            this.barDockControlLeft.Size = new System.Drawing.Size(0, 500);
+            this.barDockControlLeft.Location = new System.Drawing.Point(0, 40);
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 502);
             // 
             // barDockControlRight
             // 
             this.barDockControlRight.CausesValidation = false;
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControlRight.Location = new System.Drawing.Point(908, 42);
-            this.barDockControlRight.Size = new System.Drawing.Size(0, 500);
+            this.barDockControlRight.Location = new System.Drawing.Point(908, 40);
+            this.barDockControlRight.Size = new System.Drawing.Size(0, 502);
             // 
             // gridStall
             // 
             this.gridStall.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridStall.Location = new System.Drawing.Point(0, 42);
+            this.gridStall.Location = new System.Drawing.Point(0, 40);
             this.gridStall.MainView = this.grvStall;
             this.gridStall.MenuManager = this.barMain;
             this.gridStall.Name = "gridStall";
-            this.gridStall.Size = new System.Drawing.Size(908, 500);
+            this.gridStall.Size = new System.Drawing.Size(908, 502);
             this.gridStall.TabIndex = 14;
             this.gridStall.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.grvStall});
@@ -327,12 +330,15 @@
             this.grvStall.Name = "grvStall";
             this.grvStall.OptionsBehavior.AutoExpandAllGroups = true;
             this.grvStall.OptionsBehavior.Editable = false;
+            this.grvStall.OptionsSelection.CheckBoxSelectorColumnWidth = 30;
             this.grvStall.OptionsSelection.MultiSelect = true;
+            this.grvStall.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CheckBoxRowSelect;
+            this.grvStall.OptionsSelection.ShowCheckBoxSelectorInGroupRow = DevExpress.Utils.DefaultBoolean.True;
+            this.grvStall.OptionsView.ShowAutoFilterRow = true;
             this.grvStall.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.gcolStoreName, DevExpress.Data.ColumnSortOrder.Ascending),
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.gcolWarehouseName, DevExpress.Data.ColumnSortOrder.Ascending)});
             this.grvStall.CustomDrawRowIndicator += new DevExpress.XtraGrid.Views.Grid.RowIndicatorCustomDrawEventHandler(this.grvStall_CustomDrawRowIndicator);
-            this.grvStall.SelectionChanged += new DevExpress.Data.SelectionChangedEventHandler(this.grvStall_SelectionChanged);
             this.grvStall.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.grvStall_FocusedRowChanged);
             this.grvStall.FocusedRowLoaded += new DevExpress.XtraGrid.Views.Base.RowEventHandler(this.grvStall_FocusedRowLoaded);
             this.grvStall.DoubleClick += new System.EventHandler(this.grvStall_DoubleClick);
@@ -465,6 +471,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridStall)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grvStall)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

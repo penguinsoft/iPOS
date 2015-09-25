@@ -43,6 +43,6 @@ namespace iPOS.DRO.Systems
         public string UserID { get; set; }
 
         [DataMember]
-        public string Language { get; set; }
+        public string LanguageID { get; set; }
     }
 }

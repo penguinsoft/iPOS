@@ -238,6 +238,7 @@
             // 
             // lblEditTime
             // 
+            this.lblEditTime.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
             this.lblEditTime.Caption = "Ngày cập nhật:";
             this.lblEditTime.Id = 14;
             this.lblEditTime.Name = "lblEditTime";
@@ -245,6 +246,7 @@
             // 
             // lblEditTimeValue
             // 
+            this.lblEditTimeValue.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
             this.lblEditTimeValue.AllowHtmlText = DevExpress.Utils.DefaultBoolean.True;
             this.lblEditTimeValue.Caption = "<b><color=RED>01/01/2015</color></b>";
             this.lblEditTimeValue.Id = 15;
@@ -287,7 +289,7 @@
             this.barDockControlTop.CausesValidation = false;
             this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
-            this.barDockControlTop.Size = new System.Drawing.Size(882, 42);
+            this.barDockControlTop.Size = new System.Drawing.Size(882, 40);
             // 
             // barDockControlBottom
             // 
@@ -300,15 +302,15 @@
             // 
             this.barDockControlLeft.CausesValidation = false;
             this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
-            this.barDockControlLeft.Location = new System.Drawing.Point(0, 42);
-            this.barDockControlLeft.Size = new System.Drawing.Size(0, 478);
+            this.barDockControlLeft.Location = new System.Drawing.Point(0, 40);
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 480);
             // 
             // barDockControlRight
             // 
             this.barDockControlRight.CausesValidation = false;
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControlRight.Location = new System.Drawing.Point(882, 42);
-            this.barDockControlRight.Size = new System.Drawing.Size(0, 478);
+            this.barDockControlRight.Location = new System.Drawing.Point(882, 40);
+            this.barDockControlRight.Size = new System.Drawing.Size(0, 480);
             // 
             // gridDistrict
             // 
@@ -319,11 +321,11 @@
             this.gridDistrict.EmbeddedNavigator.Buttons.EndEdit.Visible = false;
             this.gridDistrict.EmbeddedNavigator.Buttons.Remove.Visible = false;
             this.gridDistrict.EmbeddedNavigator.TextStringFormat = "{0}/{1}";
-            this.gridDistrict.Location = new System.Drawing.Point(0, 42);
+            this.gridDistrict.Location = new System.Drawing.Point(0, 40);
             this.gridDistrict.MainView = this.grvDistrict;
             this.gridDistrict.MenuManager = this.barMain;
             this.gridDistrict.Name = "gridDistrict";
-            this.gridDistrict.Size = new System.Drawing.Size(882, 478);
+            this.gridDistrict.Size = new System.Drawing.Size(882, 480);
             this.gridDistrict.TabIndex = 6;
             this.gridDistrict.UseEmbeddedNavigator = true;
             this.gridDistrict.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -351,18 +353,22 @@
             this.grvDistrict.Name = "grvDistrict";
             this.grvDistrict.OptionsBehavior.AutoExpandAllGroups = true;
             this.grvDistrict.OptionsBehavior.Editable = false;
+            this.grvDistrict.OptionsSelection.CheckBoxSelectorColumnWidth = 30;
             this.grvDistrict.OptionsSelection.MultiSelect = true;
+            this.grvDistrict.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CheckBoxRowSelect;
+            this.grvDistrict.OptionsSelection.ShowCheckBoxSelectorInGroupRow = DevExpress.Utils.DefaultBoolean.True;
             this.grvDistrict.OptionsView.ShowAutoFilterRow = true;
             this.grvDistrict.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.gcolProvinceName, DevExpress.Data.ColumnSortOrder.Ascending)});
             this.grvDistrict.CustomDrawRowIndicator += new DevExpress.XtraGrid.Views.Grid.RowIndicatorCustomDrawEventHandler(this.grvDistrict_CustomDrawRowIndicator);
-            this.grvDistrict.SelectionChanged += new DevExpress.Data.SelectionChangedEventHandler(this.grvDistrict_SelectionChanged);
             this.grvDistrict.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.grvDistrict_FocusedRowChanged);
             this.grvDistrict.FocusedRowLoaded += new DevExpress.XtraGrid.Views.Base.RowEventHandler(this.grvDistrict_FocusedRowLoaded);
             this.grvDistrict.DoubleClick += new System.EventHandler(this.grvDistrict_DoubleClick);
             // 
             // gcolProvinceName
             // 
+            this.gcolProvinceName.AppearanceCell.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.gcolProvinceName.AppearanceCell.Options.UseFont = true;
             this.gcolProvinceName.Caption = "Tỉnh thành";
             this.gcolProvinceName.FieldName = "ProvinceName";
             this.gcolProvinceName.Name = "gcolProvinceName";
@@ -378,7 +384,7 @@
             this.gcolDistrictCode.Name = "gcolDistrictCode";
             this.gcolDistrictCode.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolDistrictCode.Visible = true;
-            this.gcolDistrictCode.VisibleIndex = 0;
+            this.gcolDistrictCode.VisibleIndex = 1;
             this.gcolDistrictCode.Width = 136;
             // 
             // gcolDistrictName
@@ -388,7 +394,7 @@
             this.gcolDistrictName.Name = "gcolDistrictName";
             this.gcolDistrictName.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolDistrictName.Visible = true;
-            this.gcolDistrictName.VisibleIndex = 1;
+            this.gcolDistrictName.VisibleIndex = 2;
             this.gcolDistrictName.Width = 301;
             // 
             // gcolRank
@@ -400,7 +406,7 @@
             this.gcolRank.Name = "gcolRank";
             this.gcolRank.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolRank.Visible = true;
-            this.gcolRank.VisibleIndex = 2;
+            this.gcolRank.VisibleIndex = 3;
             this.gcolRank.Width = 73;
             // 
             // gcolActiveString
@@ -412,7 +418,7 @@
             this.gcolActiveString.Name = "gcolActiveString";
             this.gcolActiveString.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolActiveString.Visible = true;
-            this.gcolActiveString.VisibleIndex = 3;
+            this.gcolActiveString.VisibleIndex = 4;
             this.gcolActiveString.Width = 70;
             // 
             // gcolNote
@@ -422,7 +428,7 @@
             this.gcolNote.Name = "gcolNote";
             this.gcolNote.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolNote.Visible = true;
-            this.gcolNote.VisibleIndex = 4;
+            this.gcolNote.VisibleIndex = 5;
             this.gcolNote.Width = 310;
             // 
             // gcolCreater
@@ -472,6 +478,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridDistrict)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grvDistrict)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

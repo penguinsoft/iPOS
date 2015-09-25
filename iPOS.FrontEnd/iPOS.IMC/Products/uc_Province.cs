@@ -51,7 +51,7 @@ namespace iPOS.IMC.Products
                     DescriptionEN = string.Format("Account '{0}' downloaded successfully data of provinces.", CommonEngine.userInfo.UserID)
                 });
                 gridProvince.DataSource = list;
-                barBottom.Visible = (list.Count > 0) ? true : false;
+                barBottom.Visible = (list != null && list.Count > 0) ? true : false;
             }
             catch (Exception ex)
             {
@@ -78,6 +78,17 @@ namespace iPOS.IMC.Products
 
         private async Task DeleteProvince()
         {
+            province_code_list = "";
+            province_id_list = "";
+            foreach (int index in grvProvince.GetSelectedRows())
+            {
+                province_code_list = string.Join("$", province_code_list, grvProvince.GetRowCellDisplayText(index, gcolProvinceCode));
+                province_id_list = string.Join("$", province_id_list, grvProvince.GetRowCellDisplayText(index, gcolProvinceID));
+            }
+
+            if (province_code_list.Length > 0) province_code_list = province_code_list.Substring(1);
+            if (province_id_list.Length > 0) province_id_list = province_id_list.Substring(1);
+
             string strErr = "ready";
             try
             {
@@ -172,7 +183,7 @@ namespace iPOS.IMC.Products
 
         private void btnExport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            CommonEngine.QuickExportGridViewData(ConvertEngine.ConvertObjectListToDataTable<PRO_tblProvinceDTO>(gridProvince.DataSource as List<PRO_tblProvinceDTO>), grvProvince);
+            CommonEngine.QuickExportGridViewData(ConvertEngine.ConvertObjectListToDataTable<PRO_tblProvinceDTO>(gridProvince.DataSource as List<PRO_tblProvinceDTO>), grvProvince, "Province");
         }
 
         private void btnClose_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -204,20 +215,6 @@ namespace iPOS.IMC.Products
         private void grvProvince_FocusedRowLoaded(object sender, DevExpress.XtraGrid.Views.Base.RowEventArgs e)
         {
             GetCurrentRow();
-        }
-
-        private void grvProvince_SelectionChanged(object sender, DevExpress.Data.SelectionChangedEventArgs e)
-        {
-            province_code_list = "";
-            province_id_list = "";
-            foreach (int index in grvProvince.GetSelectedRows())
-            {
-                province_code_list += grvProvince.GetRowCellDisplayText(index, gcolProvinceCode) + "$";
-                province_id_list += grvProvince.GetRowCellDisplayText(index, gcolProvinceID) + "$";
-            }
-
-            if (province_code_list.Length > 0) province_code_list = province_code_list.Substring(0, province_code_list.Length - 1);
-            if (province_id_list.Length > 0) province_id_list = province_id_list.Substring(0, province_id_list.Length - 1);
         }
         #endregion
     }

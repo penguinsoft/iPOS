@@ -14,7 +14,7 @@ namespace iPOS.DTO
 
         public string Creater { get; set; }
 
-        public DateTime CreateTime { get; set; }
+        public System.Nullable<DateTime> CreateTime { get; set; }
 
         public string Editer { get; set; }
 

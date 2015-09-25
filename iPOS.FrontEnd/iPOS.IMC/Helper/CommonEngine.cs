@@ -26,13 +26,30 @@ namespace iPOS.IMC.Helper
         public static DateTime SystemDateTime;
         protected static ILogEngine logger = new LogEngine();
 
-        public static void ShowMessage(string message, byte type)
+        public static void ShowMessage(string message, MessageType type, bool is_code = false)
         {
             string title = "";
-            title = LanguageEngine.GetMessageCaption((type == 0) ? "ERROR_TITLE_CAPTION" : "MESSAGE_TITLE_CAPTION", ConfigEngine.Language);
+            MessageBoxIcon icon = MessageBoxIcon.Error;
+            if (is_code) message = LanguageEngine.GetMessageCaption(message, ConfigEngine.Language);
+            switch (type)
+            {
+                case MessageType.Error:
+                    title = "ERROR_TITLE_CAPTION";
+                    icon = MessageBoxIcon.Error;
+                    break;
+                case MessageType.Success:
+                    title = "MESSAGE_TITLE_CAPTION";
+                    icon = MessageBoxIcon.Information;
+                    break;
+                case MessageType.Warning:
+                    title = "ERROR_SYSTEM_TITLE_CAPTION";
+                    icon = MessageBoxIcon.Warning;
+                    break;
+            }
+            title = LanguageEngine.GetMessageCaption(title, ConfigEngine.Language);
             if (type == 0)
                 logger.Error(message);
-            XtraMessageBox.Show(message, title, MessageBoxButtons.OK, (type == 1) ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+            XtraMessageBox.Show(message, title, MessageBoxButtons.OK, icon);
         }
 
         public static void ShowExceptionMessage(Exception ex)
@@ -162,13 +179,14 @@ namespace iPOS.IMC.Helper
             }
         }
 
-        public static void ExportGridViewData(DataTable data_source, GridView grid_view)
+        public static void ExportGridViewData(DataTable data_source, GridView grid_view, string file_name = "")
         {
             if (data_source != null && data_source.Rows.Count > 0)
             {
                 SaveFileDialog sDialog = new SaveFileDialog();
                 sDialog.Filter = "Microsoft Excel (*.xls)|*.xls|Microsoft Excel 2007 (*.xlsx)|*.xlsx|PDF (*.pdf)|*.pdf|Rich Text Format (*.rtf)|*.rtf|Webpage (*.html)|*.html|Rich Text File (*.rtf)|*.rtf|Text File (*.txt)|*.txt";
                 sDialog.Title = LanguageEngine.GetMessageCaption("000007", ConfigEngine.Language);
+                if (!string.IsNullOrEmpty(file_name)) sDialog.FileName = FileEngine.CreateUniqueFileName(file_name);
                 if (sDialog.ShowDialog() == DialogResult.OK)
                 {
                     switch (sDialog.FilterIndex)
@@ -210,6 +228,11 @@ namespace iPOS.IMC.Helper
         public static void QuickExportGridViewData(DataTable data_source, GridView grid_view)
         {
             ExportGridViewData(GetDataTableAfterFilter(data_source, grid_view), grid_view);
+        }
+
+        public static void QuickExportGridViewData(DataTable data_source, GridView grid_view, string file_name)
+        {
+            ExportGridViewData(GetDataTableAfterFilter(data_source, grid_view), grid_view, file_name);
         }
 
         public static bool CheckExistsUnicodeChar(string input)
@@ -269,5 +292,12 @@ namespace iPOS.IMC.Helper
             StrFormatByteSize(filesize, sb, sb.Capacity);
             return sb.ToString();
         }
+    }
+
+    public enum MessageType
+    {
+        Error = 0,
+        Success = 1,
+        Warning = 2
     }
 }

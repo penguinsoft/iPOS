@@ -343,7 +343,7 @@ namespace iPOS.IMC.Tool
             {
                 if (!isClickCheckFile)
                 {
-                    CommonEngine.ShowMessage(ConfigEngine.Language.Equals("vi") ? "Hệ thống sẽ tự động kiểm tra tệp dữ liệu." : "System will auto check valid all data files.", 1);
+                    CommonEngine.ShowMessage(ConfigEngine.Language.Equals("vi") ? "Hệ thống sẽ tự động kiểm tra tệp dữ liệu." : "System will auto check valid all data files.", MessageType.Success);
                     isClickCheckFile = await CheckValidTemplate();
                 }
                 if (isClickCheckFile)

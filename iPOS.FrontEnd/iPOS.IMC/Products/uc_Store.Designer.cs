@@ -163,8 +163,8 @@
             // 
             this.barDockControlLeft.CausesValidation = false;
             this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
-            this.barDockControlLeft.Location = new System.Drawing.Point(0, 42);
-            this.barDockControlLeft.Size = new System.Drawing.Size(0, 477);
+            this.barDockControlLeft.Location = new System.Drawing.Point(0, 40);
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 478);
             // 
             // barMain
             // 
@@ -347,13 +347,14 @@
             // 
             this.lblEditer.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
             this.lblEditer.AllowHtmlText = DevExpress.Utils.DefaultBoolean.True;
-            this.lblEditer.Caption = "Người cập nhật: <b><color=RED>admin</color></b>";
+            this.lblEditer.Caption = "Người cập nhật:";
             this.lblEditer.Id = 10;
             this.lblEditer.Name = "lblEditer";
             this.lblEditer.TextAlignment = System.Drawing.StringAlignment.Near;
             // 
             // lblEditerValue
             // 
+            this.lblEditerValue.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
             this.lblEditerValue.AllowHtmlText = DevExpress.Utils.DefaultBoolean.True;
             this.lblEditerValue.Caption = "admin";
             this.lblEditerValue.Id = 14;
@@ -371,6 +372,7 @@
             // 
             // lblEditTimeValue
             // 
+            this.lblEditTimeValue.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
             this.lblEditTimeValue.AllowHtmlText = DevExpress.Utils.DefaultBoolean.True;
             this.lblEditTimeValue.Caption = "01012015";
             this.lblEditTimeValue.Id = 15;
@@ -382,21 +384,21 @@
             this.barDockControlTop.CausesValidation = false;
             this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
-            this.barDockControlTop.Size = new System.Drawing.Size(901, 42);
+            this.barDockControlTop.Size = new System.Drawing.Size(901, 40);
             // 
             // barDockControl9
             // 
             this.barDockControl9.CausesValidation = false;
             this.barDockControl9.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.barDockControl9.Location = new System.Drawing.Point(0, 519);
-            this.barDockControl9.Size = new System.Drawing.Size(901, 24);
+            this.barDockControl9.Location = new System.Drawing.Point(0, 518);
+            this.barDockControl9.Size = new System.Drawing.Size(901, 25);
             // 
             // barDockControl10
             // 
             this.barDockControl10.CausesValidation = false;
             this.barDockControl10.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControl10.Location = new System.Drawing.Point(901, 42);
-            this.barDockControl10.Size = new System.Drawing.Size(0, 477);
+            this.barDockControl10.Location = new System.Drawing.Point(901, 40);
+            this.barDockControl10.Size = new System.Drawing.Size(0, 478);
             // 
             // gcolEditTime
             // 
@@ -410,7 +412,7 @@
             this.gcolProvinceName.FieldName = "ProvinceName";
             this.gcolProvinceName.Name = "gcolProvinceName";
             this.gcolProvinceName.Visible = true;
-            this.gcolProvinceName.VisibleIndex = 10;
+            this.gcolProvinceName.VisibleIndex = 11;
             this.gcolProvinceName.Width = 116;
             // 
             // gridStore
@@ -422,11 +424,11 @@
             this.gridStore.EmbeddedNavigator.Buttons.EndEdit.Visible = false;
             this.gridStore.EmbeddedNavigator.Buttons.Remove.Visible = false;
             this.gridStore.EmbeddedNavigator.TextStringFormat = "{0}/{1}";
-            this.gridStore.Location = new System.Drawing.Point(0, 42);
+            this.gridStore.Location = new System.Drawing.Point(0, 40);
             this.gridStore.MainView = this.grvStore;
             this.gridStore.MenuManager = this.barMain;
             this.gridStore.Name = "gridStore";
-            this.gridStore.Size = new System.Drawing.Size(901, 477);
+            this.gridStore.Size = new System.Drawing.Size(901, 478);
             this.gridStore.TabIndex = 16;
             this.gridStore.UseEmbeddedNavigator = true;
             this.gridStore.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -461,10 +463,12 @@
             this.grvStore.IndicatorWidth = 40;
             this.grvStore.Name = "grvStore";
             this.grvStore.OptionsBehavior.Editable = false;
+            this.grvStore.OptionsSelection.CheckBoxSelectorColumnWidth = 30;
             this.grvStore.OptionsSelection.MultiSelect = true;
+            this.grvStore.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CheckBoxRowSelect;
+            this.grvStore.OptionsSelection.ShowCheckBoxSelectorInGroupRow = DevExpress.Utils.DefaultBoolean.True;
             this.grvStore.OptionsView.ColumnAutoWidth = false;
             this.grvStore.CustomDrawRowIndicator += new DevExpress.XtraGrid.Views.Grid.RowIndicatorCustomDrawEventHandler(this.grvStore_CustomDrawRowIndicator);
-            this.grvStore.SelectionChanged += new DevExpress.Data.SelectionChangedEventHandler(this.grvStore_SelectionChanged);
             this.grvStore.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.grvStore_FocusedRowChanged);
             this.grvStore.FocusedRowLoaded += new DevExpress.XtraGrid.Views.Base.RowEventHandler(this.grvStore_FocusedRowLoaded);
             this.grvStore.DoubleClick += new System.EventHandler(this.grvStore_DoubleClick);
@@ -479,7 +483,7 @@
             this.gcolStoreCode.Name = "gcolStoreCode";
             this.gcolStoreCode.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolStoreCode.Visible = true;
-            this.gcolStoreCode.VisibleIndex = 0;
+            this.gcolStoreCode.VisibleIndex = 1;
             this.gcolStoreCode.Width = 116;
             // 
             // gcolShortCode
@@ -491,7 +495,7 @@
             this.gcolShortCode.Fixed = DevExpress.XtraGrid.Columns.FixedStyle.Left;
             this.gcolShortCode.Name = "gcolShortCode";
             this.gcolShortCode.Visible = true;
-            this.gcolShortCode.VisibleIndex = 1;
+            this.gcolShortCode.VisibleIndex = 2;
             // 
             // gcolStoreName
             // 
@@ -501,7 +505,7 @@
             this.gcolStoreName.Name = "gcolStoreName";
             this.gcolStoreName.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolStoreName.Visible = true;
-            this.gcolStoreName.VisibleIndex = 2;
+            this.gcolStoreName.VisibleIndex = 3;
             this.gcolStoreName.Width = 240;
             // 
             // gcolStoreAddress
@@ -510,7 +514,7 @@
             this.gcolStoreAddress.FieldName = "StoreAddress";
             this.gcolStoreAddress.Name = "gcolStoreAddress";
             this.gcolStoreAddress.Visible = true;
-            this.gcolStoreAddress.VisibleIndex = 3;
+            this.gcolStoreAddress.VisibleIndex = 4;
             this.gcolStoreAddress.Width = 301;
             // 
             // gcolIsRootString
@@ -521,7 +525,7 @@
             this.gcolIsRootString.FieldName = "IsRootString";
             this.gcolIsRootString.Name = "gcolIsRootString";
             this.gcolIsRootString.Visible = true;
-            this.gcolIsRootString.VisibleIndex = 12;
+            this.gcolIsRootString.VisibleIndex = 13;
             this.gcolIsRootString.Width = 97;
             // 
             // gcolBuildDate
@@ -530,7 +534,7 @@
             this.gcolBuildDate.FieldName = "BuildDate";
             this.gcolBuildDate.Name = "gcolBuildDate";
             this.gcolBuildDate.Visible = true;
-            this.gcolBuildDate.VisibleIndex = 4;
+            this.gcolBuildDate.VisibleIndex = 5;
             this.gcolBuildDate.Width = 122;
             // 
             // gcolPhone
@@ -539,7 +543,7 @@
             this.gcolPhone.FieldName = "Phone";
             this.gcolPhone.Name = "gcolPhone";
             this.gcolPhone.Visible = true;
-            this.gcolPhone.VisibleIndex = 5;
+            this.gcolPhone.VisibleIndex = 6;
             this.gcolPhone.Width = 88;
             // 
             // gcolFax
@@ -548,7 +552,7 @@
             this.gcolFax.FieldName = "Fax";
             this.gcolFax.Name = "gcolFax";
             this.gcolFax.Visible = true;
-            this.gcolFax.VisibleIndex = 6;
+            this.gcolFax.VisibleIndex = 7;
             // 
             // gcolTaxCode
             // 
@@ -556,7 +560,7 @@
             this.gcolTaxCode.FieldName = "TaxCode";
             this.gcolTaxCode.Name = "gcolTaxCode";
             this.gcolTaxCode.Visible = true;
-            this.gcolTaxCode.VisibleIndex = 7;
+            this.gcolTaxCode.VisibleIndex = 8;
             // 
             // gcolRepresentatives
             // 
@@ -564,7 +568,7 @@
             this.gcolRepresentatives.FieldName = "Representatives";
             this.gcolRepresentatives.Name = "gcolRepresentatives";
             this.gcolRepresentatives.Visible = true;
-            this.gcolRepresentatives.VisibleIndex = 8;
+            this.gcolRepresentatives.VisibleIndex = 9;
             this.gcolRepresentatives.Width = 150;
             // 
             // gcolDistrictName
@@ -573,7 +577,7 @@
             this.gcolDistrictName.FieldName = "DistrictName";
             this.gcolDistrictName.Name = "gcolDistrictName";
             this.gcolDistrictName.Visible = true;
-            this.gcolDistrictName.VisibleIndex = 9;
+            this.gcolDistrictName.VisibleIndex = 10;
             this.gcolDistrictName.Width = 102;
             // 
             // gcolUsedString
@@ -585,7 +589,7 @@
             this.gcolUsedString.Name = "gcolUsedString";
             this.gcolUsedString.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolUsedString.Visible = true;
-            this.gcolUsedString.VisibleIndex = 13;
+            this.gcolUsedString.VisibleIndex = 14;
             this.gcolUsedString.Width = 72;
             // 
             // gcolRank
@@ -599,7 +603,7 @@
             this.gcolRank.Name = "gcolRank";
             this.gcolRank.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolRank.Visible = true;
-            this.gcolRank.VisibleIndex = 11;
+            this.gcolRank.VisibleIndex = 12;
             this.gcolRank.Width = 65;
             // 
             // gcolNote
@@ -609,7 +613,7 @@
             this.gcolNote.Name = "gcolNote";
             this.gcolNote.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolNote.Visible = true;
-            this.gcolNote.VisibleIndex = 14;
+            this.gcolNote.VisibleIndex = 15;
             this.gcolNote.Width = 332;
             // 
             // gcolCreater
@@ -653,6 +657,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridStore)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grvStore)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

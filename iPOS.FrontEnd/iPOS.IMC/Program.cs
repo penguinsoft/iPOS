@@ -21,7 +21,7 @@ namespace iPOS.IMC
             DevExpress.Skins.SkinManager.EnableFormSkins();
             DevExpress.UserSkins.BonusSkins.Register();
             //UserLookAndFeel.Default.SetSkinStyle("DevExpress Style");
-            UserLookAndFeel.Default.SetSkinStyle("Office 2013 White");
+            UserLookAndFeel.Default.SetSkinStyle("Office 2007 Blue");
 
             if (!File.Exists(Application.StartupPath + @"\Config.ini"))
             {

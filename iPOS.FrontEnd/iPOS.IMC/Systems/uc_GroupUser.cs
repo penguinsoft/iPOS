@@ -11,6 +11,7 @@ using CommonEngine = iPOS.IMC.Helper.CommonEngine;
 using iPOS.BUS.Systems;
 using iPOS.DTO.Systems;
 using iPOS.Core.Helper;
+using System.Threading.Tasks;
 
 namespace iPOS.IMC.Systems
 {
@@ -51,7 +52,7 @@ namespace iPOS.IMC.Systems
                     DescriptionEN = string.Format("Account '{0}' downloaded successfully data of group users.", CommonEngine.userInfo.UserID)
                 });
                 gridGroupUser.DataSource = list;
-                barBottom.Visible = (list.Count > 0) ? true : false;
+                barBottom.Visible = (list != null && list.Count > 0) ? true : false;
             }
             catch (Exception ex)
             {
@@ -76,63 +77,65 @@ namespace iPOS.IMC.Systems
             }
         }
 
-        private async void DeleteGroupUser()
+        private async Task DeleteGroupUser()
         {
             group_code_list = "";
             group_id_list = "";
             foreach (int index in grvGroupUser.GetSelectedRows())
             {
-                group_code_list += grvGroupUser.GetRowCellDisplayText(index, gcolGroupCode) + "$";
-                group_id_list += grvGroupUser.GetRowCellDisplayText(index, gcolGroupID) + "$";
+                group_code_list = string.Join("$", group_code_list, grvGroupUser.GetRowCellDisplayText(index, gcolGroupCode));
+                group_id_list = string.Join("$", group_id_list, grvGroupUser.GetRowCellDisplayText(index, gcolGroupID));
             }
 
-            if (group_code_list.Length > 0)
-                group_code_list = group_code_list.Substring(0, group_code_list.Length - 1);
-            if (group_id_list.Length > 0)
-                group_id_list = group_id_list.Substring(0, group_id_list.Length - 1);
+            if (group_code_list.Length > 0) group_code_list = group_code_list.Substring(1);
+            if (group_id_list.Length > 0) group_id_list = group_id_list.Substring(1);
 
             string strErr = "ready";
-            try
+            if (!string.IsNullOrEmpty(group_id_list))
             {
-                if (group_id_list.Contains("$"))
+                try
                 {
-                    if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000012", ConfigEngine.Language).Replace("$Count$", group_id_list.Split('$').Length.ToString())))
-                        strErr = await SYS_tblGroupUserBUS.DeleteGroupUser(group_id_list, group_code_list, CommonEngine.userInfo.UserID, ConfigEngine.Language, new SYS_tblActionLogDTO
-                        {
-                            Activity = BaseConstant.COMMAND_INSERT_EN,
-                            UserID = CommonEngine.userInfo.UserID,
-                            LanguageID = ConfigEngine.Language,
-                            ActionEN = BaseConstant.COMMAND_DELETE_LIST_EN,
-                            ActionVN = BaseConstant.COMMAND_DELETE_LIST_VI,
-                            FunctionID = "9",
-                            DescriptionVN = string.Format("Tài khoản '{0}' vừa xóa thành công nhóm người dùng có mã '{1}'.", CommonEngine.userInfo.UserID, group_code_list.Replace("$", ", ")),
-                            DescriptionEN = string.Format("Account '{0}' has deleted group user successfully with group code are '{1}'.", CommonEngine.userInfo.UserID, group_code_list.Replace("$", ", "))
-                        });
-                }
-                else
-                {
-                    if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000005", ConfigEngine.Language)))
-                        strErr = await SYS_tblGroupUserBUS.DeleteGroupUser(group_id_list, group_code_list, CommonEngine.userInfo.UserID, ConfigEngine.Language, new SYS_tblActionLogDTO
-                        {
-                            Activity = BaseConstant.COMMAND_DELETE_EN,
-                            UserID = CommonEngine.userInfo.UserID,
-                            LanguageID = ConfigEngine.Language,
-                            ActionEN = BaseConstant.COMMAND_DELETE_EN,
-                            ActionVN = BaseConstant.COMMAND_DELETE_VI,
-                            FunctionID = "9",
-                            DescriptionVN = string.Format("Tài khoản '{0}' vừa xóa thành công nhóm người dùng có mã '{1}'.", CommonEngine.userInfo.UserID, group_code_list),
-                            DescriptionEN = string.Format("Account '{0}' has deleted group user successfully with group code is '{1}'.", CommonEngine.userInfo.UserID, group_code_list)
-                        });
-                }
+                    if (group_id_list.Contains("$"))
+                    {
+                        if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000012", ConfigEngine.Language).Replace("$Count$", group_id_list.Split('$').Length.ToString())))
+                            strErr = await SYS_tblGroupUserBUS.DeleteGroupUser(group_id_list, group_code_list, CommonEngine.userInfo.UserID, ConfigEngine.Language, new SYS_tblActionLogDTO
+                            {
+                                Activity = BaseConstant.COMMAND_INSERT_EN,
+                                UserID = CommonEngine.userInfo.UserID,
+                                LanguageID = ConfigEngine.Language,
+                                ActionEN = BaseConstant.COMMAND_DELETE_LIST_EN,
+                                ActionVN = BaseConstant.COMMAND_DELETE_LIST_VI,
+                                FunctionID = "9",
+                                DescriptionVN = string.Format("Tài khoản '{0}' vừa xóa thành công nhóm người dùng có mã '{1}'.", CommonEngine.userInfo.UserID, group_code_list.Replace("$", ", ")),
+                                DescriptionEN = string.Format("Account '{0}' has deleted group user successfully with group code are '{1}'.", CommonEngine.userInfo.UserID, group_code_list.Replace("$", ", "))
+                            });
+                    }
+                    else
+                    {
+                        if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000005", ConfigEngine.Language)))
+                            strErr = await SYS_tblGroupUserBUS.DeleteGroupUser(group_id_list, group_code_list, CommonEngine.userInfo.UserID, ConfigEngine.Language, new SYS_tblActionLogDTO
+                            {
+                                Activity = BaseConstant.COMMAND_DELETE_EN,
+                                UserID = CommonEngine.userInfo.UserID,
+                                LanguageID = ConfigEngine.Language,
+                                ActionEN = BaseConstant.COMMAND_DELETE_EN,
+                                ActionVN = BaseConstant.COMMAND_DELETE_VI,
+                                FunctionID = "9",
+                                DescriptionVN = string.Format("Tài khoản '{0}' vừa xóa thành công nhóm người dùng có mã '{1}'.", CommonEngine.userInfo.UserID, group_code_list),
+                                DescriptionEN = string.Format("Account '{0}' has deleted group user successfully with group code is '{1}'.", CommonEngine.userInfo.UserID, group_code_list)
+                            });
+                    }
 
-                if (!strErr.Equals("ready"))
-                    if (string.IsNullOrEmpty(strErr)) GetAllGroupUsers();
-                    else CommonEngine.ShowMessage(strErr, 0);
+                    if (!strErr.Equals("ready"))
+                        if (string.IsNullOrEmpty(strErr)) GetAllGroupUsers();
+                        else CommonEngine.ShowMessage(strErr, 0);
+                }
+                catch (Exception ex)
+                {
+                    CommonEngine.ShowExceptionMessage(ex);
+                }
             }
-            catch (Exception ex)
-            {
-                CommonEngine.ShowExceptionMessage(ex);
-            }
+            else CommonEngine.ShowMessage("000027", IMC.Helper.MessageType.Warning, true);
         }
         #endregion
 
@@ -163,9 +166,9 @@ namespace iPOS.IMC.Systems
             }
         }
 
-        private void btnDelete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private async void btnDelete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            DeleteGroupUser();
+            await DeleteGroupUser();
         }
 
         private void btnPrint_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -185,7 +188,7 @@ namespace iPOS.IMC.Systems
 
         private void btnExport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            CommonEngine.QuickExportGridViewData(ConvertEngine.ConvertObjectListToDataTable<SYS_tblGroupUserDTO>(gridGroupUser.DataSource as List<SYS_tblGroupUserDTO>), grvGroupUser);
+            CommonEngine.QuickExportGridViewData(ConvertEngine.ConvertObjectListToDataTable<SYS_tblGroupUserDTO>(gridGroupUser.DataSource as List<SYS_tblGroupUserDTO>), grvGroupUser, "GroupUser");
         }
 
         private void btnClose_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)

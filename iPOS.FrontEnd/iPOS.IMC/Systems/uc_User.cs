@@ -10,6 +10,7 @@ using iPOS.DTO.Systems;
 using iPOS.IMC.Helper;
 using iPOS.BUS.Systems;
 using iPOS.Core.Helper;
+using System.Threading.Tasks;
 
 namespace iPOS.IMC.Systems
 {
@@ -50,7 +51,7 @@ namespace iPOS.IMC.Systems
                     DescriptionEN = string.Format("Account '{0}' downloaded successfully data of users.", CommonEngine.userInfo.UserID)
                 });
                 gridUser.DataSource = list;
-                barBottom.Visible = (list.Count > 0) ? true : false;
+                barBottom.Visible = (list != null && list.Count > 0) ? true : false;
             }
             catch (Exception ex)
             {
@@ -75,13 +76,13 @@ namespace iPOS.IMC.Systems
             }
         }
 
-        private async void DeleteUser()
+        private async Task DeleteUser()
         {
             user_code_list = "";
             foreach (int index in grvUser.GetSelectedRows())
-                user_code_list += grvUser.GetRowCellDisplayText(index, gcolUsername) + "$";
+                user_code_list = string.Join("$", user_code_list, grvUser.GetRowCellDisplayText(index, gcolUsername));
 
-            if (user_code_list.Length > 0) user_code_list = user_code_list.Substring(0, user_code_list.Length - 1);
+            if (user_code_list.Length > 0) user_code_list = user_code_list.Substring(1);
 
             string strErr = "ready";
             try
@@ -155,9 +156,9 @@ namespace iPOS.IMC.Systems
             }
         }
 
-        private void btnDelete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private async void btnDelete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            DeleteUser();
+            await DeleteUser();
         }
 
         private void btnPrint_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -177,7 +178,7 @@ namespace iPOS.IMC.Systems
 
         private void btnExport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            CommonEngine.QuickExportGridViewData(ConvertEngine.ConvertObjectListToDataTable<SYS_tblGroupUserDTO>(gridUser.DataSource as List<SYS_tblGroupUserDTO>), grvUser);
+            CommonEngine.QuickExportGridViewData(ConvertEngine.ConvertObjectListToDataTable<SYS_tblGroupUserDTO>(gridUser.DataSource as List<SYS_tblGroupUserDTO>), grvUser, "User");
         }
 
         private void btnClose_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)

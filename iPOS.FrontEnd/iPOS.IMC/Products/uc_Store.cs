@@ -48,7 +48,7 @@ namespace iPOS.IMC.Products
                     DescriptionEN = string.Format("Account '{0}' downloaded successfully data of stores.", CommonEngine.userInfo.UserID)
                 });
                 gridStore.DataSource = stores;
-                barFooter.Visible = (stores.Count > 0) ? true : false;
+                barFooter.Visible = (stores != null && stores.Count > 0) ? true : false;
             }
             catch (Exception ex)
             {
@@ -75,6 +75,18 @@ namespace iPOS.IMC.Products
 
         private async Task DeleteStore()
         {
+            store_code_list = "";
+            store_id_list = "";
+
+            foreach (int index in grvStore.GetSelectedRows())
+            {
+                store_code_list = string.Join("$", store_code_list, grvStore.GetRowCellDisplayText(index, gcolStoreCode));
+                store_id_list = string.Join("$", store_id_list, grvStore.GetRowCellDisplayText(index, gcolStoreID));
+            }
+
+            if (store_code_list.Length > 0) store_code_list = store_code_list.Substring(1);
+            if (store_id_list.Length > 0) store_id_list = store_id_list.Substring(1);
+
             string strErr = "ready";
             try
             {
@@ -120,6 +132,7 @@ namespace iPOS.IMC.Products
         }
         #endregion
 
+        #region [Form Events]
         public uc_Store()
         {
             InitializeComponent();
@@ -168,7 +181,7 @@ namespace iPOS.IMC.Products
 
         private void btnExport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            CommonEngine.QuickExportGridViewData(ConvertEngine.ConvertObjectListToDataTable<PRO_tblStoreDTO>(gridStore.DataSource as List<PRO_tblStoreDTO>), grvStore);
+            CommonEngine.QuickExportGridViewData(ConvertEngine.ConvertObjectListToDataTable<PRO_tblStoreDTO>(gridStore.DataSource as List<PRO_tblStoreDTO>), grvStore, "Store");
         }
 
         private void btnClose_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -201,20 +214,6 @@ namespace iPOS.IMC.Products
         {
             GetCurrentRow();
         }
-
-        private void grvStore_SelectionChanged(object sender, DevExpress.Data.SelectionChangedEventArgs e)
-        {
-            store_code_list = "";
-            store_id_list = "";
-
-            foreach (int index in grvStore.GetSelectedRows())
-            {
-                store_code_list = string.Join("$", store_code_list, grvStore.GetRowCellDisplayText(index, gcolStoreCode));
-                store_id_list = string.Join("$", store_id_list, grvStore.GetRowCellDisplayText(index, gcolStoreID));
-            }
-
-            if (store_code_list.Length > 0) store_code_list = store_code_list.Substring(1);
-            if (store_id_list.Length > 0) store_id_list = store_id_list.Substring(1);
-        }
+        #endregion
     }
 }

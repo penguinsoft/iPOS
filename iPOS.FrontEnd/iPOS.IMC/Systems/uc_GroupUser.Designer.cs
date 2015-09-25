@@ -129,6 +129,7 @@
             this.btnInsert.Caption = "Thêm";
             this.btnInsert.Glyph = global::iPOS.IMC.Properties.Resources.add_16;
             this.btnInsert.Id = 0;
+            this.btnInsert.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N));
             this.btnInsert.Name = "btnInsert";
             this.btnInsert.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
             this.btnInsert.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnInsert_ItemClick);
@@ -138,6 +139,7 @@
             this.btnUpdate.Caption = "Cập Nhật";
             this.btnUpdate.Glyph = global::iPOS.IMC.Properties.Resources.update_16;
             this.btnUpdate.Id = 1;
+            this.btnUpdate.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F2);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnUpdate_ItemClick);
             // 
@@ -146,6 +148,7 @@
             this.btnDelete.Caption = "Xóa";
             this.btnDelete.Glyph = global::iPOS.IMC.Properties.Resources.delete_16;
             this.btnDelete.Id = 2;
+            this.btnDelete.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.Delete);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnDelete_ItemClick);
             // 
@@ -154,6 +157,7 @@
             this.btnPrint.Caption = "In";
             this.btnPrint.Glyph = global::iPOS.IMC.Properties.Resources.print_16;
             this.btnPrint.Id = 3;
+            this.btnPrint.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P));
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnPrint_ItemClick);
             // 
@@ -162,6 +166,7 @@
             this.btnReload.Caption = "Tải Lại";
             this.btnReload.Glyph = global::iPOS.IMC.Properties.Resources.reload_16;
             this.btnReload.Id = 4;
+            this.btnReload.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F5);
             this.btnReload.Name = "btnReload";
             this.btnReload.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnReload_ItemClick);
             // 
@@ -170,6 +175,7 @@
             this.btnImport.Caption = "Nhập";
             this.btnImport.Glyph = global::iPOS.IMC.Properties.Resources.import_16;
             this.btnImport.Id = 5;
+            this.btnImport.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I));
             this.btnImport.Name = "btnImport";
             this.btnImport.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnImport_ItemClick);
             // 
@@ -178,6 +184,7 @@
             this.btnExport.Caption = "Xuất";
             this.btnExport.Glyph = global::iPOS.IMC.Properties.Resources.export_16;
             this.btnExport.Id = 6;
+            this.btnExport.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E));
             this.btnExport.Name = "btnExport";
             this.btnExport.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnExport_ItemClick);
             // 
@@ -186,6 +193,7 @@
             this.btnClose.Caption = "Đóng";
             this.btnClose.Glyph = global::iPOS.IMC.Properties.Resources.close_16;
             this.btnClose.Id = 7;
+            this.btnClose.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W));
             this.btnClose.Name = "btnClose";
             this.btnClose.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnClose_ItemClick);
             // 
@@ -339,7 +347,8 @@
             this.grvGroupUser.IndicatorWidth = 40;
             this.grvGroupUser.Name = "grvGroupUser";
             this.grvGroupUser.OptionsBehavior.Editable = false;
-            this.grvGroupUser.OptionsSelection.CheckBoxSelectorColumnWidth = 30;
+            this.grvGroupUser.OptionsSelection.CheckBoxSelectorColumnWidth = 40;
+            this.grvGroupUser.OptionsSelection.EnableAppearanceFocusedCell = false;
             this.grvGroupUser.OptionsSelection.MultiSelect = true;
             this.grvGroupUser.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CheckBoxRowSelect;
             this.grvGroupUser.OptionsSelection.ShowCheckBoxSelectorInGroupRow = DevExpress.Utils.DefaultBoolean.True;

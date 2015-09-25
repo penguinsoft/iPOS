@@ -78,6 +78,7 @@
             // 
             // lblEditTimeValue
             // 
+            this.lblEditTimeValue.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
             this.lblEditTimeValue.AllowHtmlText = DevExpress.Utils.DefaultBoolean.True;
             this.lblEditTimeValue.Caption = "<b><color=RED>01/01/2015</color></b>";
             this.lblEditTimeValue.Id = 15;
@@ -134,7 +135,10 @@
             this.grvUser.Name = "grvUser";
             this.grvUser.OptionsBehavior.AutoExpandAllGroups = true;
             this.grvUser.OptionsBehavior.Editable = false;
+            this.grvUser.OptionsSelection.CheckBoxSelectorColumnWidth = 30;
             this.grvUser.OptionsSelection.MultiSelect = true;
+            this.grvUser.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CheckBoxRowSelect;
+            this.grvUser.OptionsSelection.ShowCheckBoxSelectorInGroupRow = DevExpress.Utils.DefaultBoolean.True;
             this.grvUser.OptionsView.ShowAutoFilterRow = true;
             this.grvUser.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.gcolGroupName, DevExpress.Data.ColumnSortOrder.Ascending)});
@@ -152,7 +156,7 @@
             this.gcolUsername.Name = "gcolUsername";
             this.gcolUsername.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolUsername.Visible = true;
-            this.gcolUsername.VisibleIndex = 0;
+            this.gcolUsername.VisibleIndex = 1;
             this.gcolUsername.Width = 126;
             // 
             // gcolGroupName
@@ -173,7 +177,7 @@
             this.gcolFullName.FieldName = "FullName";
             this.gcolFullName.Name = "gcolFullName";
             this.gcolFullName.Visible = true;
-            this.gcolFullName.VisibleIndex = 1;
+            this.gcolFullName.VisibleIndex = 2;
             this.gcolFullName.Width = 60;
             // 
             // gcolEmpCode
@@ -182,7 +186,7 @@
             this.gcolEmpCode.FieldName = "EmpCode";
             this.gcolEmpCode.Name = "gcolEmpCode";
             this.gcolEmpCode.Visible = true;
-            this.gcolEmpCode.VisibleIndex = 2;
+            this.gcolEmpCode.VisibleIndex = 3;
             this.gcolEmpCode.Width = 80;
             // 
             // gcolEffectiveDate
@@ -194,7 +198,7 @@
             this.gcolEffectiveDate.Name = "gcolEffectiveDate";
             this.gcolEffectiveDate.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolEffectiveDate.Visible = true;
-            this.gcolEffectiveDate.VisibleIndex = 3;
+            this.gcolEffectiveDate.VisibleIndex = 4;
             this.gcolEffectiveDate.Width = 81;
             // 
             // gcolEmail
@@ -204,7 +208,7 @@
             this.gcolEmail.Name = "gcolEmail";
             this.gcolEmail.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolEmail.Visible = true;
-            this.gcolEmail.VisibleIndex = 4;
+            this.gcolEmail.VisibleIndex = 5;
             this.gcolEmail.Width = 71;
             // 
             // gcolNote
@@ -214,7 +218,7 @@
             this.gcolNote.Name = "gcolNote";
             this.gcolNote.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolNote.Visible = true;
-            this.gcolNote.VisibleIndex = 5;
+            this.gcolNote.VisibleIndex = 6;
             this.gcolNote.Width = 333;
             // 
             // gcolCreater
@@ -445,6 +449,7 @@
             // 
             // lblEditTime
             // 
+            this.lblEditTime.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
             this.lblEditTime.Caption = "Ngày cập nhật:";
             this.lblEditTime.Id = 14;
             this.lblEditTime.Name = "lblEditTime";

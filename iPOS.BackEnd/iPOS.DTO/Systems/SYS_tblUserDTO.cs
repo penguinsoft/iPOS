@@ -10,7 +10,7 @@ namespace iPOS.DTO.Systems
 
         public Int32 GroupID { get; set; }
 
-        public DateTime EffectiveDate { get; set; }
+        public System.Nullable<DateTime> EffectiveDate { get; set; }
 
         public System.Nullable<DateTime> ToDate { get; set; }
 
@@ -48,7 +48,7 @@ namespace iPOS.DTO.Systems
 
         public string Creater { get; set; }
 
-        public DateTime CreateTime { get; set; }
+        public System.Nullable<DateTime> CreateTime { get; set; }
 
         public string Editer { get; set; }
 

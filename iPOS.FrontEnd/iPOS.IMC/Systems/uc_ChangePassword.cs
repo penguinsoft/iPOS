@@ -123,7 +123,7 @@ namespace iPOS.IMC.Systems
                     {
                         CommonEngine.userInfo.Password = EncryptEngine.Encrypt(txtNewPassword.Text);
                         txtOldPassword.EditValue = txtNewPassword.EditValue = txtConfirmPassword.EditValue = null;
-                        CommonEngine.ShowMessage(ConfigEngine.Language.Equals("vi") ? "Đổi mật khẩu người dùng thành công." : "Change user password successfully.", 1);
+                        CommonEngine.ShowMessage(ConfigEngine.Language.Equals("vi") ? "Đổi mật khẩu người dùng thành công." : "Change user password successfully.", MessageType.Success);
                         this.ParentForm.Close();
                     }
                     else

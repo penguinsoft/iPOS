@@ -37,7 +37,7 @@ namespace iPOS.IMC.Helper
                 {
                     wb.Save(sDialog.FileName, saveOptions);
                     DeleteAsposeWorksheet(sDialog.FileName);
-                    CommonEngine.ShowMessage(ConfigEngine.Language.Equals("vi") ? "Tải tập tin mẫu thành công!" : "Download template success!", 1);
+                    CommonEngine.ShowMessage(ConfigEngine.Language.Equals("vi") ? "Tải tập tin mẫu thành công!" : "Download template success!", MessageType.Success);
                 }
             }
             catch (Exception ex)

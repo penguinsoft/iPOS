@@ -5,7 +5,12 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraBars;
+using DevExpress.XtraBars.Helpers;
+using DevExpress.Skins;
+using DevExpress.LookAndFeel;
+using DevExpress.UserSkins;
 using LanguageEngine = iPOS.IMC.Helper.LanguageEngine;
 using ConfigEngine = iPOS.Core.Helper.ConfigEngine;
 using iPOS.IMC.Helper;
@@ -14,7 +19,7 @@ using iPOS.IMC.Products;
 
 namespace iPOS.IMC
 {
-    public partial class frmMain : DevExpress.XtraBars.Ribbon.RibbonForm
+    public partial class frmMain : RibbonForm
     {
         private string language = "";
 
