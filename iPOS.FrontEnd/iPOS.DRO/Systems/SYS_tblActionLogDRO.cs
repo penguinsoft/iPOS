@@ -7,6 +7,11 @@ namespace iPOS.DRO.Systems
     public class SYS_tblActionLogDRO : BaseDRO
     {
         public SYS_tblActionLogDTO ActionLogItem { get; set; }
+
+        public SYS_tblActionLogDRO()
+        {
+            ResponseItem = new ResponseItem();
+        }
     }
 
     [DataContract]

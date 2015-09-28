@@ -56,6 +56,8 @@ namespace iPOS.WCFService
             Mapper.CreateMap<SYS_tblImportFileConfigDCO, SYS_tblImportFileConfigDTO>();
             Mapper.CreateMap<SYS_tblPermissionDTO, SYS_tblPermissionDCO>();
             Mapper.CreateMap<SYS_tblPermissionDCO, SYS_tblPermissionDTO>();
+            Mapper.CreateMap<SYS_tblUserLevelDTO, SYS_tblUserLevelDCO>();
+            Mapper.CreateMap<SYS_tblUserLevelDCO, SYS_tblUserLevelDTO>();
 
             Mapper.CreateMap<PRO_tblProvinceDTO, PRO_tblProvinceDCO>();
             Mapper.CreateMap<PRO_tblProvinceDCO, PRO_tblProvinceDTO>();
@@ -85,6 +87,7 @@ namespace iPOS.WCFService
             afBuilder.RegisterType<SYS_tblReportCaptionDAO>().As<ISYS_tblReportCaptionDAO>();
             afBuilder.RegisterType<SYS_tblImportFileConfigDAO>().As<ISYS_tblImportFileConfigDAO>();
             afBuilder.RegisterType<SYS_tblPermissionDAO>().As<ISYS_tblPermissionDAO>();
+            afBuilder.RegisterType<SYS_tblUserLevelDAO>().As<ISYS_tblUserLevelDAO>();
 
             afBuilder.RegisterType<PRO_tblProvinceDAO>().As<IPRO_tblProvinceDAO>();
             afBuilder.RegisterType<PRO_tblDistrictDAO>().As<IPRO_tblDistrictDAO>();
@@ -111,18 +114,24 @@ namespace iPOS.WCFService
                     var data = Mapper.Map<SYS_tblActionLogDTO>(actionLog);
                     temp = db.InsertUpdateLog(data);
 
-                    result.Result = !string.IsNullOrEmpty(temp) ? false : true;
-                    result.Message = !string.IsNullOrEmpty(temp) ? temp : "";
-                    result.Username = actionLog.UserID;
-                    result.TotalItemCount = !string.IsNullOrEmpty(temp) ? 0 : 1;
+                    result.ResponseItem = new DCO.ResponseItem
+                    {
+                        Result = !string.IsNullOrEmpty(temp) ? false : true,
+                        Message = !string.IsNullOrEmpty(temp) ? temp : "",
+                        RequestUser = actionLog.UserID,
+                        TotalItemCount = !string.IsNullOrEmpty(temp) ? 0 : 1
+                    };
                 }
             }
             catch (Exception ex)
             {
-                result.Result = false;
-                result.Message = ex.Message;
-                result.Username = actionLog.UserID;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Message = ex.Message,
+                    RequestUser = actionLog.UserID,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -146,22 +155,28 @@ namespace iPOS.WCFService
                     if (temp != null)
                     {
                         result.GroupUserList = Mapper.Map<List<SYS_tblGroupUserDCO>>(temp);
-                        result.Result = true;
-                        result.Status = DCO.ResponseStatus.Success;
-                        result.Message = "";
-                        result.Username = Username;
-                        result.TotalItemCount = temp.Count;
+                        result.ResponseItem = new DCO.ResponseItem
+                        {
+                            Result = true,
+                            Status = DCO.ResponseStatus.Success,
+                            Message = "",
+                            RequestUser = Username,
+                            TotalItemCount = temp.Count
+                        };
                     }
                 }
             }
             catch (Exception ex)
             {
                 result.GroupUserList = Mapper.Map<List<SYS_tblGroupUserDCO>>(new List<SYS_tblGroupUserDTO>());
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Load group user list failed: " + ex.Message;
-                result.Username = Username;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Load group user list failed: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -181,22 +196,29 @@ namespace iPOS.WCFService
                     if (temp != null)
                     {
                         result.GroupUserItem = Mapper.Map<SYS_tblGroupUserDCO>(temp);
-                        result.Result = true;
-                        result.Status = DCO.ResponseStatus.Success;
-                        result.Message = "";
-                        result.Username = Username;
-                        result.TotalItemCount = 1;
+                        result.ResponseItem = new DCO.ResponseItem
+                        {
+                            Result = true,
+                            Status = DCO.ResponseStatus.Success,
+                            Message = "",
+                            RequestUser = Username,
+                            TotalItemCount = 1
+                        };
                     }
                 }
             }
             catch (Exception ex)
             {
                 result.GroupUserItem = Mapper.Map<SYS_tblGroupUserDCO>(new SYS_tblGroupUserDTO());
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Get data failed: " + ex.Message;
-                result.Username = Username;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Get data failed: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
+                logger.Error(ex);
             }
 
             return result;
@@ -216,20 +238,26 @@ namespace iPOS.WCFService
                         temp = db.InsertGroupUser(data);
                     else temp = db.UpdateGroupUser(data);
 
-                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
-                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
-                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
-                    result.Username = groupUser.UserID;
-                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                    result.ResponseItem = new DCO.ResponseItem
+                    {
+                        Result = string.IsNullOrEmpty(temp) ? true : false,
+                        Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure,
+                        Message = string.IsNullOrEmpty(temp) ? string.Empty : temp,
+                        RequestUser = groupUser.UserID,
+                        TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0
+                    };
                 }
             }
             catch (Exception ex)
             {
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Insert new group user failed because " + ex.Message;
-                result.Username = groupUser.UserID;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Insert new group user failed because " + ex.Message,
+                    RequestUser = groupUser.UserID,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -249,20 +277,26 @@ namespace iPOS.WCFService
                         temp = db.DeleteGroupUserList(GroupUserIDList, Username, LanguageID);
                     else temp = db.DeleteGroupUser(GroupUserIDList, Username, LanguageID);
 
-                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
-                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
-                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
-                    result.Username = Username;
-                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                    result.ResponseItem = new DCO.ResponseItem
+                    {
+                        Result = string.IsNullOrEmpty(temp) ? true : false,
+                        Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure,
+                        Message = string.IsNullOrEmpty(temp) ? string.Empty : temp,
+                        RequestUser = Username,
+                        TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0
+                    };
                 }
             }
             catch (Exception ex)
             {
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Delete group user failed because " + ex.Message;
-                result.Username = Username;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Delete group user failed because " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -284,21 +318,28 @@ namespace iPOS.WCFService
                     if (temp != null)
                     {
                         result.UserItem = Mapper.Map<SYS_tblUserDCO>(temp);
-                        result.Result = true;
-                        result.Message = temp.Username;
-                        result.Username = Username;
-                        result.TotalItemCount = 1;
+                        result.ResponseItem = new DCO.ResponseItem
+                        {
+                            Result = true,
+                            Status = DCO.ResponseStatus.Success,
+                            Message = temp.Username,
+                            RequestUser = Username,
+                            TotalItemCount = 1
+                        };
                     }
                 }
             }
             catch (Exception ex)
             {
                 result.UserItem = Mapper.Map<SYS_tblUserDCO>(new SYS_tblUserDTO());
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = " Check login failed: " + ex.Message;
-                result.Username = Username;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Check login failed: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -318,22 +359,27 @@ namespace iPOS.WCFService
                     if (temp != null)
                     {
                         result.UserList = Mapper.Map<List<SYS_tblUserDCO>>(temp);
-                        result.Result = true;
-                        result.Status = DCO.ResponseStatus.Success;
-                        result.Message = "";
-                        result.Username = Username;
-                        result.TotalItemCount = temp.Count;
+                        result.ResponseItem = new DCO.ResponseItem
+                        {
+                            Result = true,
+                            Status = DCO.ResponseStatus.Success,
+                            Message = "",
+                            RequestUser = Username,
+                            TotalItemCount = temp.Count
+                        };
                     }
                 }
             }
             catch (Exception ex)
             {
                 result.UserList = Mapper.Map<List<SYS_tblUserDCO>>(new List<SYS_tblUserDTO>());
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Load user list failed: " + ex.Message;
-                result.Username = Username;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Load user list failed: " + ex.Message,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -353,22 +399,29 @@ namespace iPOS.WCFService
                     if (temp != null)
                     {
                         result.UserItem = Mapper.Map<SYS_tblUserDCO>(temp);
-                        result.Result = true;
-                        result.Status = DCO.ResponseStatus.Success;
-                        result.Message = "";
-                        result.Username = Username;
-                        result.TotalItemCount = 1;
+                        result.ResponseItem = new DCO.ResponseItem
+                        {
+                            Result = true,
+                            Status = DCO.ResponseStatus.Success,
+                            Message = "",
+                            RequestUser = Username,
+                            TotalItemCount = 1
+                        };
                     }
                 }
             }
             catch (Exception ex)
             {
                 result.UserItem = Mapper.Map<SYS_tblUserDCO>(new SYS_tblUserDTO());
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Get data failed: " + ex.Message;
-                result.Username = Username;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Get data failed: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
+                logger.Error(ex);
             }
 
             return result;
@@ -388,20 +441,25 @@ namespace iPOS.WCFService
                         temp = db.InsertUser(data);
                     else temp = db.UpdateUser(data);
 
-                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
-                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
-                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
-                    result.Username = user.Username;
-                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                    result.ResponseItem = new DCO.ResponseItem
+                    {
+                        Result = string.IsNullOrEmpty(temp) ? true : false,
+                        Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure,
+                        RequestUser = user.UserID,
+                        TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0
+                    };
                 }
             }
             catch (Exception ex)
             {
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Insert new user failed because " + ex.Message;
-                result.Username = user.Username;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Insert new user failed because: " + ex.Message,
+                    RequestUser = user.UserID,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -421,20 +479,26 @@ namespace iPOS.WCFService
                         temp = db.DeleteUserList(UserCodeList, Username, LanguageID);
                     else temp = db.DeleteUser(UserCodeList, Username, LanguageID);
 
-                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
-                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
-                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
-                    result.Username = Username;
-                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                    result.ResponseItem = new DCO.ResponseItem
+                    {
+                        Result = string.IsNullOrEmpty(temp) ? true : false,
+                        Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure,
+                        Message = string.IsNullOrEmpty(temp) ? string.Empty : temp,
+                        RequestUser = Username,
+                        TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0
+                    };
                 }
             }
             catch (Exception ex)
             {
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Delete user failed because " + ex.Message;
-                result.Username = Username;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Delete user failed because: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -452,20 +516,26 @@ namespace iPOS.WCFService
                     var db = scope.Resolve<ISYS_tblUserDAO>();
                     temp = db.ChangeUserPassword(Username, LanguageID, Password);
 
-                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
-                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
-                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
-                    result.Username = Username;
-                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                    result.ResponseItem = new DCO.ResponseItem
+                    {
+                        Result = string.IsNullOrEmpty(temp) ? true : false,
+                        Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure,
+                        Message = string.IsNullOrEmpty(temp) ? string.Empty : temp,
+                        RequestUser = Username,
+                        TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0
+                    };
                 }
             }
             catch (Exception ex)
             {
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Change user password failed because " + ex.Message;
-                result.Username = Username;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Change user password failed because: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -487,22 +557,28 @@ namespace iPOS.WCFService
                     if (temp != null)
                     {
                         result.ReportCaptionList = Mapper.Map<List<SYS_tblReportCaptionDCO>>(temp);
-                        result.Result = true;
-                        result.Status = DCO.ResponseStatus.Success;
-                        result.Message = "";
-                        result.Username = Username;
-                        result.TotalItemCount = temp.Count;
+                        result.ResponseItem = new DCO.ResponseItem
+                        {
+                            Result = true,
+                            Status = DCO.ResponseStatus.Success,
+                            Message = "",
+                            RequestUser = Username,
+                            TotalItemCount = temp.Count
+                        };
                     }
                 }
             }
             catch (Exception ex)
             {
                 result.ReportCaptionList = Mapper.Map<List<SYS_tblReportCaptionDCO>>(new List<SYS_tblReportCaptionDTO>());
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Load data failed: " + ex.Message;
-                result.Username = Username;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Load data failed: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -522,22 +598,28 @@ namespace iPOS.WCFService
                     if (temp != null)
                     {
                         result.ComboDynamicList = Mapper.Map<List<ComboDynamicItemDCO>>(temp);
-                        result.Result = true;
-                        result.Status = DCO.ResponseStatus.Success;
-                        result.Message = "";
-                        result.Username = Username;
-                        result.TotalItemCount = temp.Count;
+                        result.ResponseItem = new DCO.ResponseItem
+                        {
+                            Result = true,
+                            Status = DCO.ResponseStatus.Success,
+                            Message = "",
+                            RequestUser = Username,
+                            TotalItemCount = temp.Count
+                        };
                     }
                 }
             }
             catch (Exception ex)
             {
                 result.ComboDynamicList = Mapper.Map<List<ComboDynamicItemDCO>>(new List<ComboDynamicItemDTO>());
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Load data failed: " + ex.Message;
-                result.Username = Username;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Load data failed: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -559,22 +641,29 @@ namespace iPOS.WCFService
                     if (temp != null)
                     {
                         result.ImportFileConfigItem = Mapper.Map<SYS_tblImportFileConfigDCO>(temp);
-                        result.Result = true;
-                        result.Status = DCO.ResponseStatus.Success;
-                        result.Message = "";
-                        result.Username = Username;
-                        result.TotalItemCount = 1;
+                        result.ResponseItem = new DCO.ResponseItem
+                        {
+                            Result = true,
+                            Status = DCO.ResponseStatus.Success,
+                            Message = "",
+                            RequestUser = Username,
+                            TotalItemCount = 1
+                        };
                     }
                 }
             }
             catch (Exception ex)
             {
                 result.ImportFileConfigItem = Mapper.Map<SYS_tblImportFileConfigDCO>(new SYS_tblImportFileConfigDTO());
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Get data failed: " + ex.Message;
-                result.Username = Username;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Get data failed: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
+                logger.Error(ex);
             }
 
             return result;
@@ -592,20 +681,26 @@ namespace iPOS.WCFService
                     Dictionary<string, string> input = JsonConvert.DeserializeObject<Dictionary<string, string>>(InputData);
                     temp = db.ImportDataRow(input, StoreProcedure);
 
-                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
-                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
-                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
-                    result.Username = Username;
-                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                    result.ResponseItem = new DCO.ResponseItem
+                    {
+                        Result = string.IsNullOrEmpty(temp) ? true : false,
+                        Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure,
+                        Message = string.IsNullOrEmpty(temp) ? string.Empty : temp,
+                        RequestUser = Username,
+                        TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0
+                    };
                 }
             }
             catch (Exception ex)
             {
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Import data failed because " + ex.Message;
-                result.Username = Username;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Import data failed because: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -628,22 +723,69 @@ namespace iPOS.WCFService
                     if (temp != null)
                     {
                         result.PermissionList = Mapper.Map<List<SYS_tblPermissionDCO>>(temp);
-                        result.Result = true;
-                        result.Status = DCO.ResponseStatus.Success;
-                        result.Message = "";
-                        result.Username = Username;
-                        result.TotalItemCount = temp.Count;
+                        result.ResponseItem = new DCO.ResponseItem
+                        {
+                            Result = true,
+                            Status = DCO.ResponseStatus.Success,
+                            Message = "",
+                            RequestUser = Username,
+                            TotalItemCount = temp.Count
+                        };
                     }
                 }
             }
             catch (Exception ex)
             {
                 result.PermissionList = Mapper.Map<List<SYS_tblPermissionDCO>>(new List<SYS_tblPermissionDTO>());
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Load permission failed: " + ex.Message;
-                result.Username = Username;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Load permission failed: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public SYS_tblPermissionDRO GetPermissionItem(string Username, string LanguageID, string FunctionID)
+        {
+            SYS_tblPermissionDRO result = new SYS_tblPermissionDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    SYS_tblPermissionDTO temp = new SYS_tblPermissionDTO();
+                    var db = scope.Resolve<ISYS_tblPermissionDAO>();
+                    temp = db.GetPermissionItem(Username, LanguageID, FunctionID);
+                    if (temp != null)
+                    {
+                        result.PermissionItem = Mapper.Map<SYS_tblPermissionDCO>(temp);
+                        result.ResponseItem = new DCO.ResponseItem
+                        {
+                            Result = true,
+                            Status = DCO.ResponseStatus.Success,
+                            Message = "",
+                            RequestUser = Username,
+                            TotalItemCount = 1
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.PermissionItem = Mapper.Map<SYS_tblPermissionDCO>(new SYS_tblPermissionDTO());
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Load permission failed: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -662,20 +804,26 @@ namespace iPOS.WCFService
                     var permissions = Mapper.Map<List<SYS_tblPermissionDTO>>(permissionList);
                     temp = db.UpdatePermission(Username, LanguageID, permissions, IsUser);
 
-                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
-                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
-                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
-                    result.Username = Username;
-                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                    result.ResponseItem = new DCO.ResponseItem
+                    {
+                        Result = string.IsNullOrEmpty(temp) ? true : false,
+                        Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure,
+                        Message = string.IsNullOrEmpty(temp) ? string.Empty : temp,
+                        RequestUser = Username,
+                        TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0
+                    };
                 }
             }
             catch (Exception ex)
             {
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Update permission failed because " + ex.Message;
-                result.Username = Username;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Update permission failed because: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -699,22 +847,28 @@ namespace iPOS.WCFService
                     if (temp != null)
                     {
                         result.ProvinceList = Mapper.Map<List<PRO_tblProvinceDCO>>(temp);
-                        result.Result = true;
-                        result.Status = DCO.ResponseStatus.Success;
-                        result.Message = "";
-                        result.Username = Username;
-                        result.TotalItemCount = temp.Count;
+                        result.ResponseItem = new DCO.ResponseItem
+                        {
+                            Result = true,
+                            Status = DCO.ResponseStatus.Success,
+                            Message = "",
+                            RequestUser = Username,
+                            TotalItemCount = temp.Count
+                        };
                     }
                 }
             }
             catch (Exception ex)
             {
                 result.ProvinceList = Mapper.Map<List<PRO_tblProvinceDCO>>(new List<PRO_tblProvinceDTO>());
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Load province list failed: " + ex.Message;
-                result.Username = Username;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Load province list failed: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -733,22 +887,28 @@ namespace iPOS.WCFService
                     if (temp != null)
                     {
                         result.ProvinceItem = Mapper.Map<PRO_tblProvinceDCO>(temp);
-                        result.Result = true;
-                        result.Status = DCO.ResponseStatus.Success;
-                        result.Message = "";
-                        result.Username = Username;
-                        result.TotalItemCount = 1;
+                        result.ResponseItem = new DCO.ResponseItem
+                        {
+                            Result = true,
+                            Status = DCO.ResponseStatus.Success,
+                            Message = "",
+                            RequestUser = Username,
+                            TotalItemCount = 1
+                        };
                     }
                 }
             }
             catch (Exception ex)
             {
                 result.ProvinceItem = Mapper.Map<PRO_tblProvinceDCO>(new PRO_tblProvinceDTO());
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Load province item failed: " + ex.Message;
-                result.Username = Username;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Load province item failed: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -769,20 +929,26 @@ namespace iPOS.WCFService
                         temp = db.InsertProvince(data);
                     else temp = db.UpdateProvince(data);
 
-                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
-                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
-                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
-                    result.Username = province.UserID;
-                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                    result.ResponseItem = new DCO.ResponseItem
+                    {
+                        Result = string.IsNullOrEmpty(temp) ? true : false,
+                        Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure,
+                        Message = string.IsNullOrEmpty(temp) ? string.Empty : temp,
+                        RequestUser = province.UserID,
+                        TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0
+                    };
                 }
             }
             catch (Exception ex)
             {
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Insert new province failed because " + ex.Message;
-                result.Username = province.UserID;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Insert new province failed because: " + ex.Message,
+                    RequestUser = province.UserID,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -802,20 +968,26 @@ namespace iPOS.WCFService
                         temp = db.DeleteProvinceList(ProvinceIDList, Username, LanguageID);
                     else temp = db.DeleteProvince(ProvinceIDList, Username, LanguageID);
 
-                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
-                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
-                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
-                    result.Username = Username;
-                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                    result.ResponseItem = new DCO.ResponseItem
+                    {
+                        Result = string.IsNullOrEmpty(temp) ? true : false,
+                        Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure,
+                        Message = string.IsNullOrEmpty(temp) ? string.Empty : temp,
+                        RequestUser = Username,
+                        TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0
+                    };
                 }
             }
             catch (Exception ex)
             {
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Delete province failed because " + ex.Message;
-                result.Username = Username;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Delete province failed because: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -839,22 +1011,28 @@ namespace iPOS.WCFService
                     if (temp != null)
                     {
                         result.DistrictList = Mapper.Map<List<PRO_tblDistrictDCO>>(temp);
-                        result.Result = true;
-                        result.Status = DCO.ResponseStatus.Success;
-                        result.Message = "";
-                        result.Username = Username;
-                        result.TotalItemCount = temp.Count;
+                        result.ResponseItem = new DCO.ResponseItem
+                        {
+                            Result = true,
+                            Status = DCO.ResponseStatus.Success,
+                            Message = "",
+                            RequestUser = Username,
+                            TotalItemCount = temp.Count
+                        };
                     }
                 }
             }
             catch (Exception ex)
             {
                 result.DistrictList = Mapper.Map<List<PRO_tblDistrictDCO>>(new List<PRO_tblDistrictDTO>());
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Load district list failed: " + ex.Message;
-                result.Username = Username;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Load district list failed: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -873,22 +1051,28 @@ namespace iPOS.WCFService
                     if (temp != null)
                     {
                         result.DistrictItem = Mapper.Map<PRO_tblDistrictDCO>(temp);
-                        result.Result = true;
-                        result.Status = DCO.ResponseStatus.Success;
-                        result.Message = "";
-                        result.Username = Username;
-                        result.TotalItemCount = 1;
+                        result.ResponseItem = new DCO.ResponseItem
+                        {
+                            Result = true,
+                            Status = DCO.ResponseStatus.Success,
+                            Message = "",
+                            RequestUser = Username,
+                            TotalItemCount = 1
+                        };
                     }
                 }
             }
             catch (Exception ex)
             {
                 result.DistrictItem = Mapper.Map<PRO_tblDistrictDCO>(new PRO_tblDistrictDTO());
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Load district item failed: " + ex.Message;
-                result.Username = Username;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Load district item failed: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -909,20 +1093,26 @@ namespace iPOS.WCFService
                         temp = db.InsertDistrict(data);
                     else temp = db.UpdateDistrict(data);
 
-                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
-                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
-                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
-                    result.Username = district.UserID;
-                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                    result.ResponseItem = new DCO.ResponseItem
+                    {
+                        Result = string.IsNullOrEmpty(temp) ? true : false,
+                        Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure,
+                        Message = string.IsNullOrEmpty(temp) ? string.Empty : temp,
+                        RequestUser = district.UserID,
+                        TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0
+                    };
                 }
             }
             catch (Exception ex)
             {
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Insert new district failed because " + ex.Message;
-                result.Username = district.UserID;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Insert new district failed because: " + ex.Message,
+                    RequestUser = district.UserID,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -942,20 +1132,26 @@ namespace iPOS.WCFService
                         temp = db.DeleteDistrictList(DistrictIDList, Username, LanguageID);
                     else temp = db.DeleteDistrict(DistrictIDList, Username, LanguageID);
 
-                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
-                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
-                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
-                    result.Username = Username;
-                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                    result.ResponseItem = new DCO.ResponseItem
+                    {
+                        Result = string.IsNullOrEmpty(temp) ? true : false,
+                        Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure,
+                        Message = string.IsNullOrEmpty(temp) ? string.Empty : temp,
+                        RequestUser = Username,
+                        TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0
+                    };
                 }
             }
             catch (Exception ex)
             {
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Delete district failed because " + ex.Message;
-                result.Username = Username;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Delete district failed because: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -979,22 +1175,28 @@ namespace iPOS.WCFService
                     if (temp != null)
                     {
                         result.StoreList = Mapper.Map<List<PRO_tblStoreDCO>>(temp);
-                        result.Result = true;
-                        result.Status = DCO.ResponseStatus.Success;
-                        result.Message = "";
-                        result.Username = Username;
-                        result.TotalItemCount = temp.Count;
+                        result.ResponseItem = new DCO.ResponseItem
+                        {
+                            Result = true,
+                            Status = DCO.ResponseStatus.Success,
+                            Message = "",
+                            RequestUser = Username,
+                            TotalItemCount = temp.Count
+                        };
                     }
                 }
             }
             catch (Exception ex)
             {
                 result.StoreList = Mapper.Map<List<PRO_tblStoreDCO>>(new List<PRO_tblStoreDTO>());
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Load store list failed: " + ex.Message;
-                result.Username = Username;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Load store list failed: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -1013,22 +1215,28 @@ namespace iPOS.WCFService
                     if (temp != null)
                     {
                         result.StoreItem = Mapper.Map<PRO_tblStoreDCO>(temp);
-                        result.Result = true;
-                        result.Status = DCO.ResponseStatus.Success;
-                        result.Message = "";
-                        result.Username = Username;
-                        result.TotalItemCount = 1;
+                        result.ResponseItem = new DCO.ResponseItem
+                        {
+                            Result = true,
+                            Status = DCO.ResponseStatus.Success,
+                            Message = "",
+                            RequestUser = Username,
+                            TotalItemCount = 1
+                        };
                     }
                 }
             }
             catch (Exception ex)
             {
                 result.StoreItem = Mapper.Map<PRO_tblStoreDCO>(new PRO_tblStoreDTO());
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Load store item failed: " + ex.Message;
-                result.Username = Username;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Load store item failed: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -1049,20 +1257,26 @@ namespace iPOS.WCFService
                         temp = db.InsertStore(data);
                     else temp = db.UpdateStore(data);
 
-                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
-                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
-                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
-                    result.Username = store.UserID;
-                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                    result.ResponseItem = new DCO.ResponseItem
+                    {
+                        Result = string.IsNullOrEmpty(temp) ? true : false,
+                        Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure,
+                        Message = string.IsNullOrEmpty(temp) ? string.Empty : temp,
+                        RequestUser = store.UserID,
+                        TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0
+                    };
                 }
             }
             catch (Exception ex)
             {
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Insert new store failed because " + ex.Message;
-                result.Username = store.UserID;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Insert new store failed because: " + ex.Message,
+                    RequestUser = store.UserID,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -1082,20 +1296,26 @@ namespace iPOS.WCFService
                         temp = db.DeleteStoreList(Username, LanguageID, StoreIDList);
                     else temp = db.DeleteStore(Username, LanguageID, StoreIDList);
 
-                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
-                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
-                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
-                    result.Username = Username;
-                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                    result.ResponseItem = new DCO.ResponseItem
+                    {
+                        Result = string.IsNullOrEmpty(temp) ? true : false,
+                        Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure,
+                        Message = string.IsNullOrEmpty(temp) ? string.Empty : temp,
+                        RequestUser = Username,
+                        TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0
+                    };
                 }
             }
             catch (Exception ex)
             {
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Delete store failed because " + ex.Message;
-                result.Username = Username;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Delete store failed because: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -1119,22 +1339,28 @@ namespace iPOS.WCFService
                     if (temp != null)
                     {
                         result.WarehouseList = Mapper.Map<List<PRO_tblWarehouseDCO>>(temp);
-                        result.Result = true;
-                        result.Status = DCO.ResponseStatus.Success;
-                        result.Message = "";
-                        result.Username = Username;
-                        result.TotalItemCount = temp.Count;
+                        result.ResponseItem = new DCO.ResponseItem
+                        {
+                            Result = true,
+                            Status = DCO.ResponseStatus.Success,
+                            Message = "",
+                            RequestUser = Username,
+                            TotalItemCount = temp.Count
+                        };
                     }
                 }
             }
             catch (Exception ex)
             {
                 result.WarehouseList = Mapper.Map<List<PRO_tblWarehouseDCO>>(new List<PRO_tblWarehouseDTO>());
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Load warehouse list failed: " + ex.Message;
-                result.Username = Username;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Load warehouse list failed: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -1153,22 +1379,28 @@ namespace iPOS.WCFService
                     if (temp != null)
                     {
                         result.WarehouseItem = Mapper.Map<PRO_tblWarehouseDCO>(temp);
-                        result.Result = true;
-                        result.Status = DCO.ResponseStatus.Success;
-                        result.Message = "";
-                        result.Username = Username;
-                        result.TotalItemCount = 1;
+                        result.ResponseItem = new DCO.ResponseItem
+                        {
+                            Result = true,
+                            Status = DCO.ResponseStatus.Success,
+                            Message = "",
+                            RequestUser = Username,
+                            TotalItemCount = 1
+                        };
                     }
                 }
             }
             catch (Exception ex)
             {
                 result.WarehouseItem = Mapper.Map<PRO_tblWarehouseDCO>(new PRO_tblWarehouseDTO());
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Load warehouse item failed: " + ex.Message;
-                result.Username = Username;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Load warehouse item failed: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -1189,20 +1421,26 @@ namespace iPOS.WCFService
                         temp = db.InsertWarehouse(data);
                     else temp = db.UpdateWarehouse(data);
 
-                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
-                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
-                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
-                    result.Username = warehouse.UserID;
-                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                    result.ResponseItem = new DCO.ResponseItem
+                    {
+                        Result = string.IsNullOrEmpty(temp) ? true : false,
+                        Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure,
+                        Message = string.IsNullOrEmpty(temp) ? string.Empty : temp,
+                        RequestUser = warehouse.UserID,
+                        TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0
+                    };
                 }
             }
             catch (Exception ex)
             {
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Insert new warehouse failed because " + ex.Message;
-                result.Username = warehouse.UserID;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Insert new warehouse failed because: " + ex.Message,
+                    RequestUser = warehouse.UserID,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -1222,20 +1460,26 @@ namespace iPOS.WCFService
                         temp = db.DeleteWarehouseList(WarehouseIDList, Username, LanguageID);
                     else temp = db.DeleteWarehouse(WarehouseIDList, Username, LanguageID);
 
-                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
-                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
-                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
-                    result.Username = Username;
-                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                    result.ResponseItem = new DCO.ResponseItem
+                    {
+                        Result = string.IsNullOrEmpty(temp) ? true : false,
+                        Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure,
+                        Message = string.IsNullOrEmpty(temp) ? string.Empty : temp,
+                        RequestUser = Username,
+                        TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0
+                    };
                 }
             }
             catch (Exception ex)
             {
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Delete warehouse failed because " + ex.Message;
-                result.Username = Username;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Delete warehouse failed because: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -1259,22 +1503,28 @@ namespace iPOS.WCFService
                     if (temp != null)
                     {
                         result.StallList = Mapper.Map<List<PRO_tblStallDCO>>(temp);
-                        result.Result = true;
-                        result.Status = DCO.ResponseStatus.Success;
-                        result.Message = "";
-                        result.Username = Username;
-                        result.TotalItemCount = temp.Count;
+                        result.ResponseItem = new DCO.ResponseItem
+                        {
+                            Result = true,
+                            Status = DCO.ResponseStatus.Success,
+                            Message = "",
+                            RequestUser = Username,
+                            TotalItemCount = temp.Count
+                        };
                     }
                 }
             }
             catch (Exception ex)
             {
                 result.StallList = Mapper.Map<List<PRO_tblStallDCO>>(new List<PRO_tblStallDTO>());
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Load stall list failed: " + ex.Message;
-                result.Username = Username;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Load stall list failed: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -1293,22 +1543,28 @@ namespace iPOS.WCFService
                     if (temp != null)
                     {
                         result.StallItem = Mapper.Map<PRO_tblStallDCO>(temp);
-                        result.Result = true;
-                        result.Status = DCO.ResponseStatus.Success;
-                        result.Message = "";
-                        result.Username = Username;
-                        result.TotalItemCount = 1;
+                        result.ResponseItem = new DCO.ResponseItem
+                        {
+                            Result = true,
+                            Status = DCO.ResponseStatus.Success,
+                            Message = "",
+                            RequestUser = Username,
+                            TotalItemCount = 1
+                        };
                     }
                 }
             }
             catch (Exception ex)
             {
                 result.StallItem = Mapper.Map<PRO_tblStallDCO>(new PRO_tblStallDTO());
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Load stall item failed: " + ex.Message;
-                result.Username = Username;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Load stall item failed: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -1329,20 +1585,26 @@ namespace iPOS.WCFService
                         temp = db.InsertStall(data);
                     else temp = db.UpdateStall(data);
 
-                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
-                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
-                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
-                    result.Username = stall.UserID;
-                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                    result.ResponseItem = new DCO.ResponseItem
+                    {
+                        Result = string.IsNullOrEmpty(temp) ? true : false,
+                        Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure,
+                        Message = string.IsNullOrEmpty(temp) ? string.Empty : temp,
+                        RequestUser = stall.UserID,
+                        TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0
+                    };
                 }
             }
             catch (Exception ex)
             {
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Insert new stall failed because " + ex.Message;
-                result.Username = stall.UserID;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Insert new stall failed because: " + ex.Message,
+                    RequestUser = stall.UserID,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -1362,20 +1624,26 @@ namespace iPOS.WCFService
                         temp = db.DeleteStallList(StallIDList, Username, LanguageID);
                     else temp = db.DeleteStall(StallIDList, Username, LanguageID);
 
-                    result.Result = string.IsNullOrEmpty(temp) ? true : false;
-                    result.Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure;
-                    result.Message = string.IsNullOrEmpty(temp) ? string.Empty : temp;
-                    result.Username = Username;
-                    result.TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0;
+                    result.ResponseItem = new DCO.ResponseItem
+                    {
+                        Result = string.IsNullOrEmpty(temp) ? true : false,
+                        Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure,
+                        Message = string.IsNullOrEmpty(temp) ? string.Empty : temp,
+                        RequestUser = Username,
+                        TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0
+                    };
                 }
             }
             catch (Exception ex)
             {
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Delete stall failed because " + ex.Message;
-                result.Username = Username;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Delete stall failed because: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -1397,22 +1665,69 @@ namespace iPOS.WCFService
                     if (temp != null)
                     {
                         result.TableColumnObjectList = Mapper.Map<List<OBJ_TableColumnDCO>>(temp);
-                        result.Result = true;
-                        result.Status = DCO.ResponseStatus.Success;
-                        result.Message = "";
-                        result.Username = Username;
-                        result.TotalItemCount = temp.Count;
+                        result.ResponseItem = new DCO.ResponseItem
+                        {
+                            Result = true,
+                            Status = DCO.ResponseStatus.Success,
+                            Message = "",
+                            RequestUser = Username,
+                            TotalItemCount = temp.Count
+                        };
                     }
                 }
             }
             catch (Exception ex)
             {
                 result.TableColumnObjectList = Mapper.Map<List<OBJ_TableColumnDCO>>(new List<OBJ_TableColumnDTO>());
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Load data failed: " + ex.Message;
-                result.Username = Username;
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Load column list failed because: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public SYS_tblUserLevelDRO GetUserLevelList(string Username, string LanguageID)
+        {
+            SYS_tblUserLevelDRO result = new SYS_tblUserLevelDRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    List<SYS_tblUserLevelDTO> temp = new List<SYS_tblUserLevelDTO>();
+                    var db = scope.Resolve<ISYS_tblUserLevelDAO>();
+                    temp = db.LoadAllData(Username, LanguageID);
+                    if (temp != null)
+                    {
+                        result.UserLevelList = Mapper.Map<List<SYS_tblUserLevelDCO>>(temp);
+                        result.ResponseItem = new DCO.ResponseItem
+                        {
+                            Result = true,
+                            Status = DCO.ResponseStatus.Success,
+                            Message = "",
+                            RequestUser = Username,
+                            TotalItemCount = temp.Count
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.UserLevelList = Mapper.Map<List<SYS_tblUserLevelDCO>>(new List<SYS_tblUserLevelDTO>());
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Load user level list failed because: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 
@@ -1425,19 +1740,25 @@ namespace iPOS.WCFService
             try
             {
                 string tmp = FileEngine.CreateFile(file.Data, file.Type, file.Owner);
-                result.Result = true;
-                result.Status = DCO.ResponseStatus.Success;
-                result.Message = "Filename:" + tmp;
-                result.Username = "";
-                result.TotalItemCount = 1;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = true,
+                    Status = DCO.ResponseStatus.Success,
+                    Message = "Filename:" + tmp,
+                    RequestUser = "",
+                    TotalItemCount = 1
+                };
             }
             catch (Exception ex)
             {
-                result.Result = false;
-                result.Status = DCO.ResponseStatus.Exception;
-                result.Message = "Upload failed: " + ex.Message;
-                result.Username = "";
-                result.TotalItemCount = 0;
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Upload failed: " + ex.Message,
+                    RequestUser = "",
+                    TotalItemCount = 0
+                };
                 logger.Error(ex);
             }
 

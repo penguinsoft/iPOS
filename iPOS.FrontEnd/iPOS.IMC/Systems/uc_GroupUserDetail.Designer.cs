@@ -102,22 +102,22 @@
             this.locMain.Name = "locMain";
             this.locMain.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(859, 163, 250, 350);
             this.locMain.Root = this.logMain;
-            this.locMain.Size = new System.Drawing.Size(439, 251);
+            this.locMain.Size = new System.Drawing.Size(497, 268);
             this.locMain.TabIndex = 1;
             this.locMain.Text = "layoutControl1";
             // 
             // txtENName
             // 
-            this.txtENName.Location = new System.Drawing.Point(84, 81);
+            this.txtENName.Location = new System.Drawing.Point(84, 80);
             this.txtENName.Name = "txtENName";
-            this.txtENName.Size = new System.Drawing.Size(341, 20);
+            this.txtENName.Size = new System.Drawing.Size(399, 20);
             this.txtENName.StyleController = this.locMain;
             this.txtENName.TabIndex = 14;
             this.txtENName.EditValueChanged += new System.EventHandler(this.txtENName_EditValueChanged);
             // 
             // txtGroupID
             // 
-            this.txtGroupID.Location = new System.Drawing.Point(79, 227);
+            this.txtGroupID.Location = new System.Drawing.Point(79, 244);
             this.txtGroupID.Name = "txtGroupID";
             this.txtGroupID.Size = new System.Drawing.Size(50, 20);
             this.txtGroupID.StyleController = this.locMain;
@@ -126,9 +126,9 @@
             // btnSaveClose
             // 
             this.btnSaveClose.Image = global::iPOS.IMC.Properties.Resources.save_end_16;
-            this.btnSaveClose.Location = new System.Drawing.Point(133, 227);
+            this.btnSaveClose.Location = new System.Drawing.Point(133, 244);
             this.btnSaveClose.Name = "btnSaveClose";
-            this.btnSaveClose.Size = new System.Drawing.Size(100, 22);
+            this.btnSaveClose.Size = new System.Drawing.Size(120, 22);
             this.btnSaveClose.StyleController = this.locMain;
             this.btnSaveClose.TabIndex = 5;
             this.btnSaveClose.Text = "Lưu && Đóng";
@@ -137,9 +137,9 @@
             // btnSaveInsert
             // 
             this.btnSaveInsert.Image = global::iPOS.IMC.Properties.Resources.save_add_16;
-            this.btnSaveInsert.Location = new System.Drawing.Point(237, 227);
+            this.btnSaveInsert.Location = new System.Drawing.Point(257, 244);
             this.btnSaveInsert.Name = "btnSaveInsert";
-            this.btnSaveInsert.Size = new System.Drawing.Size(100, 22);
+            this.btnSaveInsert.Size = new System.Drawing.Size(120, 22);
             this.btnSaveInsert.StyleController = this.locMain;
             this.btnSaveInsert.TabIndex = 6;
             this.btnSaveInsert.Text = "Lưu && Thêm";
@@ -148,9 +148,9 @@
             // btnCancel
             // 
             this.btnCancel.Image = global::iPOS.IMC.Properties.Resources.cancel_16;
-            this.btnCancel.Location = new System.Drawing.Point(341, 227);
+            this.btnCancel.Location = new System.Drawing.Point(381, 244);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(96, 22);
+            this.btnCancel.Size = new System.Drawing.Size(114, 22);
             this.btnCancel.StyleController = this.locMain;
             this.btnCancel.TabIndex = 7;
             this.btnCancel.Text = "Hủy Bỏ";
@@ -159,38 +159,38 @@
             // chkActive
             // 
             this.chkActive.EditValue = true;
-            this.chkActive.Location = new System.Drawing.Point(273, 191);
+            this.chkActive.Location = new System.Drawing.Point(299, 208);
             this.chkActive.Name = "chkActive";
             this.chkActive.Properties.Caption = "Đang sử dụng?";
-            this.chkActive.Size = new System.Drawing.Size(152, 19);
+            this.chkActive.Size = new System.Drawing.Size(184, 19);
             this.chkActive.StyleController = this.locMain;
             this.chkActive.TabIndex = 4;
             // 
             // chkIsDefault
             // 
-            this.chkIsDefault.Location = new System.Drawing.Point(118, 191);
+            this.chkIsDefault.Location = new System.Drawing.Point(118, 208);
             this.chkIsDefault.Name = "chkIsDefault";
             this.chkIsDefault.Properties.Caption = "Nhóm mặc định?";
-            this.chkIsDefault.Size = new System.Drawing.Size(138, 19);
+            this.chkIsDefault.Size = new System.Drawing.Size(164, 19);
             this.chkIsDefault.StyleController = this.locMain;
             this.chkIsDefault.TabIndex = 3;
             // 
             // mmoNote
             // 
             this.mmoNote.EditValue = "";
-            this.mmoNote.Location = new System.Drawing.Point(84, 105);
+            this.mmoNote.Location = new System.Drawing.Point(84, 104);
             this.mmoNote.Name = "mmoNote";
-            this.mmoNote.Size = new System.Drawing.Size(341, 82);
+            this.mmoNote.Size = new System.Drawing.Size(399, 100);
             this.mmoNote.StyleController = this.locMain;
             this.mmoNote.TabIndex = 2;
             // 
             // txtVNName
             // 
             this.txtVNName.EnterMoveNextControl = true;
-            this.txtVNName.Location = new System.Drawing.Point(84, 57);
+            this.txtVNName.Location = new System.Drawing.Point(84, 56);
             this.txtVNName.Name = "txtVNName";
             this.txtVNName.Properties.MaxLength = 255;
-            this.txtVNName.Size = new System.Drawing.Size(341, 20);
+            this.txtVNName.Size = new System.Drawing.Size(399, 20);
             this.txtVNName.StyleController = this.locMain;
             this.txtVNName.TabIndex = 1;
             this.txtVNName.EditValueChanged += new System.EventHandler(this.txtVNName_EditValueChanged);
@@ -199,12 +199,12 @@
             // 
             this.txtGroupCode.EditValue = "";
             this.txtGroupCode.EnterMoveNextControl = true;
-            this.txtGroupCode.Location = new System.Drawing.Point(84, 33);
+            this.txtGroupCode.Location = new System.Drawing.Point(84, 32);
             this.txtGroupCode.Name = "txtGroupCode";
             this.txtGroupCode.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
             this.txtGroupCode.Properties.Appearance.Options.UseFont = true;
             this.txtGroupCode.Properties.MaxLength = 20;
-            this.txtGroupCode.Size = new System.Drawing.Size(341, 20);
+            this.txtGroupCode.Size = new System.Drawing.Size(399, 20);
             this.txtGroupCode.StyleController = this.locMain;
             this.txtGroupCode.TabIndex = 0;
             this.txtGroupCode.EditValueChanged += new System.EventHandler(this.txtGroupCode_EditValueChanged);
@@ -224,8 +224,7 @@
             this.logMain.Location = new System.Drawing.Point(0, 0);
             this.logMain.Name = "Root";
             this.logMain.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
-            this.logMain.Size = new System.Drawing.Size(439, 251);
-            this.logMain.Text = "Root";
+            this.logMain.Size = new System.Drawing.Size(497, 268);
             this.logMain.TextVisible = false;
             // 
             // logDetail
@@ -241,7 +240,7 @@
             this.emptySpaceItem1});
             this.logDetail.Location = new System.Drawing.Point(0, 0);
             this.logDetail.Name = "logDetail";
-            this.logDetail.Size = new System.Drawing.Size(439, 225);
+            this.logDetail.Size = new System.Drawing.Size(497, 242);
             this.logDetail.Text = "Thông Tin Nhóm Người Dùng";
             // 
             // lciGroupCode
@@ -250,7 +249,7 @@
             this.lciGroupCode.CustomizationFormText = "Mã nhóm:";
             this.lciGroupCode.Location = new System.Drawing.Point(0, 0);
             this.lciGroupCode.Name = "lciGroupCode";
-            this.lciGroupCode.Size = new System.Drawing.Size(415, 24);
+            this.lciGroupCode.Size = new System.Drawing.Size(473, 24);
             this.lciGroupCode.Text = "Mã nhóm:";
             this.lciGroupCode.TextSize = new System.Drawing.Size(67, 13);
             // 
@@ -260,7 +259,7 @@
             this.lciVNName.CustomizationFormText = "Tên nhóm:";
             this.lciVNName.Location = new System.Drawing.Point(0, 24);
             this.lciVNName.Name = "lciVNName";
-            this.lciVNName.Size = new System.Drawing.Size(415, 24);
+            this.lciVNName.Size = new System.Drawing.Size(473, 24);
             this.lciVNName.Text = "Tên nhóm VN:";
             this.lciVNName.TextSize = new System.Drawing.Size(67, 13);
             // 
@@ -272,7 +271,7 @@
             this.lciNote.CustomizationFormText = "Ghi chú:";
             this.lciNote.Location = new System.Drawing.Point(0, 72);
             this.lciNote.Name = "lciNote";
-            this.lciNote.Size = new System.Drawing.Size(415, 86);
+            this.lciNote.Size = new System.Drawing.Size(473, 104);
             this.lciNote.Text = "Ghi chú:";
             this.lciNote.TextSize = new System.Drawing.Size(67, 13);
             // 
@@ -280,25 +279,21 @@
             // 
             this.lciIsDefault.Control = this.chkIsDefault;
             this.lciIsDefault.CustomizationFormText = "lciIsDefault";
-            this.lciIsDefault.Location = new System.Drawing.Point(104, 158);
+            this.lciIsDefault.Location = new System.Drawing.Point(104, 176);
             this.lciIsDefault.Name = "lciIsDefault";
-            this.lciIsDefault.Size = new System.Drawing.Size(142, 24);
-            this.lciIsDefault.Text = "lciIsDefault";
+            this.lciIsDefault.Size = new System.Drawing.Size(168, 24);
             this.lciIsDefault.TextSize = new System.Drawing.Size(0, 0);
-            this.lciIsDefault.TextToControlDistance = 0;
             this.lciIsDefault.TextVisible = false;
             // 
             // lciActive
             // 
             this.lciActive.Control = this.chkActive;
             this.lciActive.CustomizationFormText = "lciActive";
-            this.lciActive.Location = new System.Drawing.Point(246, 158);
+            this.lciActive.Location = new System.Drawing.Point(272, 176);
             this.lciActive.Name = "lciActive";
             this.lciActive.Padding = new DevExpress.XtraLayout.Utils.Padding(15, 2, 2, 2);
-            this.lciActive.Size = new System.Drawing.Size(169, 24);
-            this.lciActive.Text = "lciActive";
+            this.lciActive.Size = new System.Drawing.Size(201, 24);
             this.lciActive.TextSize = new System.Drawing.Size(0, 0);
-            this.lciActive.TextToControlDistance = 0;
             this.lciActive.TextVisible = false;
             // 
             // lciENName
@@ -307,7 +302,7 @@
             this.lciENName.CustomizationFormText = "Tên nhóm EN:";
             this.lciENName.Location = new System.Drawing.Point(0, 48);
             this.lciENName.Name = "lciENName";
-            this.lciENName.Size = new System.Drawing.Size(415, 24);
+            this.lciENName.Size = new System.Drawing.Size(473, 24);
             this.lciENName.Text = "Tên nhóm EN:";
             this.lciENName.TextSize = new System.Drawing.Size(67, 13);
             // 
@@ -315,62 +310,54 @@
             // 
             this.emptySpaceItem1.AllowHotTrack = false;
             this.emptySpaceItem1.CustomizationFormText = "emptySpaceItem1";
-            this.emptySpaceItem1.Location = new System.Drawing.Point(0, 158);
+            this.emptySpaceItem1.Location = new System.Drawing.Point(0, 176);
             this.emptySpaceItem1.MaxSize = new System.Drawing.Size(104, 24);
             this.emptySpaceItem1.MinSize = new System.Drawing.Size(104, 24);
             this.emptySpaceItem1.Name = "emptySpaceItem1";
             this.emptySpaceItem1.Size = new System.Drawing.Size(104, 24);
             this.emptySpaceItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            this.emptySpaceItem1.Text = "emptySpaceItem1";
             this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
             // 
             // esiFirst
             // 
             this.esiFirst.AllowHotTrack = false;
             this.esiFirst.CustomizationFormText = "esiFirst";
-            this.esiFirst.Location = new System.Drawing.Point(0, 225);
+            this.esiFirst.Location = new System.Drawing.Point(0, 242);
             this.esiFirst.MaxSize = new System.Drawing.Size(77, 26);
             this.esiFirst.MinSize = new System.Drawing.Size(77, 26);
             this.esiFirst.Name = "esiFirst";
             this.esiFirst.Size = new System.Drawing.Size(77, 26);
             this.esiFirst.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            this.esiFirst.Text = "esiFirst";
             this.esiFirst.TextSize = new System.Drawing.Size(0, 0);
             // 
             // lciButtonCancel
             // 
             this.lciButtonCancel.Control = this.btnCancel;
             this.lciButtonCancel.CustomizationFormText = "lciButtonCancel";
-            this.lciButtonCancel.Location = new System.Drawing.Point(339, 225);
+            this.lciButtonCancel.Location = new System.Drawing.Point(379, 242);
             this.lciButtonCancel.Name = "lciButtonCancel";
-            this.lciButtonCancel.Size = new System.Drawing.Size(100, 26);
-            this.lciButtonCancel.Text = "lciButtonCancel";
+            this.lciButtonCancel.Size = new System.Drawing.Size(118, 26);
             this.lciButtonCancel.TextSize = new System.Drawing.Size(0, 0);
-            this.lciButtonCancel.TextToControlDistance = 0;
             this.lciButtonCancel.TextVisible = false;
             // 
             // lciButtonSaveInsert
             // 
             this.lciButtonSaveInsert.Control = this.btnSaveInsert;
             this.lciButtonSaveInsert.CustomizationFormText = "lciButtonSaveInsert";
-            this.lciButtonSaveInsert.Location = new System.Drawing.Point(235, 225);
+            this.lciButtonSaveInsert.Location = new System.Drawing.Point(255, 242);
             this.lciButtonSaveInsert.Name = "lciButtonSaveInsert";
-            this.lciButtonSaveInsert.Size = new System.Drawing.Size(104, 26);
-            this.lciButtonSaveInsert.Text = "lciButtonSaveInsert";
+            this.lciButtonSaveInsert.Size = new System.Drawing.Size(124, 26);
             this.lciButtonSaveInsert.TextSize = new System.Drawing.Size(0, 0);
-            this.lciButtonSaveInsert.TextToControlDistance = 0;
             this.lciButtonSaveInsert.TextVisible = false;
             // 
             // layoutControlItem5
             // 
             this.layoutControlItem5.Control = this.btnSaveClose;
             this.layoutControlItem5.CustomizationFormText = "layoutControlItem5";
-            this.layoutControlItem5.Location = new System.Drawing.Point(131, 225);
+            this.layoutControlItem5.Location = new System.Drawing.Point(131, 242);
             this.layoutControlItem5.Name = "layoutControlItem5";
-            this.layoutControlItem5.Size = new System.Drawing.Size(104, 26);
-            this.layoutControlItem5.Text = "layoutControlItem5";
+            this.layoutControlItem5.Size = new System.Drawing.Size(124, 26);
             this.layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem5.TextToControlDistance = 0;
             this.layoutControlItem5.TextVisible = false;
             // 
             // lciGroupID
@@ -378,15 +365,13 @@
             this.lciGroupID.ContentVisible = false;
             this.lciGroupID.Control = this.txtGroupID;
             this.lciGroupID.CustomizationFormText = "lciGroupID";
-            this.lciGroupID.Location = new System.Drawing.Point(77, 225);
+            this.lciGroupID.Location = new System.Drawing.Point(77, 242);
             this.lciGroupID.MaxSize = new System.Drawing.Size(54, 26);
             this.lciGroupID.MinSize = new System.Drawing.Size(54, 26);
             this.lciGroupID.Name = "lciGroupID";
             this.lciGroupID.Size = new System.Drawing.Size(54, 26);
             this.lciGroupID.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            this.lciGroupID.Text = "lciGroupID";
             this.lciGroupID.TextSize = new System.Drawing.Size(0, 0);
-            this.lciGroupID.TextToControlDistance = 0;
             this.lciGroupID.TextVisible = false;
             // 
             // uc_GroupUserDetail
@@ -396,7 +381,7 @@
             this.Controls.Add(this.locMain);
             this.DoubleBuffered = true;
             this.Name = "uc_GroupUserDetail";
-            this.Size = new System.Drawing.Size(439, 251);
+            this.Size = new System.Drawing.Size(497, 268);
             ((System.ComponentModel.ISupportInitialize)(this.depError)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.locMain)).EndInit();
             this.locMain.ResumeLayout(false);

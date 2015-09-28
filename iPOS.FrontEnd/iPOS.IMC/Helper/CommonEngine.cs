@@ -65,6 +65,12 @@ namespace iPOS.IMC.Helper
             return false;
         }
 
+        public static void ShowHTTPErrorMessage(string code, string name)
+        {
+            string title = LanguageEngine.GetMessageCaption("ERROR_TITLE_CAPTION", ConfigEngine.Language);
+            XtraMessageBox.Show(string.Format("Request error: {0}\n{1}", code, name), title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
         public static void OpenInputForm(XtraUserControl uc, Size size)
         {
             frmOpen frm = new frmOpen();
@@ -87,9 +93,19 @@ namespace iPOS.IMC.Helper
                 temp = (ConfigEngine.Language == "vi") ? "Cập Nhật" : "Update";
             else temp = (ConfigEngine.Language == "vi") ? "Thêm Mới" : "Add New";
             frm.Text = string.Format("{0} {1}", temp, LanguageEngine.GetOpenFormText(uc.Name, ConfigEngine.Language));
+
+            if (ConfigEngine.TouchMode)
+            {
+                int width = 0, height = 0;
+                string[] tmp = CaptionEngine.GetControlCaption(uc.Name, null, BaseConstant.FORM_SIZE, null).Split('|');
+                width = Convert.ToInt32(tmp[0]);
+                height = Convert.ToInt32(tmp[1]);
+                size = new Size(width, height);
+            }
             frm.Size = size;
             frm.MaximumSize = size;
             frm.MinimumSize = size;
+
             frm.Controls.Clear();
             uc.Dock = DockStyle.Fill;
             frm.Controls.Add(uc);
@@ -282,6 +298,49 @@ namespace iPOS.IMC.Helper
                 picture_edit.Image = Image.FromFile(ofd.FileName);
                 file_name = ofd.FileName;
             }
+        }
+
+        public async static void LoadUserPermission(string function_id, TextEdit txtID, SimpleButton btnSaveClose, SimpleButton btnSaveInsert)
+        {
+            iPOS.DRO.Systems.SYS_tblPermissionDRO permission = new iPOS.DRO.Systems.SYS_tblPermissionDRO();
+            permission = await iPOS.BUS.Systems.SYS_tblPermissionBUS.GetPermissionItem(CommonEngine.userInfo.UserID, ConfigEngine.Language, function_id);
+            if (permission.ResponseItem.IsError)
+            {
+                CommonEngine.ShowHTTPErrorMessage(permission.ResponseItem.ErrorCode, permission.ResponseItem.ErrorMessage);
+                btnSaveClose.Enabled = btnSaveInsert.Enabled = false;
+                return;
+            }
+            if (permission.PermissionItem != null)
+            {
+                if (string.IsNullOrEmpty(txtID.Text))
+                    btnSaveClose.Enabled = btnSaveInsert.Enabled = permission.PermissionItem.AllowInsert;
+                else
+                {
+                    btnSaveClose.Enabled = permission.PermissionItem.AllowUpdate;
+                    btnSaveInsert.Enabled = permission.PermissionItem.AllowInsert & permission.PermissionItem.AllowUpdate;
+                }
+            }
+            else btnSaveClose.Enabled = btnSaveInsert.Enabled = false;
+        }
+
+        public async static void LoadUserPermission(string function_id, BarLargeButtonItem btnDelete, BarLargeButtonItem btnPrint, BarLargeButtonItem btnImport, BarLargeButtonItem btnExport)
+        {
+            iPOS.DRO.Systems.SYS_tblPermissionDRO permission = new iPOS.DRO.Systems.SYS_tblPermissionDRO();
+            permission = await iPOS.BUS.Systems.SYS_tblPermissionBUS.GetPermissionItem(CommonEngine.userInfo.UserID, ConfigEngine.Language, function_id);
+            if (permission.ResponseItem.IsError)
+            {
+                CommonEngine.ShowHTTPErrorMessage(permission.ResponseItem.ErrorCode, permission.ResponseItem.ErrorMessage);
+                btnDelete.Enabled = btnPrint.Enabled = btnImport.Enabled = btnExport.Enabled = false;
+                return;
+            }
+            if (permission.PermissionItem != null)
+            {
+                btnDelete.Enabled = permission.PermissionItem.AllowDelete;
+                btnPrint.Enabled = permission.PermissionItem.AllowPrint;
+                btnImport.Enabled = permission.PermissionItem.AllowImport;
+                btnExport.Enabled = permission.PermissionItem.AllowExport;
+            }
+            else btnDelete.Enabled = btnPrint.Enabled = btnImport.Enabled = btnExport.Enabled = false;
         }
 
         [DllImport("Shlwapi.dll", CharSet = CharSet.Auto)]

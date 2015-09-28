@@ -10,6 +10,11 @@ namespace iPOS.DRO.Systems
         public List<SYS_tblUserDTO> UserList { get; set; }
 
         public SYS_tblUserDTO UserItem { get; set; }
+
+        public SYS_tblUserDRO()
+        {
+            ResponseItem = new ResponseItem();
+        }
     }
 
     [DataContract]

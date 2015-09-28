@@ -30,6 +30,10 @@ namespace iPOS.IMC
             }
             else
             {
+                DevExpress.XtraEditors.WindowsFormsSettings.TouchUIMode = (ConfigEngine.TouchMode) ? DevExpress.LookAndFeel.TouchUIMode.True : TouchUIMode.False;
+                if (ConfigEngine.TouchMode)
+                    DevExpress.Utils.AppearanceObject.DefaultFont = new System.Drawing.Font("Tahoma", 10);
+
                 frmLogin frm = new frmLogin(ConfigEngine.Language);
                 if (frm.ShowDialog() == DialogResult.OK)
                     Application.Run(new frmMain(ConfigEngine.Language));

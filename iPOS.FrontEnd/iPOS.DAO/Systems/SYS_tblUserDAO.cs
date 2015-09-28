@@ -9,17 +9,27 @@ namespace iPOS.DAO.Systems
 {
     public class SYS_tblUserDAO : BaseDAO
     {
-        public async static Task<SYS_tblUserDTO> CheckLogin(string url)
+        public async static Task<SYS_tblUserDRO> CheckLogin(string url)
         {
-            SYS_tblUserDTO result = new SYS_tblUserDTO();
+            SYS_tblUserDRO result = new SYS_tblUserDRO();
             try
             {
                 var response_data = await HttpGet(url);
-                var response_collection = JsonConvert.DeserializeObject<SYS_tblUserDRO>(response_data + "");
-
-                if (response_collection != null)
+                if (response_data.ToLower().StartsWith("error"))
                 {
-                    result = response_collection.UserItem;
+                    result.ResponseItem.IsError = true;
+                    string[] tmp = response_data.Split('|');
+                    result.ResponseItem.ErrorCode = tmp[1];
+                    result.ResponseItem.ErrorMessage = tmp[2];
+                }
+                else
+                {
+                    var response_collection = JsonConvert.DeserializeObject<SYS_tblUserDRO>(response_data + "");
+
+                    if (response_collection != null)
+                    {
+                        result.UserItem = response_collection.UserItem;
+                    }
                 }
 
                 return result;
@@ -31,15 +41,30 @@ namespace iPOS.DAO.Systems
             return null;
         }
 
-        public async static Task<List<SYS_tblUserDTO>> GetAllUsers(string url)
+        public async static Task<SYS_tblUserDRO> GetAllUsers(string url)
         {
+            SYS_tblUserDRO result = new SYS_tblUserDRO();
             try
             {
                 var response_data = await HttpGet(url);
-                var response_collection = JsonConvert.DeserializeObject<SYS_tblUserDRO>(response_data + "");
+                if (response_data.ToLower().StartsWith("error"))
+                {
+                    result.ResponseItem.IsError = true;
+                    string[] tmp = response_data.Split('|');
+                    result.ResponseItem.ErrorCode = tmp[1];
+                    result.ResponseItem.ErrorMessage = tmp[2];
+                }
+                else
+                {
+                    var response_collection = JsonConvert.DeserializeObject<SYS_tblUserDRO>(response_data + "");
 
-                if (response_collection != null)
-                    return response_collection.UserList;
+                    if (response_collection != null)
+                    {
+                        result.UserList = response_collection.UserList;
+                    }
+                }
+
+                return result;
             }
             catch (Exception ex)
             {
@@ -49,15 +74,30 @@ namespace iPOS.DAO.Systems
             return null;
         }
 
-        public async static Task<SYS_tblUserDTO> GetUserItem(string url)
+        public async static Task<SYS_tblUserDRO> GetUserItem(string url)
         {
+            SYS_tblUserDRO result = new SYS_tblUserDRO();
             try
             {
                 var response_data = await HttpGet(url);
-                var response_collection = JsonConvert.DeserializeObject<SYS_tblUserDRO>(response_data + "");
+                if (response_data.ToLower().StartsWith("error"))
+                {
+                    result.ResponseItem.IsError = true;
+                    string[] tmp = response_data.Split('|');
+                    result.ResponseItem.ErrorCode = tmp[1];
+                    result.ResponseItem.ErrorMessage = tmp[2];
+                }
+                else
+                {
+                    var response_collection = JsonConvert.DeserializeObject<SYS_tblUserDRO>(response_data + "");
 
-                if (response_collection != null)
-                    return response_collection.UserItem;
+                    if (response_collection != null)
+                    {
+                        result.UserItem = response_collection.UserItem;
+                    }
+                }
+
+                return result;
             }
             catch (Exception ex)
             {
@@ -67,61 +107,103 @@ namespace iPOS.DAO.Systems
             return null;
         }
 
-        public async static Task<string> InsertUpdateUser(string url, string json_data)
+        public async static Task<SYS_tblUserDRO> InsertUpdateUser(string url, string json_data)
         {
+            SYS_tblUserDRO result = new SYS_tblUserDRO();
             try
             {
                 var response_data = await HttpPost(url, json_data);
-                var response_collection = JsonConvert.DeserializeObject<SYS_tblUserDRO>(response_data + "");
+                if (response_data.ToLower().StartsWith("error"))
+                {
+                    result.ResponseItem.IsError = true;
+                    string[] tmp = response_data.Split('|');
+                    result.ResponseItem.ErrorCode = tmp[1];
+                    result.ResponseItem.ErrorMessage = tmp[2];
+                }
+                else
+                {
+                    var response_collection = JsonConvert.DeserializeObject<SYS_tblUserDRO>(response_data + "");
 
-                if (response_collection != null)
-                    return response_collection.Message;
+                    if (response_collection != null)
+                    {
+                        result.ResponseItem.Message = response_collection.ResponseItem.Message;
+                    }
+                }
+
+                return result;
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
-                return ex.Message;
             }
 
-            return "";
+            return null;
         }
 
-        public async static Task<string> DeleteUser(string url)
+        public async static Task<SYS_tblUserDRO> DeleteUser(string url)
         {
+            SYS_tblUserDRO result = new SYS_tblUserDRO();
             try
             {
                 var response_data = await HttpGet(url);
-                var response_collection = JsonConvert.DeserializeObject<SYS_tblUserDRO>(response_data + "");
+                if (response_data.ToLower().StartsWith("error"))
+                {
+                    result.ResponseItem.IsError = true;
+                    string[] tmp = response_data.Split('|');
+                    result.ResponseItem.ErrorCode = tmp[1];
+                    result.ResponseItem.ErrorMessage = tmp[2];
+                }
+                else
+                {
+                    var response_collection = JsonConvert.DeserializeObject<SYS_tblUserDRO>(response_data + "");
 
-                if (response_collection != null)
-                    return response_collection.Message;
+                    if (response_collection != null)
+                    {
+                        result.ResponseItem.Message = response_collection.ResponseItem.Message;
+                    }
+                }
+
+                return result;
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
-                return ex.Message;
             }
 
-            return "";
+            return null;
         }
 
-        public async static Task<string> ChangeUserPassword(string url)
+        public async static Task<SYS_tblUserDRO> ChangeUserPassword(string url)
         {
+            SYS_tblUserDRO result = new SYS_tblUserDRO();
             try
             {
                 var response_data = await HttpGet(url);
-                var response_collection = JsonConvert.DeserializeObject<SYS_tblUserDRO>(response_data + "");
+                if (response_data.ToLower().StartsWith("error"))
+                {
+                    result.ResponseItem.IsError = true;
+                    string[] tmp = response_data.Split('|');
+                    result.ResponseItem.ErrorCode = tmp[1];
+                    result.ResponseItem.ErrorMessage = tmp[2];
+                }
+                else
+                {
+                    var response_collection = JsonConvert.DeserializeObject<SYS_tblUserDRO>(response_data + "");
 
-                if (response_collection != null)
-                    return response_collection.Message;
+                    if (response_collection != null)
+                    {
+                        result.ResponseItem.Message = response_collection.ResponseItem.Message;
+                    }
+                }
+
+                return result;
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
-                return ex.Message;
             }
 
-            return "";
+            return null;
         }
     }
 }

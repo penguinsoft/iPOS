@@ -55,6 +55,7 @@
     <Compile Include="Systems\SYS_tblPermissionDTO.cs" />
     <Compile Include="Systems\SYS_tblReportCaptionDTO.cs" />
     <Compile Include="Systems\SYS_tblUserDTO.cs" />
+    <Compile Include="Systems\SYS_tblUserLevelDTO.cs" />
     <Compile Include="Tools\OBJ_TableColumnDTO.cs" />
   </ItemGroup>
   <ItemGroup />

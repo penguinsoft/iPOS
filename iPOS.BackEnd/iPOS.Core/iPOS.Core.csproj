@@ -30,8 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.ServiceModel.Web">
-      <HintPath>..\iPOS.WCFService\bin\Microsoft.ServiceModel.Web.dll</HintPath>
+    <Reference Include="Microsoft.ServiceModel.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ServiceModel.Web.1.0.1\lib\net35\Microsoft.ServiceModel.Web.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -65,7 +66,9 @@
     <Compile Include="SQLServer\SQLDatabase.cs" />
     <Compile Include="SQLServer\SQLEngine.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

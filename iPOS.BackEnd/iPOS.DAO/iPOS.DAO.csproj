@@ -58,6 +58,7 @@
     <Compile Include="Systems\SYS_tblPermissionDAO.cs" />
     <Compile Include="Systems\SYS_tblReportCaptionDAO.cs" />
     <Compile Include="Systems\SYS_tblUserDAO.cs" />
+    <Compile Include="Systems\SYS_tblUserLevelDAO.cs" />
     <Compile Include="Tools\OBJ_TableColumnDAO.cs" />
   </ItemGroup>
   <ItemGroup>

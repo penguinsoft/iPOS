@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(uc_UserPermission));
+            this.cboUserLevel = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
             this.barMain = new DevExpress.XtraBars.BarManager(this.components);
             this.barTop = new DevExpress.XtraBars.Bar();
             this.btnSave = new DevExpress.XtraBars.BarLargeButtonItem();
@@ -39,7 +40,10 @@
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
-            this.sccMain = new DevExpress.XtraEditors.SplitContainerControl();
+            this.docMain = new DevExpress.XtraBars.Docking.DockManager(this.components);
+            this.hideContainerLeft = new DevExpress.XtraBars.Docking.AutoHideContainer();
+            this.dplLeft = new DevExpress.XtraBars.Docking.DockPanel();
+            this.dockPanel1_Container = new DevExpress.XtraBars.Docking.ControlContainer();
             this.trlUser = new DevExpress.XtraTreeList.TreeList();
             this.tlcName = new DevExpress.XtraTreeList.Columns.TreeListColumn();
             this.tlcCode = new DevExpress.XtraTreeList.Columns.TreeListColumn();
@@ -62,8 +66,11 @@
             this.chkAllowImport = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
             this.tlcAllowExport = new DevExpress.XtraTreeList.Columns.TreeListColumn();
             this.chkAllowExport = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
-            this.tlcUserLevelID = new DevExpress.XtraTreeList.Columns.TreeListColumn();
-            this.cboUserLevel = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
+            this.tlcUserLevel = new DevExpress.XtraTreeList.Columns.TreeListColumn();
+            this.gluUserLevel = new DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit();
+            this.grvUserLevel = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gcolUserLevelName = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gcolUserLevelID = new DevExpress.XtraGrid.Columns.GridColumn();
             this.tlcNote = new DevExpress.XtraTreeList.Columns.TreeListColumn();
             this.txtNote = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
             this.tlcID = new DevExpress.XtraTreeList.Columns.TreeListColumn();
@@ -72,9 +79,13 @@
             this.tlcCreateTime = new DevExpress.XtraTreeList.Columns.TreeListColumn();
             this.tlcEditer = new DevExpress.XtraTreeList.Columns.TreeListColumn();
             this.tlcEditTime = new DevExpress.XtraTreeList.Columns.TreeListColumn();
+            this.grpMain = new DevExpress.XtraEditors.GroupControl();
+            ((System.ComponentModel.ISupportInitialize)(this.cboUserLevel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barMain)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sccMain)).BeginInit();
-            this.sccMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.docMain)).BeginInit();
+            this.hideContainerLeft.SuspendLayout();
+            this.dplLeft.SuspendLayout();
+            this.dockPanel1_Container.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trlUser)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imcGroupUser)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trlPermission)).BeginInit();
@@ -86,9 +97,19 @@
             ((System.ComponentModel.ISupportInitialize)(this.chkAllowPrint)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkAllowImport)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkAllowExport)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cboUserLevel)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gluUserLevel)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grvUserLevel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtNote)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grpMain)).BeginInit();
+            this.grpMain.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // cboUserLevel
+            // 
+            this.cboUserLevel.AutoHeight = false;
+            this.cboUserLevel.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cboUserLevel.Name = "cboUserLevel";
             // 
             // barMain
             // 
@@ -99,6 +120,7 @@
             this.barMain.DockControls.Add(this.barDockControlBottom);
             this.barMain.DockControls.Add(this.barDockControlLeft);
             this.barMain.DockControls.Add(this.barDockControlRight);
+            this.barMain.DockManager = this.docMain;
             this.barMain.Form = this;
             this.barMain.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.btnSave,
@@ -157,7 +179,7 @@
             this.barDockControlTop.CausesValidation = false;
             this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
-            this.barDockControlTop.Size = new System.Drawing.Size(1318, 42);
+            this.barDockControlTop.Size = new System.Drawing.Size(1318, 40);
             // 
             // barDockControlBottom
             // 
@@ -170,41 +192,64 @@
             // 
             this.barDockControlLeft.CausesValidation = false;
             this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
-            this.barDockControlLeft.Location = new System.Drawing.Point(0, 42);
-            this.barDockControlLeft.Size = new System.Drawing.Size(0, 453);
+            this.barDockControlLeft.Location = new System.Drawing.Point(0, 40);
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 455);
             // 
             // barDockControlRight
             // 
             this.barDockControlRight.CausesValidation = false;
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControlRight.Location = new System.Drawing.Point(1318, 42);
-            this.barDockControlRight.Size = new System.Drawing.Size(0, 453);
+            this.barDockControlRight.Location = new System.Drawing.Point(1318, 40);
+            this.barDockControlRight.Size = new System.Drawing.Size(0, 455);
             // 
-            // sccMain
+            // docMain
             // 
-            this.sccMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sccMain.Location = new System.Drawing.Point(0, 42);
-            this.sccMain.Name = "sccMain";
-            this.sccMain.Panel1.AppearanceCaption.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.sccMain.Panel1.AppearanceCaption.Options.UseFont = true;
-            this.sccMain.Panel1.AutoScroll = true;
-            this.sccMain.Panel1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Default;
-            this.sccMain.Panel1.Controls.Add(this.trlUser);
-            this.sccMain.Panel1.MinSize = 250;
-            this.sccMain.Panel1.ShowCaption = true;
-            this.sccMain.Panel1.Text = "Danh Sách Người Dùng";
-            this.sccMain.Panel2.AppearanceCaption.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.sccMain.Panel2.AppearanceCaption.Options.UseFont = true;
-            this.sccMain.Panel2.AutoScroll = true;
-            this.sccMain.Panel2.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Default;
-            this.sccMain.Panel2.Controls.Add(this.trlPermission);
-            this.sccMain.Panel2.MinSize = 500;
-            this.sccMain.Panel2.ShowCaption = true;
-            this.sccMain.Panel2.Text = "Thông Tin Phân Quyền Dữ Liệu";
-            this.sccMain.Size = new System.Drawing.Size(1318, 453);
-            this.sccMain.SplitterPosition = 281;
-            this.sccMain.TabIndex = 4;
-            this.sccMain.Text = "splitContainerControl1";
+            this.docMain.AutoHideContainers.AddRange(new DevExpress.XtraBars.Docking.AutoHideContainer[] {
+            this.hideContainerLeft});
+            this.docMain.Form = this;
+            this.docMain.MenuManager = this.barMain;
+            this.docMain.TopZIndexControls.AddRange(new string[] {
+            "DevExpress.XtraBars.BarDockControl",
+            "DevExpress.XtraBars.StandaloneBarDockControl",
+            "System.Windows.Forms.StatusBar",
+            "System.Windows.Forms.MenuStrip",
+            "System.Windows.Forms.StatusStrip",
+            "DevExpress.XtraBars.Ribbon.RibbonStatusBar",
+            "DevExpress.XtraBars.Ribbon.RibbonControl",
+            "DevExpress.XtraBars.Navigation.OfficeNavigationBar",
+            "DevExpress.XtraBars.Navigation.TileNavPane"});
+            // 
+            // hideContainerLeft
+            // 
+            this.hideContainerLeft.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(239)))));
+            this.hideContainerLeft.Controls.Add(this.dplLeft);
+            this.hideContainerLeft.Dock = System.Windows.Forms.DockStyle.Left;
+            this.hideContainerLeft.Location = new System.Drawing.Point(0, 40);
+            this.hideContainerLeft.Name = "hideContainerLeft";
+            this.hideContainerLeft.Size = new System.Drawing.Size(19, 455);
+            // 
+            // dplLeft
+            // 
+            this.dplLeft.Controls.Add(this.dockPanel1_Container);
+            this.dplLeft.Dock = DevExpress.XtraBars.Docking.DockingStyle.Left;
+            this.dplLeft.ID = new System.Guid("124529c9-6cfd-4a52-90a8-00836d063d84");
+            this.dplLeft.Location = new System.Drawing.Point(-233, 0);
+            this.dplLeft.Name = "dplLeft";
+            this.dplLeft.Options.ShowCloseButton = false;
+            this.dplLeft.OriginalSize = new System.Drawing.Size(233, 200);
+            this.dplLeft.SavedDock = DevExpress.XtraBars.Docking.DockingStyle.Left;
+            this.dplLeft.SavedIndex = 0;
+            this.dplLeft.Size = new System.Drawing.Size(233, 455);
+            this.dplLeft.Text = "Danh Sách Người Dùng";
+            this.dplLeft.Visibility = DevExpress.XtraBars.Docking.DockVisibility.AutoHide;
+            // 
+            // dockPanel1_Container
+            // 
+            this.dockPanel1_Container.Controls.Add(this.trlUser);
+            this.dockPanel1_Container.Location = new System.Drawing.Point(4, 23);
+            this.dockPanel1_Container.Name = "dockPanel1_Container";
+            this.dockPanel1_Container.Size = new System.Drawing.Size(225, 428);
+            this.dockPanel1_Container.TabIndex = 0;
             // 
             // trlUser
             // 
@@ -228,8 +273,8 @@
             this.trlUser.OptionsView.ShowColumns = false;
             this.trlUser.OptionsView.ShowHorzLines = false;
             this.trlUser.SelectImageList = this.imcGroupUser;
-            this.trlUser.Size = new System.Drawing.Size(277, 430);
-            this.trlUser.TabIndex = 0;
+            this.trlUser.Size = new System.Drawing.Size(225, 428);
+            this.trlUser.TabIndex = 9;
             this.trlUser.FocusedNodeChanged += new DevExpress.XtraTreeList.FocusedNodeChangedEventHandler(this.trlUser_FocusedNodeChanged);
             // 
             // tlcName
@@ -267,7 +312,7 @@
             this.tlcAllowPrint,
             this.tlcAllowImport,
             this.tlcAllowExport,
-            this.tlcUserLevelID,
+            this.tlcUserLevel,
             this.tlcNote,
             this.tlcID,
             this.tlcFunctionID,
@@ -276,7 +321,7 @@
             this.tlcEditer,
             this.tlcEditTime});
             this.trlPermission.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.trlPermission.Location = new System.Drawing.Point(0, 0);
+            this.trlPermission.Location = new System.Drawing.Point(2, 20);
             this.trlPermission.Name = "trlPermission";
             this.trlPermission.OptionsBehavior.PopulateServiceColumns = true;
             this.trlPermission.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
@@ -288,10 +333,10 @@
             this.chkAllowPrint,
             this.chkAllowImport,
             this.chkAllowExport,
-            this.cboUserLevel,
-            this.txtNote});
-            this.trlPermission.Size = new System.Drawing.Size(1028, 430);
-            this.trlPermission.TabIndex = 0;
+            this.txtNote,
+            this.gluUserLevel});
+            this.trlPermission.Size = new System.Drawing.Size(1295, 433);
+            this.trlPermission.TabIndex = 10;
             // 
             // tlcFunctionName
             // 
@@ -439,22 +484,51 @@
             this.chkAllowExport.AutoHeight = false;
             this.chkAllowExport.Name = "chkAllowExport";
             // 
-            // tlcUserLevelID
+            // tlcUserLevel
             // 
-            this.tlcUserLevelID.Caption = "Cấp độ quyền";
-            this.tlcUserLevelID.ColumnEdit = this.cboUserLevel;
-            this.tlcUserLevelID.FieldName = "Cấp độ quyền";
-            this.tlcUserLevelID.Name = "tlcUserLevelID";
-            this.tlcUserLevelID.Visible = true;
-            this.tlcUserLevelID.VisibleIndex = 9;
-            this.tlcUserLevelID.Width = 90;
+            this.tlcUserLevel.Caption = "Cấp độ quyền";
+            this.tlcUserLevel.ColumnEdit = this.gluUserLevel;
+            this.tlcUserLevel.FieldName = "Cấp độ quyền";
+            this.tlcUserLevel.Name = "tlcUserLevel";
+            this.tlcUserLevel.Visible = true;
+            this.tlcUserLevel.VisibleIndex = 9;
+            this.tlcUserLevel.Width = 90;
             // 
-            // cboUserLevel
+            // gluUserLevel
             // 
-            this.cboUserLevel.AutoHeight = false;
-            this.cboUserLevel.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            this.gluUserLevel.AutoHeight = false;
+            this.gluUserLevel.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.cboUserLevel.Name = "cboUserLevel";
+            this.gluUserLevel.Name = "gluUserLevel";
+            this.gluUserLevel.View = this.grvUserLevel;
+            // 
+            // grvUserLevel
+            // 
+            this.grvUserLevel.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gcolUserLevelName,
+            this.gcolUserLevelID});
+            this.grvUserLevel.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.grvUserLevel.Name = "grvUserLevel";
+            this.grvUserLevel.OptionsBehavior.Editable = false;
+            this.grvUserLevel.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.grvUserLevel.OptionsView.ShowAutoFilterRow = true;
+            this.grvUserLevel.OptionsView.ShowGroupPanel = false;
+            // 
+            // gcolUserLevelName
+            // 
+            this.gcolUserLevelName.Caption = "Cấp phân quyền";
+            this.gcolUserLevelName.FieldName = "UserLevelName";
+            this.gcolUserLevelName.Name = "gcolUserLevelName";
+            this.gcolUserLevelName.Visible = true;
+            this.gcolUserLevelName.VisibleIndex = 0;
+            this.gcolUserLevelName.Width = 298;
+            // 
+            // gcolUserLevelID
+            // 
+            this.gcolUserLevelID.Caption = "UserLevelID";
+            this.gcolUserLevelID.FieldName = "UserLevelID";
+            this.gcolUserLevelID.Name = "gcolUserLevelID";
+            this.gcolUserLevelID.Width = 712;
             // 
             // tlcNote
             // 
@@ -507,20 +581,34 @@
             this.tlcEditTime.FieldName = "EditTime";
             this.tlcEditTime.Name = "tlcEditTime";
             // 
+            // grpMain
+            // 
+            this.grpMain.Controls.Add(this.trlPermission);
+            this.grpMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grpMain.Location = new System.Drawing.Point(19, 40);
+            this.grpMain.Name = "grpMain";
+            this.grpMain.Size = new System.Drawing.Size(1299, 455);
+            this.grpMain.TabIndex = 12;
+            this.grpMain.Text = "groupControl1";
+            // 
             // uc_UserPermission
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.sccMain);
+            this.Controls.Add(this.grpMain);
+            this.Controls.Add(this.hideContainerLeft);
             this.Controls.Add(this.barDockControlLeft);
             this.Controls.Add(this.barDockControlRight);
             this.Controls.Add(this.barDockControlBottom);
             this.Controls.Add(this.barDockControlTop);
             this.Name = "uc_UserPermission";
             this.Size = new System.Drawing.Size(1318, 518);
+            ((System.ComponentModel.ISupportInitialize)(this.cboUserLevel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barMain)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sccMain)).EndInit();
-            this.sccMain.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.docMain)).EndInit();
+            this.hideContainerLeft.ResumeLayout(false);
+            this.dplLeft.ResumeLayout(false);
+            this.dockPanel1_Container.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.trlUser)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imcGroupUser)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trlPermission)).EndInit();
@@ -532,9 +620,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.chkAllowPrint)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkAllowImport)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkAllowExport)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cboUserLevel)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gluUserLevel)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grvUserLevel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtNote)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grpMain)).EndInit();
+            this.grpMain.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -549,9 +641,10 @@
         private DevExpress.XtraBars.BarDockControl barDockControlRight;
         private DevExpress.XtraBars.BarLargeButtonItem btnSave;
         private DevExpress.XtraBars.BarLargeButtonItem btnClose;
-        private DevExpress.XtraEditors.SplitContainerControl sccMain;
-        private DevExpress.XtraTreeList.TreeList trlUser;
         private DevExpress.Utils.ImageCollection imcGroupUser;
+        private DevExpress.XtraTreeList.TreeList trlUser;
+        private DevExpress.XtraTreeList.Columns.TreeListColumn tlcName;
+        private DevExpress.XtraTreeList.Columns.TreeListColumn tlcCode;
         private DevExpress.XtraTreeList.TreeList trlPermission;
         private DevExpress.XtraTreeList.Columns.TreeListColumn tlcFunctionName;
         private DevExpress.XtraTreeList.Columns.TreeListColumn tlcAllowAll;
@@ -570,17 +663,24 @@
         private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit chkAllowImport;
         private DevExpress.XtraTreeList.Columns.TreeListColumn tlcAllowExport;
         private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit chkAllowExport;
-        private DevExpress.XtraTreeList.Columns.TreeListColumn tlcUserLevelID;
-        private DevExpress.XtraEditors.Repository.RepositoryItemComboBox cboUserLevel;
+        private DevExpress.XtraTreeList.Columns.TreeListColumn tlcUserLevel;
         private DevExpress.XtraTreeList.Columns.TreeListColumn tlcNote;
         private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit txtNote;
         private DevExpress.XtraTreeList.Columns.TreeListColumn tlcID;
         private DevExpress.XtraTreeList.Columns.TreeListColumn tlcFunctionID;
-        private DevExpress.XtraTreeList.Columns.TreeListColumn tlcName;
-        private DevExpress.XtraTreeList.Columns.TreeListColumn tlcCode;
         private DevExpress.XtraTreeList.Columns.TreeListColumn tlcCreater;
         private DevExpress.XtraTreeList.Columns.TreeListColumn tlcCreateTime;
         private DevExpress.XtraTreeList.Columns.TreeListColumn tlcEditer;
         private DevExpress.XtraTreeList.Columns.TreeListColumn tlcEditTime;
+        private DevExpress.XtraBars.Docking.DockManager docMain;
+        private DevExpress.XtraBars.Docking.DockPanel dplLeft;
+        private DevExpress.XtraBars.Docking.ControlContainer dockPanel1_Container;
+        private DevExpress.XtraEditors.GroupControl grpMain;
+        private DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit gluUserLevel;
+        private DevExpress.XtraGrid.Views.Grid.GridView grvUserLevel;
+        private DevExpress.XtraGrid.Columns.GridColumn gcolUserLevelName;
+        private DevExpress.XtraGrid.Columns.GridColumn gcolUserLevelID;
+        private DevExpress.XtraEditors.Repository.RepositoryItemComboBox cboUserLevel;
+        private DevExpress.XtraBars.Docking.AutoHideContainer hideContainerLeft;
     }
 }

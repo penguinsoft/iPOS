@@ -7,6 +7,7 @@ using iPOS.DRO.Systems;
 using iPOS.DTO.Systems;
 using Newtonsoft.Json;
 using iPOS.Core.Helper;
+using System.Collections.Generic;
 
 namespace iPOS.DAO
 {
@@ -26,7 +27,7 @@ namespace iPOS.DAO
                     using (HttpResponseMessage response = await client.GetAsync(url))
                     using (HttpContent content = response.Content)
                     {
-                        result = MessageEngine.GetHTTPStatusCodes(response.StatusCode);
+                        result = MessageEngine.GetHTTPStatusCodes(response.StatusCode.ToString(), ConfigEngine.Language);
                         if (string.IsNullOrEmpty(result))
                             result = await content.ReadAsStringAsync();
                     }
@@ -34,6 +35,8 @@ namespace iPOS.DAO
             }
             catch (Exception ex)
             {
+                if (ex.InnerException.Message.ToLower().Contains("unable to connect to the remote server"))
+                    logger.Error(ex);
                 logger.Error(ex);
             }
 

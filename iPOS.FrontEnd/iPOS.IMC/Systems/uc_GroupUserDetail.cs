@@ -12,6 +12,7 @@ using iPOS.IMC.Helper;
 using iPOS.DTO.Systems;
 using iPOS.BUS.Systems;
 using System.Threading.Tasks;
+using iPOS.DRO.Systems;
 
 namespace iPOS.IMC.Systems
 {
@@ -83,14 +84,14 @@ namespace iPOS.IMC.Systems
                 this.ParentForm.Text = LanguageEngine.GetOpenFormText(this.Name, ConfigEngine.Language, false);
                 txtGroupCode.Focus();
             }
+            CommonEngine.LoadUserPermission("9", txtGroupID, btnSaveClose, btnSaveInsert);
         }
 
         private async Task<bool> SaveGroupUser(bool isEdit)
         {
-            string strErr = "";
             try
             {
-                SYS_tblGroupUserDTO item = new SYS_tblGroupUserDTO
+                SYS_tblGroupUserDRO result = await SYS_tblGroupUserBUS.InsertUpdateGroupUser(new SYS_tblGroupUserDTO
                 {
                     GroupID = txtGroupID.Text,
                     GroupCode = txtGroupCode.Text,
@@ -102,8 +103,7 @@ namespace iPOS.IMC.Systems
                     Activity = (isEdit) ? BaseConstant.UPDATE_COMMAND : BaseConstant.INSERT_COMMAND,
                     UserID = CommonEngine.userInfo.UserID,
                     LanguageID = ConfigEngine.Language
-                };
-                strErr = await SYS_tblGroupUserBUS.InsertUpdateGroupUser(item, new SYS_tblActionLogDTO
+                }, new SYS_tblActionLogDTO
                 {
                     Activity = BaseConstant.COMMAND_INSERT_EN,
                     UserID = CommonEngine.userInfo.UserID,
@@ -114,9 +114,9 @@ namespace iPOS.IMC.Systems
                     DescriptionVN = string.Format("Tài khoản '{0}' vừa thêm mới thành công nhóm người dùng có mã '{1}'.", CommonEngine.userInfo.UserID, txtGroupCode.Text),
                     DescriptionEN = string.Format("Account '{0}' has inserted new group user successfully with group code is '{1}'.", CommonEngine.userInfo.UserID, txtGroupCode.Text)
                 });
-                if (!string.IsNullOrEmpty(strErr))
+                if (!string.IsNullOrEmpty(result.ResponseItem.Message))
                 {
-                    CommonEngine.ShowMessage(strErr, 0);
+                    CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
                     txtGroupCode.Focus();
                     return false;
                 }
@@ -142,6 +142,7 @@ namespace iPOS.IMC.Systems
         {
             InitializeComponent();
             Initialize();
+            CommonEngine.LoadUserPermission("9", txtGroupID, btnSaveClose, btnSaveInsert);
             parent_form = _parent_form;
 
             if (item != null)

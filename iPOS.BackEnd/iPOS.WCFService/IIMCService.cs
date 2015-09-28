@@ -106,6 +106,11 @@ namespace iPOS.WCFService
         SYS_tblPermissionDRO GetPermissionList(string Username, string LanguageID, string ID, string ParentID, bool IsUser);
 
         [OperationContract]
+        [WebInvoke(Method = "GET", UriTemplate = "/GetPermissionItem?Username={Username}&LanguageID={LanguageID}&FunctionID={FunctionID}",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        SYS_tblPermissionDRO GetPermissionItem(string Username, string LanguageID, string FunctionID);
+
+        [OperationContract]
         [WebInvoke(Method = "POST", UriTemplate = "/UpdatePermission",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
                 BodyStyle = WebMessageBodyStyle.WrappedRequest)]
@@ -238,6 +243,11 @@ namespace iPOS.WCFService
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
                 BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         iPOS.DCO.BaseDRO FileUpload(OBJ_FileDCO file);
+
+        [OperationContract]
+        [WebInvoke(Method = "GET", UriTemplate = "/GetUserLevelList?Username={Username}&LanguageID={LanguageID}",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        SYS_tblUserLevelDRO GetUserLevelList(string Username, string LanguageID);
         #endregion
     }
 }

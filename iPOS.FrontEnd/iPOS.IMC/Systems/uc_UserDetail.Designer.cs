@@ -84,14 +84,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.chkPasswordNeverExpired.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkChangePassNextTime.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkCanNotChangePassword.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dteUnlockDate.Properties.VistaTimeProperties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dteUnlockDate.Properties.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dteUnlockDate.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dteLockDate.Properties.VistaTimeProperties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dteLockDate.Properties.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dteLockDate.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkLocked.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dteToDate.Properties.VistaTimeProperties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dteToDate.Properties.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dteToDate.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dteEffectiveDate.Properties.VistaTimeProperties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dteEffectiveDate.Properties.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dteEffectiveDate.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gluEmployee.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gluViewEmployee)).BeginInit();
@@ -190,15 +190,15 @@
             // 
             // mmoNote
             // 
-            this.mmoNote.Location = new System.Drawing.Point(105, 340);
+            this.mmoNote.Location = new System.Drawing.Point(105, 339);
             this.mmoNote.Name = "mmoNote";
-            this.mmoNote.Size = new System.Drawing.Size(329, 69);
+            this.mmoNote.Size = new System.Drawing.Size(329, 70);
             this.mmoNote.StyleController = this.locMain;
             this.mmoNote.TabIndex = 18;
             // 
             // txtEmail
             // 
-            this.txtEmail.Location = new System.Drawing.Point(105, 316);
+            this.txtEmail.Location = new System.Drawing.Point(105, 315);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(329, 20);
             this.txtEmail.StyleController = this.locMain;
@@ -208,7 +208,7 @@
             // chkPasswordNeverExpired
             // 
             this.chkPasswordNeverExpired.EditValue = true;
-            this.chkPasswordNeverExpired.Location = new System.Drawing.Point(103, 293);
+            this.chkPasswordNeverExpired.Location = new System.Drawing.Point(103, 292);
             this.chkPasswordNeverExpired.Name = "chkPasswordNeverExpired";
             this.chkPasswordNeverExpired.Properties.Caption = "Mật khẩu không bao giờ hết hạn?";
             this.chkPasswordNeverExpired.Size = new System.Drawing.Size(331, 19);
@@ -217,7 +217,7 @@
             // 
             // chkChangePassNextTime
             // 
-            this.chkChangePassNextTime.Location = new System.Drawing.Point(103, 270);
+            this.chkChangePassNextTime.Location = new System.Drawing.Point(103, 269);
             this.chkChangePassNextTime.Name = "chkChangePassNextTime";
             this.chkChangePassNextTime.Properties.Caption = "Đổi mật khẩu khi đăng nhập ở lần kế tiếp?";
             this.chkChangePassNextTime.Size = new System.Drawing.Size(331, 19);
@@ -226,7 +226,7 @@
             // 
             // chkCanNotChangePassword
             // 
-            this.chkCanNotChangePassword.Location = new System.Drawing.Point(103, 247);
+            this.chkCanNotChangePassword.Location = new System.Drawing.Point(103, 246);
             this.chkCanNotChangePassword.Name = "chkCanNotChangePassword";
             this.chkCanNotChangePassword.Properties.Caption = "Người dùng không thể đổi mật khẩu?";
             this.chkCanNotChangePassword.Size = new System.Drawing.Size(331, 19);
@@ -236,11 +236,11 @@
             // dteUnlockDate
             // 
             this.dteUnlockDate.EditValue = null;
-            this.dteUnlockDate.Location = new System.Drawing.Point(317, 223);
+            this.dteUnlockDate.Location = new System.Drawing.Point(317, 222);
             this.dteUnlockDate.Name = "dteUnlockDate";
             this.dteUnlockDate.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.dteUnlockDate.Properties.VistaTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            this.dteUnlockDate.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
             this.dteUnlockDate.Size = new System.Drawing.Size(117, 20);
             this.dteUnlockDate.StyleController = this.locMain;
@@ -250,11 +250,11 @@
             // dteLockDate
             // 
             this.dteLockDate.EditValue = null;
-            this.dteLockDate.Location = new System.Drawing.Point(105, 223);
+            this.dteLockDate.Location = new System.Drawing.Point(105, 222);
             this.dteLockDate.Name = "dteLockDate";
             this.dteLockDate.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.dteLockDate.Properties.VistaTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            this.dteLockDate.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
             this.dteLockDate.Size = new System.Drawing.Size(117, 20);
             this.dteLockDate.StyleController = this.locMain;
@@ -262,7 +262,7 @@
             // 
             // chkLocked
             // 
-            this.chkLocked.Location = new System.Drawing.Point(103, 200);
+            this.chkLocked.Location = new System.Drawing.Point(103, 199);
             this.chkLocked.Name = "chkLocked";
             this.chkLocked.Properties.Caption = "Khóa người dùng?";
             this.chkLocked.Size = new System.Drawing.Size(331, 19);
@@ -273,11 +273,11 @@
             // dteToDate
             // 
             this.dteToDate.EditValue = null;
-            this.dteToDate.Location = new System.Drawing.Point(317, 176);
+            this.dteToDate.Location = new System.Drawing.Point(317, 175);
             this.dteToDate.Name = "dteToDate";
             this.dteToDate.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.dteToDate.Properties.VistaTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            this.dteToDate.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
             this.dteToDate.Size = new System.Drawing.Size(117, 20);
             this.dteToDate.StyleController = this.locMain;
@@ -287,11 +287,11 @@
             // dteEffectiveDate
             // 
             this.dteEffectiveDate.EditValue = null;
-            this.dteEffectiveDate.Location = new System.Drawing.Point(105, 176);
+            this.dteEffectiveDate.Location = new System.Drawing.Point(105, 175);
             this.dteEffectiveDate.Name = "dteEffectiveDate";
             this.dteEffectiveDate.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.dteEffectiveDate.Properties.VistaTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            this.dteEffectiveDate.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
             this.dteEffectiveDate.Size = new System.Drawing.Size(117, 20);
             this.dteEffectiveDate.StyleController = this.locMain;
@@ -299,7 +299,7 @@
             // 
             // gluEmployee
             // 
-            this.gluEmployee.Location = new System.Drawing.Point(105, 152);
+            this.gluEmployee.Location = new System.Drawing.Point(105, 151);
             this.gluEmployee.Name = "gluEmployee";
             this.gluEmployee.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -318,7 +318,7 @@
             // 
             // txtFullName
             // 
-            this.txtFullName.Location = new System.Drawing.Point(105, 128);
+            this.txtFullName.Location = new System.Drawing.Point(105, 127);
             this.txtFullName.Name = "txtFullName";
             this.txtFullName.Size = new System.Drawing.Size(329, 20);
             this.txtFullName.StyleController = this.locMain;
@@ -327,7 +327,7 @@
             // 
             // chkIsEmployee
             // 
-            this.chkIsEmployee.Location = new System.Drawing.Point(103, 105);
+            this.chkIsEmployee.Location = new System.Drawing.Point(103, 104);
             this.chkIsEmployee.Name = "chkIsEmployee";
             this.chkIsEmployee.Properties.Caption = "Là nhân viên cửa hàng?";
             this.chkIsEmployee.Size = new System.Drawing.Size(331, 19);
@@ -337,7 +337,7 @@
             // 
             // gluGroupUser
             // 
-            this.gluGroupUser.Location = new System.Drawing.Point(105, 81);
+            this.gluGroupUser.Location = new System.Drawing.Point(105, 80);
             this.gluGroupUser.Name = "gluGroupUser";
             this.gluGroupUser.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -386,7 +386,7 @@
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(105, 57);
+            this.txtPassword.Location = new System.Drawing.Point(105, 56);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Properties.UseSystemPasswordChar = true;
             this.txtPassword.Size = new System.Drawing.Size(329, 20);
@@ -396,7 +396,7 @@
             // 
             // txtUsername
             // 
-            this.txtUsername.Location = new System.Drawing.Point(105, 33);
+            this.txtUsername.Location = new System.Drawing.Point(105, 32);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
             this.txtUsername.Properties.Appearance.Options.UseFont = true;
@@ -420,7 +420,6 @@
             this.logMain.Name = "logMain";
             this.logMain.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
             this.logMain.Size = new System.Drawing.Size(448, 449);
-            this.logMain.Text = "logMain";
             this.logMain.TextVisible = false;
             // 
             // logDetail
@@ -446,7 +445,6 @@
             this.logDetail.Location = new System.Drawing.Point(0, 0);
             this.logDetail.Name = "logDetail";
             this.logDetail.Size = new System.Drawing.Size(448, 423);
-            this.logDetail.Text = "logDetail";
             // 
             // lciUsername
             // 
@@ -489,7 +487,6 @@
             this.lciIsEmployee.Size = new System.Drawing.Size(424, 23);
             this.lciIsEmployee.Text = "Là nhân viên cửa hàng?";
             this.lciIsEmployee.TextSize = new System.Drawing.Size(0, 0);
-            this.lciIsEmployee.TextToControlDistance = 0;
             this.lciIsEmployee.TextVisible = false;
             // 
             // lciFullName
@@ -544,9 +541,7 @@
             this.lciLocked.Padding = new DevExpress.XtraLayout.Utils.Padding(91, 2, 2, 2);
             this.lciLocked.Size = new System.Drawing.Size(424, 23);
             this.lciLocked.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            this.lciLocked.Text = "lciLocked";
             this.lciLocked.TextSize = new System.Drawing.Size(0, 0);
-            this.lciLocked.TextToControlDistance = 0;
             this.lciLocked.TextVisible = false;
             // 
             // lciLockDate
@@ -579,9 +574,7 @@
             this.lciCanNotChangePassword.Name = "lciCanNotChangePassword";
             this.lciCanNotChangePassword.Padding = new DevExpress.XtraLayout.Utils.Padding(91, 2, 2, 2);
             this.lciCanNotChangePassword.Size = new System.Drawing.Size(424, 23);
-            this.lciCanNotChangePassword.Text = "lciCanNotChangePassword";
             this.lciCanNotChangePassword.TextSize = new System.Drawing.Size(0, 0);
-            this.lciCanNotChangePassword.TextToControlDistance = 0;
             this.lciCanNotChangePassword.TextVisible = false;
             // 
             // lciChangePassNextTime
@@ -592,9 +585,7 @@
             this.lciChangePassNextTime.Name = "lciChangePassNextTime";
             this.lciChangePassNextTime.Padding = new DevExpress.XtraLayout.Utils.Padding(91, 2, 2, 2);
             this.lciChangePassNextTime.Size = new System.Drawing.Size(424, 23);
-            this.lciChangePassNextTime.Text = "lciChangePassNextTime";
             this.lciChangePassNextTime.TextSize = new System.Drawing.Size(0, 0);
-            this.lciChangePassNextTime.TextToControlDistance = 0;
             this.lciChangePassNextTime.TextVisible = false;
             // 
             // lciPasswordNeverExpired
@@ -605,9 +596,7 @@
             this.lciPasswordNeverExpired.Name = "lciPasswordNeverExpired";
             this.lciPasswordNeverExpired.Padding = new DevExpress.XtraLayout.Utils.Padding(91, 2, 2, 2);
             this.lciPasswordNeverExpired.Size = new System.Drawing.Size(424, 23);
-            this.lciPasswordNeverExpired.Text = "lciPasswordNeverExpired";
             this.lciPasswordNeverExpired.TextSize = new System.Drawing.Size(0, 0);
-            this.lciPasswordNeverExpired.TextToControlDistance = 0;
             this.lciPasswordNeverExpired.TextVisible = false;
             // 
             // lciEmail
@@ -626,7 +615,7 @@
             this.lciNote.CustomizationFormText = "Ghi chú:";
             this.lciNote.Location = new System.Drawing.Point(0, 307);
             this.lciNote.Name = "lciNote";
-            this.lciNote.Size = new System.Drawing.Size(424, 73);
+            this.lciNote.Size = new System.Drawing.Size(424, 74);
             this.lciNote.Text = "Ghi chú:";
             this.lciNote.TextSize = new System.Drawing.Size(88, 13);
             // 
@@ -637,9 +626,7 @@
             this.lciButtonSaveInsert.Location = new System.Drawing.Point(248, 423);
             this.lciButtonSaveInsert.Name = "lciButtonSaveInsert";
             this.lciButtonSaveInsert.Size = new System.Drawing.Size(100, 26);
-            this.lciButtonSaveInsert.Text = "lciButtonSaveInsert";
             this.lciButtonSaveInsert.TextSize = new System.Drawing.Size(0, 0);
-            this.lciButtonSaveInsert.TextToControlDistance = 0;
             this.lciButtonSaveInsert.TextVisible = false;
             // 
             // lciButtonCancel
@@ -649,9 +636,7 @@
             this.lciButtonCancel.Location = new System.Drawing.Point(348, 423);
             this.lciButtonCancel.Name = "lciButtonCancel";
             this.lciButtonCancel.Size = new System.Drawing.Size(100, 26);
-            this.lciButtonCancel.Text = "lciButtonCancel";
             this.lciButtonCancel.TextSize = new System.Drawing.Size(0, 0);
-            this.lciButtonCancel.TextToControlDistance = 0;
             this.lciButtonCancel.TextVisible = false;
             // 
             // lciButtonSaveClose
@@ -661,9 +646,7 @@
             this.lciButtonSaveClose.Location = new System.Drawing.Point(148, 423);
             this.lciButtonSaveClose.Name = "lciButtonSaveClose";
             this.lciButtonSaveClose.Size = new System.Drawing.Size(100, 26);
-            this.lciButtonSaveClose.Text = "lciButtonSaveClose";
             this.lciButtonSaveClose.TextSize = new System.Drawing.Size(0, 0);
-            this.lciButtonSaveClose.TextToControlDistance = 0;
             this.lciButtonSaveClose.TextVisible = false;
             // 
             // esiEmpty1
@@ -676,7 +659,6 @@
             this.esiEmpty1.Name = "esiEmpty1";
             this.esiEmpty1.Size = new System.Drawing.Size(148, 26);
             this.esiEmpty1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            this.esiEmpty1.Text = "esiEmpty1";
             this.esiEmpty1.TextSize = new System.Drawing.Size(0, 0);
             // 
             // depError
@@ -697,14 +679,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.chkPasswordNeverExpired.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkChangePassNextTime.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkCanNotChangePassword.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dteUnlockDate.Properties.VistaTimeProperties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dteUnlockDate.Properties.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dteUnlockDate.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dteLockDate.Properties.VistaTimeProperties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dteLockDate.Properties.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dteLockDate.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkLocked.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dteToDate.Properties.VistaTimeProperties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dteToDate.Properties.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dteToDate.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dteEffectiveDate.Properties.VistaTimeProperties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dteEffectiveDate.Properties.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dteEffectiveDate.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gluEmployee.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gluViewEmployee)).EndInit();

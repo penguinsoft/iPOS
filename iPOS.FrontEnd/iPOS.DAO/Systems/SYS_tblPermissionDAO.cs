@@ -9,15 +9,30 @@ namespace iPOS.DAO.Systems
 {
     public class SYS_tblPermissionDAO : BaseDAO
     {
-        public async static Task<List<SYS_tblPermissionDTO>> GetPermissionList(string url)
+        public async static Task<SYS_tblPermissionDRO> GetPermissionList(string url)
         {
+            SYS_tblPermissionDRO result = new SYS_tblPermissionDRO();
             try
             {
                 var response_data = await HttpGet(url);
-                var response_collection = JsonConvert.DeserializeObject<SYS_tblPermissionDRO>(response_data + "");
+                if (response_data.ToLower().StartsWith("error"))
+                {
+                    result.ResponseItem.IsError = true;
+                    string[] tmp = response_data.Split('|');
+                    result.ResponseItem.ErrorCode = tmp[1];
+                    result.ResponseItem.ErrorMessage = tmp[2];
+                }
+                else
+                {
+                    var response_collection = JsonConvert.DeserializeObject<SYS_tblPermissionDRO>(response_data + "");
 
-                if (response_collection != null)
-                    return response_collection.PermissionList;
+                    if (response_collection != null)
+                    {
+                        result.PermissionList = response_collection.PermissionList;
+                    }
+                }
+
+                return result;
             }
             catch (Exception ex)
             {
@@ -27,15 +42,63 @@ namespace iPOS.DAO.Systems
             return null;
         }
 
-        public async static Task<string> UpdatePermission(string url, string json_data)
+        public async static Task<SYS_tblPermissionDRO> GetPermissionItem(string url)
         {
+            SYS_tblPermissionDRO result = new SYS_tblPermissionDRO();
+            try
+            {
+                var response_data = await HttpGet(url);
+                if (response_data.ToLower().StartsWith("error"))
+                {
+                    result.ResponseItem.IsError = true;
+                    string[] tmp = response_data.Split('|');
+                    result.ResponseItem.ErrorCode = tmp[1];
+                    result.ResponseItem.ErrorMessage = tmp[2];
+                }
+                else
+                {
+                    var response_collection = JsonConvert.DeserializeObject<SYS_tblPermissionDRO>(response_data + "");
+
+                    if (response_collection != null)
+                    {
+                        result.PermissionItem = response_collection.PermissionItem;
+                    }
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+            }
+
+            return null;
+        }
+
+        public async static Task<SYS_tblPermissionDRO> UpdatePermission(string url, string json_data)
+        {
+            SYS_tblPermissionDRO result = new SYS_tblPermissionDRO();
             try
             {
                 var response_data = await HttpPost(url, json_data);
-                var response_collection = JsonConvert.DeserializeObject<SYS_tblPermissionDRO>(response_data + "");
+                if (response_data.ToLower().StartsWith("error"))
+                {
+                    result.ResponseItem.IsError = true;
+                    string[] tmp = response_data.Split('|');
+                    result.ResponseItem.ErrorCode = tmp[1];
+                    result.ResponseItem.ErrorMessage = tmp[2];
+                }
+                else
+                {
+                    var response_collection = JsonConvert.DeserializeObject<SYS_tblPermissionDRO>(response_data + "");
 
-                if (response_collection != null)
-                    return response_collection.Message;
+                    if (response_collection != null)
+                    {
+                        result.ResponseItem.Message = response_collection.ResponseItem.Message;
+                    }
+                }
+
+                return result;
             }
             catch (Exception ex)
             {

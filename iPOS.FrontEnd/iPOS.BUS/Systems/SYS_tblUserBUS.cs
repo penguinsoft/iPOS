@@ -10,14 +10,14 @@ namespace iPOS.BUS.Systems
 {
     public class SYS_tblUserBUS : BaseBUS
     {
-        public async static Task<SYS_tblUserDTO> CheckLogin(string username, string password, string language_id)
+        public async static Task<SYS_tblUserDRO> CheckLogin(string username, string password, string language_id)
         {
             string url = string.Format("{0}/CheckLogin?Username={1}&Password={2}&LanguageID={3}", GetBaseUrl(), username, password, language_id);
 
             return await SYS_tblUserDAO.CheckLogin(url);
         }
 
-        public async static Task<List<SYS_tblUserDTO>> GetAllUsers(string username, string language_id, SYS_tblActionLogDTO actionLog)
+        public async static Task<SYS_tblUserDRO> GetAllUsers(string username, string language_id, SYS_tblActionLogDTO actionLog)
         {
             string url = string.Format("{0}/GetAllUsers?Username={1}&LanguageID={2}", GetBaseUrl(), username, language_id);
 
@@ -26,14 +26,14 @@ namespace iPOS.BUS.Systems
             return await SYS_tblUserDAO.GetAllUsers(url);
         }
 
-        public async static Task<SYS_tblUserDTO> GetUserItem(string username, string language_id, string userid)
+        public async static Task<SYS_tblUserDRO> GetUserItem(string username, string language_id, string userid)
         {
             string url = string.Format("{0}/GetUserByID?Username={1}&LanguageID={2}&UsernameOther={3}", GetBaseUrl(), username, language_id, userid);
 
             return await SYS_tblUserDAO.GetUserItem(url);
         }
 
-        public async static Task<string> InsertUpdateUser(SYS_tblUserDTO item, SYS_tblActionLogDTO actionLog)
+        public async static Task<SYS_tblUserDRO> InsertUpdateUser(SYS_tblUserDTO item, SYS_tblActionLogDTO actionLog)
         {
             try
             {
@@ -66,48 +66,48 @@ namespace iPOS.BUS.Systems
                     DateFormatHandling = DateFormatHandling.MicrosoftDateFormat
                 }) + "}";
 
-                string result = await SYS_tblUserDAO.InsertUpdateUser(url, json_data);
-                if (string.IsNullOrEmpty(result)) result = await SYS_tblActionLogBUS.InsertUpdateLog(actionLog);
+                SYS_tblUserDRO result = await SYS_tblUserDAO.InsertUpdateUser(url, json_data);
+                if (string.IsNullOrEmpty(result.ResponseItem.Message)) result.ResponseItem = await SYS_tblActionLogBUS.InsertUpdateLog(actionLog);
                 return result;
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
-                return ex.Message;
+                return null;
             }
         }
 
-        public async static Task<string> DeleteUser(string user_code_list, string username, string language_id, SYS_tblActionLogDTO actionLog)
+        public async static Task<SYS_tblUserDRO> DeleteUser(string user_code_list, string username, string language_id, SYS_tblActionLogDTO actionLog)
         {
             try
             {
                 string url = string.Format(@"{0}/DeleteUser?Username={1}&LanguageID={2}&UserCodeList={3}", GetBaseUrl(), username, language_id, user_code_list);
 
-                string result = await SYS_tblUserDAO.DeleteUser(url);
-                if (string.IsNullOrEmpty(result)) result = await SYS_tblActionLogBUS.InsertUpdateLog(actionLog);
+                SYS_tblUserDRO result = await SYS_tblUserDAO.DeleteUser(url);
+                if (string.IsNullOrEmpty(result.ResponseItem.Message)) result.ResponseItem = await SYS_tblActionLogBUS.InsertUpdateLog(actionLog);
                 return result;
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
-                return ex.Message;
+                return null;
             }
         }
 
-        public async static Task<string> ChangeUserPassword(string username, string language_id, string password, SYS_tblActionLogDTO actionLog)
+        public async static Task<SYS_tblUserDRO> ChangeUserPassword(string username, string language_id, string password, SYS_tblActionLogDTO actionLog)
         {
             try
             {
                 string url = string.Format(@"{0}/ChangeUserPassword?Username={1}&LanguageID={2}&Password={3}", GetBaseUrl(), username, language_id, password);
 
-                string result = await SYS_tblUserDAO.ChangeUserPassword(url);
-                if (string.IsNullOrEmpty(result)) result = await SYS_tblActionLogBUS.InsertUpdateLog(actionLog);
+                SYS_tblUserDRO result = await SYS_tblUserDAO.ChangeUserPassword(url);
+                if (string.IsNullOrEmpty(result.ResponseItem.Message)) result.ResponseItem = await SYS_tblActionLogBUS.InsertUpdateLog(actionLog);
                 return result;
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
-                return ex.Message;
+                return null;
             }
         }
     }

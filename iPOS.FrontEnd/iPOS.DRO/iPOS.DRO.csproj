@@ -41,12 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseDCO.cs" />
     <Compile Include="BaseDRO.cs" />
-    <Compile Include="Products\PRO_tblDistrictDRO.cs" />
-    <Compile Include="Products\PRO_tblProvinceDRO.cs" />
-    <Compile Include="Products\PRO_tblStallDRO.cs" />
-    <Compile Include="Products\PRO_tblStoreDRO.cs" />
-    <Compile Include="Products\PRO_tblWarehouseDRO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Systems\SYS_tblActionLogDRO.cs" />
     <Compile Include="Systems\SYS_tblGroupUserDRO.cs" />
@@ -54,6 +50,7 @@
     <Compile Include="Systems\SYS_tblPermissionDRO.cs" />
     <Compile Include="Systems\SYS_tblReportCaptionDRO.cs" />
     <Compile Include="Systems\SYS_tblUserDRO.cs" />
+    <Compile Include="Systems\SYS_tblUserLevelDRO.cs" />
     <Compile Include="Tools\OBJ_TableColumnDRO.cs" />
   </ItemGroup>
   <ItemGroup>

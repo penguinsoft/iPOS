@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace iPOS.DCO
 {
     [DataContract]
-    public class BaseDRO
+    public class ResponseItem
     {
         [DataMember]
         public ResponseStatus Status { get; set; }
@@ -16,11 +16,18 @@ namespace iPOS.DCO
         public string Message { get; set; }
 
         [DataMember]
-        public long TotalItemCount;
+        public long TotalItemCount { get; set; }
 
         [DataMember]
-        public string Username;
+        public string RequestUser { get; set; }
 
+    }
+
+    [DataContract]
+    public class BaseDRO
+    {
+        [DataMember]
+        public ResponseItem ResponseItem { get; set; }
     }
 
     public enum ResponseStatus

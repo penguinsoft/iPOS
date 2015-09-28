@@ -29,6 +29,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
+            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
+            DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
+            DevExpress.Utils.ToolTipSeparatorItem toolTipSeparatorItem1 = new DevExpress.Utils.ToolTipSeparatorItem();
+            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.btnShutdown = new DevExpress.XtraBars.BarButtonItem();
@@ -110,8 +115,6 @@
             this.ribbon.Location = new System.Drawing.Point(0, 0);
             this.ribbon.MaxItemId = 28;
             this.ribbon.Name = "ribbon";
-            this.ribbon.OptionsTouch.ShowTouchUISelectorInQAT = true;
-            this.ribbon.OptionsTouch.ShowTouchUISelectorVisibilityItemInQATMenu = true;
             this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribSystemModule,
             this.ribProductModule});
@@ -150,6 +153,21 @@
             this.btnGroupUserList.LargeGlyph = global::iPOS.IMC.Properties.Resources.group_user_32;
             this.btnGroupUserList.LargeWidth = 70;
             this.btnGroupUserList.Name = "btnGroupUserList";
+            superToolTip1.AllowHtmlText = DevExpress.Utils.DefaultBoolean.True;
+            toolTipTitleItem1.Appearance.Image = global::iPOS.IMC.Properties.Resources.import_export_method_32;
+            toolTipTitleItem1.Appearance.Options.UseImage = true;
+            toolTipTitleItem1.Image = global::iPOS.IMC.Properties.Resources.import_export_method_32;
+            toolTipTitleItem1.Text = "<color=RED>Nhóm Người Dùng</color>";
+            toolTipItem1.LeftIndent = 6;
+            toolTipItem1.Text = "Quản lý nhóm người sử dụng trong hệ thống, Quản lý nhóm người sử dụng trong hệ th" +
+    "ống, Quản lý nhóm người sử dụng trong hệ thống";
+            toolTipTitleItem2.LeftIndent = 6;
+            toolTipTitleItem2.Text = "Chỉ có admin mới có quyền quản trị.";
+            superToolTip1.Items.Add(toolTipTitleItem1);
+            superToolTip1.Items.Add(toolTipItem1);
+            superToolTip1.Items.Add(toolTipSeparatorItem1);
+            superToolTip1.Items.Add(toolTipTitleItem2);
+            this.btnGroupUserList.SuperTip = superToolTip1;
             this.btnGroupUserList.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnGroupUserList_ItemClick);
             // 
             // btnUserList

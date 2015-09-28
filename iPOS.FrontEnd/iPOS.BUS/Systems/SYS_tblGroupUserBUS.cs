@@ -10,7 +10,7 @@ namespace iPOS.BUS.Systems
 {
     public class SYS_tblGroupUserBUS : BaseBUS
     {
-        public async static Task<List<SYS_tblGroupUserDTO>> GetAllGroupUsers(string username, string language, bool is_combobox, SYS_tblActionLogDTO actionLog)
+        public async static Task<SYS_tblGroupUserDRO> GetAllGroupUsers(string username, string language, bool is_combobox, SYS_tblActionLogDTO actionLog)
         {
             string url = string.Format("{0}/GetAllGroupUsers?Username={1}&LanguageID={2}&GetComboBox={3}", GetBaseUrl(), username, language, is_combobox ? "True" : "False");
 
@@ -18,14 +18,14 @@ namespace iPOS.BUS.Systems
             return await SYS_tblGroupUserDAO.GetAllGroupUsers(url);
         }
 
-        public async static Task<SYS_tblGroupUserDTO> GetGroupUserItem(string username, string language, string group_user_id)
+        public async static Task<SYS_tblGroupUserDRO> GetGroupUserItem(string username, string language, string group_user_id)
         {
             string url = string.Format(@"{0}/GetGroupUserByID?Username={1}&LanguageID={2}&GroupID={3}", GetBaseUrl(), username, language, group_user_id);
 
             return await SYS_tblGroupUserDAO.GetGroupUserItem(url);
         }
 
-        public async static Task<string> InsertUpdateGroupUser(SYS_tblGroupUserDTO item, SYS_tblActionLogDTO actionLog)
+        public async static Task<SYS_tblGroupUserDRO> InsertUpdateGroupUser(SYS_tblGroupUserDTO item, SYS_tblActionLogDTO actionLog)
         {
             try
             {
@@ -48,31 +48,31 @@ namespace iPOS.BUS.Systems
                     DateFormatHandling = DateFormatHandling.MicrosoftDateFormat
                 }) + "}";
 
-                string result = await SYS_tblGroupUserDAO.InsertUpdateGroupUser(url, json_data);
-                if (string.IsNullOrEmpty(result)) result = await SYS_tblActionLogBUS.InsertUpdateLog(actionLog);
+                SYS_tblGroupUserDRO result = await SYS_tblGroupUserDAO.InsertUpdateGroupUser(url, json_data);
+                if (string.IsNullOrEmpty(result.ResponseItem.Message)) result.ResponseItem = await SYS_tblActionLogBUS.InsertUpdateLog(actionLog);
                 return result;
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
-                return ex.Message;
+                return null;
             }
         }
 
-        public async static Task<string> DeleteGroupUser(string group_id_list, string group_code_list, string username, string language, SYS_tblActionLogDTO actionLog)
+        public async static Task<SYS_tblGroupUserDRO> DeleteGroupUser(string group_id_list, string group_code_list, string username, string language, SYS_tblActionLogDTO actionLog)
         {
             try
             {
                 string url = string.Format(@"{0}/DeleteGroupUser?Username={1}&LanguageID={2}&GroupUserIDList={3}&GroupUserCodeList={4}", GetBaseUrl(), username, language, group_id_list, group_code_list);
 
-                string result = await SYS_tblGroupUserDAO.DeleteGroupUser(url);
-                if (string.IsNullOrEmpty(result)) result = await SYS_tblActionLogBUS.InsertUpdateLog(actionLog);
+                SYS_tblGroupUserDRO result = await SYS_tblGroupUserDAO.DeleteGroupUser(url);
+                if (string.IsNullOrEmpty(result.ResponseItem.Message)) result.ResponseItem = await SYS_tblActionLogBUS.InsertUpdateLog(actionLog);
                 return result;
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
-                return ex.Message;
+                return null;
             }
         }
     }

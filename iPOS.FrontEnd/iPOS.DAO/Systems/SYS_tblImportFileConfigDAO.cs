@@ -34,7 +34,7 @@ namespace iPOS.DAO.Systems
                 var response_collection = JsonConvert.DeserializeObject<SYS_tblImportFileConfigDRO>(response_data + "");
 
                 if (response_collection != null)
-                    return response_collection.Message;
+                    return response_collection.ResponseItem.Message;
             }
             catch (Exception ex)
             {

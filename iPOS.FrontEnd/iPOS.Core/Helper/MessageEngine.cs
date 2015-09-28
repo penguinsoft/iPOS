@@ -39,30 +39,33 @@ namespace iPOS.Core.Helper
             return result;
         }
 
-        public static string GetHTTPStatusCodes(HttpStatusCode status_code)
+        public static string GetHTTPStatusCodes(string name, string language)
         {
-            string result="ErrCode:";
-            switch (status_code)
+            string result = "";
+            if (name.ToLower().Equals("ok")) return "";
+            var message_source = ReadFileSource();
+            try
             {
-                case HttpStatusCode.BadRequest:
-                    result += "400";
-                    break;
-                case HttpStatusCode.Unauthorized:
-                    result += "401";
-                    break;
-                case HttpStatusCode.Forbidden:
-                    result += "403";
-                    break;
-                case HttpStatusCode.NotFound:
-                    result += "404";
-                    break;
-                case HttpStatusCode.RequestTimeout:
-                    result += "408";
-                    break;
-                default:
-                    result = "";
-                    break;
+                if (!string.IsNullOrEmpty(message_source))
+                {
+                    var _message = (from message in XDocument.Parse(message_source).Descendants("message")
+                                    where message.Attribute("name").Value.ToLower().Equals(name.ToLower())
+                                    select new
+                                    {
+                                        code = message.Attribute("code").Value,
+                                        message = message.Element(language).Value
+                                    }).First();
+                    if (_message != null)
+                    {
+                        result = string.Join("|", "Error", _message.code, _message.message);
+                    }
+                }
             }
+            catch
+            {
+                return string.Join("|", "Error", name, name);
+            }
+
             return result;
         }
     }

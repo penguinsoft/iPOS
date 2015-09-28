@@ -16,11 +16,14 @@ using UserBUS = iPOS.BUS.Systems.SYS_tblUserBUS;
 using iPOS.DTO.Systems;
 using iPOS.BUS.Systems;
 using iPOS.IMC.Helper;
+using iPOS.DRO.Systems;
+using iPOS.DRO;
 
 namespace iPOS.IMC
 {
     public partial class frmLogin : DevExpress.XtraEditors.XtraForm
     {
+        #region [Personal Methods]
         private void Initialize(string language)
         {
             string username = EncryptEngine.Decrypt(ConfigEngine.Username),
@@ -40,10 +43,12 @@ namespace iPOS.IMC
         {
             LanguageEngine.ChangeCaptionCheckEdit(this.Name, language, chkRemember);
             LanguageEngine.ChangeCaptionHyperLinkEdit(this.Name, language, hplForgotPassword);
-            LanguageEngine.ChangeCaptionLabelControl(this.Name, language, new LabelControl[] { lblTitle, lblLanguage, lblUsername, lblPassword });
+            LanguageEngine.ChangeCaptionLabelControl(this.Name, language, lblTitle);
             LanguageEngine.ChangeCaptionSimpleButton(this.Name, language, new SimpleButton[] { btnLogin, btnExit });
             LanguageEngine.ChangeCaptionImageComboBoxEdit(this.Name, language, icbLanguage);
+            LanguageEngine.ChangeCaptionLayoutControlItem(this.Name, language, new DevExpress.XtraLayout.LayoutControlItem[] { lciLanguage, lciUsername, lciPassword });
             LanguageEngine.ChangeTextXtraForm(this, language);
+            LanguageEngine.ChangeFormSize(this, this.Name, ConfigEngine.TouchMode);
         }
 
         private async Task<bool> CheckLogin()
@@ -62,26 +67,34 @@ namespace iPOS.IMC
             }
             try
             {
-                SYS_tblUserDTO user = await UserBUS.CheckLogin(txtUsername.Text.Trim(), EncryptEngine.Encrypt(txtPassword.Text.Trim()), ConfigEngine.Language);
-                if (user != null)
+                SYS_tblUserDRO user = await UserBUS.CheckLogin(txtUsername.Text.Trim(), EncryptEngine.Encrypt(txtPassword.Text.Trim()), ConfigEngine.Language);
+                if (user.ResponseItem.IsError)
                 {
-                    CommonEngine.userInfo = user;
-                    string temp = user.Username.Substring(user.Username.IndexOf("|") + 1);
-                    user.Username = user.Username.Replace("|" + temp, "");
-                    CommonEngine.SystemDateTime = Convert.ToDateTime(temp);
-
-                    if (user.Locked)
-                    {
-                        CommonEngine.ShowMessage(LanguageEngine.GetMessageCaption("000010", ConfigEngine.Language).Replace("$UserName$", user.Username), MessageType.Error);
-                        txtUsername.Focus();
-                        return false;
-                    }
+                    CommonEngine.ShowHTTPErrorMessage(user.ResponseItem.ErrorCode, user.ResponseItem.ErrorMessage);
+                    return false;
                 }
                 else
                 {
-                    CommonEngine.ShowMessage(LanguageEngine.GetMessageCaption("000009", ConfigEngine.Language), MessageType.Error);
-                    txtUsername.Focus();
-                    return false;
+                    if (user.UserItem != null)
+                    {
+                        CommonEngine.userInfo = user.UserItem;
+                        string temp = user.UserItem.Username.Substring(user.UserItem.Username.IndexOf("|") + 1);
+                        user.UserItem.Username = user.UserItem.Username.Replace("|" + temp, "");
+                        CommonEngine.SystemDateTime = Convert.ToDateTime(temp);
+
+                        if (user.UserItem.Locked)
+                        {
+                            CommonEngine.ShowMessage(LanguageEngine.GetMessageCaption("000010", ConfigEngine.Language).Replace("$UserName$", user.UserItem.Username), MessageType.Error);
+                            txtUsername.Focus();
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        CommonEngine.ShowMessage(LanguageEngine.GetMessageCaption("000009", ConfigEngine.Language), MessageType.Error);
+                        txtUsername.Focus();
+                        return false;
+                    }
                 }
             }
             catch (Exception ex)
@@ -93,7 +106,9 @@ namespace iPOS.IMC
 
             return true;
         }
+        #endregion
 
+        #region [Form Events]
         public frmLogin()
         {
             InitializeComponent();
@@ -103,6 +118,7 @@ namespace iPOS.IMC
         {
             InitializeComponent();
             Initialize(language);
+            ChangeCaptionLanguage(language);
         }
 
         private void icbLanguage_SelectedIndexChanged(object sender, EventArgs e)
@@ -132,7 +148,7 @@ namespace iPOS.IMC
                 IOEngine.Write("Initialize", "Username", username);
                 IOEngine.Write("Initialize", "Password", password);
 
-                string strErr = await SYS_tblActionLogBUS.InsertUpdateLog(new SYS_tblActionLogDTO
+                ResponseItem result = await SYS_tblActionLogBUS.InsertUpdateLog(new SYS_tblActionLogDTO
                 {
                     ID = string.Empty,
                     ActionVN = "Đăng Nhập",
@@ -149,12 +165,19 @@ namespace iPOS.IMC
                     LanguageID = ConfigEngine.Language
                 });
 
-                if (!string.IsNullOrEmpty(strErr))
+                if (result.IsError)
                 {
-                    CommonEngine.ShowMessage(strErr, 0);
-                    return;
+                    CommonEngine.ShowHTTPErrorMessage(result.ErrorCode, result.ErrorMessage);
                 }
-                this.DialogResult = DialogResult.OK;
+                else
+                {
+                    if (!string.IsNullOrEmpty(result.Message))
+                    {
+                        CommonEngine.ShowMessage(result.Message, 0);
+                        return;
+                    }
+                    this.DialogResult = DialogResult.OK;
+                }
             }
         }
 
@@ -168,5 +191,6 @@ namespace iPOS.IMC
             if (e.KeyData == Keys.Enter)
                 btnLogin_Click(null, null);
         }
+        #endregion
     }
 }

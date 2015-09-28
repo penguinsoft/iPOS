@@ -14,6 +14,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using iPOS.Core.Security;
 using iPOS.BUS.Systems;
+using iPOS.DRO.Systems;
 
 namespace iPOS.IMC.Systems
 {
@@ -30,6 +31,7 @@ namespace iPOS.IMC.Systems
             LanguageEngine.ChangeCaptionLayoutControlItem(this.Name, ConfigEngine.Language, new DevExpress.XtraLayout.LayoutControlItem[] { lciUsername, lciPassword, lciGroupUser, lciFullName, lciEffectiveDate, lciToDate, lciLockDate, lciUnlockDate, lciEmail, lciNote });
             LanguageEngine.ChangeCaptionSimpleButton(this.Name, ConfigEngine.Language, new SimpleButton[] { btnSaveClose, btnSaveInsert, btnCancel });
             LanguageEngine.ChangeCaptionCheckEdit(this.Name, ConfigEngine.Language, new CheckEdit[] { chkIsEmployee, chkLocked, chkCanNotChangePassword, chkChangePassNextTime, chkPasswordNeverExpired });
+            LanguageEngine.ChangeCaptionGridLookUpEdit(this.Name, ConfigEngine.Language, gluGroupUser);
 
             await LoadGroupUser(item);
             dteEffectiveDate.EditValue = CommonEngine.SystemDateTime;
@@ -130,18 +132,22 @@ namespace iPOS.IMC.Systems
 
         private async Task LoadGroupUser(SYS_tblUserDTO item)
         {
-            List<SYS_tblGroupUserDTO> groupUsers = await iPOS.BUS.Systems.SYS_tblGroupUserBUS.GetAllGroupUsers(CommonEngine.userInfo.Username, ConfigEngine.Language, true, null);
+            SYS_tblGroupUserDRO groupUsers = await iPOS.BUS.Systems.SYS_tblGroupUserBUS.GetAllGroupUsers(CommonEngine.userInfo.Username, ConfigEngine.Language, true, null);
             gluGroupUser.DataBindings.Clear();
-            gluGroupUser.Properties.DataSource = groupUsers;
+            if (groupUsers.ResponseItem.IsError)
+            {
+                CommonEngine.ShowHTTPErrorMessage(groupUsers.ResponseItem.ErrorCode, groupUsers.ResponseItem.ErrorMessage);
+            }
+            else gluGroupUser.Properties.DataSource = groupUsers.GroupUserList;
             gluGroupUser.Properties.DisplayMember = "Note";
             gluGroupUser.Properties.ValueMember = "GroupID";
 
-            if (item == null)
+            if (item == null && groupUsers.GroupUserList != null)
             {
-                var groupDefault = (from groupUser in groupUsers
+                var groupDefault = (from groupUser in groupUsers.GroupUserList
                                     where groupUser.IsDefault.Equals(true)
                                     select groupUser).FirstOrDefault();
-                if (groupUsers.Count > 0)
+                if (groupUsers.GroupUserList.Count > 0)
                     gluGroupUser.EditValue = groupDefault.GroupID;
             }
             else gluGroupUser.EditValue = item.GroupID;
@@ -149,10 +155,10 @@ namespace iPOS.IMC.Systems
 
         private async Task<bool> SaveUser(bool isEdit)
         {
-            string strErr = "";
+            SYS_tblUserDRO result = new SYS_tblUserDRO();
             try
             {
-                SYS_tblUserDTO item = new SYS_tblUserDTO
+                result = await SYS_tblUserBUS.InsertUpdateUser(new SYS_tblUserDTO
                 {
                     Username = txtUsername.Text,
                     Password = EncryptEngine.Encrypt(txtPassword.Text.Trim()),
@@ -172,8 +178,7 @@ namespace iPOS.IMC.Systems
                     Activity = (isEdit) ? BaseConstant.UPDATE_COMMAND : BaseConstant.INSERT_COMMAND,
                     UserID = CommonEngine.userInfo.UserID,
                     LanguageID = ConfigEngine.Language
-                };
-                strErr = await SYS_tblUserBUS.InsertUpdateUser(item, new SYS_tblActionLogDTO
+                }, new SYS_tblActionLogDTO
                 {
                     Activity = BaseConstant.COMMAND_INSERT_EN,
                     UserID = txtUsername.Text,
@@ -181,12 +186,12 @@ namespace iPOS.IMC.Systems
                     ActionEN = BaseConstant.COMMAND_UPDATE_EN,
                     ActionVN = BaseConstant.COMMAND_UPDATE_VI,
                     FunctionID = "10",
-                    DescriptionVN = string.Format("Tài khoản '{0}' vừa cập nhật thành công người dùng có tên tài khoản '{1}'.", item.UserID, item.Username),
-                    DescriptionEN = string.Format("Account '{0}' has updated user successfully with username is '{1}'.", item.UserID, item.Username)
+                    DescriptionVN = string.Format("Tài khoản '{0}' vừa cập nhật thành công người dùng có tên tài khoản '{1}'.", CommonEngine.userInfo.UserID, txtUsername.Text.Trim()),
+                    DescriptionEN = string.Format("Account '{0}' has updated user successfully with username is '{1}'.", CommonEngine.userInfo.UserID, txtUsername.Text.Trim())
                 });
-                if (!string.IsNullOrEmpty(strErr))
+                if (!string.IsNullOrEmpty(result.ResponseItem.Message))
                 {
-                    CommonEngine.ShowMessage(strErr, 0);
+                    CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
                     txtUsername.Focus();
                     return false;
                 }

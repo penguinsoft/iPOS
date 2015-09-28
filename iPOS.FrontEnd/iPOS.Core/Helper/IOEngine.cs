@@ -29,6 +29,11 @@ namespace iPOS.Core.Helper
         {
             string tmp = Read(strSection, strKey);
             if (string.IsNullOrEmpty(tmp)) return default_value;
+            if (typeof(T) == typeof(bool))
+            {
+                if (tmp.Equals("1")) return (T)(object)true;
+                else return (T)(object)false;
+            }
             else return (T)(object)tmp;
         }
 

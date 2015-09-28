@@ -15,7 +15,6 @@ using LanguageEngine = iPOS.IMC.Helper.LanguageEngine;
 using ConfigEngine = iPOS.Core.Helper.ConfigEngine;
 using iPOS.IMC.Helper;
 using iPOS.IMC.Systems;
-using iPOS.IMC.Products;
 
 namespace iPOS.IMC
 {
@@ -73,7 +72,9 @@ namespace iPOS.IMC
 
         private void btnChangePassword_ItemClick(object sender, ItemClickEventArgs e)
         {
-            CommonEngine.OpenInputForm(new uc_ChangePassword(false), new System.Drawing.Size(400, 225)); //is expired 250
+            //CommonEngine.OpenInputForm(new uc_ChangePassword(false), new System.Drawing.Size(400, 225)); //is expired 250
+            MessageBox.Show(ConfigEngine.TouchMode + "");
+            ribbon.OptionsTouch.TouchUI = DevExpress.Utils.DefaultBoolean.False;
         }
 
         private void btnUserList_ItemClick(object sender, ItemClickEventArgs e)
@@ -105,27 +106,27 @@ namespace iPOS.IMC
 
         private void btnProvince_ItemClick(object sender, ItemClickEventArgs e)
         {
-            CommonEngine.OpenMdiChildForm(this, new uc_Province(ConfigEngine.Language), tabMain);
+            //CommonEngine.OpenMdiChildForm(this, new uc_Province(ConfigEngine.Language), tabMain);
         }
 
         private void btnDistrict_ItemClick(object sender, ItemClickEventArgs e)
         {
-            CommonEngine.OpenMdiChildForm(this, new uc_District(ConfigEngine.Language), tabMain);
+            //CommonEngine.OpenMdiChildForm(this, new uc_District(ConfigEngine.Language), tabMain);
         }
 
         private void btnStore_ItemClick(object sender, ItemClickEventArgs e)
         {
-            CommonEngine.OpenMdiChildForm(this, new uc_Store(ConfigEngine.Language), tabMain);
+            //CommonEngine.OpenMdiChildForm(this, new uc_Store(ConfigEngine.Language), tabMain);
         }
 
         private void btnWarehouse_ItemClick(object sender, ItemClickEventArgs e)
         {
-            CommonEngine.OpenMdiChildForm(this, new uc_Warehouse(ConfigEngine.Language), tabMain);
+            //CommonEngine.OpenMdiChildForm(this, new uc_Warehouse(ConfigEngine.Language), tabMain);
         }
 
         private void btnStall_ItemClick(object sender, ItemClickEventArgs e)
         {
-            CommonEngine.OpenMdiChildForm(this, new uc_Stall(ConfigEngine.Language), tabMain);
+            //CommonEngine.OpenMdiChildForm(this, new uc_Stall(ConfigEngine.Language), tabMain);
         }
     }
 }

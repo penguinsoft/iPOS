@@ -5,14 +5,16 @@ using iPOS.DTO.Systems;
 
 namespace iPOS.DRO.Systems
 {
-    [DataContract]
     public class SYS_tblPermissionDRO : BaseDRO
     {
-        [DataMember]
         public List<SYS_tblPermissionDTO> PermissionList { get; set; }
 
-        [DataMember]
         public SYS_tblPermissionDTO PermissionItem { get; set; }
+
+        public SYS_tblPermissionDRO()
+        {
+            ResponseItem = new ResponseItem();
+        }
     }
 
     [DataContract]

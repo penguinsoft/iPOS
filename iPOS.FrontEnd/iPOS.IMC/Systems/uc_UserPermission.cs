@@ -15,6 +15,7 @@ using iPOS.BUS.Systems;
 using iPOS.Core.Helper;
 using System.Linq;
 using System.Threading.Tasks;
+using iPOS.DRO.Systems;
 
 namespace iPOS.IMC.Systems
 {
@@ -28,10 +29,12 @@ namespace iPOS.IMC.Systems
         public void ChangeLanguage(string language)
         {
             LanguageEngine.ChangeCaptionBarLargeButtonItem(this.Name, language, new DevExpress.XtraBars.BarLargeButtonItem[] { btnSave, btnClose });
-            LanguageEngine.ChangeCaptionSplitContainerControl(this.Name, language, sccMain);
-            LanguageEngine.ChangeCaptionTreeListColumn(this.Name, language, new DevExpress.XtraTreeList.Columns.TreeListColumn[] { tlcFunctionName, tlcAllowAll, tlcAllowInsert, tlcAllowUpdate, tlcAllowDelete, tlcAllowAccess, tlcAllowPrint, tlcAllowImport, tlcAllowExport, tlcUserLevelID, tlcNote });
+            LanguageEngine.ChangeCaptionTreeList(this.Name, language, trlPermission);
+            LanguageEngine.ChangeCaptionDockPanel(this.Name, language, dplLeft);
+            LanguageEngine.ChangeCaptionGroupControl(this.Name, language, grpMain);
 
             LoadAllGroupUser();
+            LoadAllUserLevel();
 
             chkAllowAll.CheckedChanged += delegate(object sender, EventArgs e) { chkNode_CheckedChanged(sender, e, new TreeListColumn[] { tlcAllowAll, tlcAllowInsert, tlcAllowUpdate, tlcAllowDelete, tlcAllowAccess, tlcAllowPrint, tlcAllowImport, tlcAllowExport }); };
             chkAllowInsert.CheckedChanged += delegate(object sender, EventArgs e) { chkNode_CheckedChanged(sender, e, tlcAllowInsert); };
@@ -70,14 +73,18 @@ namespace iPOS.IMC.Systems
             try
             {
                 trlUser.BeginUnboundLoad();
-                List<SYS_tblGroupUserDTO> groupUserList = await SYS_tblGroupUserBUS.GetAllGroupUsers(CommonEngine.userInfo.UserID, ConfigEngine.Language, false, null);
-                List<SYS_tblUserDTO> userList = await SYS_tblUserBUS.GetAllUsers(CommonEngine.userInfo.UserID, ConfigEngine.Language, null);
-                foreach (var item in groupUserList)
+                SYS_tblGroupUserDRO groupUser = await SYS_tblGroupUserBUS.GetAllGroupUsers(CommonEngine.userInfo.UserID, ConfigEngine.Language, false, null);
+                SYS_tblUserDRO users = await SYS_tblUserBUS.GetAllUsers(CommonEngine.userInfo.UserID, ConfigEngine.Language, null);
+                if (groupUser.ResponseItem.IsError)
+                {
+                    CommonEngine.ShowHTTPErrorMessage(groupUser.ResponseItem.ErrorCode, groupUser.ResponseItem.ErrorMessage);
+                }
+                foreach (var item in groupUser.GroupUserList)
                 {
                     groupNode = trlUser.AppendNode(new object[] { string.Format(@"{0} - {1}", item.GroupCode, item.GroupName), item.GroupID }, -1);
                     groupNode.ImageIndex = 0;
                     groupNode.SelectImageIndex = 0;
-                    LoadAllUser(groupNode, item.GroupID, userList);
+                    LoadAllUser(groupNode, item.GroupID, users.UserList);
                 }
                 trlUser.EndUnboundLoad();
                 trlUser.ExpandAll();
@@ -87,6 +94,19 @@ namespace iPOS.IMC.Systems
                 CommonEngine.ShowExceptionMessage(ex);
                 return;
             }
+        }
+
+        private async void LoadAllUserLevel()
+        {
+            SYS_tblUserLevelDRO userLevel = new SYS_tblUserLevelDRO();
+            userLevel = await SYS_tblUserLevelBUS.GetAllUserLevel(CommonEngine.userInfo.UserID, ConfigEngine.Language);
+            if (userLevel.ResponseItem.IsError)
+            {
+                CommonEngine.ShowHTTPErrorMessage(userLevel.ResponseItem.ErrorCode, userLevel.ResponseItem.ErrorMessage);
+            }
+            gluUserLevel.DataSource = userLevel.UserLevelList;
+            gluUserLevel.DisplayMember = "UserLevelName";
+            gluUserLevel.ValueMember = "UserLevelID";
         }
 
         private void LoadAllUser(TreeListNode group_node, string group_id, List<SYS_tblUserDTO> user_list)
@@ -120,11 +140,18 @@ namespace iPOS.IMC.Systems
             {
                 TreeListNode child_node;
                 trlPermission.BeginUnboundLoad();
-                List<SYS_tblPermissionDTO> permissionList = await SYS_tblPermissionBUS.GetPermissionList(CommonEngine.userInfo.UserID, ConfigEngine.Language, id, parent_id, is_user);
-                foreach (var item in permissionList)
+                SYS_tblPermissionDRO permissionList = await SYS_tblPermissionBUS.GetPermissionList(CommonEngine.userInfo.UserID, ConfigEngine.Language, id, parent_id, is_user);
+                if (permissionList.ResponseItem.IsError)
                 {
-                    child_node = trlPermission.AppendNode(new object[] { item.FunctionName, item.AllowAll, item.AllowInsert, item.AllowUpdate, item.AllowDelete, item.AllowAccess, item.AllowPrint, item.AllowImport, item.AllowExport, item.UserLevelID, item.Note, item.ID, item.FunctionID, item.Creater, item.CreateTime, item.Editer, item.EditTime }, parent_node);
-                    await LoadPermission(id, item.FunctionID, child_node, is_user);
+                    CommonEngine.ShowHTTPErrorMessage(permissionList.ResponseItem.ErrorCode, permissionList.ResponseItem.ErrorMessage);
+                }
+                else
+                {
+                    foreach (var item in permissionList.PermissionList)
+                    {
+                        child_node = trlPermission.AppendNode(new object[] { item.FunctionName, item.AllowAll, item.AllowInsert, item.AllowUpdate, item.AllowDelete, item.AllowAccess, item.AllowPrint, item.AllowImport, item.AllowExport, item.UserLevelID, item.Note, item.ID, item.FunctionID, item.Creater, item.CreateTime, item.Editer, item.EditTime }, parent_node);
+                        await LoadPermission(id, item.FunctionID, child_node, is_user);
+                    }
                 }
                 trlPermission.EndUnboundLoad();
                 trlPermission.ExpandAll();
@@ -153,7 +180,7 @@ namespace iPOS.IMC.Systems
                     AllowPrint = Convert.ToBoolean(node.GetValue(tlcAllowPrint)),
                     AllowImport = Convert.ToBoolean(node.GetValue(tlcAllowImport)),
                     AllowExport = Convert.ToBoolean(node.GetValue(tlcAllowExport)),
-                    UserLevelID = node.GetValue(tlcUserLevelID) + "",
+                    UserLevelID = node.GetValue(tlcUserLevel) + "",
                     Note = node.GetValue(tlcNote) + ""
                 });
 
@@ -168,10 +195,11 @@ namespace iPOS.IMC.Systems
             List<SYS_tblPermissionDTO> permissionList = new List<SYS_tblPermissionDTO>();
             try
             {
+                SYS_tblPermissionDRO result = new SYS_tblPermissionDRO();
                 permissionList = GetAllPermission(nodes);
                 string strMessage = LanguageEngine.GetMessageCaption("000024", ConfigEngine.Language).Replace("$Type$", is_user ? (ConfigEngine.Language.Equals("vi") ? "người dùng" : "user") : (ConfigEngine.Language.Equals("vi") ? "nhóm người dùng" : "group user")).Replace("$Name$", trlUser.FocusedNode.GetDisplayText(tlcName));
 
-                string strError = await SYS_tblPermissionBUS.UpdatePermission(CommonEngine.userInfo.UserID, ConfigEngine.Language, permissionList, is_user, new SYS_tblActionLogDTO
+                result = await SYS_tblPermissionBUS.UpdatePermission(CommonEngine.userInfo.UserID, ConfigEngine.Language, permissionList, is_user, new SYS_tblActionLogDTO
                 {
                     Activity = BaseConstant.COMMAND_INSERT_EN,
                     UserID = CommonEngine.userInfo.UserID,
@@ -182,7 +210,7 @@ namespace iPOS.IMC.Systems
                     DescriptionVN = strMessage.Replace("$IsError$", "thành công"),
                     DescriptionEN = strMessage.Replace("$IsError$", "successfully")
                 });
-                if (string.IsNullOrEmpty(strError))
+                if (string.IsNullOrEmpty(result.ResponseItem.Message))
                     CommonEngine.ShowMessage(strMessage.Replace("$IsError$", ConfigEngine.Language.Equals("vi") ? "thành công" : "successfully").Trim(), MessageType.Success);
                 else CommonEngine.ShowMessage(strMessage.Replace("$IsError$", ConfigEngine.Language.Equals("vi") ? "thất bại" : "failed").Trim(), MessageType.Error);
             }

@@ -9,15 +9,28 @@ namespace iPOS.DAO.Systems
 {
     public class SYS_tblGroupUserDAO : BaseDAO
     {
-        public async static Task<List<SYS_tblGroupUserDTO>> GetAllGroupUsers(string url)
+        public async static Task<SYS_tblGroupUserDRO> GetAllGroupUsers(string url)
         {
+            SYS_tblGroupUserDRO result = new SYS_tblGroupUserDRO();
             try
             {
                 var response_data = await HttpGet(url);
-                var response_collection = JsonConvert.DeserializeObject<SYS_tblGroupUserDRO>(response_data + "");
+                if (response_data.ToLower().StartsWith("error"))
+                {
+                    result.ResponseItem.IsError = true;
+                    string[] tmp = response_data.Split('|');
+                    result.ResponseItem.ErrorCode = tmp[1];
+                    result.ResponseItem.ErrorMessage = tmp[2];
+                }
+                else
+                {
+                    var response_collection = JsonConvert.DeserializeObject<SYS_tblGroupUserDRO>(response_data + "");
 
-                if (response_collection != null)
-                    return response_collection.GroupUserList;
+                    if (response_collection != null)
+                        result.GroupUserList = response_collection.GroupUserList;
+                }
+
+                return result;
             }
             catch (Exception ex)
             {
@@ -27,15 +40,28 @@ namespace iPOS.DAO.Systems
             return null;
         }
 
-        public async static Task<SYS_tblGroupUserDTO> GetGroupUserItem(string url)
+        public async static Task<SYS_tblGroupUserDRO> GetGroupUserItem(string url)
         {
+            SYS_tblGroupUserDRO result = new SYS_tblGroupUserDRO();
             try
             {
                 var response_data = await HttpGet(url);
-                var response_collection = JsonConvert.DeserializeObject<SYS_tblGroupUserDRO>(response_data + "");
+                if (response_data.ToLower().StartsWith("error"))
+                {
+                    result.ResponseItem.IsError = true;
+                    string[] tmp = response_data.Split('|');
+                    result.ResponseItem.ErrorCode = tmp[1];
+                    result.ResponseItem.ErrorMessage = tmp[2];
+                }
+                else
+                {
+                    var response_collection = JsonConvert.DeserializeObject<SYS_tblGroupUserDRO>(response_data + "");
 
-                if (response_collection != null)
-                    return response_collection.GroupUserItem;
+                    if (response_collection != null)
+                        result.GroupUserItem = response_collection.GroupUserItem;
+                }
+
+                return result;
             }
             catch (Exception ex)
             {
@@ -45,42 +71,66 @@ namespace iPOS.DAO.Systems
             return null;
         }
 
-        public async static Task<string> InsertUpdateGroupUser(string url, string json_data)
+        public async static Task<SYS_tblGroupUserDRO> InsertUpdateGroupUser(string url, string json_data)
         {
+            SYS_tblGroupUserDRO result = new SYS_tblGroupUserDRO();
             try
             {
                 var response_data = await HttpPost(url, json_data);
-                var response_collection = JsonConvert.DeserializeObject<SYS_tblGroupUserDRO>(response_data + "");
+                if (response_data.ToLower().StartsWith("error"))
+                {
+                    result.ResponseItem.IsError = true;
+                    string[] tmp = response_data.Split('|');
+                    result.ResponseItem.ErrorCode = tmp[1];
+                    result.ResponseItem.ErrorMessage = tmp[2];
+                }
+                else
+                {
+                    var response_collection = JsonConvert.DeserializeObject<SYS_tblGroupUserDRO>(response_data + "");
 
-                if (response_collection != null)
-                    return response_collection.Message;
+                    if (response_collection != null)
+                        result.ResponseItem.Message = response_collection.ResponseItem.Message;
+                }
+
+                return result;
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
-                return ex.Message;
             }
 
-            return "";
+            return null;
         }
 
-        public async static Task<string> DeleteGroupUser(string url)
+        public async static Task<SYS_tblGroupUserDRO> DeleteGroupUser(string url)
         {
+            SYS_tblGroupUserDRO result = new SYS_tblGroupUserDRO();
             try
             {
                 var response_data = await HttpGet(url);
-                var response_collection = JsonConvert.DeserializeObject<SYS_tblGroupUserDRO>(response_data + "");
+                if (response_data.ToLower().StartsWith("error"))
+                {
+                    result.ResponseItem.IsError = true;
+                    string[] tmp = response_data.Split('|');
+                    result.ResponseItem.ErrorCode = tmp[1];
+                    result.ResponseItem.ErrorMessage = tmp[2];
+                }
+                else
+                {
+                    var response_collection = JsonConvert.DeserializeObject<SYS_tblGroupUserDRO>(response_data + "");
 
-                if (response_collection != null)
-                    return response_collection.Message;
+                    if (response_collection != null)
+                        result.ResponseItem.Message = response_collection.ResponseItem.Message;
+                }
+
+                return result;
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
-                return ex.Message;
             }
 
-            return "";
+            return null;
         }
     }
 }

@@ -29,6 +29,7 @@ namespace iPOS.Core.Helper
                                    {
                                        name = parent.Attribute("name").Value,
                                        text = parent.Element("text"),
+                                       size = parent.Element("size"),
                                        controls = (from controls in parent.Descendants("control")
                                                    select new
                                                    {
@@ -94,6 +95,21 @@ namespace iPOS.Core.Helper
                                         result = string.Format("{0}|{1}|{2}|{3}", wizard_buttons.items[0].text.Element(language).Value, wizard_buttons.items[1].text.Element(language).Value, wizard_buttons.items[2].text.Element(language).Value, wizard_buttons.items[3].text.Element(language).Value);
                                     }
                                 }
+                                return result;
+                            case BaseConstant.FORM_SIZE:
+                                result = "";
+                                string width = "0", height = "0";
+                                if(ConfigEngine.TouchMode)
+                                {
+                                    width = parents.size.Element("touch").Attribute("width").Value;
+                                    height = parents.size.Element("touch").Attribute("height").Value;
+                                }
+                                else
+                                {
+                                    width = parents.size.Element("normal").Attribute("width").Value;
+                                    height = parents.size.Element("normal").Attribute("height").Value;
+                                }
+                                result = string.Format("{0}|{1}", width, height);
                                 return result;
                         }
                     }

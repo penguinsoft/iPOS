@@ -7,12 +7,13 @@ using iPOS.DAO.Systems;
 using iPOS.DRO.Systems;
 using iPOS.DTO.Systems;
 using Newtonsoft.Json;
+using iPOS.DRO;
 
 namespace iPOS.BUS.Systems
 {
     public class SYS_tblActionLogBUS : BaseBUS
     {
-        public async static Task<string> InsertUpdateLog(SYS_tblActionLogDTO item)
+        public async static Task<ResponseItem> InsertUpdateLog(SYS_tblActionLogDTO item)
         {
             try
             {
@@ -48,7 +49,7 @@ namespace iPOS.BUS.Systems
             catch (Exception ex)
             {
                 logger.Error(ex);
-                return ex.Message;
+                return null;
             }
         }
     }

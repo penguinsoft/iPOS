@@ -12,6 +12,7 @@ using iPOS.BUS.Systems;
 using iPOS.DTO.Systems;
 using iPOS.Core.Helper;
 using System.Threading.Tasks;
+using iPOS.DRO.Systems;
 
 namespace iPOS.IMC.Systems
 {
@@ -39,8 +40,7 @@ namespace iPOS.IMC.Systems
             try
             {
                 gridGroupUser.DataBindings.Clear();
-
-                List<iPOS.DTO.Systems.SYS_tblGroupUserDTO> list = await SYS_tblGroupUserBUS.GetAllGroupUsers(CommonEngine.userInfo.UserID, CommonEngine.userInfo.LanguageID, false, new SYS_tblActionLogDTO
+                SYS_tblGroupUserDRO list = await SYS_tblGroupUserBUS.GetAllGroupUsers(CommonEngine.userInfo.UserID, CommonEngine.userInfo.LanguageID, false, new SYS_tblActionLogDTO
                 {
                     Activity = BaseConstant.COMMAND_INSERT_EN,
                     UserID = CommonEngine.userInfo.UserID,
@@ -51,8 +51,14 @@ namespace iPOS.IMC.Systems
                     DescriptionVN = string.Format("Tài khoản '{0}' vừa tải thành công dữ liệu nhóm người dùng.", CommonEngine.userInfo.UserID),
                     DescriptionEN = string.Format("Account '{0}' downloaded successfully data of group users.", CommonEngine.userInfo.UserID)
                 });
-                gridGroupUser.DataSource = list;
-                barBottom.Visible = (list != null && list.Count > 0) ? true : false;
+                if (list.ResponseItem.IsError)
+                {
+                    CommonEngine.ShowHTTPErrorMessage(list.ResponseItem.ErrorCode, list.ResponseItem.ErrorMessage);
+                    return;
+                }
+                else gridGroupUser.DataSource = list.GroupUserList;
+                barBottom.Visible = (list != null && list.GroupUserList.Count > 0) ? true : false;
+                CommonEngine.LoadUserPermission("9", btnDelete, btnPrint, btnImport, btnExport);
             }
             catch (Exception ex)
             {
@@ -90,7 +96,8 @@ namespace iPOS.IMC.Systems
             if (group_code_list.Length > 0) group_code_list = group_code_list.Substring(1);
             if (group_id_list.Length > 0) group_id_list = group_id_list.Substring(1);
 
-            string strErr = "ready";
+            SYS_tblGroupUserDRO result = new SYS_tblGroupUserDRO();
+            result.ResponseItem.Message = "ready";
             if (!string.IsNullOrEmpty(group_id_list))
             {
                 try
@@ -98,7 +105,7 @@ namespace iPOS.IMC.Systems
                     if (group_id_list.Contains("$"))
                     {
                         if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000012", ConfigEngine.Language).Replace("$Count$", group_id_list.Split('$').Length.ToString())))
-                            strErr = await SYS_tblGroupUserBUS.DeleteGroupUser(group_id_list, group_code_list, CommonEngine.userInfo.UserID, ConfigEngine.Language, new SYS_tblActionLogDTO
+                            result = await SYS_tblGroupUserBUS.DeleteGroupUser(group_id_list, group_code_list, CommonEngine.userInfo.UserID, ConfigEngine.Language, new SYS_tblActionLogDTO
                             {
                                 Activity = BaseConstant.COMMAND_INSERT_EN,
                                 UserID = CommonEngine.userInfo.UserID,
@@ -113,7 +120,7 @@ namespace iPOS.IMC.Systems
                     else
                     {
                         if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000005", ConfigEngine.Language)))
-                            strErr = await SYS_tblGroupUserBUS.DeleteGroupUser(group_id_list, group_code_list, CommonEngine.userInfo.UserID, ConfigEngine.Language, new SYS_tblActionLogDTO
+                            result = await SYS_tblGroupUserBUS.DeleteGroupUser(group_id_list, group_code_list, CommonEngine.userInfo.UserID, ConfigEngine.Language, new SYS_tblActionLogDTO
                             {
                                 Activity = BaseConstant.COMMAND_DELETE_EN,
                                 UserID = CommonEngine.userInfo.UserID,
@@ -126,9 +133,14 @@ namespace iPOS.IMC.Systems
                             });
                     }
 
-                    if (!strErr.Equals("ready"))
-                        if (string.IsNullOrEmpty(strErr)) GetAllGroupUsers();
-                        else CommonEngine.ShowMessage(strErr, 0);
+                    if (result.ResponseItem.IsError)
+                    {
+                        CommonEngine.ShowHTTPErrorMessage(result.ResponseItem.ErrorCode, result.ResponseItem.ErrorMessage);
+                        return;
+                    }
+                    if (!result.ResponseItem.Message.Equals("ready"))
+                        if (string.IsNullOrEmpty(result.ResponseItem.Message)) GetAllGroupUsers();
+                        else CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
                 }
                 catch (Exception ex)
                 {
@@ -160,9 +172,9 @@ namespace iPOS.IMC.Systems
         {
             if (curItem.Count > 0)
             {
-                SYS_tblGroupUserDTO item = await SYS_tblGroupUserBUS.GetGroupUserItem(CommonEngine.userInfo.Username, ConfigEngine.Language, curItem[0].GroupID);
-                if (item != null)
-                    CommonEngine.OpenInputForm(new uc_GroupUserDetail(this, item), new Size(450, 290), true);
+                SYS_tblGroupUserDRO item = await SYS_tblGroupUserBUS.GetGroupUserItem(CommonEngine.userInfo.Username, ConfigEngine.Language, curItem[0].GroupID);
+                if (item != null && item.GroupUserItem != null)
+                    CommonEngine.OpenInputForm(new uc_GroupUserDetail(this, item.GroupUserItem), new Size(450, 290), true);
             }
         }
 

@@ -104,66 +104,6 @@
     <Compile Include="Helper\CommonEngine.cs" />
     <Compile Include="Helper\LanguageEngine.cs" />
     <Compile Include="Helper\ReportEngine.cs" />
-    <Compile Include="Products\uc_District.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Products\uc_District.Designer.cs">
-      <DependentUpon>uc_District.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Products\uc_DistrictDetail.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Products\uc_DistrictDetail.Designer.cs">
-      <DependentUpon>uc_DistrictDetail.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Products\uc_Province.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Products\uc_Province.Designer.cs">
-      <DependentUpon>uc_Province.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Products\uc_ProvinceDetail.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Products\uc_ProvinceDetail.Designer.cs">
-      <DependentUpon>uc_ProvinceDetail.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Products\uc_Stall.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Products\uc_Stall.Designer.cs">
-      <DependentUpon>uc_Stall.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Products\uc_StallDetail.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Products\uc_StallDetail.Designer.cs">
-      <DependentUpon>uc_StallDetail.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Products\uc_Store.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Products\uc_Store.Designer.cs">
-      <DependentUpon>uc_Store.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Products\uc_StoreDetail.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Products\uc_StoreDetail.Designer.cs">
-      <DependentUpon>uc_StoreDetail.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Products\uc_Warehouse.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Products\uc_Warehouse.Designer.cs">
-      <DependentUpon>uc_Warehouse.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Products\uc_WarehouseDetail.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Products\uc_WarehouseDetail.Designer.cs">
-      <DependentUpon>uc_WarehouseDetail.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Systems\uc_ChangePassword.cs">
@@ -223,36 +163,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmOpen.resx">
       <DependentUpon>frmOpen.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Products\uc_District.resx">
-      <DependentUpon>uc_District.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Products\uc_DistrictDetail.resx">
-      <DependentUpon>uc_DistrictDetail.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Products\uc_Province.resx">
-      <DependentUpon>uc_Province.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Products\uc_ProvinceDetail.resx">
-      <DependentUpon>uc_ProvinceDetail.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Products\uc_Stall.resx">
-      <DependentUpon>uc_Stall.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Products\uc_StallDetail.resx">
-      <DependentUpon>uc_StallDetail.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Products\uc_Store.resx">
-      <DependentUpon>uc_Store.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Products\uc_StoreDetail.resx">
-      <DependentUpon>uc_StoreDetail.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Products\uc_Warehouse.resx">
-      <DependentUpon>uc_Warehouse.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Products\uc_WarehouseDetail.resx">
-      <DependentUpon>uc_WarehouseDetail.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -377,6 +287,10 @@
     <ProjectReference Include="..\iPOS.Core\iPOS.Core.csproj">
       <Project>{7ae67df2-4fa7-4373-a084-ddad739d82b0}</Project>
       <Name>iPOS.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\iPOS.DRO\iPOS.DRO.csproj">
+      <Project>{ab2ba08d-beb2-4acc-bfc7-5617d63928e1}</Project>
+      <Name>iPOS.DRO</Name>
     </ProjectReference>
     <ProjectReference Include="..\iPOS.DTO\iPOS.DTO.csproj">
       <Project>{49580846-f792-4556-ad07-a237db2f4761}</Project>

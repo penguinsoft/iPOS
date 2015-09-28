@@ -14,6 +14,11 @@ namespace iPOS.Core.Helper
         {
             get { return IOEngine.Read("System", "MessagePath") + ""; }
         }
+
+        public static bool TouchMode
+        {
+            get { return IOEngine.Read<bool>("System", "TouchMode", false); }
+        }
         #endregion
 
         #region [Extensions]

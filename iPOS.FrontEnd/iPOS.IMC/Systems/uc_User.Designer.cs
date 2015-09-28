@@ -168,7 +168,7 @@
             this.gcolGroupName.Name = "gcolGroupName";
             this.gcolGroupName.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolGroupName.Visible = true;
-            this.gcolGroupName.VisibleIndex = 1;
+            this.gcolGroupName.VisibleIndex = 2;
             this.gcolGroupName.Width = 140;
             // 
             // gcolFullName

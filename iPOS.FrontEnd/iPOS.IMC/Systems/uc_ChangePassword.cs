@@ -10,6 +10,7 @@ using iPOS.IMC.Helper;
 using iPOS.Core.Helper;
 using iPOS.Core.Security;
 using iPOS.BUS.Systems;
+using iPOS.DRO.Systems;
 
 namespace iPOS.IMC.Systems
 {
@@ -103,10 +104,10 @@ namespace iPOS.IMC.Systems
         {
             if (CheckValidate())
             {
-                string strError = "";
+                SYS_tblUserDRO result = new SYS_tblUserDRO();
                 try
                 {
-                    strError = await SYS_tblUserBUS.ChangeUserPassword(txtUsername.Text, ConfigEngine.Language, EncryptEngine.Encrypt(txtNewPassword.Text), new DTO.Systems.SYS_tblActionLogDTO
+                    result = await SYS_tblUserBUS.ChangeUserPassword(txtUsername.Text, ConfigEngine.Language, EncryptEngine.Encrypt(txtNewPassword.Text), new DTO.Systems.SYS_tblActionLogDTO
                     {
                         Activity = BaseConstant.COMMAND_INSERT_EN,
                         UserID = txtUsername.Text,
@@ -119,7 +120,7 @@ namespace iPOS.IMC.Systems
                         DescriptionVN = string.Format("Tài khoản '{0}' vừa đổi mật khẩu thành công vào lúc {1}.", txtUsername.Text, DateTime.Now),
                         DescriptionEN = string.Format("Account '{0}' has change password successfully at {1}.", txtUsername.Text, DateTime.Now)
                     });
-                    if (string.IsNullOrEmpty(strError))
+                    if (string.IsNullOrEmpty(result.ResponseItem.Message))
                     {
                         CommonEngine.userInfo.Password = EncryptEngine.Encrypt(txtNewPassword.Text);
                         txtOldPassword.EditValue = txtNewPassword.EditValue = txtConfirmPassword.EditValue = null;
@@ -128,7 +129,7 @@ namespace iPOS.IMC.Systems
                     }
                     else
                     {
-                        CommonEngine.ShowMessage(strError, 0);
+                        CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
                         txtOldPassword.Focus();
                     }
                 }

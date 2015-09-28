@@ -14,6 +14,9 @@ using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraLayout;
 using DevExpress.XtraWizard;
 using DevExpress.XtraTreeList.Columns;
+using System.Drawing;
+using DevExpress.XtraBars.Docking;
+using DevExpress.XtraTreeList;
 
 namespace iPOS.IMC.Helper
 {
@@ -36,6 +39,15 @@ namespace iPOS.IMC.Helper
                 temp = (ConfigEngine.Language == "vi") ? "Cập Nhật" : "Update";
             else temp = (ConfigEngine.Language == "vi") ? "Thêm Mới" : "Add New";
             return string.Format("{0} {1}", temp, CaptionEngine.GetControlCaption(form_name, form_name, BaseConstant.PARENT_TEXT, language));
+        }
+
+        public static void ChangeFormSize(XtraForm form, string form_name, bool is_touch_mode)
+        {
+            int width = 0, height = 0;
+            string[] tmp = CaptionEngine.GetControlCaption(form_name, null, BaseConstant.FORM_SIZE, null).Split('|');
+            width = Convert.ToInt32(tmp[0]);
+            height = Convert.ToInt32(tmp[1]);
+            form.Size = new Size(width, height);
         }
 
         public static void ChangeTextXtraForm(XtraForm form, string language)
@@ -293,6 +305,35 @@ namespace iPOS.IMC.Helper
                 ChangeCaptionTreeListColumn(parent_name, language, tree_list_column);
         }
 
+        public static void ChangeCaptionTreeList(string parent_name, string language, TreeList tree_list)
+        {
+            var columnList = CaptionEngine.GetControlCaptionList(parent_name, tree_list.Name, BaseConstant.GRID_COLUMN, language);
+            if (columnList != null && columnList.Count > 0)
+            {
+                foreach (TreeListColumn column in tree_list.Columns)
+                {
+                    var caption = (from item in columnList
+                                   where item.Name.ToLower().Equals(column.Name.ToLower())
+                                   select item.Caption).FirstOrDefault();
+                    if (!string.IsNullOrEmpty(caption))
+                        column.Caption = caption;
+                }
+            }
+        }
+
+        public static void ChangeCaptionTreeList(string parent_name, string language, TreeList[] tree_lists)
+        {
+            foreach (TreeList tree_list in tree_lists)
+                ChangeCaptionTreeList(parent_name, language, tree_list);
+        }
+
+        private static void gridLookUpEdit_Popup(object sender, EventArgs e)
+        {
+            DevExpress.Utils.Win.IPopupControl popup = sender as DevExpress.Utils.Win.IPopupControl;
+            DevExpress.XtraEditors.Popup.PopupGridLookUpEditForm popupForm = popup.PopupWindow as DevExpress.XtraEditors.Popup.PopupGridLookUpEditForm;
+            popupForm.Width = (ConfigEngine.TouchMode) ? 600 : 400;
+        }
+
         public static void ChangeCaptionGridLookUpEdit(string parent_name, string language, GridLookUpEdit grid_lookup_edit)
         {
             grid_lookup_edit.Properties.NullText = "[" + CaptionEngine.GetControlCaption(parent_name, grid_lookup_edit.Name, BaseConstant.CONTROL_TEXT, language) + "]";
@@ -308,6 +349,7 @@ namespace iPOS.IMC.Helper
                         column.Caption = caption;
                 }
             }
+            grid_lookup_edit.Popup += new EventHandler(gridLookUpEdit_Popup);
         }
 
         public static void ChangeCaptionGridLookUpEdit(string parent_name, string language, GridLookUpEdit[] grid_lookup_edits)
@@ -325,6 +367,28 @@ namespace iPOS.IMC.Helper
         {
             foreach (PictureEdit picture_edit in picture_edits)
                 ChangeCaptionPictureEdit(parent_name, language, picture_edit);
+        }
+
+        public static void ChangeCaptionGroupControl(string parent_name, string language, GroupControl group_control)
+        {
+            group_control.Text = CaptionEngine.GetControlCaption(parent_name, group_control.Name, BaseConstant.CONTROL_TEXT, language);
+        }
+
+        public static void ChangeCaptionGroupControl(string parent_name, string language, GroupControl[] group_controls)
+        {
+            foreach (GroupControl group_control in group_controls)
+                ChangeCaptionGroupControl(parent_name, language, group_control);
+        }
+
+        public static void ChangeCaptionDockPanel(string parent_name, string language, DockPanel dock_panel)
+        {
+            dock_panel.Text = CaptionEngine.GetControlCaption(parent_name, dock_panel.Name, BaseConstant.CONTROL_TEXT, language);
+        }
+
+        public static void ChangeCaptionDockPanel(string parent_name, string language, DockPanel[] dock_panels)
+        {
+            foreach (DockPanel dock_panel in dock_panels)
+                ChangeCaptionDockPanel(parent_name, language, dock_panel);
         }
     }
 }

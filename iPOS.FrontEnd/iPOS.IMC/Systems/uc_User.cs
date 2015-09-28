@@ -11,6 +11,7 @@ using iPOS.IMC.Helper;
 using iPOS.BUS.Systems;
 using iPOS.Core.Helper;
 using System.Threading.Tasks;
+using iPOS.DRO.Systems;
 
 namespace iPOS.IMC.Systems
 {
@@ -38,8 +39,8 @@ namespace iPOS.IMC.Systems
             try
             {
                 gridUser.DataBindings.Clear();
-                List<iPOS.DTO.Systems.SYS_tblUserDTO> list = new List<iPOS.DTO.Systems.SYS_tblUserDTO>();
-                list = await SYS_tblUserBUS.GetAllUsers(CommonEngine.userInfo.UserID, CommonEngine.userInfo.LanguageID, new SYS_tblActionLogDTO
+                SYS_tblUserDRO users = new SYS_tblUserDRO();
+                users = await SYS_tblUserBUS.GetAllUsers(CommonEngine.userInfo.UserID, CommonEngine.userInfo.LanguageID, new SYS_tblActionLogDTO
                 {
                     Activity = BaseConstant.COMMAND_INSERT_EN,
                     UserID = CommonEngine.userInfo.UserID,
@@ -50,8 +51,14 @@ namespace iPOS.IMC.Systems
                     DescriptionVN = string.Format("Tài khoản '{0}' vừa tải thành công dữ liệu người dùng.", CommonEngine.userInfo.UserID),
                     DescriptionEN = string.Format("Account '{0}' downloaded successfully data of users.", CommonEngine.userInfo.UserID)
                 });
-                gridUser.DataSource = list;
-                barBottom.Visible = (list != null && list.Count > 0) ? true : false;
+                if (users.ResponseItem.IsError)
+                {
+                    CommonEngine.ShowHTTPErrorMessage(users.ResponseItem.ErrorCode, users.ResponseItem.ErrorMessage);
+                    return;
+                }
+                else gridUser.DataSource = users.UserList;
+                barBottom.Visible = (users != null && users.UserList.Count > 0) ? true : false;
+                CommonEngine.LoadUserPermission("10", btnDelete, btnPrint, btnImport, btnExport);
             }
             catch (Exception ex)
             {
@@ -84,13 +91,14 @@ namespace iPOS.IMC.Systems
 
             if (user_code_list.Length > 0) user_code_list = user_code_list.Substring(1);
 
-            string strErr = "ready";
+            SYS_tblUserDRO result = new SYS_tblUserDRO();
+            result.ResponseItem.Message = "ready";
             try
             {
                 if (user_code_list.Contains("$"))
                 {
                     if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000012", ConfigEngine.Language).Replace("$Count$", user_code_list.Split('$').Length.ToString())))
-                        strErr = await SYS_tblUserBUS.DeleteUser(user_code_list, CommonEngine.userInfo.Username, ConfigEngine.Language, new SYS_tblActionLogDTO
+                        result = await SYS_tblUserBUS.DeleteUser(user_code_list, CommonEngine.userInfo.Username, ConfigEngine.Language, new SYS_tblActionLogDTO
                         {
                             Activity = BaseConstant.COMMAND_INSERT_EN,
                             UserID = CommonEngine.userInfo.UserID,
@@ -105,7 +113,7 @@ namespace iPOS.IMC.Systems
                 else
                 {
                     if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000005", ConfigEngine.Language)))
-                        strErr = await SYS_tblUserBUS.DeleteUser(user_code_list, CommonEngine.userInfo.Username, ConfigEngine.Language, new SYS_tblActionLogDTO
+                        result = await SYS_tblUserBUS.DeleteUser(user_code_list, CommonEngine.userInfo.Username, ConfigEngine.Language, new SYS_tblActionLogDTO
                         {
                             Activity = BaseConstant.COMMAND_INSERT_EN,
                             UserID = CommonEngine.userInfo.UserID,
@@ -118,9 +126,14 @@ namespace iPOS.IMC.Systems
                         });
                 }
 
-                if (!strErr.Equals("ready"))
-                    if (string.IsNullOrEmpty(strErr)) GetAllUsers();
-                    else CommonEngine.ShowMessage(strErr, 0);
+                if (result.ResponseItem.IsError)
+                {
+                    CommonEngine.ShowHTTPErrorMessage(result.ResponseItem.ErrorCode, result.ResponseItem.ErrorMessage);
+                    return;
+                }
+                if (!result.ResponseItem.Message.Equals("ready"))
+                    if (string.IsNullOrEmpty(result.ResponseItem.Message)) GetAllUsers();
+                    else CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
             }
             catch (Exception ex)
             {
@@ -150,9 +163,9 @@ namespace iPOS.IMC.Systems
         {
             if (curItem.Count > 0)
             {
-                SYS_tblUserDTO item = await SYS_tblUserBUS.GetUserItem(CommonEngine.userInfo.UserID, ConfigEngine.Language, curItem[0].Username);
-                if (item != null)
-                    CommonEngine.OpenInputForm(new uc_UserDetail(this, item), new Size(455, 460), true);
+                SYS_tblUserDRO item = await SYS_tblUserBUS.GetUserItem(CommonEngine.userInfo.UserID, ConfigEngine.Language, curItem[0].Username);
+                if (item != null && item.UserItem != null)
+                    CommonEngine.OpenInputForm(new uc_UserDetail(this, item.UserItem), new Size(455, 460), true);
             }
         }
 
@@ -178,7 +191,7 @@ namespace iPOS.IMC.Systems
 
         private void btnExport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            CommonEngine.QuickExportGridViewData(ConvertEngine.ConvertObjectListToDataTable<SYS_tblGroupUserDTO>(gridUser.DataSource as List<SYS_tblGroupUserDTO>), grvUser, "User");
+            CommonEngine.QuickExportGridViewData(ConvertEngine.ConvertObjectListToDataTable<SYS_tblUserDTO>(gridUser.DataSource as List<SYS_tblUserDTO>), grvUser, "User");
         }
 
         private void btnClose_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)

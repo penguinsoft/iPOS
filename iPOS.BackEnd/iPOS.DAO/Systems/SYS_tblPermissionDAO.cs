@@ -10,6 +10,9 @@ namespace iPOS.DAO.Systems
     {
         List<SYS_tblPermissionDTO> GetAllPermisionList(string username, string language_id, string id, string parent_id, bool is_user);
 
+
+        SYS_tblPermissionDTO GetPermissionItem(string username, string language_id, string function_id);
+
         string UpdatePermission(string username, string language_id, List<SYS_tblPermissionDTO> permissionList, bool is_user);
     }
 
@@ -26,6 +29,23 @@ namespace iPOS.DAO.Systems
                 DataTable data = db.GetDataTable("SYS_spfrmPermission", new string[] { "Activity", "Username", "LanguageID", strParameter, "FunctionID" }, new object[] { strActivity, username, language_id, id, parent_id });
                 if (data != null && data.Rows.Count > 0)
                     result = ConvertEngine.ConvertDataTableToObjectList<SYS_tblPermissionDTO>(data);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public SYS_tblPermissionDTO GetPermissionItem(string username, string language_id, string function_id)
+        {
+            SYS_tblPermissionDTO result = new SYS_tblPermissionDTO();
+            try
+            {
+                DataTable data = db.GetDataTable("SYS_spfrmPermission", new string[] { "Activity", "UsernameOther", "LanguageID", "FunctionID" }, new object[] { "GetPermissionByFunction", username, language_id, function_id });
+                if (data != null && data.Rows.Count > 0)
+                    result = ConvertEngine.ConvertDataTableToObjectList<SYS_tblPermissionDTO>(data)[0];
             }
             catch (Exception ex)
             {
