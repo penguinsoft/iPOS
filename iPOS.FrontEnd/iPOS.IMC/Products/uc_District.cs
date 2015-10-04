@@ -12,6 +12,7 @@ using iPOS.BUS.Products;
 using iPOS.Core.Helper;
 using iPOS.DTO.Systems;
 using System.Threading.Tasks;
+using iPOS.DRO.Products;
 
 namespace iPOS.IMC.Products
 {
@@ -39,8 +40,7 @@ namespace iPOS.IMC.Products
             try
             {
                 gridDistrict.DataBindings.Clear();
-                List<PRO_tblDistrictDTO> list = new List<PRO_tblDistrictDTO>();
-                list = await PRO_tblDistrictBUS.GetAllDistricts(CommonEngine.userInfo.UserID, ConfigEngine.Language, false, "", new SYS_tblActionLogDTO
+                PRO_tblDistrictDRO list = await PRO_tblDistrictBUS.GetAllDistricts(CommonEngine.userInfo.UserID, ConfigEngine.Language, false, "", new SYS_tblActionLogDTO
                 {
                     Activity = BaseConstant.COMMAND_INSERT_EN,
                     UserID = CommonEngine.userInfo.UserID,
@@ -51,8 +51,10 @@ namespace iPOS.IMC.Products
                     DescriptionVN = string.Format("Tài khoản '{0}' vừa tải thành công dữ liệu quận huyện.", CommonEngine.userInfo.UserID),
                     DescriptionEN = string.Format("Account '{0}' downloaded successfully data of districts.", CommonEngine.userInfo.UserID)
                 });
-                gridDistrict.DataSource = list;
-                barBottom.Visible = (list != null && list.Count > 0) ? true : false;
+                if (list.ResponseItem.IsError)
+                    CommonEngine.ShowHTTPErrorMessage(list.ResponseItem);
+                gridDistrict.DataSource = (list.DistrictList != null) ? list.DistrictList : null;
+                barBottom.Visible = (list.DistrictList != null && list.DistrictList.Count > 0) ? true : false;
             }
             catch (Exception ex)
             {
@@ -91,13 +93,14 @@ namespace iPOS.IMC.Products
             if (district_code_list.Length > 0) district_code_list = district_code_list.Substring(1);
             if (district_id_list.Length > 0) district_id_list = district_id_list.Substring(1);
 
-            string strErr = "ready";
+            PRO_tblDistrictDRO result = new PRO_tblDistrictDRO();
+            result.ResponseItem.Message = "ready";
             try
             {
                 if (district_id_list.Contains("$"))
                 {
                     if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000012", ConfigEngine.Language).Replace("$Count$", district_id_list.Split('$').Length.ToString())))
-                        strErr = await PRO_tblDistrictBUS.DeleteDistrict(CommonEngine.userInfo.Username, ConfigEngine.Language, district_id_list, new SYS_tblActionLogDTO
+                        result = await PRO_tblDistrictBUS.DeleteDistrict(CommonEngine.userInfo.Username, ConfigEngine.Language, district_id_list, new SYS_tblActionLogDTO
                         {
                             Activity = BaseConstant.COMMAND_INSERT_EN,
                             UserID = CommonEngine.userInfo.UserID,
@@ -112,7 +115,7 @@ namespace iPOS.IMC.Products
                 else
                 {
                     if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000005", ConfigEngine.Language)))
-                        strErr = await PRO_tblDistrictBUS.DeleteDistrict(CommonEngine.userInfo.Username, ConfigEngine.Language, district_id_list, new SYS_tblActionLogDTO
+                        result = await PRO_tblDistrictBUS.DeleteDistrict(CommonEngine.userInfo.Username, ConfigEngine.Language, district_id_list, new SYS_tblActionLogDTO
                         {
                             Activity = BaseConstant.COMMAND_INSERT_EN,
                             UserID = CommonEngine.userInfo.UserID,
@@ -124,10 +127,15 @@ namespace iPOS.IMC.Products
                             DescriptionEN = string.Format("Account '{0}' has deleted district successfully with district code is '{1}'.", CommonEngine.userInfo.UserID, district_code_list)
                         });
                 }
+                if (result.ResponseItem.IsError)
+                {
+                    CommonEngine.ShowHTTPErrorMessage(result.ResponseItem);
+                    return;
+                }
 
-                if (!strErr.Equals("ready"))
-                    if (string.IsNullOrEmpty(strErr)) GetAllDistrict();
-                    else CommonEngine.ShowMessage(strErr, 0);
+                if (!result.ResponseItem.Message.Equals("ready"))
+                    if (string.IsNullOrEmpty(result.ResponseItem.Message)) GetAllDistrict();
+                    else CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
             }
             catch (Exception ex)
             {
@@ -157,9 +165,9 @@ namespace iPOS.IMC.Products
         {
             if (curItem.Count > 0)
             {
-                PRO_tblDistrictDTO item = await PRO_tblDistrictBUS.GetDistrictItem(CommonEngine.userInfo.UserID, ConfigEngine.Language, curItem[0].DistrictID);
-                if (item != null)
-                    CommonEngine.OpenInputForm(new uc_DistrictDetail(this, item), new Size(435, 270), true);
+                PRO_tblDistrictDRO item = await PRO_tblDistrictBUS.GetDistrictItem(CommonEngine.userInfo.UserID, ConfigEngine.Language, curItem[0].DistrictID);
+                if (item.DistrictItem != null)
+                    CommonEngine.OpenInputForm(new uc_DistrictDetail(this, item.DistrictItem), new Size(435, 270), true);
             }
         }
 

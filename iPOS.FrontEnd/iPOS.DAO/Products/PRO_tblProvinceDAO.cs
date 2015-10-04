@@ -9,78 +9,132 @@ namespace iPOS.DAO.Products
 {
     public class PRO_tblProvinceDAO : BaseDAO
     {
-        public async static Task<List<PRO_tblProvinceDTO>> GetAllProvinces(string url)
+        public async static Task<PRO_tblProvinceDRO> GetAllProvinces(string url)
         {
+            PRO_tblProvinceDRO result = new PRO_tblProvinceDRO();
             try
             {
                 var response_data = await HttpGet(url);
-                var response_collection = JsonConvert.DeserializeObject<PRO_tblProvinceDRO>(response_data + "");
+                if (response_data.ToLower().StartsWith("error"))
+                {
+                    result.ResponseItem.IsError = true;
+                    string[] tmp = response_data.Split('|');
+                    result.ResponseItem.ErrorCode = tmp[1];
+                    result.ResponseItem.ErrorMessage = tmp[2];
+                }
+                else
+                {
+                    var response_collection = JsonConvert.DeserializeObject<PRO_tblProvinceDRO>(response_data + "");
 
-                if (response_collection != null)
-                    return response_collection.ProvinceList;
+                    if (response_collection != null)
+                    {
+                        result.ProvinceList = response_collection.ProvinceList;
+                    }
+                }
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
+                result.ResponseItem.Message = ex.Message;
             }
 
-            return null;
+            return result;
         }
 
-        public async static Task<PRO_tblProvinceDTO> GetProvinceItem(string url)
+        public async static Task<PRO_tblProvinceDRO> GetProvinceItem(string url)
         {
+            PRO_tblProvinceDRO result = new PRO_tblProvinceDRO();
             try
             {
                 var response_data = await HttpGet(url);
-                var response_collection = JsonConvert.DeserializeObject<PRO_tblProvinceDRO>(response_data + "");
+                if (response_data.ToLower().StartsWith("error"))
+                {
+                    result.ResponseItem.IsError = true;
+                    string[] tmp = response_data.Split('|');
+                    result.ResponseItem.ErrorCode = tmp[1];
+                    result.ResponseItem.ErrorMessage = tmp[2];
+                }
+                else
+                {
+                    var response_collection = JsonConvert.DeserializeObject<PRO_tblProvinceDRO>(response_data + "");
 
-                if (response_collection != null)
-                    return response_collection.ProvinceItem;
+                    if (response_collection != null)
+                    {
+                        result.ProvinceItem = response_collection.ProvinceItem;
+                    }
+                }
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
+                result.ResponseItem.Message = ex.Message;
             }
 
-            return null;
+            return result;
         }
 
-        public async static Task<string> InsertUpdateProvince(string url, string json_data)
+        public async static Task<PRO_tblProvinceDRO> InsertUpdateProvince(string url, string json_data)
         {
+            PRO_tblProvinceDRO result = new PRO_tblProvinceDRO();
             try
             {
                 var response_data = await HttpPost(url, json_data);
-                var response_collection = JsonConvert.DeserializeObject<PRO_tblProvinceDRO>(response_data + "");
+                if (response_data.ToLower().StartsWith("error"))
+                {
+                    result.ResponseItem.IsError = true;
+                    string[] tmp = response_data.Split('|');
+                    result.ResponseItem.ErrorCode = tmp[1];
+                    result.ResponseItem.ErrorMessage = tmp[2];
+                }
+                else
+                {
+                    var response_collection = JsonConvert.DeserializeObject<PRO_tblProvinceDRO>(response_data + "");
 
-                if (response_collection != null)
-                    return response_collection.Message;
+                    if (response_collection != null)
+                    {
+                        result.ResponseItem = response_collection.ResponseItem;
+                    }
+                }
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
-                return ex.Message;
+                result.ResponseItem.Message = ex.Message;
             }
 
-            return "";
+            return result;
         }
 
-        public async static Task<string> DeleteProvince(string url)
+        public async static Task<PRO_tblProvinceDRO> DeleteProvince(string url)
         {
+            PRO_tblProvinceDRO result = new PRO_tblProvinceDRO();
             try
             {
                 var response_data = await HttpGet(url);
-                var response_collection = JsonConvert.DeserializeObject<PRO_tblProvinceDRO>(response_data + "");
+                if (response_data.ToLower().StartsWith("error"))
+                {
+                    result.ResponseItem.IsError = true;
+                    string[] tmp = response_data.Split('|');
+                    result.ResponseItem.ErrorCode = tmp[1];
+                    result.ResponseItem.ErrorMessage = tmp[2];
+                }
+                else
+                {
+                    var response_collection = JsonConvert.DeserializeObject<PRO_tblProvinceDRO>(response_data + "");
 
-                if (response_collection != null)
-                    return response_collection.Message;
+                    if (response_collection != null)
+                    {
+                        result.ResponseItem = response_collection.ResponseItem;
+                    }
+                }
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
-                return ex.Message;
+                result.ResponseItem.Message = ex.Message;
             }
 
-            return "";
+            return result;
         }
     }
 }

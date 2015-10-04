@@ -12,23 +12,47 @@ namespace iPOS.BUS.Products
 {
     public class PRO_tblProvinceBUS : BaseBUS
     {
-        public async static Task<List<PRO_tblProvinceDTO>> GetAllProvinces(string username, string language_id, bool is_combobox, SYS_tblActionLogDTO actionLog)
+        public async static Task<PRO_tblProvinceDRO> GetAllProvinces(string username, string language_id, bool is_combobox, SYS_tblActionLogDTO actionLog)
         {
-            string url = string.Format(@"{0}/GetAllProvinces?Username={1}&LanguageID={2}&GetCombobox={3}", GetBaseUrl(), username, language_id, is_combobox ? "True" : "False");
+            PRO_tblProvinceDRO result = new PRO_tblProvinceDRO();
+            try
+            {
+                string url = string.Format(@"{0}/GetAllProvinces?Username={1}&LanguageID={2}&GetCombobox={3}", GetBaseUrl(), username, language_id, is_combobox ? "True" : "False");
 
-            if (actionLog != null) await SYS_tblActionLogBUS.InsertUpdateLog(actionLog);
-            return await PRO_tblProvinceDAO.GetAllProvinces(url);
+                result = await PRO_tblProvinceDAO.GetAllProvinces(url);
+                if (string.IsNullOrEmpty(result.ResponseItem.Message))
+                    if (actionLog != null) result.ResponseItem = await SYS_tblActionLogBUS.InsertUpdateLog(actionLog);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                result.ResponseItem.Message = ex.Message;
+            }
+
+            return result;
         }
 
-        public async static Task<PRO_tblProvinceDTO> GetProvinceItem(string username, string language_id, string province_id)
+        public async static Task<PRO_tblProvinceDRO> GetProvinceItem(string username, string language_id, string province_id)
         {
-            string url = string.Format(@"{0}/GetProvinceByID?Username={1}&LanguageID={2}&ProvinceID={3}", GetBaseUrl(), username, language_id, province_id);
+            PRO_tblProvinceDRO result = new PRO_tblProvinceDRO();
+            try
+            {
+                string url = string.Format(@"{0}/GetProvinceByID?Username={1}&LanguageID={2}&ProvinceID={3}", GetBaseUrl(), username, language_id, province_id);
 
-            return await PRO_tblProvinceDAO.GetProvinceItem(url);
+                result = await PRO_tblProvinceDAO.GetProvinceItem(url);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                result.ResponseItem.Message = ex.Message;
+            }
+
+            return result;
         }
 
-        public async static Task<string> InsertUpdateProvince(PRO_tblProvinceDTO item, SYS_tblActionLogDTO actionLog)
+        public async static Task<PRO_tblProvinceDRO> InsertUpdateProvince(PRO_tblProvinceDTO item, SYS_tblActionLogDTO actionLog)
         {
+            PRO_tblProvinceDRO result = new PRO_tblProvinceDRO();
             try
             {
                 string url = string.Format(@"{0}/InsertUpdateProvince", GetBaseUrl());
@@ -50,32 +74,35 @@ namespace iPOS.BUS.Products
                     DateFormatHandling = DateFormatHandling.MicrosoftDateFormat
                 }) + "}";
 
-                string result = await PRO_tblProvinceDAO.InsertUpdateProvince(url, json_data);
-                if (string.IsNullOrEmpty(result)) result = await SYS_tblActionLogBUS.InsertUpdateLog(actionLog);
-                return result;
+                result = await PRO_tblProvinceDAO.InsertUpdateProvince(url, json_data);
+                if (string.IsNullOrEmpty(result.ResponseItem.Message)) result.ResponseItem = await SYS_tblActionLogBUS.InsertUpdateLog(actionLog);
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
-                return ex.Message;
+                result.ResponseItem.Message = ex.Message;
             }
+
+            return result;
         }
 
-        public async static Task<string> DeleteProvince(string username, string language_id, string province_id_list, SYS_tblActionLogDTO actionLog)
+        public async static Task<PRO_tblProvinceDRO> DeleteProvince(string username, string language_id, string province_id_list, SYS_tblActionLogDTO actionLog)
         {
+            PRO_tblProvinceDRO result = new PRO_tblProvinceDRO();
             try
             {
                 string url = string.Format(@"{0}/DeleteProvince?Username={1}&LanguageID={2}&ProvinceIDList={3}", GetBaseUrl(), username, language_id, province_id_list);
 
-                string result = await PRO_tblProvinceDAO.DeleteProvince(url);
-                if (string.IsNullOrEmpty(result)) result = await SYS_tblActionLogBUS.InsertUpdateLog(actionLog);
-                return result;
+                result = await PRO_tblProvinceDAO.DeleteProvince(url);
+                if (string.IsNullOrEmpty(result.ResponseItem.Message)) result.ResponseItem = await SYS_tblActionLogBUS.InsertUpdateLog(actionLog);
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
-                return ex.Message;
+                result.ResponseItem.Message = ex.Message;
             }
+
+            return result;
         }
     }
 }

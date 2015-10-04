@@ -383,6 +383,7 @@ namespace iPOS.IMC.Helper
         public static void ChangeCaptionDockPanel(string parent_name, string language, DockPanel dock_panel)
         {
             dock_panel.Text = CaptionEngine.GetControlCaption(parent_name, dock_panel.Name, BaseConstant.CONTROL_TEXT, language);
+
         }
 
         public static void ChangeCaptionDockPanel(string parent_name, string language, DockPanel[] dock_panels)

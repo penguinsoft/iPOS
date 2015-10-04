@@ -12,23 +12,47 @@ namespace iPOS.BUS.Products
 {
     public class PRO_tblStoreBUS : BaseBUS
     {
-        public async static Task<List<PRO_tblStoreDTO>> GetAllStores(string username, string language_id, bool is_combobox, SYS_tblActionLogDTO actionLog)
+        public async static Task<PRO_tblStoreDRO> GetAllStores(string username, string language_id, bool is_combobox, SYS_tblActionLogDTO actionLog)
         {
-            string url = string.Format(@"{0}/GetAllStores?Username={1}&LanguageID={2}&GetCombobox={3}", GetBaseUrl(), username, language_id, is_combobox ? "True" : "False");
+            PRO_tblStoreDRO result = new PRO_tblStoreDRO();
+            try
+            {
+                string url = string.Format(@"{0}/GetAllStores?Username={1}&LanguageID={2}&GetCombobox={3}", GetBaseUrl(), username, language_id, is_combobox ? "True" : "False");
 
-            if (actionLog != null) await SYS_tblActionLogBUS.InsertUpdateLog(actionLog);
-            return await PRO_tblStoreDAO.GetAllStores(url);
+                result = await PRO_tblStoreDAO.GetAllStores(url);
+                if(string.IsNullOrEmpty(result.ResponseItem.Message))
+                if (actionLog != null) result.ResponseItem = await SYS_tblActionLogBUS.InsertUpdateLog(actionLog);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                result.ResponseItem.Message = ex.Message;
+            }
+
+            return result;
         }
 
-        public async static Task<PRO_tblStoreDTO> GetStoreItem(string username, string language_id, string store_id)
+        public async static Task<PRO_tblStoreDRO> GetStoreItem(string username, string language_id, string store_id)
         {
-            string url = string.Format(@"{0}/GetStoreByID?Username={1}&LanguageID={2}&StoreID={3}", GetBaseUrl(), username, language_id, store_id);
+            PRO_tblStoreDRO result = new PRO_tblStoreDRO();
+            try
+            {
+                string url = string.Format(@"{0}/GetStoreByID?Username={1}&LanguageID={2}&StoreID={3}", GetBaseUrl(), username, language_id, store_id);
 
-            return await PRO_tblStoreDAO.GetStoreItem(url);
+                result = await PRO_tblStoreDAO.GetStoreItem(url);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                result.ResponseItem.Message = ex.Message;
+            }
+
+            return result;
         }
 
-        public async static Task<string> InsertUpdateStore(PRO_tblStoreDTO item, SYS_tblActionLogDTO actionLog)
+        public async static Task<PRO_tblStoreDRO> InsertUpdateStore(PRO_tblStoreDTO item, SYS_tblActionLogDTO actionLog)
         {
+            PRO_tblStoreDRO result = new PRO_tblStoreDRO();
             try
             {
                 string url = string.Format(@"{0}/InsertUpdateStore", GetBaseUrl());
@@ -63,32 +87,35 @@ namespace iPOS.BUS.Products
                     DateFormatHandling = DateFormatHandling.MicrosoftDateFormat
                 }) + "}";
 
-                string result = await PRO_tblStoreDAO.InsertUpdateStore(url, json_data);
-                if (string.IsNullOrEmpty(result)) result = await SYS_tblActionLogBUS.InsertUpdateLog(actionLog);
-                return result;
+                result = await PRO_tblStoreDAO.InsertUpdateStore(url, json_data);
+                if (string.IsNullOrEmpty(result.ResponseItem.Message)) result.ResponseItem = await SYS_tblActionLogBUS.InsertUpdateLog(actionLog);
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
-                return ex.Message;
+                result.ResponseItem.Message = ex.Message;
             }
+
+            return result;
         }
 
-        public async static Task<string> DeleteStore(string username, string language_id, string store_id_list, SYS_tblActionLogDTO actionLog)
+        public async static Task<PRO_tblStoreDRO> DeleteStore(string username, string language_id, string store_id_list, SYS_tblActionLogDTO actionLog)
         {
+            PRO_tblStoreDRO result = new PRO_tblStoreDRO();
             try
             {
                 string url = string.Format(@"{0}/DeleteStore?Username={1}&LanguageID={2}&StoreIDList={3}", GetBaseUrl(), username, language_id, store_id_list);
 
-                string result = await PRO_tblStoreDAO.DeleteStore(url);
-                if (string.IsNullOrEmpty(result)) result = await SYS_tblActionLogBUS.InsertUpdateLog(actionLog);
-                return result;
+                result = await PRO_tblStoreDAO.DeleteStore(url);
+                if (string.IsNullOrEmpty(result.ResponseItem.Message)) result.ResponseItem = await SYS_tblActionLogBUS.InsertUpdateLog(actionLog);
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
-                return ex.Message;
+                result.ResponseItem.Message = ex.Message;
             }
+
+            return result;
         }
     }
 }

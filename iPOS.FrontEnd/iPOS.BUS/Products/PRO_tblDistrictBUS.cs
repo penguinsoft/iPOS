@@ -12,23 +12,47 @@ namespace iPOS.BUS.Products
 {
     public class PRO_tblDistrictBUS : BaseBUS
     {
-        public async static Task<List<PRO_tblDistrictDTO>> GetAllDistricts(string username, string language_id, bool is_combobox, string province_id, SYS_tblActionLogDTO actionLog)
+        public async static Task<PRO_tblDistrictDRO> GetAllDistricts(string username, string language_id, bool is_combobox, string province_id, SYS_tblActionLogDTO actionLog)
         {
-            string url = string.Format(@"{0}/GetAllDistrict?Username={1}&LanguageID={2}&ProvinceID={3}&GetCombobox={4}", GetBaseUrl(), username, language_id, province_id, is_combobox ? "True" : "False");
+            PRO_tblDistrictDRO result=new PRO_tblDistrictDRO();
+            try
+            {
+                string url = string.Format(@"{0}/GetAllDistrict?Username={1}&LanguageID={2}&ProvinceID={3}&GetCombobox={4}", GetBaseUrl(), username, language_id, province_id, is_combobox ? "True" : "False");
 
-            if (actionLog != null) await SYS_tblActionLogBUS.InsertUpdateLog(actionLog);
-            return await PRO_tblDistrictDAO.GetAllDistricts(url);
+                result = await PRO_tblDistrictDAO.GetAllDistricts(url);
+                if (string.IsNullOrEmpty(result.ResponseItem.Message))
+                    if (actionLog != null) result.ResponseItem = await SYS_tblActionLogBUS.InsertUpdateLog(actionLog);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                result.ResponseItem.Message = ex.Message;
+            }
+
+            return result;
         }
 
-        public async static Task<PRO_tblDistrictDTO> GetDistrictItem(string username, string language_id, string district_id)
+        public async static Task<PRO_tblDistrictDRO> GetDistrictItem(string username, string language_id, string district_id)
         {
-            string url = string.Format(@"{0}/GetDistrictByID?Username={1}&LanguageID={2}&DistrictID={3}", GetBaseUrl(), username, language_id, district_id);
+            PRO_tblDistrictDRO result = new PRO_tblDistrictDRO();
+            try
+            {
+                string url = string.Format(@"{0}/GetDistrictByID?Username={1}&LanguageID={2}&DistrictID={3}", GetBaseUrl(), username, language_id, district_id);
 
-            return await PRO_tblDistrictDAO.GetDistrictItem(url);
+                result = await PRO_tblDistrictDAO.GetDistrictItem(url);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                result.ResponseItem.Message = ex.Message;
+            }
+
+            return result;
         }
 
-        public async static Task<string> InsertUpdateDistrict(PRO_tblDistrictDTO item, SYS_tblActionLogDTO actionLog)
+        public async static Task<PRO_tblDistrictDRO> InsertUpdateDistrict(PRO_tblDistrictDTO item, SYS_tblActionLogDTO actionLog)
         {
+            PRO_tblDistrictDRO result = new PRO_tblDistrictDRO();
             try
             {
                 string url = string.Format(@"{0}/InsertUpdateDistrict", GetBaseUrl());
@@ -51,32 +75,34 @@ namespace iPOS.BUS.Products
                     DateFormatHandling = DateFormatHandling.MicrosoftDateFormat
                 }) + "}";
 
-                string result = await PRO_tblDistrictDAO.InsertUpdateDistrict(url, json_data);
-                if (string.IsNullOrEmpty(result)) result = await SYS_tblActionLogBUS.InsertUpdateLog(actionLog);
-                return result;
+                result = await PRO_tblDistrictDAO.InsertUpdateDistrict(url, json_data);
+                if (string.IsNullOrEmpty(result.ResponseItem.Message)) result.ResponseItem = await SYS_tblActionLogBUS.InsertUpdateLog(actionLog);
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
-                return ex.Message;
+                result.ResponseItem.Message = ex.Message;
             }
+            return result;
         }
 
-        public async static Task<string> DeleteDistrict(string username, string language_id, string district_id_list, SYS_tblActionLogDTO actionLog)
+        public async static Task<PRO_tblDistrictDRO> DeleteDistrict(string username, string language_id, string district_id_list, SYS_tblActionLogDTO actionLog)
         {
+            PRO_tblDistrictDRO result = new PRO_tblDistrictDRO();
             try
             {
                 string url = string.Format(@"{0}/DeleteDistrict?Username={1}&LanguageID={2}&DistrictIDList={3}", GetBaseUrl(), username, language_id, district_id_list);
 
-                string result = await PRO_tblDistrictDAO.DeleteDistrict(url);
-                if (string.IsNullOrEmpty(result)) result = await SYS_tblActionLogBUS.InsertUpdateLog(actionLog);
-                return result;
+                result = await PRO_tblDistrictDAO.DeleteDistrict(url);
+                if (string.IsNullOrEmpty(result.ResponseItem.Message)) result.ResponseItem = await SYS_tblActionLogBUS.InsertUpdateLog(actionLog);
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
-                return ex.Message;
+                result.ResponseItem.Message = ex.Message;
             }
+
+            return result;
         }
     }
 }

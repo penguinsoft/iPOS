@@ -35,10 +35,10 @@ namespace iPOS.DCO.Products
         public string Description { get; set; }
 
         [DataMember]
-        public Int32 Level1ID { get; set; }
+        public System.Nullable<Int32> Level1ID { get; set; }
 
         [DataMember]
-        public Int32 Level2ID { get; set; }
+        public System.Nullable<Int32> Level2ID { get; set; }
 
         [DataMember]
         public bool Visible { get; set; }
@@ -47,7 +47,7 @@ namespace iPOS.DCO.Products
         public string Creater { get; set; }
 
         [DataMember]
-        public DateTime CreateTime { get; set; }
+        public System.Nullable<DateTime> CreateTime { get; set; }
 
         [DataMember]
         public string Editer { get; set; }
@@ -63,6 +63,18 @@ namespace iPOS.DCO.Products
 
         [DataMember]
         public string LanguageID { get; set; }
+
+        [DataMember]
+        public string Level3Name { get; set; }
+
+        [DataMember]
+        public string FullLevel3Name { get; set; }
+
+        [DataMember]
+        public string Level1Name { get; set; }
+
+        [DataMember]
+        public string Level2Name { get; set; }
     }
 
     [DataContract]

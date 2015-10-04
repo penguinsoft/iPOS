@@ -53,10 +53,9 @@ namespace iPOS.IMC.Systems
                 });
                 if (users.ResponseItem.IsError)
                 {
-                    CommonEngine.ShowHTTPErrorMessage(users.ResponseItem.ErrorCode, users.ResponseItem.ErrorMessage);
-                    return;
+                    CommonEngine.ShowHTTPErrorMessage(users.ResponseItem);
                 }
-                else gridUser.DataSource = users.UserList;
+                gridUser.DataSource = users.UserList;
                 barBottom.Visible = (users != null && users.UserList.Count > 0) ? true : false;
                 CommonEngine.LoadUserPermission("10", btnDelete, btnPrint, btnImport, btnExport);
             }
@@ -128,7 +127,7 @@ namespace iPOS.IMC.Systems
 
                 if (result.ResponseItem.IsError)
                 {
-                    CommonEngine.ShowHTTPErrorMessage(result.ResponseItem.ErrorCode, result.ResponseItem.ErrorMessage);
+                    CommonEngine.ShowHTTPErrorMessage(result.ResponseItem);
                     return;
                 }
                 if (!result.ResponseItem.Message.Equals("ready"))

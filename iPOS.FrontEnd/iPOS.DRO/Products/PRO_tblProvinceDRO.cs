@@ -10,6 +10,11 @@ namespace iPOS.DRO.Products
         public List<PRO_tblProvinceDTO> ProvinceList { get; set; }
 
         public PRO_tblProvinceDTO ProvinceItem { get; set; }
+
+        public PRO_tblProvinceDRO()
+        {
+            ResponseItem = new ResponseItem();
+        }
     }
 
     [DataContract]

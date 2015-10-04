@@ -43,5 +43,7 @@ namespace iPOS.DTO.Systems
         public string Editer { get; set; }
 
         public System.Nullable<DateTime> EditTime { get; set; }
+
+        public string UserLevelName { get; set; }
     }
 }

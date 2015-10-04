@@ -10,6 +10,11 @@ namespace iPOS.DRO.Products
         public List<PRO_tblWarehouseDTO> WarehouseList { get; set; }
 
         public PRO_tblWarehouseDTO WarehouseItem { get; set; }
+
+        public PRO_tblWarehouseDRO()
+        {
+            ResponseItem = new ResponseItem();
+        }
     }
 
     [DataContract]

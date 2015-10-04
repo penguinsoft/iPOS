@@ -2,7 +2,7 @@
 
 namespace iPOS.DTO.Products
 {
-    public class PRO_tblProvinceDTO
+    public class PRO_tblProvinceDTO : BaseDTO
     {
         public string ProvinceID { get; set; }
 
@@ -17,22 +17,6 @@ namespace iPOS.DTO.Products
         public bool Used { get; set; }
 
         public string Note { get; set; }
-
-        public string Activity { get; set; }
-
-        public string UserID { get; set; }
-
-        public string LanguageID { get; set; }
-
-        public bool Visible { get; set; }
-
-        public string Creater { get; set; }
-
-        public System.Nullable<DateTime> CreateTime { get; set; }
-
-        public string Editer { get; set; }
-
-        public System.Nullable<DateTime> EditTime { get; set; }
 
         public string ProvinceName { get; set; }
 

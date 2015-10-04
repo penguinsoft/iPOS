@@ -65,10 +65,10 @@ namespace iPOS.IMC.Helper
             return false;
         }
 
-        public static void ShowHTTPErrorMessage(string code, string name)
+        public static void ShowHTTPErrorMessage(iPOS.DRO.ResponseItem res)
         {
             string title = LanguageEngine.GetMessageCaption("ERROR_TITLE_CAPTION", ConfigEngine.Language);
-            XtraMessageBox.Show(string.Format("Request error: {0}\n{1}", code, name), title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            XtraMessageBox.Show(string.Format("Request error: {0}\n{1}", res.ErrorCode, res.ErrorMessage), title, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         public static void OpenInputForm(XtraUserControl uc, Size size)
@@ -306,7 +306,7 @@ namespace iPOS.IMC.Helper
             permission = await iPOS.BUS.Systems.SYS_tblPermissionBUS.GetPermissionItem(CommonEngine.userInfo.UserID, ConfigEngine.Language, function_id);
             if (permission.ResponseItem.IsError)
             {
-                CommonEngine.ShowHTTPErrorMessage(permission.ResponseItem.ErrorCode, permission.ResponseItem.ErrorMessage);
+                CommonEngine.ShowHTTPErrorMessage(permission.ResponseItem);
                 btnSaveClose.Enabled = btnSaveInsert.Enabled = false;
                 return;
             }
@@ -329,7 +329,7 @@ namespace iPOS.IMC.Helper
             permission = await iPOS.BUS.Systems.SYS_tblPermissionBUS.GetPermissionItem(CommonEngine.userInfo.UserID, ConfigEngine.Language, function_id);
             if (permission.ResponseItem.IsError)
             {
-                CommonEngine.ShowHTTPErrorMessage(permission.ResponseItem.ErrorCode, permission.ResponseItem.ErrorMessage);
+                CommonEngine.ShowHTTPErrorMessage(permission.ResponseItem);
                 btnDelete.Enabled = btnPrint.Enabled = btnImport.Enabled = btnExport.Enabled = false;
                 return;
             }

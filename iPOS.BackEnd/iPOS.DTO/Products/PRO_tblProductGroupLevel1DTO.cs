@@ -26,7 +26,7 @@ namespace iPOS.DTO.Products
 
         public string Creater { get; set; }
 
-        public DateTime CreateTime { get; set; }
+        public System.Nullable<DateTime> CreateTime { get; set; }
 
         public string Editer { get; set; }
 
@@ -37,5 +37,9 @@ namespace iPOS.DTO.Products
         public string UserID { get; set; }
 
         public string LanguageID { get; set; }
+
+        public string Level1Name { get; set; }
+
+        public string FullLevel1Name { get; set; }
     }
 }

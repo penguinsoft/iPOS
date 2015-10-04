@@ -22,15 +22,15 @@ namespace iPOS.DTO.Products
 
         public string Description { get; set; }
 
-        public Int32 Level1ID { get; set; }
+        public System.Nullable<Int32> Level1ID { get; set; }
 
-        public Int32 Level2ID { get; set; }
+        public System.Nullable<Int32> Level2ID { get; set; }
 
         public bool Visible { get; set; }
 
         public string Creater { get; set; }
 
-        public DateTime CreateTime { get; set; }
+        public System.Nullable<DateTime> CreateTime { get; set; }
 
         public string Editer { get; set; }
 
@@ -41,5 +41,13 @@ namespace iPOS.DTO.Products
         public string UserID { get; set; }
 
         public string LanguageID { get; set; }
+
+        public string Level3Name { get; set; }
+
+        public string FullLevel3Name { get; set; }
+
+        public string Level1Name { get; set; }
+
+        public string Level2Name { get; set; }
     }
 }

@@ -69,6 +69,12 @@ namespace iPOS.WCFService
             Mapper.CreateMap<PRO_tblWarehouseDCO, PRO_tblWarehouseDTO>();
             Mapper.CreateMap<PRO_tblStallDTO, PRO_tblStallDCO>();
             Mapper.CreateMap<PRO_tblStallDCO, PRO_tblStallDTO>();
+            Mapper.CreateMap<PRO_tblProductGroupLevel1DTO, PRO_tblProductGroupLevel1DCO>();
+            Mapper.CreateMap<PRO_tblProductGroupLevel1DCO, PRO_tblProductGroupLevel1DTO>();
+            Mapper.CreateMap<PRO_tblProductGroupLevel2DTO, PRO_tblProductGroupLevel2DCO>();
+            Mapper.CreateMap<PRO_tblProductGroupLevel2DCO, PRO_tblProductGroupLevel2DTO>();
+            Mapper.CreateMap<PRO_tblProductGroupLevel3DTO, PRO_tblProductGroupLevel3DCO>();
+            Mapper.CreateMap<PRO_tblProductGroupLevel3DCO, PRO_tblProductGroupLevel3DTO>();
 
             Mapper.CreateMap<OBJ_TableColumnDTO, OBJ_TableColumnDCO>();
             Mapper.CreateMap<OBJ_TableColumnDCO, OBJ_TableColumnDTO>();
@@ -94,6 +100,9 @@ namespace iPOS.WCFService
             afBuilder.RegisterType<PRO_tblStoreDAO>().As<IPRO_tblStoreDAO>();
             afBuilder.RegisterType<PRO_tblWarehouseDAO>().As<IPRO_tblWarehouseDAO>();
             afBuilder.RegisterType<PRO_tblStallDAO>().As<IPRO_tblStallDAO>();
+            afBuilder.RegisterType<PRO_tblProductGroupLevel1DAO>().As<IPRO_tblProductGroupLevel1DAO>();
+            afBuilder.RegisterType<PRO_tblProductGroupLevel2DAO>().As<IPRO_tblProductGroupLevel2DAO>();
+            afBuilder.RegisterType<PRO_tblProductGroupLevel3DAO>().As<IPRO_tblProductGroupLevel3DAO>();
 
             afBuilder.RegisterType<OBJ_TableColumnDAO>().As<IOBJ_TableColumnDAO>();
 
@@ -103,7 +112,6 @@ namespace iPOS.WCFService
         #region [SYS_tblActionLog]
         public SYS_tblActionLogDRO InsertUpdateLog(SYS_tblActionLogDCO actionLog)
         {
-            logger.Info("Start insert new action log");
             SYS_tblActionLogDRO result = new SYS_tblActionLogDRO();
             try
             {
@@ -1641,6 +1649,498 @@ namespace iPOS.WCFService
                     Result = false,
                     Status = DCO.ResponseStatus.Exception,
                     Message = "Delete stall failed because: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+        #endregion
+
+        #region [PRO_tblProductGroupLevel1]
+        public PRO_tblProductGroupLevel1DRO GetAllLevel1(string Username, string LanguageID, bool GetCombobox)
+        {
+            PRO_tblProductGroupLevel1DRO result = new PRO_tblProductGroupLevel1DRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    List<PRO_tblProductGroupLevel1DTO> temp = new List<PRO_tblProductGroupLevel1DTO>();
+                    var db = scope.Resolve<IPRO_tblProductGroupLevel1DAO>();
+                    if (!GetCombobox)
+                        temp = db.LoadAllData(Username, LanguageID);
+                    else temp = db.GetDataCombobox(Username, LanguageID);
+                    if (temp != null)
+                    {
+                        result.Level1List = Mapper.Map<List<PRO_tblProductGroupLevel1DCO>>(temp);
+                        result.ResponseItem = new DCO.ResponseItem
+                        {
+                            Result = true,
+                            Status = DCO.ResponseStatus.Success,
+                            Message = "",
+                            RequestUser = Username,
+                            TotalItemCount = temp.Count
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Level1List = Mapper.Map<List<PRO_tblProductGroupLevel1DCO>>(new List<PRO_tblProductGroupLevel1DTO>());
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Load level1 list failed: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public PRO_tblProductGroupLevel1DRO GetLevel1ByID(string Username, string LanguageID, string Level1ID)
+        {
+            PRO_tblProductGroupLevel1DRO result = new PRO_tblProductGroupLevel1DRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    var db = scope.Resolve<IPRO_tblProductGroupLevel1DAO>();
+                    var temp = db.GetDataByID(Username, LanguageID, Level1ID);
+                    if (temp != null)
+                    {
+                        result.Level1Item = Mapper.Map<PRO_tblProductGroupLevel1DCO>(temp);
+                        result.ResponseItem = new DCO.ResponseItem
+                        {
+                            Result = true,
+                            Status = DCO.ResponseStatus.Success,
+                            Message = "",
+                            RequestUser = Username,
+                            TotalItemCount = 1
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Level1Item = Mapper.Map<PRO_tblProductGroupLevel1DCO>(new PRO_tblProductGroupLevel1DTO());
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Load level1 item failed: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public PRO_tblProductGroupLevel1DRO InsertUpdateLevel1(PRO_tblProductGroupLevel1DCO level1)
+        {
+            PRO_tblProductGroupLevel1DRO result = new PRO_tblProductGroupLevel1DRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    string temp = "";
+                    var db = scope.Resolve<IPRO_tblProductGroupLevel1DAO>();
+                    var data = Mapper.Map<PRO_tblProductGroupLevel1DTO>(level1);
+                    if (level1.Activity.Equals(BaseConstant.COMMAND_INSERT_EN))
+                        temp = db.InsertLevel1(data);
+                    else temp = db.UpdateLevel1(data);
+
+                    result.ResponseItem = new DCO.ResponseItem
+                    {
+                        Result = string.IsNullOrEmpty(temp) ? true : false,
+                        Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure,
+                        Message = string.IsNullOrEmpty(temp) ? string.Empty : temp,
+                        RequestUser = level1.UserID,
+                        TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Insert new level1 failed because: " + ex.Message,
+                    RequestUser = level1.UserID,
+                    TotalItemCount = 0
+                };
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public PRO_tblProductGroupLevel1DRO DeleteLevel1(string Username, string LanguageID, string Level1IDList)
+        {
+            PRO_tblProductGroupLevel1DRO result = new PRO_tblProductGroupLevel1DRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    string temp = "";
+                    var db = scope.Resolve<IPRO_tblProductGroupLevel1DAO>();
+                    if (Level1IDList.Contains("$"))
+                        temp = db.DeleteLevel1List(Username, LanguageID, Level1IDList);
+                    else temp = db.DeleteLevel1(Username, LanguageID, Level1IDList);
+
+                    result.ResponseItem = new DCO.ResponseItem
+                    {
+                        Result = string.IsNullOrEmpty(temp) ? true : false,
+                        Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure,
+                        Message = string.IsNullOrEmpty(temp) ? string.Empty : temp,
+                        RequestUser = Username,
+                        TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Delete level1 failed because: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+        #endregion
+
+        #region [PRO_tblProductGroupLevel2]
+        public PRO_tblProductGroupLevel2DRO GetAllLevel2(string Username, string LanguageID, string Level1ID, bool GetCombobox)
+        {
+            PRO_tblProductGroupLevel2DRO result = new PRO_tblProductGroupLevel2DRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    List<PRO_tblProductGroupLevel2DTO> temp = new List<PRO_tblProductGroupLevel2DTO>();
+                    var db = scope.Resolve<IPRO_tblProductGroupLevel2DAO>();
+                    if (!GetCombobox)
+                        temp = db.LoadAllData(Username, LanguageID, Level1ID);
+                    else temp = db.GetDataCombobox(Username, LanguageID, Level1ID);
+                    if (temp != null)
+                    {
+                        result.Level2List = Mapper.Map<List<PRO_tblProductGroupLevel2DCO>>(temp);
+                        result.ResponseItem = new DCO.ResponseItem
+                        {
+                            Result = true,
+                            Status = DCO.ResponseStatus.Success,
+                            Message = "",
+                            RequestUser = Username,
+                            TotalItemCount = temp.Count
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Level2List = Mapper.Map<List<PRO_tblProductGroupLevel2DCO>>(new List<PRO_tblProductGroupLevel2DTO>());
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Load level2 list failed: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public PRO_tblProductGroupLevel2DRO GetLevel2ByID(string Username, string LanguageID, string Level2ID)
+        {
+            PRO_tblProductGroupLevel2DRO result = new PRO_tblProductGroupLevel2DRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    var db = scope.Resolve<IPRO_tblProductGroupLevel2DAO>();
+                    var temp = db.GetDataByID(Username, LanguageID, Level2ID);
+                    if (temp != null)
+                    {
+                        result.Level2Item = Mapper.Map<PRO_tblProductGroupLevel2DCO>(temp);
+                        result.ResponseItem = new DCO.ResponseItem
+                        {
+                            Result = true,
+                            Status = DCO.ResponseStatus.Success,
+                            Message = "",
+                            RequestUser = Username,
+                            TotalItemCount = 1
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Level2Item = Mapper.Map<PRO_tblProductGroupLevel2DCO>(new PRO_tblProductGroupLevel2DTO());
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Load level2 item failed: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public PRO_tblProductGroupLevel2DRO InsertUpdateLevel2(PRO_tblProductGroupLevel2DCO level2)
+        {
+            PRO_tblProductGroupLevel2DRO result = new PRO_tblProductGroupLevel2DRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    string temp = "";
+                    var db = scope.Resolve<IPRO_tblProductGroupLevel2DAO>();
+                    var data = Mapper.Map<PRO_tblProductGroupLevel2DTO>(level2);
+                    if (level2.Activity.Equals(BaseConstant.COMMAND_INSERT_EN))
+                        temp = db.InsertLevel2(data);
+                    else temp = db.UpdateLevel2(data);
+
+                    result.ResponseItem = new DCO.ResponseItem
+                    {
+                        Result = string.IsNullOrEmpty(temp) ? true : false,
+                        Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure,
+                        Message = string.IsNullOrEmpty(temp) ? string.Empty : temp,
+                        RequestUser = level2.UserID,
+                        TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Insert new level2 failed because: " + ex.Message,
+                    RequestUser = level2.UserID,
+                    TotalItemCount = 0
+                };
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public PRO_tblProductGroupLevel2DRO DeleteLevel2(string Username, string LanguageID, string Level2IDList)
+        {
+            PRO_tblProductGroupLevel2DRO result = new PRO_tblProductGroupLevel2DRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    string temp = "";
+                    var db = scope.Resolve<IPRO_tblProductGroupLevel2DAO>();
+                    if (Level2IDList.Contains("$"))
+                        temp = db.DeleteLevel2List(Username, LanguageID, Level2IDList);
+                    else temp = db.DeleteLevel2(Username, LanguageID, Level2IDList);
+
+                    result.ResponseItem = new DCO.ResponseItem
+                    {
+                        Result = string.IsNullOrEmpty(temp) ? true : false,
+                        Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure,
+                        Message = string.IsNullOrEmpty(temp) ? string.Empty : temp,
+                        RequestUser = Username,
+                        TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Delete level2 failed because: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+        #endregion
+
+        #region [PRO_tblProductGroupLevel3]
+        public PRO_tblProductGroupLevel3DRO GetAllLevel3(string Username, string LanguageID, string Level1ID, string Level2ID, bool GetCombobox)
+        {
+            PRO_tblProductGroupLevel3DRO result = new PRO_tblProductGroupLevel3DRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    List<PRO_tblProductGroupLevel3DTO> temp = new List<PRO_tblProductGroupLevel3DTO>();
+                    var db = scope.Resolve<IPRO_tblProductGroupLevel3DAO>();
+                    if (!GetCombobox)
+                        temp = db.LoadAllData(Username, LanguageID, Level1ID, Level2ID);
+                    else temp = db.GetDataCombobox(Username, LanguageID, Level1ID, Level2ID);
+                    if (temp != null)
+                    {
+                        result.Level3List = Mapper.Map<List<PRO_tblProductGroupLevel3DCO>>(temp);
+                        result.ResponseItem = new DCO.ResponseItem
+                        {
+                            Result = true,
+                            Status = DCO.ResponseStatus.Success,
+                            Message = "",
+                            RequestUser = Username,
+                            TotalItemCount = temp.Count
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Level3List = Mapper.Map<List<PRO_tblProductGroupLevel3DCO>>(new List<PRO_tblProductGroupLevel3DTO>());
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Load level3 list failed: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public PRO_tblProductGroupLevel3DRO GetLevel3ByID(string Username, string LanguageID, string Level3ID)
+        {
+            PRO_tblProductGroupLevel3DRO result = new PRO_tblProductGroupLevel3DRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    var db = scope.Resolve<IPRO_tblProductGroupLevel3DAO>();
+                    var temp = db.GetDataByID(Username, LanguageID, Level3ID);
+                    if (temp != null)
+                    {
+                        result.Level3Item = Mapper.Map<PRO_tblProductGroupLevel3DCO>(temp);
+                        result.ResponseItem = new DCO.ResponseItem
+                        {
+                            Result = true,
+                            Status = DCO.ResponseStatus.Success,
+                            Message = "",
+                            RequestUser = Username,
+                            TotalItemCount = 1
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Level3Item = Mapper.Map<PRO_tblProductGroupLevel3DCO>(new PRO_tblProductGroupLevel3DTO());
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Load level3 item failed: " + ex.Message,
+                    RequestUser = Username,
+                    TotalItemCount = 0
+                };
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public PRO_tblProductGroupLevel3DRO InsertUpdateLevel3(PRO_tblProductGroupLevel3DCO level3)
+        {
+            PRO_tblProductGroupLevel3DRO result = new PRO_tblProductGroupLevel3DRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    string temp = "";
+                    var db = scope.Resolve<IPRO_tblProductGroupLevel3DAO>();
+                    var data = Mapper.Map<PRO_tblProductGroupLevel3DTO>(level3);
+                    if (level3.Activity.Equals(BaseConstant.COMMAND_INSERT_EN))
+                        temp = db.InsertLevel3(data);
+                    else temp = db.UpdateLevel3(data);
+
+                    result.ResponseItem = new DCO.ResponseItem
+                    {
+                        Result = string.IsNullOrEmpty(temp) ? true : false,
+                        Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure,
+                        Message = string.IsNullOrEmpty(temp) ? string.Empty : temp,
+                        RequestUser = level3.UserID,
+                        TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Insert new level3 failed because: " + ex.Message,
+                    RequestUser = level3.UserID,
+                    TotalItemCount = 0
+                };
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public PRO_tblProductGroupLevel3DRO DeleteLevel3(string Username, string LanguageID, string Level3IDList)
+        {
+            PRO_tblProductGroupLevel3DRO result = new PRO_tblProductGroupLevel3DRO();
+            try
+            {
+                using (var scope = Container.BeginLifetimeScope())
+                {
+                    string temp = "";
+                    var db = scope.Resolve<IPRO_tblProductGroupLevel3DAO>();
+                    if (Level3IDList.Contains("$"))
+                        temp = db.DeleteLevel3List(Username, LanguageID, Level3IDList);
+                    else temp = db.DeleteLevel3(Username, LanguageID, Level3IDList);
+
+                    result.ResponseItem = new DCO.ResponseItem
+                    {
+                        Result = string.IsNullOrEmpty(temp) ? true : false,
+                        Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure,
+                        Message = string.IsNullOrEmpty(temp) ? string.Empty : temp,
+                        RequestUser = Username,
+                        TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                result.ResponseItem = new DCO.ResponseItem
+                {
+                    Result = false,
+                    Status = DCO.ResponseStatus.Exception,
+                    Message = "Delete level3 failed because: " + ex.Message,
                     RequestUser = Username,
                     TotalItemCount = 0
                 };

@@ -35,13 +35,13 @@
             this.barTop = new DevExpress.XtraBars.Bar();
             this.btnSave = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnClose = new DevExpress.XtraBars.BarLargeButtonItem();
+            this.lblUserInfo = new DevExpress.XtraBars.BarStaticItem();
             this.barBottom = new DevExpress.XtraBars.Bar();
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
             this.docMain = new DevExpress.XtraBars.Docking.DockManager(this.components);
-            this.hideContainerLeft = new DevExpress.XtraBars.Docking.AutoHideContainer();
             this.dplLeft = new DevExpress.XtraBars.Docking.DockPanel();
             this.dockPanel1_Container = new DevExpress.XtraBars.Docking.ControlContainer();
             this.trlUser = new DevExpress.XtraTreeList.TreeList();
@@ -83,7 +83,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.cboUserLevel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barMain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.docMain)).BeginInit();
-            this.hideContainerLeft.SuspendLayout();
             this.dplLeft.SuspendLayout();
             this.dockPanel1_Container.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trlUser)).BeginInit();
@@ -124,9 +123,10 @@
             this.barMain.Form = this;
             this.barMain.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.btnSave,
-            this.btnClose});
+            this.btnClose,
+            this.lblUserInfo});
             this.barMain.MainMenu = this.barTop;
-            this.barMain.MaxItemId = 10;
+            this.barMain.MaxItemId = 12;
             this.barMain.StatusBar = this.barBottom;
             // 
             // barTop
@@ -137,7 +137,8 @@
             this.barTop.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
             this.barTop.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnSave, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnClose, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph)});
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnClose, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.lblUserInfo, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph)});
             this.barTop.OptionsBar.DisableClose = true;
             this.barTop.OptionsBar.DisableCustomization = true;
             this.barTop.OptionsBar.DrawBorder = false;
@@ -160,6 +161,20 @@
             this.btnClose.Id = 1;
             this.btnClose.Name = "btnClose";
             this.btnClose.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnClose_ItemClick);
+            // 
+            // lblUserInfo
+            // 
+            this.lblUserInfo.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+            this.lblUserInfo.AllowHtmlText = DevExpress.Utils.DefaultBoolean.True;
+            this.lblUserInfo.Caption = "Group: Administrator<br>User: Admin";
+            this.lblUserInfo.Glyph = ((System.Drawing.Image)(resources.GetObject("lblUserInfo.Glyph")));
+            this.lblUserInfo.Id = 10;
+            this.lblUserInfo.ItemAppearance.Normal.Options.UseTextOptions = true;
+            this.lblUserInfo.ItemAppearance.Normal.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
+            this.lblUserInfo.Name = "lblUserInfo";
+            this.lblUserInfo.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
+            this.lblUserInfo.RightIndent = 20;
+            this.lblUserInfo.TextAlignment = System.Drawing.StringAlignment.Far;
             // 
             // barBottom
             // 
@@ -204,10 +219,10 @@
             // 
             // docMain
             // 
-            this.docMain.AutoHideContainers.AddRange(new DevExpress.XtraBars.Docking.AutoHideContainer[] {
-            this.hideContainerLeft});
             this.docMain.Form = this;
             this.docMain.MenuManager = this.barMain;
+            this.docMain.RootPanels.AddRange(new DevExpress.XtraBars.Docking.DockPanel[] {
+            this.dplLeft});
             this.docMain.TopZIndexControls.AddRange(new string[] {
             "DevExpress.XtraBars.BarDockControl",
             "DevExpress.XtraBars.StandaloneBarDockControl",
@@ -219,36 +234,24 @@
             "DevExpress.XtraBars.Navigation.OfficeNavigationBar",
             "DevExpress.XtraBars.Navigation.TileNavPane"});
             // 
-            // hideContainerLeft
-            // 
-            this.hideContainerLeft.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(239)))));
-            this.hideContainerLeft.Controls.Add(this.dplLeft);
-            this.hideContainerLeft.Dock = System.Windows.Forms.DockStyle.Left;
-            this.hideContainerLeft.Location = new System.Drawing.Point(0, 40);
-            this.hideContainerLeft.Name = "hideContainerLeft";
-            this.hideContainerLeft.Size = new System.Drawing.Size(19, 455);
-            // 
             // dplLeft
             // 
             this.dplLeft.Controls.Add(this.dockPanel1_Container);
             this.dplLeft.Dock = DevExpress.XtraBars.Docking.DockingStyle.Left;
             this.dplLeft.ID = new System.Guid("124529c9-6cfd-4a52-90a8-00836d063d84");
-            this.dplLeft.Location = new System.Drawing.Point(-233, 0);
+            this.dplLeft.Location = new System.Drawing.Point(0, 40);
             this.dplLeft.Name = "dplLeft";
             this.dplLeft.Options.ShowCloseButton = false;
-            this.dplLeft.OriginalSize = new System.Drawing.Size(233, 200);
-            this.dplLeft.SavedDock = DevExpress.XtraBars.Docking.DockingStyle.Left;
-            this.dplLeft.SavedIndex = 0;
-            this.dplLeft.Size = new System.Drawing.Size(233, 455);
+            this.dplLeft.OriginalSize = new System.Drawing.Size(256, 200);
+            this.dplLeft.Size = new System.Drawing.Size(256, 455);
             this.dplLeft.Text = "Danh Sách Người Dùng";
-            this.dplLeft.Visibility = DevExpress.XtraBars.Docking.DockVisibility.AutoHide;
             // 
             // dockPanel1_Container
             // 
             this.dockPanel1_Container.Controls.Add(this.trlUser);
             this.dockPanel1_Container.Location = new System.Drawing.Point(4, 23);
             this.dockPanel1_Container.Name = "dockPanel1_Container";
-            this.dockPanel1_Container.Size = new System.Drawing.Size(225, 428);
+            this.dockPanel1_Container.Size = new System.Drawing.Size(248, 428);
             this.dockPanel1_Container.TabIndex = 0;
             // 
             // trlUser
@@ -273,7 +276,7 @@
             this.trlUser.OptionsView.ShowColumns = false;
             this.trlUser.OptionsView.ShowHorzLines = false;
             this.trlUser.SelectImageList = this.imcGroupUser;
-            this.trlUser.Size = new System.Drawing.Size(225, 428);
+            this.trlUser.Size = new System.Drawing.Size(248, 428);
             this.trlUser.TabIndex = 9;
             this.trlUser.FocusedNodeChanged += new DevExpress.XtraTreeList.FocusedNodeChangedEventHandler(this.trlUser_FocusedNodeChanged);
             // 
@@ -335,7 +338,7 @@
             this.chkAllowExport,
             this.txtNote,
             this.gluUserLevel});
-            this.trlPermission.Size = new System.Drawing.Size(1295, 433);
+            this.trlPermission.Size = new System.Drawing.Size(1058, 433);
             this.trlPermission.TabIndex = 10;
             // 
             // tlcFunctionName
@@ -346,7 +349,7 @@
             this.tlcFunctionName.OptionsColumn.AllowEdit = false;
             this.tlcFunctionName.Visible = true;
             this.tlcFunctionName.VisibleIndex = 0;
-            this.tlcFunctionName.Width = 374;
+            this.tlcFunctionName.Width = 328;
             // 
             // tlcAllowAll
             // 
@@ -358,7 +361,7 @@
             this.tlcAllowAll.Name = "tlcAllowAll";
             this.tlcAllowAll.Visible = true;
             this.tlcAllowAll.VisibleIndex = 1;
-            this.tlcAllowAll.Width = 54;
+            this.tlcAllowAll.Width = 82;
             // 
             // chkAllowAll
             // 
@@ -375,7 +378,7 @@
             this.tlcAllowInsert.Name = "tlcAllowInsert";
             this.tlcAllowInsert.Visible = true;
             this.tlcAllowInsert.VisibleIndex = 2;
-            this.tlcAllowInsert.Width = 54;
+            this.tlcAllowInsert.Width = 82;
             // 
             // chkAllowInsert
             // 
@@ -392,7 +395,7 @@
             this.tlcAllowUpdate.Name = "tlcAllowUpdate";
             this.tlcAllowUpdate.Visible = true;
             this.tlcAllowUpdate.VisibleIndex = 3;
-            this.tlcAllowUpdate.Width = 54;
+            this.tlcAllowUpdate.Width = 82;
             // 
             // chkAllowUpdate
             // 
@@ -409,7 +412,7 @@
             this.tlcAllowDelete.Name = "tlcAllowDelete";
             this.tlcAllowDelete.Visible = true;
             this.tlcAllowDelete.VisibleIndex = 4;
-            this.tlcAllowDelete.Width = 54;
+            this.tlcAllowDelete.Width = 82;
             // 
             // chkAllowDelete
             // 
@@ -426,7 +429,7 @@
             this.tlcAllowAccess.Name = "tlcAllowAccess";
             this.tlcAllowAccess.Visible = true;
             this.tlcAllowAccess.VisibleIndex = 5;
-            this.tlcAllowAccess.Width = 54;
+            this.tlcAllowAccess.Width = 82;
             // 
             // chkAllowAccess
             // 
@@ -443,7 +446,7 @@
             this.tlcAllowPrint.Name = "tlcAllowPrint";
             this.tlcAllowPrint.Visible = true;
             this.tlcAllowPrint.VisibleIndex = 6;
-            this.tlcAllowPrint.Width = 54;
+            this.tlcAllowPrint.Width = 81;
             // 
             // chkAllowPrint
             // 
@@ -460,7 +463,7 @@
             this.tlcAllowImport.Name = "tlcAllowImport";
             this.tlcAllowImport.Visible = true;
             this.tlcAllowImport.VisibleIndex = 7;
-            this.tlcAllowImport.Width = 54;
+            this.tlcAllowImport.Width = 81;
             // 
             // chkAllowImport
             // 
@@ -477,7 +480,7 @@
             this.tlcAllowExport.Name = "tlcAllowExport";
             this.tlcAllowExport.Visible = true;
             this.tlcAllowExport.VisibleIndex = 8;
-            this.tlcAllowExport.Width = 54;
+            this.tlcAllowExport.Width = 81;
             // 
             // chkAllowExport
             // 
@@ -492,7 +495,7 @@
             this.tlcUserLevel.Name = "tlcUserLevel";
             this.tlcUserLevel.Visible = true;
             this.tlcUserLevel.VisibleIndex = 9;
-            this.tlcUserLevel.Width = 90;
+            this.tlcUserLevel.Width = 160;
             // 
             // gluUserLevel
             // 
@@ -538,7 +541,7 @@
             this.tlcNote.Name = "tlcNote";
             this.tlcNote.Visible = true;
             this.tlcNote.VisibleIndex = 10;
-            this.tlcNote.Width = 152;
+            this.tlcNote.Width = 136;
             // 
             // txtNote
             // 
@@ -585,9 +588,9 @@
             // 
             this.grpMain.Controls.Add(this.trlPermission);
             this.grpMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grpMain.Location = new System.Drawing.Point(19, 40);
+            this.grpMain.Location = new System.Drawing.Point(256, 40);
             this.grpMain.Name = "grpMain";
-            this.grpMain.Size = new System.Drawing.Size(1299, 455);
+            this.grpMain.Size = new System.Drawing.Size(1062, 455);
             this.grpMain.TabIndex = 12;
             this.grpMain.Text = "groupControl1";
             // 
@@ -596,7 +599,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.grpMain);
-            this.Controls.Add(this.hideContainerLeft);
+            this.Controls.Add(this.dplLeft);
             this.Controls.Add(this.barDockControlLeft);
             this.Controls.Add(this.barDockControlRight);
             this.Controls.Add(this.barDockControlBottom);
@@ -606,7 +609,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.cboUserLevel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barMain)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.docMain)).EndInit();
-            this.hideContainerLeft.ResumeLayout(false);
             this.dplLeft.ResumeLayout(false);
             this.dockPanel1_Container.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.trlUser)).EndInit();
@@ -681,6 +683,6 @@
         private DevExpress.XtraGrid.Columns.GridColumn gcolUserLevelName;
         private DevExpress.XtraGrid.Columns.GridColumn gcolUserLevelID;
         private DevExpress.XtraEditors.Repository.RepositoryItemComboBox cboUserLevel;
-        private DevExpress.XtraBars.Docking.AutoHideContainer hideContainerLeft;
+        private DevExpress.XtraBars.BarStaticItem lblUserInfo;
     }
 }

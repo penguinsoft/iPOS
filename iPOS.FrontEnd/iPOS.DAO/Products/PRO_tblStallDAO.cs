@@ -9,78 +9,132 @@ namespace iPOS.DAO.Products
 {
     public class PRO_tblStallDAO : BaseDAO
     {
-        public async static Task<List<PRO_tblStallDTO>> GetAllStalls(string url)
+        public async static Task<PRO_tblStallDRO> GetAllStalls(string url)
         {
+            PRO_tblStallDRO result = new PRO_tblStallDRO();
             try
             {
                 var response_data = await HttpGet(url);
-                var response_collection = JsonConvert.DeserializeObject<PRO_tblStallDRO>(response_data + "");
+                if (response_data.ToLower().StartsWith("error"))
+                {
+                    result.ResponseItem.IsError = true;
+                    string[] tmp = response_data.Split('|');
+                    result.ResponseItem.ErrorCode = tmp[1];
+                    result.ResponseItem.ErrorMessage = tmp[2];
+                }
+                else
+                {
+                    var response_collection = JsonConvert.DeserializeObject<PRO_tblStallDRO>(response_data + "");
 
-                if (response_collection != null)
-                    return response_collection.StallList;
+                    if (response_collection != null)
+                    {
+                        result.StallList = response_collection.StallList;
+                    }
+                }
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
+                result.ResponseItem.Message = ex.Message;
             }
 
-            return null;
+            return result;
         }
 
-        public async static Task<PRO_tblStallDTO> GetStallItem(string url)
+        public async static Task<PRO_tblStallDRO> GetStallItem(string url)
         {
+            PRO_tblStallDRO result = new PRO_tblStallDRO();
             try
             {
                 var response_data = await HttpGet(url);
-                var response_collection = JsonConvert.DeserializeObject<PRO_tblStallDRO>(response_data + "");
+                if (response_data.ToLower().StartsWith("error"))
+                {
+                    result.ResponseItem.IsError = true;
+                    string[] tmp = response_data.Split('|');
+                    result.ResponseItem.ErrorCode = tmp[1];
+                    result.ResponseItem.ErrorMessage = tmp[2];
+                }
+                else
+                {
+                    var response_collection = JsonConvert.DeserializeObject<PRO_tblStallDRO>(response_data + "");
 
-                if (response_collection != null)
-                    return response_collection.StallItem;
+                    if (response_collection != null)
+                    {
+                        result.StallItem = response_collection.StallItem;
+                    }
+                }
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
+                result.ResponseItem.Message = ex.Message;
             }
 
-            return null;
+            return result;
         }
 
-        public async static Task<string> InsertUpdateStall(string url, string json_data)
+        public async static Task<PRO_tblStallDRO> InsertUpdateStall(string url, string json_data)
         {
+            PRO_tblStallDRO result = new PRO_tblStallDRO();
             try
             {
                 var response_data = await HttpPost(url, json_data);
-                var response_collection = JsonConvert.DeserializeObject<PRO_tblStallDRO>(response_data + "");
+                if (response_data.ToLower().StartsWith("error"))
+                {
+                    result.ResponseItem.IsError = true;
+                    string[] tmp = response_data.Split('|');
+                    result.ResponseItem.ErrorCode = tmp[1];
+                    result.ResponseItem.ErrorMessage = tmp[2];
+                }
+                else
+                {
+                    var response_collection = JsonConvert.DeserializeObject<PRO_tblStallDRO>(response_data + "");
 
-                if (response_collection != null)
-                    return response_collection.Message;
+                    if (response_collection != null)
+                    {
+                        result.ResponseItem = response_collection.ResponseItem;
+                    }
+                }
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
-                return ex.Message;
+                result.ResponseItem.Message = ex.Message;
             }
 
-            return "";
+            return result;
         }
 
-        public async static Task<string> DeleteStall(string url)
+        public async static Task<PRO_tblStallDRO> DeleteStall(string url)
         {
+            PRO_tblStallDRO result = new PRO_tblStallDRO();
             try
             {
                 var response_data = await HttpGet(url);
-                var response_collection = JsonConvert.DeserializeObject<PRO_tblStallDRO>(response_data + "");
+                if (response_data.ToLower().StartsWith("error"))
+                {
+                    result.ResponseItem.IsError = true;
+                    string[] tmp = response_data.Split('|');
+                    result.ResponseItem.ErrorCode = tmp[1];
+                    result.ResponseItem.ErrorMessage = tmp[2];
+                }
+                else
+                {
+                    var response_collection = JsonConvert.DeserializeObject<PRO_tblStallDRO>(response_data + "");
 
-                if (response_collection != null)
-                    return response_collection.Message;
+                    if (response_collection != null)
+                    {
+                        result.ResponseItem = response_collection.ResponseItem;
+                    }
+                }
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
-                return ex.Message;
+                result.ResponseItem.Message = ex.Message;
             }
 
-            return "";
+            return result;
         } 
     }
 }

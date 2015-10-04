@@ -43,6 +43,9 @@
   <ItemGroup>
     <Compile Include="BaseDTO.cs" />
     <Compile Include="Products\PRO_tblDistrictDTO.cs" />
+    <Compile Include="Products\PRO_tblLevel1DTO.cs" />
+    <Compile Include="Products\PRO_tblLevel2DTO.cs" />
+    <Compile Include="Products\PRO_tblLevel3DTO.cs" />
     <Compile Include="Products\PRO_tblStallDTO.cs" />
     <Compile Include="Products\PRO_tblStoreDTO.cs" />
     <Compile Include="Products\PRO_tblWarehouseDTO.cs" />

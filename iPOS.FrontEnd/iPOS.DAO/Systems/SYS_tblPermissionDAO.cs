@@ -31,15 +31,14 @@ namespace iPOS.DAO.Systems
                         result.PermissionList = response_collection.PermissionList;
                     }
                 }
-
-                return result;
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
+                result.ResponseItem.Message = ex.Message;
             }
 
-            return null;
+            return result;
         }
 
         public async static Task<SYS_tblPermissionDRO> GetPermissionItem(string url)
@@ -64,15 +63,14 @@ namespace iPOS.DAO.Systems
                         result.PermissionItem = response_collection.PermissionItem;
                     }
                 }
-
-                return result;
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
+                result.ResponseItem.Message = ex.Message;
             }
 
-            return null;
+            return result;
         }
 
         public async static Task<SYS_tblPermissionDRO> UpdatePermission(string url, string json_data)
@@ -97,15 +95,14 @@ namespace iPOS.DAO.Systems
                         result.ResponseItem.Message = response_collection.ResponseItem.Message;
                     }
                 }
-
-                return result;
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
+                result.ResponseItem.Message = ex.Message;
             }
 
-            return null;
+            return result;
         }
     }
 }

@@ -53,7 +53,7 @@ namespace iPOS.IMC.Systems
                 });
                 if (list.ResponseItem.IsError)
                 {
-                    CommonEngine.ShowHTTPErrorMessage(list.ResponseItem.ErrorCode, list.ResponseItem.ErrorMessage);
+                    CommonEngine.ShowHTTPErrorMessage(list.ResponseItem);
                     return;
                 }
                 else gridGroupUser.DataSource = list.GroupUserList;
@@ -135,7 +135,7 @@ namespace iPOS.IMC.Systems
 
                     if (result.ResponseItem.IsError)
                     {
-                        CommonEngine.ShowHTTPErrorMessage(result.ResponseItem.ErrorCode, result.ResponseItem.ErrorMessage);
+                        CommonEngine.ShowHTTPErrorMessage(result.ResponseItem);
                         return;
                     }
                     if (!result.ResponseItem.Message.Equals("ready"))

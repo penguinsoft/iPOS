@@ -11,6 +11,7 @@ using iPOS.Core.Helper;
 using iPOS.DTO.Products;
 using System.Threading.Tasks;
 using iPOS.BUS.Products;
+using iPOS.DRO.Products;
 
 namespace iPOS.IMC.Products
 {
@@ -42,37 +43,37 @@ namespace iPOS.IMC.Products
                 txtStoreCode.Focus();
                 return false;
             }
-            if (txtStoreCode.Text.Contains(" "))
+            else if (txtStoreCode.Text.Contains(" "))
             {
                 depError.SetError(txtStoreCode, LanguageEngine.GetMessageCaption("000004", ConfigEngine.Language));
                 txtStoreCode.Focus();
                 return false;
             }
-            if (CommonEngine.CheckExistsUnicodeChar(txtStoreCode.Text))
+            else if (CommonEngine.CheckExistsUnicodeChar(txtStoreCode.Text))
             {
                 depError.SetError(txtStoreCode, LanguageEngine.GetMessageCaption("000021", ConfigEngine.Language));
                 txtStoreCode.Focus();
                 return false;
             }
-            if (string.IsNullOrEmpty(txtShortCode.Text.Trim()))
+            else if (string.IsNullOrEmpty(txtShortCode.Text.Trim()))
             {
                 depError.SetError(txtShortCode, LanguageEngine.GetMessageCaption("000003", ConfigEngine.Language));
                 txtShortCode.Focus();
                 return false;
             }
-            if (string.IsNullOrEmpty(txtVNName.Text.Trim()))
+            else if (string.IsNullOrEmpty(txtVNName.Text.Trim()))
             {
                 depError.SetError(txtVNName, LanguageEngine.GetMessageCaption("000003", ConfigEngine.Language));
                 txtVNName.Focus();
                 return false;
             }
-            if (string.IsNullOrEmpty(txtENName.Text.Trim()))
+            else if (string.IsNullOrEmpty(txtENName.Text.Trim()))
             {
                 depError.SetError(txtENName, LanguageEngine.GetMessageCaption("000003", ConfigEngine.Language));
                 txtENName.Focus();
                 return false;
             }
-            if (dteEndDate.EditValue != null && !CommonEngine.CompareDateEdit(dteBuildDate, dteEndDate, false))
+            else if (dteEndDate.EditValue != null && !CommonEngine.CompareDateEdit(dteBuildDate, dteEndDate, false))
             {
                 depError.SetError(dteEndDate, LanguageEngine.GetMessageCaption("000025", ConfigEngine.Language));
                 dteEndDate.Focus();
@@ -101,7 +102,8 @@ namespace iPOS.IMC.Products
 
         private async Task<bool> SaveStore(bool isEdit)
         {
-            string strError = "", file_name = "";
+            string file_name = "";
+            PRO_tblStoreDRO result = new PRO_tblStoreDRO();
             try
             {
                 if (!string.IsNullOrEmpty(new_file_path))
@@ -110,7 +112,7 @@ namespace iPOS.IMC.Products
                     file_name = await iPOS.BUS.Tools.OBJ_FileBUS.UploadImageFile(image, "Stores");
                 }
 
-                strError = await PRO_tblStoreBUS.InsertUpdateStore(new PRO_tblStoreDTO
+                result = await PRO_tblStoreBUS.InsertUpdateStore(new PRO_tblStoreDTO
                 {
                     StoreID = isEdit ? txtStoreID.Text : "0",
                     StoreCode = txtStoreCode.Text,
@@ -146,9 +148,16 @@ namespace iPOS.IMC.Products
                     DescriptionVN = string.Format("Tài khoản '{0}' vừa {1} thành công cửa hàng có mã cửa hàng là '{2}'.", CommonEngine.userInfo.UserID, isEdit ? "cập nhật" : "thêm mới", txtStoreCode.Text),
                     DescriptionEN = string.Format("Account '{0}' has {1} store successfully with store code is '{2}'.", CommonEngine.userInfo.UserID, isEdit ? "updated" : "inserted", txtStoreCode.Text)
                 });
-                if (!string.IsNullOrEmpty(strError))
+
+                if (result.ResponseItem.IsError)
                 {
-                    CommonEngine.ShowMessage(strError, 0);
+                    CommonEngine.ShowHTTPErrorMessage(result.ResponseItem);
+                    txtStoreCode.Focus();
+                    return false;
+                }
+                if (!string.IsNullOrEmpty(result.ResponseItem.Message))
+                {
+                    CommonEngine.ShowMessage(result.ResponseItem.Message, MessageType.Error);
                     txtStoreCode.Focus();
                     return false;
                 }

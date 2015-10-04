@@ -70,7 +70,7 @@ namespace iPOS.IMC
                 SYS_tblUserDRO user = await UserBUS.CheckLogin(txtUsername.Text.Trim(), EncryptEngine.Encrypt(txtPassword.Text.Trim()), ConfigEngine.Language);
                 if (user.ResponseItem.IsError)
                 {
-                    CommonEngine.ShowHTTPErrorMessage(user.ResponseItem.ErrorCode, user.ResponseItem.ErrorMessage);
+                    CommonEngine.ShowHTTPErrorMessage(user.ResponseItem);
                     return false;
                 }
                 else
@@ -157,8 +157,8 @@ namespace iPOS.IMC
                     FunctionID = string.Empty,
                     FunctionNameVN = "Đăng Nhập",
                     FunctionNameEN = "Login",
-                    DescriptionVN = string.Format("Account '{0}' has logined to system at {1}.", txtUsername.Text, DateTime.Now),
-                    DescriptionEN = string.Format("Tài khoản '{0}' vừa đăng nhập vào hệ thống vào lúc {1}.", txtUsername.Text, DateTime.Now),
+                    DescriptionEN = string.Format("Account '{0}' has logined to system at {1}.", txtUsername.Text, DateTime.Now),
+                    DescriptionVN = string.Format("Tài khoản '{0}' vừa đăng nhập vào hệ thống vào lúc {1}.", txtUsername.Text, DateTime.Now),
                     FullName = CommonEngine.userInfo.FullName,
                     Activity = "Insert",
                     UserID = CommonEngine.userInfo.UserID,
@@ -167,7 +167,7 @@ namespace iPOS.IMC
 
                 if (result.IsError)
                 {
-                    CommonEngine.ShowHTTPErrorMessage(result.ErrorCode, result.ErrorMessage);
+                    CommonEngine.ShowHTTPErrorMessage(result);
                 }
                 else
                 {

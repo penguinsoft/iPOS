@@ -10,6 +10,7 @@ using iPOS.IMC.Helper;
 using iPOS.Core.Helper;
 using iPOS.DTO.Products;
 using System.Threading.Tasks;
+using iPOS.DRO.Products;
 
 namespace iPOS.IMC.Products
 {
@@ -101,10 +102,10 @@ namespace iPOS.IMC.Products
 
         private async Task<bool> SaveWarehouse(bool isEdit)
         {
-            string strError = "";
+            PRO_tblWarehouseDRO result = new PRO_tblWarehouseDRO();
             try
             {
-                strError = await iPOS.BUS.Products.PRO_tblWarehouseBUS.InsertUpdateStore(new PRO_tblWarehouseDTO
+                result = await iPOS.BUS.Products.PRO_tblWarehouseBUS.InsertUpdateStore(new PRO_tblWarehouseDTO
                 {
                     WarehouseID = isEdit ? txtWarehouseID.Text : "0",
                     WarehouseCode = txtWarehouseCode.Text,
@@ -134,9 +135,16 @@ namespace iPOS.IMC.Products
                     DescriptionVN = string.Format("Tài khoản '{0}' vừa {1} thành công kho hàng có mã kho hàng là '{2}'.", CommonEngine.userInfo.UserID, isEdit ? "cập nhật" : "thêm mới", txtWarehouseCode.Text),
                     DescriptionEN = string.Format("Account '{0}' has {1} warehouse successfully with warehouse code is '{2}'.", CommonEngine.userInfo.UserID, isEdit ? "updated" : "inserted", txtWarehouseCode.Text)
                 });
-                if (!string.IsNullOrEmpty(strError))
+
+                if (result.ResponseItem.IsError)
                 {
-                    CommonEngine.ShowMessage(strError, 0);
+                    CommonEngine.ShowHTTPErrorMessage(result.ResponseItem);
+                    txtWarehouseCode.Focus();
+                    return false;
+                }
+                if (!string.IsNullOrEmpty(result.ResponseItem.Message))
+                {
+                    CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
                     txtWarehouseCode.Focus();
                     return false;
                 }

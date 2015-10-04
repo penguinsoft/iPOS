@@ -29,15 +29,14 @@ namespace iPOS.DAO.Systems
                         result.UserLevelList = response_collection.UserLevelList;
                     }
                 }
-
-                return result;
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
+                result.ResponseItem.Message = ex.Message;
             }
 
-            return null;
+            return result;
         }
     }
 }

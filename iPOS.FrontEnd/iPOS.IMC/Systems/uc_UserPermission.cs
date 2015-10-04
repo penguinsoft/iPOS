@@ -77,7 +77,7 @@ namespace iPOS.IMC.Systems
                 SYS_tblUserDRO users = await SYS_tblUserBUS.GetAllUsers(CommonEngine.userInfo.UserID, ConfigEngine.Language, null);
                 if (groupUser.ResponseItem.IsError)
                 {
-                    CommonEngine.ShowHTTPErrorMessage(groupUser.ResponseItem.ErrorCode, groupUser.ResponseItem.ErrorMessage);
+                    CommonEngine.ShowHTTPErrorMessage(groupUser.ResponseItem);
                 }
                 foreach (var item in groupUser.GroupUserList)
                 {
@@ -102,7 +102,7 @@ namespace iPOS.IMC.Systems
             userLevel = await SYS_tblUserLevelBUS.GetAllUserLevel(CommonEngine.userInfo.UserID, ConfigEngine.Language);
             if (userLevel.ResponseItem.IsError)
             {
-                CommonEngine.ShowHTTPErrorMessage(userLevel.ResponseItem.ErrorCode, userLevel.ResponseItem.ErrorMessage);
+                CommonEngine.ShowHTTPErrorMessage(userLevel.ResponseItem);
             }
             gluUserLevel.DataSource = userLevel.UserLevelList;
             gluUserLevel.DisplayMember = "UserLevelName";
@@ -143,7 +143,7 @@ namespace iPOS.IMC.Systems
                 SYS_tblPermissionDRO permissionList = await SYS_tblPermissionBUS.GetPermissionList(CommonEngine.userInfo.UserID, ConfigEngine.Language, id, parent_id, is_user);
                 if (permissionList.ResponseItem.IsError)
                 {
-                    CommonEngine.ShowHTTPErrorMessage(permissionList.ResponseItem.ErrorCode, permissionList.ResponseItem.ErrorMessage);
+                    CommonEngine.ShowHTTPErrorMessage(permissionList.ResponseItem);
                 }
                 else
                 {
@@ -241,6 +241,19 @@ namespace iPOS.IMC.Systems
                 trlPermission.ClearNodes();
                 TreeListNode node = trlUser.FocusedNode;
                 await LoadPermission(node.GetDisplayText(tlcCode) + "", "", rootNode, node.Level == 0 ? false : true);
+                string result = "", tmpGroup = "", tmpUser = "";
+                if (node.Level.Equals(0))
+                {
+                    tmpGroup = string.Format(@"  {0}: {1}", ConfigEngine.Language.Equals("vi") ? "Nhóm" : "Group", node.GetDisplayText(tlcName));
+                    tmpUser = "";
+                }
+                else
+                {
+                    tmpGroup = string.Format(@"  {0}: {1}", ConfigEngine.Language.Equals("vi") ? "Nhóm" : "Group", node.ParentNode.GetDisplayText(tlcName));
+                    tmpUser = string.Format(@"<br>  {0}: {1}", ConfigEngine.Language.Equals("vi") ? "Người dùng" : "User", node.GetDisplayText(tlcName));
+                }
+                result = string.Format(@"{0}{1}", tmpGroup, tmpUser);
+                lblUserInfo.Caption = result;
             }
             catch (Exception ex)
             {

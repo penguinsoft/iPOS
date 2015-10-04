@@ -15,6 +15,7 @@ namespace iPOS.BUS.Systems
     {
         public async static Task<ResponseItem> InsertUpdateLog(SYS_tblActionLogDTO item)
         {
+            ResponseItem result = new ResponseItem();
             try
             {
                 string url = string.Format(@"{0}/InsertUpdateLog", GetBaseUrl());
@@ -44,13 +45,15 @@ namespace iPOS.BUS.Systems
                     DateFormatHandling = DateFormatHandling.MicrosoftDateFormat
                 }) + "}";
 
-                return await SYS_tblActionLogDAO.InsertUpdateLog(url, json_data);
+                result = await SYS_tblActionLogDAO.InsertUpdateLog(url, json_data);
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
-                return null;
+                result.Message = ex.Message;
             }
+
+            return result;
         }
     }
 }

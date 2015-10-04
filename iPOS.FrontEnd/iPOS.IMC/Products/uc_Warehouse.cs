@@ -12,6 +12,7 @@ using iPOS.BUS.Products;
 using iPOS.Core.Helper;
 using iPOS.DTO.Systems;
 using System.Threading.Tasks;
+using iPOS.DRO.Products;
 
 namespace iPOS.IMC.Products
 {
@@ -37,7 +38,7 @@ namespace iPOS.IMC.Products
             try
             {
                 gridWarehouse.DataBindings.Clear();
-                List<PRO_tblWarehouseDTO> warehouses = await PRO_tblWarehouseBUS.GetAllWarehouses(CommonEngine.userInfo.UserID, ConfigEngine.Language, false, store_id, "", "", new SYS_tblActionLogDTO
+                PRO_tblWarehouseDRO warehouses = await PRO_tblWarehouseBUS.GetAllWarehouses(CommonEngine.userInfo.UserID, ConfigEngine.Language, false, store_id, "", "", new SYS_tblActionLogDTO
                 {
                     Activity = BaseConstant.COMMAND_INSERT_EN,
                     UserID = CommonEngine.userInfo.UserID,
@@ -48,8 +49,10 @@ namespace iPOS.IMC.Products
                     DescriptionVN = string.Format("Tài khoản '{0}' vừa tải thành công dữ liệu kho hàng.", CommonEngine.userInfo.UserID),
                     DescriptionEN = string.Format("Account '{0}' downloaded successfully data of warehouses.", CommonEngine.userInfo.UserID)
                 });
-                gridWarehouse.DataSource = warehouses;
-                barFooter.Visible = (warehouses != null && warehouses.Count > 0) ? true : false;
+                if (warehouses.ResponseItem.IsError)
+                    CommonEngine.ShowHTTPErrorMessage(warehouses.ResponseItem);
+                gridWarehouse.DataSource = warehouses.WarehouseList != null ? warehouses.WarehouseList : null;
+                barFooter.Visible = (warehouses.WarehouseList != null && warehouses.WarehouseList.Count > 0) ? true : false;
             }
             catch (Exception ex)
             {
@@ -87,13 +90,14 @@ namespace iPOS.IMC.Products
             if (warehouse_code_list.Length > 0) warehouse_code_list = warehouse_code_list.Substring(1);
             if (warehouse_id_list.Length > 0) warehouse_id_list = warehouse_id_list.Substring(1);
 
-            string strErr = "ready";
+            PRO_tblWarehouseDRO result = new PRO_tblWarehouseDRO();
+            result.ResponseItem.Message = "ready";
             try
             {
                 if (warehouse_id_list.Contains("$"))
                 {
                     if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000012", ConfigEngine.Language).Replace("$Count$", warehouse_id_list.Split('$').Length.ToString())))
-                        strErr = await PRO_tblWarehouseBUS.DeleteWarehouse(warehouse_id_list, CommonEngine.userInfo.Username, ConfigEngine.Language, new SYS_tblActionLogDTO
+                        result = await PRO_tblWarehouseBUS.DeleteWarehouse(warehouse_id_list, CommonEngine.userInfo.Username, ConfigEngine.Language, new SYS_tblActionLogDTO
                         {
                             Activity = BaseConstant.COMMAND_INSERT_EN,
                             UserID = CommonEngine.userInfo.UserID,
@@ -108,7 +112,7 @@ namespace iPOS.IMC.Products
                 else
                 {
                     if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000005", ConfigEngine.Language)))
-                        strErr = await PRO_tblWarehouseBUS.DeleteWarehouse(warehouse_id_list, CommonEngine.userInfo.Username, ConfigEngine.Language, new SYS_tblActionLogDTO
+                        result = await PRO_tblWarehouseBUS.DeleteWarehouse(warehouse_id_list, CommonEngine.userInfo.Username, ConfigEngine.Language, new SYS_tblActionLogDTO
                         {
                             Activity = BaseConstant.COMMAND_INSERT_EN,
                             UserID = CommonEngine.userInfo.UserID,
@@ -121,9 +125,14 @@ namespace iPOS.IMC.Products
                         });
                 }
 
-                if (!strErr.Equals("ready"))
-                    if (string.IsNullOrEmpty(strErr)) GetAllWarehouse("");
-                    else CommonEngine.ShowMessage(strErr, 0);
+                if (result.ResponseItem.IsError)
+                {
+                    CommonEngine.ShowHTTPErrorMessage(result.ResponseItem);
+                    return;
+                }
+                if (!result.ResponseItem.Message.Equals("ready"))
+                    if (string.IsNullOrEmpty(result.ResponseItem.Message)) GetAllWarehouse("");
+                    else CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
             }
             catch (Exception ex)
             {
@@ -153,9 +162,9 @@ namespace iPOS.IMC.Products
         {
             if (curItem.Count > 0)
             {
-                PRO_tblWarehouseDTO item = await PRO_tblWarehouseBUS.GetWarehouseItem(CommonEngine.userInfo.UserID, ConfigEngine.Language, curItem[0].WarehouseID);
-                if (item != null)
-                    CommonEngine.OpenInputForm(new uc_WarehouseDetail(this, item), new Size(410, 400), true);
+                PRO_tblWarehouseDRO item = await PRO_tblWarehouseBUS.GetWarehouseItem(CommonEngine.userInfo.UserID, ConfigEngine.Language, curItem[0].WarehouseID);
+                if (item.WarehouseItem != null)
+                    CommonEngine.OpenInputForm(new uc_WarehouseDetail(this, item.WarehouseItem), new Size(410, 400), true);
             }
         }
 

@@ -543,6 +543,16 @@ namespace iPOS.IMC.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap user_info_32 {
+            get {
+                object obj = ResourceManager.GetObject("user_info_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap vi_flag_16 {
             get {
                 object obj = ResourceManager.GetObject("vi_flag_16", resourceCulture);

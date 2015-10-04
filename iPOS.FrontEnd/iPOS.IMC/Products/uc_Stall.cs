@@ -12,6 +12,7 @@ using iPOS.BUS.Products;
 using iPOS.Core.Helper;
 using iPOS.DTO.Systems;
 using System.Threading.Tasks;
+using iPOS.DRO.Products;
 
 namespace iPOS.IMC.Products
 {
@@ -36,7 +37,7 @@ namespace iPOS.IMC.Products
             try
             {
                 gridStall.DataBindings.Clear();
-                List<PRO_tblStallDTO> stalls = await PRO_tblStallBUS.GetAllStall(CommonEngine.userInfo.UserID, ConfigEngine.Language, false, store_id, warehouse_id, new SYS_tblActionLogDTO
+                PRO_tblStallDRO stalls = await PRO_tblStallBUS.GetAllStall(CommonEngine.userInfo.UserID, ConfigEngine.Language, false, store_id, warehouse_id, new SYS_tblActionLogDTO
                 {
                     Activity = BaseConstant.COMMAND_INSERT_EN,
                     UserID = CommonEngine.userInfo.UserID,
@@ -47,8 +48,10 @@ namespace iPOS.IMC.Products
                     DescriptionVN = string.Format("Tài khoản '{0}' vừa tải thành công dữ liệu quầy bán.", CommonEngine.userInfo.UserID),
                     DescriptionEN = string.Format("Account '{0}' downloaded successfully data of stalls.", CommonEngine.userInfo.UserID)
                 });
-                gridStall.DataSource = stalls;
-                barFooter.Visible = (stalls != null && stalls.Count > 0) ? true : false;
+                if (stalls.ResponseItem.IsError)
+                    CommonEngine.ShowHTTPErrorMessage(stalls.ResponseItem);
+                gridStall.DataSource = stalls.StallList != null ? stalls.StallList : null;
+                barFooter.Visible = (stalls.StallList != null && stalls.StallList.Count > 0) ? true : false;
             }
             catch (Exception ex)
             {
@@ -86,13 +89,14 @@ namespace iPOS.IMC.Products
             if (stall_code_list.Length > 0) stall_code_list = stall_code_list.Substring(1);
             if (stall_id_list.Length > 0) stall_id_list = stall_id_list.Substring(1);
 
-            string strErr = "ready";
+            PRO_tblStallDRO result = new PRO_tblStallDRO();
+            result.ResponseItem.Message = "ready";
             try
             {
                 if (stall_id_list.Contains("$"))
                 {
                     if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000012", ConfigEngine.Language).Replace("$Count$", stall_id_list.Split('$').Length.ToString())))
-                        strErr = await PRO_tblStallBUS.DeleteStall(stall_id_list, CommonEngine.userInfo.Username, ConfigEngine.Language, new SYS_tblActionLogDTO
+                        result = await PRO_tblStallBUS.DeleteStall(stall_id_list, CommonEngine.userInfo.Username, ConfigEngine.Language, new SYS_tblActionLogDTO
                         {
                             Activity = BaseConstant.COMMAND_INSERT_EN,
                             UserID = CommonEngine.userInfo.UserID,
@@ -107,7 +111,7 @@ namespace iPOS.IMC.Products
                 else
                 {
                     if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000005", ConfigEngine.Language)))
-                        strErr = await PRO_tblStallBUS.DeleteStall(stall_id_list, CommonEngine.userInfo.Username, ConfigEngine.Language, new SYS_tblActionLogDTO
+                        result = await PRO_tblStallBUS.DeleteStall(stall_id_list, CommonEngine.userInfo.Username, ConfigEngine.Language, new SYS_tblActionLogDTO
                         {
                             Activity = BaseConstant.COMMAND_INSERT_EN,
                             UserID = CommonEngine.userInfo.UserID,
@@ -120,9 +124,14 @@ namespace iPOS.IMC.Products
                         });
                 }
 
-                if (!strErr.Equals("ready"))
-                    if (string.IsNullOrEmpty(strErr)) GetAllStall("", "");
-                    else CommonEngine.ShowMessage(strErr, 0);
+                if (result.ResponseItem.IsError)
+                {
+                    CommonEngine.ShowHTTPErrorMessage(result.ResponseItem);
+                    return;
+                }
+                if (!result.ResponseItem.Message.Equals("ready"))
+                    if (string.IsNullOrEmpty(result.ResponseItem.Message)) GetAllStall("", "");
+                    else CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
             }
             catch (Exception ex)
             {
@@ -152,9 +161,9 @@ namespace iPOS.IMC.Products
         {
             if (curItem.Count > 0)
             {
-                PRO_tblStallDTO item = await PRO_tblStallBUS.GetStallItem(CommonEngine.userInfo.UserID, ConfigEngine.Language, curItem[0].StallID);
-                if (item != null)
-                    CommonEngine.OpenInputForm(new uc_StallDetail(this, item), new Size(395, 300), true);
+                PRO_tblStallDRO item = await PRO_tblStallBUS.GetStallItem(CommonEngine.userInfo.UserID, ConfigEngine.Language, curItem[0].StallID);
+                if (item.StallItem != null)
+                    CommonEngine.OpenInputForm(new uc_StallDetail(this, item.StallItem), new Size(395, 300), true);
             }
         }
 

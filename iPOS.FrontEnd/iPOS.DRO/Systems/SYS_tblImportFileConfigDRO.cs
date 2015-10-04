@@ -8,6 +8,11 @@ namespace iPOS.DRO.Systems
     public class SYS_tblImportFileConfigDRO : BaseDRO
     {
         public SYS_tblImportFileConfigDTO ImportFileConfigItem { get; set; }
+
+        public SYS_tblImportFileConfigDRO()
+        {
+            ResponseItem = new ResponseItem();
+        }
     }
 
     [DataContract]

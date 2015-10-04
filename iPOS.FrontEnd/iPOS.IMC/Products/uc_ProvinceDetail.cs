@@ -11,6 +11,7 @@ using iPOS.Core.Helper;
 using iPOS.DTO.Products;
 using System.Threading.Tasks;
 using iPOS.BUS.Products;
+using iPOS.DRO.Products;
 
 namespace iPOS.IMC.Products
 {
@@ -67,10 +68,10 @@ namespace iPOS.IMC.Products
 
         private async Task<bool> SaveProvince(bool isEdit)
         {
-            string strError = "";
+            PRO_tblProvinceDRO result = new PRO_tblProvinceDRO();
             try
             {
-                PRO_tblProvinceDTO item = new PRO_tblProvinceDTO
+                result = await PRO_tblProvinceBUS.InsertUpdateProvince(new PRO_tblProvinceDTO
                 {
                     ProvinceID = isEdit ? txtProvinceID.Text : "0",
                     ProvinceCode = txtProvinceCode.Text,
@@ -82,8 +83,7 @@ namespace iPOS.IMC.Products
                     UserID = CommonEngine.userInfo.UserID,
                     Activity = (isEdit) ? BaseConstant.COMMAND_UPDATE_EN : BaseConstant.COMMAND_INSERT_EN,
                     LanguageID = ConfigEngine.Language
-                };
-                strError = await PRO_tblProvinceBUS.InsertUpdateProvince(item, new DTO.Systems.SYS_tblActionLogDTO
+                }, new DTO.Systems.SYS_tblActionLogDTO
                 {
                     Activity = BaseConstant.COMMAND_INSERT_EN,
                     UserID = CommonEngine.userInfo.UserID,
@@ -91,12 +91,19 @@ namespace iPOS.IMC.Products
                     ActionEN = isEdit ? BaseConstant.COMMAND_UPDATE_EN : BaseConstant.COMMAND_INSERT_EN,
                     ActionVN = isEdit ? BaseConstant.COMMAND_UPDATE_VI : BaseConstant.COMMAND_INSERT_VI,
                     FunctionID = "8",
-                    DescriptionVN = string.Format("Tài khoản '{0}' vừa {1} thành công tỉnh thành có mã tỉnh là '{2}'.", item.UserID, isEdit ? "cập nhật" : "thêm mới", txtProvinceCode.Text),
-                    DescriptionEN = string.Format("Account '{0}' has {1} province successfully with province code is '{2}'.", item.UserID, isEdit ? "updated" : "inserted", txtProvinceCode.Text)
+                    DescriptionVN = string.Format("Tài khoản '{0}' vừa {1} thành công tỉnh thành có mã tỉnh là '{2}'.", CommonEngine.userInfo.UserID, isEdit ? "cập nhật" : "thêm mới", txtProvinceCode.Text),
+                    DescriptionEN = string.Format("Account '{0}' has {1} province successfully with province code is '{2}'.", CommonEngine.userInfo.UserID, isEdit ? "updated" : "inserted", txtProvinceCode.Text)
                 });
-                if (!string.IsNullOrEmpty(strError))
+
+                if (result.ResponseItem.IsError)
                 {
-                    CommonEngine.ShowMessage(strError, 0);
+                    CommonEngine.ShowHTTPErrorMessage(result.ResponseItem);
+                    txtProvinceCode.Focus();
+                    return false;
+                }
+                if (!string.IsNullOrEmpty(result.ResponseItem.Message))
+                {
+                    CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
                     txtProvinceCode.Focus();
                     return false;
                 }

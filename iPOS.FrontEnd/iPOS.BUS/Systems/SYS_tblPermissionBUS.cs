@@ -12,20 +12,43 @@ namespace iPOS.BUS.Systems
     {
         public async static Task<SYS_tblPermissionDRO> GetPermissionList(string username, string language_id, string id, string parent_id, bool is_user)
         {
-            string url = string.Format("{0}/GetPermissionList?Username={1}&LanguageID={2}&ID={3}&ParentID={4}&IsUser={5}", GetBaseUrl(), username, language_id, id, parent_id, is_user);
+            SYS_tblPermissionDRO result = new SYS_tblPermissionDRO();
+            try
+            {
+                string url = string.Format("{0}/GetPermissionList?Username={1}&LanguageID={2}&ID={3}&ParentID={4}&IsUser={5}", GetBaseUrl(), username, language_id, id, parent_id, is_user);
 
-            return await SYS_tblPermissionDAO.GetPermissionList(url);
+                result = await SYS_tblPermissionDAO.GetPermissionList(url);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                result.ResponseItem.Message = ex.Message;
+            }
+
+            return result;
         }
 
         public async static Task<SYS_tblPermissionDRO> GetPermissionItem(string username, string language_id, string function_id)
         {
-            string url = string.Format("{0}/GetPermissionItem?Username={1}&LanguageID={2}&FunctionID={3}", GetBaseUrl(), username, language_id, function_id);
+            SYS_tblPermissionDRO result = new SYS_tblPermissionDRO();
+            try
+            {
+                string url = string.Format("{0}/GetPermissionItem?Username={1}&LanguageID={2}&FunctionID={3}", GetBaseUrl(), username, language_id, function_id);
 
-            return await SYS_tblPermissionDAO.GetPermissionItem(url);
+                result = await SYS_tblPermissionDAO.GetPermissionItem(url);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                result.ResponseItem.Message = ex.Message;
+            }
+
+            return result;
         }
 
         public async static Task<SYS_tblPermissionDRO> UpdatePermission(string username, string language_id, List<SYS_tblPermissionDTO> permissions, bool is_user, SYS_tblActionLogDTO actionLog)
         {
+            SYS_tblPermissionDRO result = new SYS_tblPermissionDRO();
             try
             {
                 string url = string.Format("{0}/UpdatePermission", GetBaseUrl());
@@ -34,15 +57,16 @@ namespace iPOS.BUS.Systems
                     DateFormatHandling = DateFormatHandling.MicrosoftDateFormat
                 }) + "}";
 
-                SYS_tblPermissionDRO result = await SYS_tblPermissionDAO.UpdatePermission(url, json_data);
+                result = await SYS_tblPermissionDAO.UpdatePermission(url, json_data);
                 if (string.IsNullOrEmpty(result.ResponseItem.Message)) result.ResponseItem = await SYS_tblActionLogBUS.InsertUpdateLog(actionLog);
-                return result;
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
-                return null;
+                result.ResponseItem.Message = ex.Message;
             }
+
+            return result;
         }
     }
 }

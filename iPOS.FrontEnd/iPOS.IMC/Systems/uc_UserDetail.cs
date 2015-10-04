@@ -136,7 +136,7 @@ namespace iPOS.IMC.Systems
             gluGroupUser.DataBindings.Clear();
             if (groupUsers.ResponseItem.IsError)
             {
-                CommonEngine.ShowHTTPErrorMessage(groupUsers.ResponseItem.ErrorCode, groupUsers.ResponseItem.ErrorMessage);
+                CommonEngine.ShowHTTPErrorMessage(groupUsers.ResponseItem);
             }
             else gluGroupUser.Properties.DataSource = groupUsers.GroupUserList;
             gluGroupUser.Properties.DisplayMember = "Note";

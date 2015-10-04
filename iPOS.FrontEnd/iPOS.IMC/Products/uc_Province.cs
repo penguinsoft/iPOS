@@ -12,6 +12,7 @@ using iPOS.BUS.Products;
 using iPOS.DTO.Systems;
 using iPOS.Core.Helper;
 using iPOS.DTO.Products;
+using iPOS.DRO.Products;
 
 namespace iPOS.IMC.Products
 {
@@ -39,7 +40,7 @@ namespace iPOS.IMC.Products
             try
             {
                 gridProvince.DataBindings.Clear();
-                List<PRO_tblProvinceDTO> list = await PRO_tblProvinceBUS.GetAllProvinces(CommonEngine.userInfo.UserID, CommonEngine.userInfo.LanguageID, false, new SYS_tblActionLogDTO
+                PRO_tblProvinceDRO list = await PRO_tblProvinceBUS.GetAllProvinces(CommonEngine.userInfo.UserID, CommonEngine.userInfo.LanguageID, false, new SYS_tblActionLogDTO
                 {
                     Activity = BaseConstant.COMMAND_INSERT_EN,
                     UserID = CommonEngine.userInfo.UserID,
@@ -50,8 +51,10 @@ namespace iPOS.IMC.Products
                     DescriptionVN = string.Format("Tài khoản '{0}' vừa tải thành công dữ liệu tỉnh thành.", CommonEngine.userInfo.UserID),
                     DescriptionEN = string.Format("Account '{0}' downloaded successfully data of provinces.", CommonEngine.userInfo.UserID)
                 });
-                gridProvince.DataSource = list;
-                barBottom.Visible = (list != null && list.Count > 0) ? true : false;
+                if (list.ResponseItem.IsError)
+                    CommonEngine.ShowHTTPErrorMessage(list.ResponseItem);
+                gridProvince.DataSource = list.ProvinceList != null ? list.ProvinceList : null;
+                barBottom.Visible = (list.ProvinceList != null && list.ProvinceList.Count > 0) ? true : false;
             }
             catch (Exception ex)
             {
@@ -89,13 +92,14 @@ namespace iPOS.IMC.Products
             if (province_code_list.Length > 0) province_code_list = province_code_list.Substring(1);
             if (province_id_list.Length > 0) province_id_list = province_id_list.Substring(1);
 
-            string strErr = "ready";
+            PRO_tblProvinceDRO result = new PRO_tblProvinceDRO();
+            result.ResponseItem.Message = "ready";
             try
             {
                 if (province_id_list.Contains("$"))
                 {
                     if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000012", ConfigEngine.Language).Replace("$Count$", province_id_list.Split('$').Length.ToString())))
-                        strErr = await PRO_tblProvinceBUS.DeleteProvince(CommonEngine.userInfo.Username, ConfigEngine.Language, province_id_list, new SYS_tblActionLogDTO
+                        result = await PRO_tblProvinceBUS.DeleteProvince(CommonEngine.userInfo.Username, ConfigEngine.Language, province_id_list, new SYS_tblActionLogDTO
                         {
                             Activity = BaseConstant.COMMAND_INSERT_EN,
                             UserID = CommonEngine.userInfo.UserID,
@@ -110,7 +114,7 @@ namespace iPOS.IMC.Products
                 else
                 {
                     if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000005", ConfigEngine.Language)))
-                        strErr = await PRO_tblProvinceBUS.DeleteProvince(CommonEngine.userInfo.Username, ConfigEngine.Language, province_id_list, new SYS_tblActionLogDTO
+                        result = await PRO_tblProvinceBUS.DeleteProvince(CommonEngine.userInfo.Username, ConfigEngine.Language, province_id_list, new SYS_tblActionLogDTO
                         {
                             Activity = BaseConstant.COMMAND_INSERT_EN,
                             UserID = CommonEngine.userInfo.UserID,
@@ -123,9 +127,14 @@ namespace iPOS.IMC.Products
                         });
                 }
 
-                if (!strErr.Equals("ready"))
-                    if (string.IsNullOrEmpty(strErr)) GetAllProvinces();
-                    else CommonEngine.ShowMessage(strErr, 0);
+                if (result.ResponseItem.IsError)
+                {
+                    CommonEngine.ShowHTTPErrorMessage(result.ResponseItem);
+                    return;
+                }
+                if (!result.ResponseItem.Message.Equals("ready"))
+                    if (string.IsNullOrEmpty(result.ResponseItem.Message)) GetAllProvinces();
+                    else CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
             }
             catch (Exception ex)
             {
@@ -155,9 +164,9 @@ namespace iPOS.IMC.Products
         {
             if (curItem.Count > 0)
             {
-                PRO_tblProvinceDTO item = await PRO_tblProvinceBUS.GetProvinceItem(CommonEngine.userInfo.UserID, ConfigEngine.Language, curItem[0].ProvinceID);
-                if (item != null)
-                    CommonEngine.OpenInputForm(new uc_ProvinceDetail(this, item), new Size(435, 265), true);
+                PRO_tblProvinceDRO item = await PRO_tblProvinceBUS.GetProvinceItem(CommonEngine.userInfo.UserID, ConfigEngine.Language, curItem[0].ProvinceID);
+                if (item.ProvinceItem != null)
+                    CommonEngine.OpenInputForm(new uc_ProvinceDetail(this, item.ProvinceItem), new Size(435, 265), true);
             }
         }
 

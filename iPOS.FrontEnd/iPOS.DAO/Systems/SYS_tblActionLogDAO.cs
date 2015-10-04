@@ -31,12 +31,11 @@ namespace iPOS.DAO.Systems
                     if (response_collection != null)
                         result = response_collection.ResponseItem;
                 }
-
-                return result;
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
+                result.Message = ex.Message;
             }
 
             return result;

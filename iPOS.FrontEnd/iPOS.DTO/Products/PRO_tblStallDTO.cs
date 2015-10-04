@@ -2,7 +2,7 @@
 
 namespace iPOS.DTO.Products
 {
-    public class PRO_tblStallDTO
+    public class PRO_tblStallDTO : BaseDTO
     {
         public string StallID { get; set; }
 
@@ -25,22 +25,6 @@ namespace iPOS.DTO.Products
         public string StoreID { get; set; }
 
         public string WarehouseID { get; set; }
-
-        public bool Visible { get; set; }
-
-        public string Creater { get; set; }
-
-        public System.Nullable<DateTime> CreateTime { get; set; }
-
-        public string Editer { get; set; }
-
-        public System.Nullable<DateTime> EditTime { get; set; }
-
-        public string Activity { get; set; }
-
-        public string UserID { get; set; }
-
-        public string LanguageID { get; set; }
 
         public string StoreName { get; set; }
 

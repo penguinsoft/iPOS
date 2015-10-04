@@ -29,15 +29,14 @@ namespace iPOS.DAO.Systems
                     if (response_collection != null)
                         result.GroupUserList = response_collection.GroupUserList;
                 }
-
-                return result;
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
+                result.ResponseItem.Message = ex.Message;
             }
 
-            return null;
+            return result;
         }
 
         public async static Task<SYS_tblGroupUserDRO> GetGroupUserItem(string url)
@@ -60,15 +59,14 @@ namespace iPOS.DAO.Systems
                     if (response_collection != null)
                         result.GroupUserItem = response_collection.GroupUserItem;
                 }
-
-                return result;
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
+                result.ResponseItem.Message = ex.Message;
             }
 
-            return null;
+            return result;
         }
 
         public async static Task<SYS_tblGroupUserDRO> InsertUpdateGroupUser(string url, string json_data)
@@ -91,15 +89,14 @@ namespace iPOS.DAO.Systems
                     if (response_collection != null)
                         result.ResponseItem.Message = response_collection.ResponseItem.Message;
                 }
-
-                return result;
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
+                result.ResponseItem.Message = ex.Message;
             }
 
-            return null;
+            return result;
         }
 
         public async static Task<SYS_tblGroupUserDRO> DeleteGroupUser(string url)
@@ -122,15 +119,14 @@ namespace iPOS.DAO.Systems
                     if (response_collection != null)
                         result.ResponseItem.Message = response_collection.ResponseItem.Message;
                 }
-
-                return result;
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
+                result.ResponseItem.Message = ex.Message;
             }
 
-            return null;
+            return result;
         }
     }
 }

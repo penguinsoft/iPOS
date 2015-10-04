@@ -13,7 +13,7 @@ namespace iPOS.WCFService
     {
         #region [SYS_tblActionLog]
         [OperationContract]
-        [WebInvoke(Method = "POST", UriTemplate = "/InsertUpdateLog",
+        [WebInvoke(Method = "POST", UriTemplate = "InsertUpdateLog",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
                 BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         SYS_tblActionLogDRO InsertUpdateLog(SYS_tblActionLogDCO actionLog);
@@ -21,97 +21,97 @@ namespace iPOS.WCFService
 
         #region [SYS_tblGroupUser]
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/GetAllGroupUsers?Username={Username}&LanguageID={LanguageID}&GetComboBox={GetComboBox}",
+        [WebInvoke(Method = "GET", UriTemplate = "GetAllGroupUsers?Username={Username}&LanguageID={LanguageID}&GetComboBox={GetComboBox}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         SYS_tblGroupUserDRO GetAllGroupUsers(string Username, string LanguageID, bool GetComboBox);
 
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/GetGroupUserByID?Username={Username}&LanguageID={LanguageID}&GroupID={GroupID}",
+        [WebInvoke(Method = "GET", UriTemplate = "GetGroupUserByID?Username={Username}&LanguageID={LanguageID}&GroupID={GroupID}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         SYS_tblGroupUserDRO GetGroupUserByID(string Username, string LanguageID, string GroupID);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", UriTemplate = "/InsertUpdateGroupUser",
+        [WebInvoke(Method = "POST", UriTemplate = "InsertUpdateGroupUser",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
                 BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         SYS_tblGroupUserDRO InsertUpdateGroupUser(SYS_tblGroupUserDCO groupUser);
 
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/DeleteGroupUser?Username={Username}&LanguageID={LanguageID}&GroupUserIDList={GroupUserIDList}",
+        [WebInvoke(Method = "GET", UriTemplate = "DeleteGroupUser?Username={Username}&LanguageID={LanguageID}&GroupUserIDList={GroupUserIDList}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         SYS_tblGroupUserDRO DeleteGroupUser(string Username, string LanguageID, string GroupUserIDList);
         #endregion
 
         #region [SYS_tblUser]
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/CheckLogin?Username={Username}&Password={Password}&LanguageID={LanguageID}",
+        [WebInvoke(Method = "GET", UriTemplate = "CheckLogin?Username={Username}&Password={Password}&LanguageID={LanguageID}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         SYS_tblUserDRO CheckLogin(string Username, string Password, string LanguageID);
 
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/GetAllUsers?Username={Username}&LanguageID={LanguageID}",
+        [WebInvoke(Method = "GET", UriTemplate = "GetAllUsers?Username={Username}&LanguageID={LanguageID}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         SYS_tblUserDRO GetAllUsers(string Username, string LanguageID);
 
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/GetUserByID?Username={Username}&LanguageID={LanguageID}&UsernameOther={UsernameOther}",
+        [WebInvoke(Method = "GET", UriTemplate = "GetUserByID?Username={Username}&LanguageID={LanguageID}&UsernameOther={UsernameOther}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         SYS_tblUserDRO GetUserByID(string Username, string LanguageID, string UsernameOther);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", UriTemplate = "/InsertUpdateUser",
+        [WebInvoke(Method = "POST", UriTemplate = "InsertUpdateUser",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
                 BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         SYS_tblUserDRO InsertUpdateUser(SYS_tblUserDCO user); 
 
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/DeleteUser?Username={Username}&LanguageID={LanguageID}&UserCodeList={UserCodeList}",
+        [WebInvoke(Method = "GET", UriTemplate = "DeleteUser?Username={Username}&LanguageID={LanguageID}&UserCodeList={UserCodeList}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         SYS_tblUserDRO DeleteUser(string Username, string LanguageID, string UserCodeList); 
 
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/ChangeUserPassword?Username={Username}&LanguageID={LanguageID}&Password={Password}",
+        [WebInvoke(Method = "GET", UriTemplate = "ChangeUserPassword?Username={Username}&LanguageID={LanguageID}&Password={Password}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         SYS_tblUserDRO ChangeUserPassword(string Username, string LanguageID, string Password); 
         #endregion
 
         #region [SYS_tblReportCaption]
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/GetReportCaption?Username={Username}&LanguageID={LanguageID}&FunctionID={FunctionID}&IsImport={IsImport}",
+        [WebInvoke(Method = "GET", UriTemplate = "GetReportCaption?Username={Username}&LanguageID={LanguageID}&FunctionID={FunctionID}&IsImport={IsImport}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         SYS_tblReportCaptionDRO GetReportCaption(string Username, string LanguageID, string FunctionID, bool IsImport);
 
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/GetComboDynamicList?Username={Username}&LanguageID={LanguageID}&Code={Code}&TableName={TableName}&GetBy={GetBy}",
+        [WebInvoke(Method = "GET", UriTemplate = "GetComboDynamicList?Username={Username}&LanguageID={LanguageID}&Code={Code}&TableName={TableName}&GetBy={GetBy}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         SYS_tblReportCaptionDRO GetComboDynamicList(string Username, string LanguageID, string Code, string TableName, string GetBy);
         #endregion
 
         #region [SYS_tblImportFileConfig]
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/CheckValidImportTemplate?Username={Username}&LanguageID={LanguageID}&StoreProcedure={StoreProcedure}&FileName={FileName}&ModuleID={ModuleID}&FunctionID={FunctionID}",
+        [WebInvoke(Method = "GET", UriTemplate = "CheckValidImportTemplate?Username={Username}&LanguageID={LanguageID}&StoreProcedure={StoreProcedure}&FileName={FileName}&ModuleID={ModuleID}&FunctionID={FunctionID}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         SYS_tblImportFileConfigDRO CheckValidImportTemplate(string Username, string LanguageID, string StoreProcedure, string FileName, string ModuleID, string FunctionID);
 
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/ImportDataRow?Username={Username}&InputData={InputData}&StoreProcedure={StoreProcedure}",
+        [WebInvoke(Method = "GET", UriTemplate = "ImportDataRow?Username={Username}&InputData={InputData}&StoreProcedure={StoreProcedure}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         SYS_tblImportFileConfigDRO ImportDataRow(string Username, string InputData, string StoreProcedure);
         #endregion
 
         #region [SYS_tblPermission]
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/GetPermissionList?Username={Username}&LanguageID={LanguageID}&ID={ID}&ParentID={ParentID}&IsUser={IsUser}",
+        [WebInvoke(Method = "GET", UriTemplate = "GetPermissionList?Username={Username}&LanguageID={LanguageID}&ID={ID}&ParentID={ParentID}&IsUser={IsUser}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         SYS_tblPermissionDRO GetPermissionList(string Username, string LanguageID, string ID, string ParentID, bool IsUser);
 
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/GetPermissionItem?Username={Username}&LanguageID={LanguageID}&FunctionID={FunctionID}",
+        [WebInvoke(Method = "GET", UriTemplate = "GetPermissionItem?Username={Username}&LanguageID={LanguageID}&FunctionID={FunctionID}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         SYS_tblPermissionDRO GetPermissionItem(string Username, string LanguageID, string FunctionID);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", UriTemplate = "/UpdatePermission",
+        [WebInvoke(Method = "POST", UriTemplate = "UpdatePermission",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
                 BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         SYS_tblPermissionDRO UpdatePermission(string Username, string LanguageID, bool IsUser, List<SYS_tblPermissionDCO> permissionList);
@@ -119,133 +119,202 @@ namespace iPOS.WCFService
 
         #region [PRO_tblProvince]
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/GetAllProvinces?Username={Username}&LanguageID={LanguageID}&GetCombobox={GetCombobox}",
+        [WebInvoke(Method = "GET", UriTemplate = "GetAllProvinces?Username={Username}&LanguageID={LanguageID}&GetCombobox={GetCombobox}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         PRO_tblProvinceDRO GetAllProvinces(string Username, string LanguageID, bool GetCombobox);
 
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/GetProvinceByID?Username={Username}&LanguageID={LanguageID}&ProvinceID={ProvinceID}",
+        [WebInvoke(Method = "GET", UriTemplate = "GetProvinceByID?Username={Username}&LanguageID={LanguageID}&ProvinceID={ProvinceID}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         PRO_tblProvinceDRO GetProvinceByID(string Username, string LanguageID, string ProvinceID);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", UriTemplate = "/InsertUpdateProvince",
+        [WebInvoke(Method = "POST", UriTemplate = "InsertUpdateProvince",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
                 BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         PRO_tblProvinceDRO InsertUpdateProvince(PRO_tblProvinceDCO province);
 
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/DeleteProvince?Username={Username}&LanguageID={LanguageID}&ProvinceIDList={ProvinceIDList}",
+        [WebInvoke(Method = "GET", UriTemplate = "DeleteProvince?Username={Username}&LanguageID={LanguageID}&ProvinceIDList={ProvinceIDList}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         PRO_tblProvinceDRO DeleteProvince(string Username, string LanguageID, string ProvinceIDList); 
         #endregion
 
         #region [PRO_tblDistrict]
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/GetAllDistrict?Username={Username}&LanguageID={LanguageID}&ProvinceID={ProvinceID}&GetCombobox={GetCombobox}",
+        [WebInvoke(Method = "GET", UriTemplate = "GetAllDistrict?Username={Username}&LanguageID={LanguageID}&ProvinceID={ProvinceID}&GetCombobox={GetCombobox}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         PRO_tblDistrictDRO GetAllDistrict(string Username, string LanguageID, string ProvinceID, bool GetCombobox);
 
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/GetDistrictByID?Username={Username}&LanguageID={LanguageID}&DistrictID={DistrictID}",
+        [WebInvoke(Method = "GET", UriTemplate = "GetDistrictByID?Username={Username}&LanguageID={LanguageID}&DistrictID={DistrictID}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         PRO_tblDistrictDRO GetDistrictByID(string Username, string LanguageID, string DistrictID);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", UriTemplate = "/InsertUpdateDistrict",
+        [WebInvoke(Method = "POST", UriTemplate = "InsertUpdateDistrict",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
                 BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         PRO_tblDistrictDRO InsertUpdateDistrict(PRO_tblDistrictDCO district);
 
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/DeleteDistrict?Username={Username}&LanguageID={LanguageID}&DistrictIDList={DistrictIDList}",
+        [WebInvoke(Method = "GET", UriTemplate = "DeleteDistrict?Username={Username}&LanguageID={LanguageID}&DistrictIDList={DistrictIDList}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         PRO_tblDistrictDRO DeleteDistrict(string Username, string LanguageID, string DistrictIDList);
         #endregion
 
         #region [PRO_tblStore]
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/GetAllStores?Username={Username}&LanguageID={LanguageID}&GetCombobox={GetCombobox}",
+        [WebInvoke(Method = "GET", UriTemplate = "GetAllStores?Username={Username}&LanguageID={LanguageID}&GetCombobox={GetCombobox}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         PRO_tblStoreDRO GetAllStores(string Username, string LanguageID, bool GetCombobox);
 
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/GetStoreByID?Username={Username}&LanguageID={LanguageID}&StoreID={StoreID}",
+        [WebInvoke(Method = "GET", UriTemplate = "GetStoreByID?Username={Username}&LanguageID={LanguageID}&StoreID={StoreID}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         PRO_tblStoreDRO GetStoreByID(string Username, string LanguageID, string StoreID);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", UriTemplate = "/InsertUpdateStore",
+        [WebInvoke(Method = "POST", UriTemplate = "InsertUpdateStore",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
                 BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         PRO_tblStoreDRO InsertUpdateStore(PRO_tblStoreDCO store);
 
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/DeleteStore?Username={Username}&LanguageID={LanguageID}&StoreIDList={StoreIDList}",
+        [WebInvoke(Method = "GET", UriTemplate = "DeleteStore?Username={Username}&LanguageID={LanguageID}&StoreIDList={StoreIDList}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         PRO_tblStoreDRO DeleteStore(string Username, string LanguageID, string StoreIDList);
         #endregion
 
         #region [PRO_tblWarehouse]
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/GetAllWarehouses?Username={Username}&LanguageID={LanguageID}&StoreID={StoreID}&ProvinceID={ProvinceID}&DistrictID={DistrictID}&GetCombobox={GetCombobox}",
+        [WebInvoke(Method = "GET", UriTemplate = "GetAllWarehouses?Username={Username}&LanguageID={LanguageID}&StoreID={StoreID}&ProvinceID={ProvinceID}&DistrictID={DistrictID}&GetCombobox={GetCombobox}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         PRO_tblWarehouseDRO GetAllWarehouses(string Username, string LanguageID, string StoreID, string ProvinceID, string DistrictID, bool GetCombobox);
 
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/GetWarehouseByID?Username={Username}&LanguageID={LanguageID}&WarehouseID={WarehouseID}",
+        [WebInvoke(Method = "GET", UriTemplate = "GetWarehouseByID?Username={Username}&LanguageID={LanguageID}&WarehouseID={WarehouseID}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         PRO_tblWarehouseDRO GetWarehouseByID(string Username, string LanguageID, string WarehouseID);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", UriTemplate = "/InsertUpdateWarehouse",
+        [WebInvoke(Method = "POST", UriTemplate = "InsertUpdateWarehouse",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
                 BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         PRO_tblWarehouseDRO InsertUpdateWarehouse(PRO_tblWarehouseDCO warehouse);
 
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/DeleteWarehouse?Username={Username}&LanguageID={LanguageID}&WarehouseIDList={WarehouseIDList}",
+        [WebInvoke(Method = "GET", UriTemplate = "DeleteWarehouse?Username={Username}&LanguageID={LanguageID}&WarehouseIDList={WarehouseIDList}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         PRO_tblWarehouseDRO DeleteWarehouse(string Username, string LanguageID, string WarehouseIDList);
         #endregion 
 
         #region [PRO_tblStall]
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/GetAllStalls?Username={Username}&LanguageID={LanguageID}&StoreID={StoreID}&WarehouseID={WarehouseID}&GetCombobox={GetCombobox}",
+        [WebInvoke(Method = "GET", UriTemplate = "GetAllStalls?Username={Username}&LanguageID={LanguageID}&StoreID={StoreID}&WarehouseID={WarehouseID}&GetCombobox={GetCombobox}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         PRO_tblStallDRO GetAllStalls(string Username, string LanguageID, string StoreID, string WarehouseID, bool GetCombobox);
 
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/GetStallByID?Username={Username}&LanguageID={LanguageID}&StallID={StallID}",
+        [WebInvoke(Method = "GET", UriTemplate = "GetStallByID?Username={Username}&LanguageID={LanguageID}&StallID={StallID}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         PRO_tblStallDRO GetStallByID(string Username, string LanguageID, string StallID);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", UriTemplate = "/InsertUpdateStall",
+        [WebInvoke(Method = "POST", UriTemplate = "InsertUpdateStall",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
                 BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         PRO_tblStallDRO InsertUpdateStall(PRO_tblStallDCO stall);
 
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/DeleteStall?Username={Username}&LanguageID={LanguageID}&StallIDList={StallIDList}",
+        [WebInvoke(Method = "GET", UriTemplate = "DeleteStall?Username={Username}&LanguageID={LanguageID}&StallIDList={StallIDList}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         PRO_tblStallDRO DeleteStall(string Username, string LanguageID, string StallIDList);
         #endregion 
 
+        #region [PRO_tblProductGroupLevel1]
+        [OperationContract]
+        [WebInvoke(Method = "GET", UriTemplate = "GetAllLevel1?Username={Username}&LanguageID={LanguageID}&GetCombobox={GetCombobox}",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        PRO_tblProductGroupLevel1DRO GetAllLevel1(string Username, string LanguageID, bool GetCombobox);
+
+        [OperationContract]
+        [WebInvoke(Method = "GET", UriTemplate = "GetLevel1ByID?Username={Username}&LanguageID={LanguageID}&Level1ID={Level1ID}",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        PRO_tblProductGroupLevel1DRO GetLevel1ByID(string Username, string LanguageID, string Level1ID);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "InsertUpdateLevel1",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
+                BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        PRO_tblProductGroupLevel1DRO InsertUpdateLevel1(PRO_tblProductGroupLevel1DCO level1);
+
+        [OperationContract]
+        [WebInvoke(Method = "GET", UriTemplate = "DeleteLevel1?Username={Username}&LanguageID={LanguageID}&Level1IDList={Level1IDList}",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        PRO_tblProductGroupLevel1DRO DeleteLevel1(string Username, string LanguageID, string Level1IDList);
+        #endregion 
+
+        #region [PRO_tblProductGroupLevel2]
+        [OperationContract]
+        [WebInvoke(Method = "GET", UriTemplate = "GetAllLevel2?Username={Username}&LanguageID={LanguageID}&Level1ID={Level1ID}&GetCombobox={GetCombobox}",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        PRO_tblProductGroupLevel2DRO GetAllLevel2(string Username, string LanguageID, string Level1ID, bool GetCombobox);
+
+        [OperationContract]
+        [WebInvoke(Method = "GET", UriTemplate = "GetLevel2ByID?Username={Username}&LanguageID={LanguageID}&Level2ID={Level2ID}",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        PRO_tblProductGroupLevel2DRO GetLevel2ByID(string Username, string LanguageID, string Level2ID);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "InsertUpdateLevel2",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
+                BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        PRO_tblProductGroupLevel2DRO InsertUpdateLevel2(PRO_tblProductGroupLevel2DCO Level2);
+
+        [OperationContract]
+        [WebInvoke(Method = "GET", UriTemplate = "DeleteLevel2?Username={Username}&LanguageID={LanguageID}&Level2IDList={Level2IDList}",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        PRO_tblProductGroupLevel2DRO DeleteLevel2(string Username, string LanguageID, string Level2IDList);
+        #endregion 
+
+        #region [PRO_tblProductGroupLevel3]
+        [OperationContract]
+        [WebInvoke(Method = "GET", UriTemplate = "GetAllLevel3?Username={Username}&LanguageID={LanguageID}&Level1ID={Level1ID}&Level2ID={Level2ID}&GetCombobox={GetCombobox}",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        PRO_tblProductGroupLevel3DRO GetAllLevel3(string Username, string LanguageID, string Level1ID, string Level2ID, bool GetCombobox);
+
+        [OperationContract]
+        [WebInvoke(Method = "GET", UriTemplate = "GetLevel3ByID?Username={Username}&LanguageID={LanguageID}&Level3ID={Level3ID}",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        PRO_tblProductGroupLevel3DRO GetLevel3ByID(string Username, string LanguageID, string Level3ID);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "InsertUpdateLevel3",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
+                BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        PRO_tblProductGroupLevel3DRO InsertUpdateLevel3(PRO_tblProductGroupLevel3DCO Level3);
+
+        [OperationContract]
+        [WebInvoke(Method = "GET", UriTemplate = "DeleteLevel3?Username={Username}&LanguageID={LanguageID}&Level3IDList={Level3IDList}",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        PRO_tblProductGroupLevel3DRO DeleteLevel3(string Username, string LanguageID, string Level3IDList);
+        #endregion 
+
         #region [Tools]
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/GetTableColumnList?Username={Username}&ObjectName={ObjectName}",
+        [WebInvoke(Method = "GET", UriTemplate = "GetTableColumnList?Username={Username}&ObjectName={ObjectName}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         OBJ_TableColumnDRO GetTableColumnList(string Username, string ObjectName);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", UriTemplate = "/FileUpload", 
+        [WebInvoke(Method = "POST", UriTemplate = "FileUpload", 
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
                 BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         iPOS.DCO.BaseDRO FileUpload(OBJ_FileDCO file);
 
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/GetUserLevelList?Username={Username}&LanguageID={LanguageID}",
+        [WebInvoke(Method = "GET", UriTemplate = "GetUserLevelList?Username={Username}&LanguageID={LanguageID}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         SYS_tblUserLevelDRO GetUserLevelList(string Username, string LanguageID);
         #endregion

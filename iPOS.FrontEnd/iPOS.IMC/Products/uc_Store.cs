@@ -12,6 +12,7 @@ using iPOS.BUS.Products;
 using iPOS.Core.Helper;
 using iPOS.DTO.Systems;
 using System.Threading.Tasks;
+using iPOS.DRO.Products;
 
 namespace iPOS.IMC.Products
 {
@@ -36,7 +37,7 @@ namespace iPOS.IMC.Products
             try
             {
                 gridStore.DataBindings.Clear();
-                List<PRO_tblStoreDTO> stores = await PRO_tblStoreBUS.GetAllStores(CommonEngine.userInfo.UserID, ConfigEngine.Language, false, new SYS_tblActionLogDTO
+                PRO_tblStoreDRO stores = await PRO_tblStoreBUS.GetAllStores(CommonEngine.userInfo.UserID, ConfigEngine.Language, false, new SYS_tblActionLogDTO
                 {
                     Activity = BaseConstant.COMMAND_INSERT_EN,
                     UserID = CommonEngine.userInfo.UserID,
@@ -47,8 +48,10 @@ namespace iPOS.IMC.Products
                     DescriptionVN = string.Format("Tài khoản '{0}' vừa tải thành công dữ liệu cửa hàng.", CommonEngine.userInfo.UserID),
                     DescriptionEN = string.Format("Account '{0}' downloaded successfully data of stores.", CommonEngine.userInfo.UserID)
                 });
-                gridStore.DataSource = stores;
-                barFooter.Visible = (stores != null && stores.Count > 0) ? true : false;
+                if (stores.ResponseItem.IsError)
+                    CommonEngine.ShowHTTPErrorMessage(stores.ResponseItem);
+                gridStore.DataSource = stores.StoreList != null ? stores.StoreList : null;
+                barFooter.Visible = (stores.StoreList != null && stores.StoreList.Count > 0) ? true : false;
             }
             catch (Exception ex)
             {
@@ -87,13 +90,14 @@ namespace iPOS.IMC.Products
             if (store_code_list.Length > 0) store_code_list = store_code_list.Substring(1);
             if (store_id_list.Length > 0) store_id_list = store_id_list.Substring(1);
 
-            string strErr = "ready";
+            PRO_tblStoreDRO result = new PRO_tblStoreDRO();
+            result.ResponseItem.Message = "ready";
             try
             {
                 if (store_id_list.Contains("$"))
                 {
                     if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000012", ConfigEngine.Language).Replace("$Count$", store_id_list.Split('$').Length.ToString())))
-                        strErr = await PRO_tblStoreBUS.DeleteStore(CommonEngine.userInfo.Username, ConfigEngine.Language, store_id_list, new SYS_tblActionLogDTO
+                        result = await PRO_tblStoreBUS.DeleteStore(CommonEngine.userInfo.Username, ConfigEngine.Language, store_id_list, new SYS_tblActionLogDTO
                         {
                             Activity = BaseConstant.COMMAND_INSERT_EN,
                             UserID = CommonEngine.userInfo.UserID,
@@ -108,7 +112,7 @@ namespace iPOS.IMC.Products
                 else
                 {
                     if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000005", ConfigEngine.Language)))
-                        strErr = await PRO_tblStoreBUS.DeleteStore(CommonEngine.userInfo.Username, ConfigEngine.Language, store_id_list, new SYS_tblActionLogDTO
+                        result = await PRO_tblStoreBUS.DeleteStore(CommonEngine.userInfo.Username, ConfigEngine.Language, store_id_list, new SYS_tblActionLogDTO
                         {
                             Activity = BaseConstant.COMMAND_INSERT_EN,
                             UserID = CommonEngine.userInfo.UserID,
@@ -121,9 +125,14 @@ namespace iPOS.IMC.Products
                         });
                 }
 
-                if (!strErr.Equals("ready"))
-                    if (string.IsNullOrEmpty(strErr)) GetAllStore();
-                    else CommonEngine.ShowMessage(strErr, 0);
+                if (result.ResponseItem.IsError)
+                {
+                    CommonEngine.ShowHTTPErrorMessage(result.ResponseItem);
+                    return;
+                }
+                if (!result.ResponseItem.Message.Equals("ready"))
+                    if (string.IsNullOrEmpty(result.ResponseItem.Message)) GetAllStore();
+                    else CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
             }
             catch (Exception ex)
             {
@@ -153,9 +162,9 @@ namespace iPOS.IMC.Products
         {
             if (curItem.Count > 0)
             {
-                PRO_tblStoreDTO item = await PRO_tblStoreBUS.GetStoreItem(CommonEngine.userInfo.UserID, ConfigEngine.Language, curItem[0].StoreID);
-                if (item != null)
-                    CommonEngine.OpenInputForm(new uc_StoreDetail(this, item), new Size(660, 400), true);
+                PRO_tblStoreDRO item = await PRO_tblStoreBUS.GetStoreItem(CommonEngine.userInfo.UserID, ConfigEngine.Language, curItem[0].StoreID);
+                if (item.StoreItem != null)
+                    CommonEngine.OpenInputForm(new uc_StoreDetail(this, item.StoreItem), new Size(660, 400), true);
             }
         }
 

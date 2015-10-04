@@ -5,11 +5,16 @@ using iPOS.DTO.Systems;
 
 namespace iPOS.DRO.Systems
 {
-    public class SYS_tblReportCaptionDRO
+    public class SYS_tblReportCaptionDRO : BaseDRO
     {
         public List<SYS_tblReportCaptionDTO> ReportCaptionList { get; set; }
 
         public List<ComboDynamicItemDTO> ComboDynamicList { get; set; }
+
+        public SYS_tblReportCaptionDRO()
+        {
+            ResponseItem = new ResponseItem();
+        }
     }
 
     [DataContract]

@@ -79,18 +79,16 @@
             // 
             this.lciButtonCancel.Control = this.btnCancel;
             this.lciButtonCancel.CustomizationFormText = "lciButtonCancel";
-            this.lciButtonCancel.Location = new System.Drawing.Point(295, 190);
+            this.lciButtonCancel.Location = new System.Drawing.Point(295, 189);
             this.lciButtonCancel.Name = "lciButtonCancel";
-            this.lciButtonCancel.Size = new System.Drawing.Size(100, 27);
-            this.lciButtonCancel.Text = "lciButtonCancel";
+            this.lciButtonCancel.Size = new System.Drawing.Size(100, 28);
             this.lciButtonCancel.TextSize = new System.Drawing.Size(0, 0);
-            this.lciButtonCancel.TextToControlDistance = 0;
             this.lciButtonCancel.TextVisible = false;
             // 
             // btnCancel
             // 
             this.btnCancel.Image = global::iPOS.IMC.Properties.Resources.cancel_16;
-            this.btnCancel.Location = new System.Drawing.Point(297, 192);
+            this.btnCancel.Location = new System.Drawing.Point(297, 191);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(96, 22);
             this.btnCancel.StyleController = this.locMain;
@@ -119,7 +117,7 @@
             // btnSave
             // 
             this.btnSave.Image = global::iPOS.IMC.Properties.Resources.save_end_16;
-            this.btnSave.Location = new System.Drawing.Point(197, 192);
+            this.btnSave.Location = new System.Drawing.Point(197, 191);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(96, 22);
             this.btnSave.StyleController = this.locMain;
@@ -129,7 +127,8 @@
             // 
             // txtConfirmPassword
             // 
-            this.txtConfirmPassword.Location = new System.Drawing.Point(112, 156);
+            this.txtConfirmPassword.EnterMoveNextControl = true;
+            this.txtConfirmPassword.Location = new System.Drawing.Point(112, 155);
             this.txtConfirmPassword.Name = "txtConfirmPassword";
             this.txtConfirmPassword.Properties.UseSystemPasswordChar = true;
             this.txtConfirmPassword.Size = new System.Drawing.Size(269, 20);
@@ -139,7 +138,8 @@
             // 
             // txtNewPassword
             // 
-            this.txtNewPassword.Location = new System.Drawing.Point(112, 132);
+            this.txtNewPassword.EnterMoveNextControl = true;
+            this.txtNewPassword.Location = new System.Drawing.Point(112, 131);
             this.txtNewPassword.Name = "txtNewPassword";
             this.txtNewPassword.Properties.UseSystemPasswordChar = true;
             this.txtNewPassword.Size = new System.Drawing.Size(269, 20);
@@ -149,7 +149,8 @@
             // 
             // txtOldPassword
             // 
-            this.txtOldPassword.Location = new System.Drawing.Point(112, 108);
+            this.txtOldPassword.EnterMoveNextControl = true;
+            this.txtOldPassword.Location = new System.Drawing.Point(112, 107);
             this.txtOldPassword.Name = "txtOldPassword";
             this.txtOldPassword.Properties.UseSystemPasswordChar = true;
             this.txtOldPassword.Size = new System.Drawing.Size(269, 20);
@@ -159,7 +160,8 @@
             // 
             // txtGroupName
             // 
-            this.txtGroupName.Location = new System.Drawing.Point(112, 84);
+            this.txtGroupName.EnterMoveNextControl = true;
+            this.txtGroupName.Location = new System.Drawing.Point(112, 83);
             this.txtGroupName.Name = "txtGroupName";
             this.txtGroupName.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
             this.txtGroupName.Properties.Appearance.Options.UseFont = true;
@@ -171,7 +173,8 @@
             // 
             // txtUsername
             // 
-            this.txtUsername.Location = new System.Drawing.Point(112, 60);
+            this.txtUsername.EnterMoveNextControl = true;
+            this.txtUsername.Location = new System.Drawing.Point(112, 59);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
             this.txtUsername.Properties.Appearance.Options.UseFont = true;
@@ -184,7 +187,7 @@
             // lblNote
             // 
             this.lblNote.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.Vertical;
-            this.lblNote.Location = new System.Drawing.Point(19, 38);
+            this.lblNote.Location = new System.Drawing.Point(19, 37);
             this.lblNote.Name = "lblNote";
             this.lblNote.Size = new System.Drawing.Size(357, 13);
             this.lblNote.StyleController = this.locMain;
@@ -205,20 +208,18 @@
             this.logMain.Name = "logMain";
             this.logMain.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
             this.logMain.Size = new System.Drawing.Size(395, 217);
-            this.logMain.Text = "logMain";
             this.logMain.TextVisible = false;
             // 
             // esiFirst
             // 
             this.esiFirst.AllowHotTrack = false;
             this.esiFirst.CustomizationFormText = "esiFirst";
-            this.esiFirst.Location = new System.Drawing.Point(0, 190);
+            this.esiFirst.Location = new System.Drawing.Point(0, 189);
             this.esiFirst.MaxSize = new System.Drawing.Size(195, 27);
             this.esiFirst.MinSize = new System.Drawing.Size(195, 27);
             this.esiFirst.Name = "esiFirst";
-            this.esiFirst.Size = new System.Drawing.Size(195, 27);
+            this.esiFirst.Size = new System.Drawing.Size(195, 28);
             this.esiFirst.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            this.esiFirst.Text = "esiFirst";
             this.esiFirst.TextSize = new System.Drawing.Size(0, 0);
             // 
             // logDetail
@@ -233,7 +234,7 @@
             this.lciConfirmPassword});
             this.logDetail.Location = new System.Drawing.Point(0, 0);
             this.logDetail.Name = "logDetail";
-            this.logDetail.Size = new System.Drawing.Size(395, 190);
+            this.logDetail.Size = new System.Drawing.Size(395, 189);
             this.logDetail.Text = "Password Information";
             // 
             // lciLabelNote
@@ -244,9 +245,7 @@
             this.lciLabelNote.Name = "lciLabelNote";
             this.lciLabelNote.Padding = new DevExpress.XtraLayout.Utils.Padding(7, 7, 7, 7);
             this.lciLabelNote.Size = new System.Drawing.Size(371, 27);
-            this.lciLabelNote.Text = "lciLabelNote";
             this.lciLabelNote.TextSize = new System.Drawing.Size(0, 0);
-            this.lciLabelNote.TextToControlDistance = 0;
             this.lciLabelNote.TextVisible = false;
             this.lciLabelNote.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
             // 
@@ -304,12 +303,10 @@
             // 
             this.lciButtonSave.Control = this.btnSave;
             this.lciButtonSave.CustomizationFormText = "lciButtonSave";
-            this.lciButtonSave.Location = new System.Drawing.Point(195, 190);
+            this.lciButtonSave.Location = new System.Drawing.Point(195, 189);
             this.lciButtonSave.Name = "lciButtonSave";
-            this.lciButtonSave.Size = new System.Drawing.Size(100, 27);
-            this.lciButtonSave.Text = "lciButtonSave";
+            this.lciButtonSave.Size = new System.Drawing.Size(100, 28);
             this.lciButtonSave.TextSize = new System.Drawing.Size(0, 0);
-            this.lciButtonSave.TextToControlDistance = 0;
             this.lciButtonSave.TextVisible = false;
             // 
             // uc_ChangePassword

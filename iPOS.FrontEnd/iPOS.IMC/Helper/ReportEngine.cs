@@ -12,6 +12,7 @@ using iPOS.Core.Helper;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using iPOS.DRO.Systems;
 
 namespace iPOS.IMC.Helper
 {
@@ -121,8 +122,8 @@ namespace iPOS.IMC.Helper
             bool result = false;
             try
             {
-                iPOS.DTO.Systems.SYS_tblImportFileConfigDTO tmpItem = await iPOS.BUS.Systems.SYS_tblImportFileConfigBUS.CheckValidImportTemplate(username, language_id, store_procedure, file_name, module_id, function_id);
-                if (tmpItem != null && !string.IsNullOrEmpty(tmpItem.ImportFileConfigID + ""))
+                SYS_tblImportFileConfigDRO tmpItem = await iPOS.BUS.Systems.SYS_tblImportFileConfigBUS.CheckValidImportTemplate(username, language_id, store_procedure, file_name, module_id, function_id);
+                if (tmpItem != null && !string.IsNullOrEmpty(tmpItem.ImportFileConfigItem.ImportFileConfigID + ""))
                     result = true;
                 else
                 {
@@ -164,12 +165,12 @@ namespace iPOS.IMC.Helper
         {
             try
             {
-                List<iPOS.DTO.Systems.SYS_tblReportCaptionDTO> captionList = await iPOS.BUS.Systems.SYS_tblReportCaptionBUS.GetReportCaption(username, language_id, function_id, true);
+                SYS_tblReportCaptionDRO captionList = await iPOS.BUS.Systems.SYS_tblReportCaptionBUS.GetReportCaption(username, language_id, function_id, true);
                 Workbook wb = new Workbook(string.Format(@"{0}\{1}\{2}", Temp, module_id, template));
                 Worksheet ws = wb.Worksheets[0];
                 int index = 0;
                 int count = wb.Worksheets.Count;
-                if (captionList != null && captionList.Count > 0)
+                if (captionList != null && captionList.ReportCaptionList.Count > 0)
                 {
                     FindOptions findOptions = new FindOptions
                     {
@@ -177,27 +178,27 @@ namespace iPOS.IMC.Helper
                         LookAtType = LookAtType.EntireContent
                     };
 
-                    for (int i = 0; i < captionList.Count; i++)
+                    for (int i = 0; i < captionList.ReportCaptionList.Count; i++)
                     {
-                        Cell cell = ws.Cells.Find("$" + captionList[i].ControlID + "$", null, findOptions);
+                        Cell cell = ws.Cells.Find("$" + captionList.ReportCaptionList[i].ControlID + "$", null, findOptions);
                         if (cell != null)
                         {
                             int column = cell.Column;
-                            ws.Replace("$" + captionList[i].ControlID + "$", captionList[i].Caption);
-                            if (captionList[i].IsList)
+                            ws.Replace("$" + captionList.ReportCaptionList[i].ControlID + "$", captionList.ReportCaptionList[i].Caption);
+                            if (captionList.ReportCaptionList[i].IsList)
                             {
                                 string tmp = "";
                                 tmp = ws.Cells[cell.Row + 1, column].Value + "";
-                                List<iPOS.DTO.Systems.ComboDynamicItemDTO> comboItems = await iPOS.BUS.Systems.SYS_tblReportCaptionBUS.GetComboDynamicList(username, language_id, "", captionList[i].TableName, "Code");
+                                SYS_tblReportCaptionDRO comboItems = await iPOS.BUS.Systems.SYS_tblReportCaptionBUS.GetComboDynamicList(username, language_id, "", captionList.ReportCaptionList[i].TableName, "Code");
                                 index++;
-                                if (comboItems != null && comboItems.Count > 0)
+                                if (comboItems != null && comboItems.ComboDynamicList.Count > 0)
                                 {
-                                    wb.Worksheets[index].Name = captionList[i].TableName;
+                                    wb.Worksheets[index].Name = captionList.ReportCaptionList[i].TableName;
                                     Worksheet ws1 = wb.Worksheets[index];
-                                    ws1.Cells.ImportDataTable(iPOS.Core.Helper.ConvertEngine.ConvertObjectListToDataTable<iPOS.DTO.Systems.ComboDynamicItemDTO>(comboItems), true, 0, 0, true, false);
-                                    Range range = ws1.Cells.CreateRange(1, 0, comboItems.Count, 1);
+                                    ws1.Cells.ImportDataTable(iPOS.Core.Helper.ConvertEngine.ConvertObjectListToDataTable<iPOS.DTO.Systems.ComboDynamicItemDTO>(comboItems.ComboDynamicList), true, 0, 0, true, false);
+                                    Range range = ws1.Cells.CreateRange(1, 0, comboItems.ComboDynamicList.Count, 1);
                                     range.Name = tmp;
-                                    for (int j = 0; j < comboItems.Count; j++)
+                                    for (int j = 0; j < comboItems.ComboDynamicList.Count; j++)
                                     {
                                         iPOS.Core.Extensions.AsposeCellsStyle.Cells.BackgroundColor(ws1.Cells[0, j], Color.Yellow);
                                         iPOS.Core.Extensions.AsposeCellsStyle.Cells.Font.Color(ws1.Cells[0, j], Color.Red);
@@ -221,7 +222,7 @@ namespace iPOS.IMC.Helper
                                 validation.AreaList.Add(cellArea);
                             }
                         }
-                        if (captionList[i].IsRequire)
+                        if (captionList.ReportCaptionList[i].IsRequire)
                             iPOS.Core.Extensions.AsposeCellsStyle.Cells.Font.Color(cell, Color.Red);
                     }
                     SaveExportCustom(wb, template, true);

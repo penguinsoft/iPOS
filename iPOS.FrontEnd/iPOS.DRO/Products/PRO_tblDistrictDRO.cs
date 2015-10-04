@@ -10,6 +10,11 @@ namespace iPOS.DRO.Products
         public List<PRO_tblDistrictDTO> DistrictList { get; set; }
 
         public PRO_tblDistrictDTO DistrictItem { get; set; }
+
+        public PRO_tblDistrictDRO()
+        {
+            ResponseItem = new ResponseItem();
+        }
     }
 
     [DataContract]

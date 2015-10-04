@@ -10,6 +10,7 @@ using iPOS.DTO.Products;
 using iPOS.IMC.Helper;
 using iPOS.Core.Helper;
 using System.Threading.Tasks;
+using iPOS.DRO.Products;
 
 namespace iPOS.IMC.Products
 {
@@ -98,10 +99,10 @@ namespace iPOS.IMC.Products
 
         private async Task<bool> SaveStall(bool isEdit)
         {
-            string strError = "";
+            PRO_tblStallDRO result = new PRO_tblStallDRO();
             try
             {
-                strError = await iPOS.BUS.Products.PRO_tblStallBUS.InsertUpdateStall(new PRO_tblStallDTO
+                result = await iPOS.BUS.Products.PRO_tblStallBUS.InsertUpdateStall(new PRO_tblStallDTO
                 {
                     StallID = isEdit ? txtStallID.Text : "0",
                     StallCode = txtStallCode.Text.Trim(),
@@ -126,9 +127,16 @@ namespace iPOS.IMC.Products
                     DescriptionVN = string.Format("Tài khoản '{0}' vừa {1} thành công quầy bán có mã quầy là '{2}'.", CommonEngine.userInfo.UserID, isEdit ? "cập nhật" : "thêm mới", txtStallCode.Text),
                     DescriptionEN = string.Format("Account '{0}' has {1} stall successfully with stall code is '{2}'.", CommonEngine.userInfo.UserID, isEdit ? "updated" : "inserted", txtStallCode.Text)
                 });
-                if (!string.IsNullOrEmpty(strError))
+
+                if (result.ResponseItem.IsError)
                 {
-                    CommonEngine.ShowMessage(strError, 0);
+                    CommonEngine.ShowHTTPErrorMessage(result.ResponseItem);
+                    txtStallCode.Focus();
+                    return false;
+                }
+                if (!string.IsNullOrEmpty(result.ResponseItem.Message))
+                {
+                    CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
                     txtStallCode.Focus();
                     return false;
                 }

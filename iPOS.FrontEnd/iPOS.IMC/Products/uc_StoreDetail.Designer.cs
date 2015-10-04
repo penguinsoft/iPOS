@@ -110,9 +110,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtPhone.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtAddressEN.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtAddressVN.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dteEndDate.Properties.VistaTimeProperties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dteEndDate.Properties.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dteEndDate.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dteBuildDate.Properties.VistaTimeProperties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dteBuildDate.Properties.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dteBuildDate.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtENName.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtVNName.Properties)).BeginInit();
@@ -152,14 +152,12 @@
             this.lciPhoto.Location = new System.Drawing.Point(470, 0);
             this.lciPhoto.Name = "lciPhoto";
             this.lciPhoto.Size = new System.Drawing.Size(160, 144);
-            this.lciPhoto.Text = "lciPhoto";
             this.lciPhoto.TextSize = new System.Drawing.Size(0, 0);
-            this.lciPhoto.TextToControlDistance = 0;
             this.lciPhoto.TextVisible = false;
             // 
             // picPhoto
             // 
-            this.picPhoto.Location = new System.Drawing.Point(484, 33);
+            this.picPhoto.Location = new System.Drawing.Point(484, 32);
             this.picPhoto.Name = "picPhoto";
             this.picPhoto.Properties.NullText = "[Chọn ảnh logo]";
             this.picPhoto.Properties.PictureStoreMode = DevExpress.XtraEditors.Controls.PictureStoreMode.ByteArray;
@@ -207,7 +205,7 @@
             // txtShortCode
             // 
             this.txtShortCode.EnterMoveNextControl = true;
-            this.txtShortCode.Location = new System.Drawing.Point(393, 33);
+            this.txtShortCode.Location = new System.Drawing.Point(393, 32);
             this.txtShortCode.Name = "txtShortCode";
             this.txtShortCode.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
             this.txtShortCode.Properties.Appearance.Options.UseFont = true;
@@ -261,9 +259,9 @@
             // 
             // mmoNote
             // 
-            this.mmoNote.Location = new System.Drawing.Point(132, 273);
+            this.mmoNote.Location = new System.Drawing.Point(132, 272);
             this.mmoNote.Name = "mmoNote";
-            this.mmoNote.Size = new System.Drawing.Size(508, 63);
+            this.mmoNote.Size = new System.Drawing.Size(508, 64);
             this.mmoNote.StyleController = this.locMain;
             this.mmoNote.TabIndex = 18;
             // 
@@ -271,7 +269,7 @@
             // 
             this.chkUsed.EditValue = true;
             this.chkUsed.EnterMoveNextControl = true;
-            this.chkUsed.Location = new System.Drawing.Point(399, 249);
+            this.chkUsed.Location = new System.Drawing.Point(399, 248);
             this.chkUsed.Name = "chkUsed";
             this.chkUsed.Properties.Caption = "Đang hoạt động?";
             this.chkUsed.Size = new System.Drawing.Size(241, 19);
@@ -281,7 +279,7 @@
             // chkIsRoot
             // 
             this.chkIsRoot.EnterMoveNextControl = true;
-            this.chkIsRoot.Location = new System.Drawing.Point(132, 249);
+            this.chkIsRoot.Location = new System.Drawing.Point(132, 248);
             this.chkIsRoot.Name = "chkIsRoot";
             this.chkIsRoot.Properties.Caption = "Là cửa hàng chính?";
             this.chkIsRoot.Size = new System.Drawing.Size(208, 19);
@@ -291,7 +289,7 @@
             // txtRepresentives
             // 
             this.txtRepresentives.EnterMoveNextControl = true;
-            this.txtRepresentives.Location = new System.Drawing.Point(348, 225);
+            this.txtRepresentives.Location = new System.Drawing.Point(348, 224);
             this.txtRepresentives.Name = "txtRepresentives";
             this.txtRepresentives.Properties.MaxLength = 150;
             this.txtRepresentives.Size = new System.Drawing.Size(292, 20);
@@ -306,7 +304,7 @@
             0,
             0});
             this.speRank.EnterMoveNextControl = true;
-            this.speRank.Location = new System.Drawing.Point(132, 225);
+            this.speRank.Location = new System.Drawing.Point(132, 224);
             this.speRank.Name = "speRank";
             this.speRank.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
@@ -317,7 +315,7 @@
             // gluDistrict
             // 
             this.gluDistrict.EnterMoveNextControl = true;
-            this.gluDistrict.Location = new System.Drawing.Point(427, 177);
+            this.gluDistrict.Location = new System.Drawing.Point(427, 176);
             this.gluDistrict.Name = "gluDistrict";
             this.gluDistrict.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -377,7 +375,7 @@
             // gluProvince
             // 
             this.gluProvince.EnterMoveNextControl = true;
-            this.gluProvince.Location = new System.Drawing.Point(132, 177);
+            this.gluProvince.Location = new System.Drawing.Point(132, 176);
             this.gluProvince.Name = "gluProvince";
             this.gluProvince.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -439,7 +437,7 @@
             // txtTaxCode
             // 
             this.txtTaxCode.EnterMoveNextControl = true;
-            this.txtTaxCode.Location = new System.Drawing.Point(488, 201);
+            this.txtTaxCode.Location = new System.Drawing.Point(488, 200);
             this.txtTaxCode.Name = "txtTaxCode";
             this.txtTaxCode.Properties.MaxLength = 50;
             this.txtTaxCode.Size = new System.Drawing.Size(152, 20);
@@ -449,7 +447,7 @@
             // txtFax
             // 
             this.txtFax.EnterMoveNextControl = true;
-            this.txtFax.Location = new System.Drawing.Point(298, 201);
+            this.txtFax.Location = new System.Drawing.Point(298, 200);
             this.txtFax.Name = "txtFax";
             this.txtFax.Properties.MaxLength = 100;
             this.txtFax.Size = new System.Drawing.Size(121, 20);
@@ -459,7 +457,7 @@
             // txtPhone
             // 
             this.txtPhone.EnterMoveNextControl = true;
-            this.txtPhone.Location = new System.Drawing.Point(132, 201);
+            this.txtPhone.Location = new System.Drawing.Point(132, 200);
             this.txtPhone.Name = "txtPhone";
             this.txtPhone.Properties.MaxLength = 100;
             this.txtPhone.Size = new System.Drawing.Size(132, 20);
@@ -469,7 +467,7 @@
             // txtAddressEN
             // 
             this.txtAddressEN.EnterMoveNextControl = true;
-            this.txtAddressEN.Location = new System.Drawing.Point(132, 153);
+            this.txtAddressEN.Location = new System.Drawing.Point(132, 152);
             this.txtAddressEN.Name = "txtAddressEN";
             this.txtAddressEN.Properties.MaxLength = 255;
             this.txtAddressEN.Size = new System.Drawing.Size(348, 20);
@@ -479,7 +477,7 @@
             // txtAddressVN
             // 
             this.txtAddressVN.EnterMoveNextControl = true;
-            this.txtAddressVN.Location = new System.Drawing.Point(132, 129);
+            this.txtAddressVN.Location = new System.Drawing.Point(132, 128);
             this.txtAddressVN.Name = "txtAddressVN";
             this.txtAddressVN.Properties.MaxLength = 255;
             this.txtAddressVN.Size = new System.Drawing.Size(348, 20);
@@ -490,11 +488,11 @@
             // 
             this.dteEndDate.EditValue = null;
             this.dteEndDate.EnterMoveNextControl = true;
-            this.dteEndDate.Location = new System.Drawing.Point(363, 105);
+            this.dteEndDate.Location = new System.Drawing.Point(363, 104);
             this.dteEndDate.Name = "dteEndDate";
             this.dteEndDate.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.dteEndDate.Properties.VistaTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            this.dteEndDate.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
             this.dteEndDate.Size = new System.Drawing.Size(117, 20);
             this.dteEndDate.StyleController = this.locMain;
@@ -505,11 +503,11 @@
             // 
             this.dteBuildDate.EditValue = null;
             this.dteBuildDate.EnterMoveNextControl = true;
-            this.dteBuildDate.Location = new System.Drawing.Point(132, 105);
+            this.dteBuildDate.Location = new System.Drawing.Point(132, 104);
             this.dteBuildDate.Name = "dteBuildDate";
             this.dteBuildDate.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.dteBuildDate.Properties.VistaTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            this.dteBuildDate.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
             this.dteBuildDate.Size = new System.Drawing.Size(109, 20);
             this.dteBuildDate.StyleController = this.locMain;
@@ -518,7 +516,7 @@
             // txtENName
             // 
             this.txtENName.EnterMoveNextControl = true;
-            this.txtENName.Location = new System.Drawing.Point(132, 81);
+            this.txtENName.Location = new System.Drawing.Point(132, 80);
             this.txtENName.Name = "txtENName";
             this.txtENName.Properties.MaxLength = 255;
             this.txtENName.Size = new System.Drawing.Size(348, 20);
@@ -529,7 +527,7 @@
             // txtVNName
             // 
             this.txtVNName.EnterMoveNextControl = true;
-            this.txtVNName.Location = new System.Drawing.Point(132, 57);
+            this.txtVNName.Location = new System.Drawing.Point(132, 56);
             this.txtVNName.Name = "txtVNName";
             this.txtVNName.Properties.MaxLength = 255;
             this.txtVNName.Size = new System.Drawing.Size(348, 20);
@@ -540,7 +538,7 @@
             // txtStoreCode
             // 
             this.txtStoreCode.EnterMoveNextControl = true;
-            this.txtStoreCode.Location = new System.Drawing.Point(132, 33);
+            this.txtStoreCode.Location = new System.Drawing.Point(132, 32);
             this.txtStoreCode.Name = "txtStoreCode";
             this.txtStoreCode.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
             this.txtStoreCode.Properties.Appearance.Options.UseFont = true;
@@ -566,7 +564,6 @@
             this.logMain.Name = "Root";
             this.logMain.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
             this.logMain.Size = new System.Drawing.Size(654, 376);
-            this.logMain.Text = "Root";
             this.logMain.TextVisible = false;
             // 
             // logDetail
@@ -595,7 +592,6 @@
             this.logDetail.Location = new System.Drawing.Point(0, 0);
             this.logDetail.Name = "logDetail";
             this.logDetail.Size = new System.Drawing.Size(654, 350);
-            this.logDetail.Text = "logDetail";
             // 
             // lciVNName
             // 
@@ -779,7 +775,7 @@
             this.lciNote.CustomizationFormText = "Ghi chú:";
             this.lciNote.Location = new System.Drawing.Point(0, 240);
             this.lciNote.Name = "lciNote";
-            this.lciNote.Size = new System.Drawing.Size(630, 67);
+            this.lciNote.Size = new System.Drawing.Size(630, 68);
             this.lciNote.Text = "Ghi chú:";
             this.lciNote.TextSize = new System.Drawing.Size(115, 13);
             // 
@@ -803,9 +799,7 @@
             this.lciButtonSaveClose.Location = new System.Drawing.Point(354, 350);
             this.lciButtonSaveClose.Name = "lciButtonSaveClose";
             this.lciButtonSaveClose.Size = new System.Drawing.Size(100, 26);
-            this.lciButtonSaveClose.Text = "lciButtonSaveClose";
             this.lciButtonSaveClose.TextSize = new System.Drawing.Size(0, 0);
-            this.lciButtonSaveClose.TextToControlDistance = 0;
             this.lciButtonSaveClose.TextVisible = false;
             // 
             // lciButtonSaveInsert
@@ -815,9 +809,7 @@
             this.lciButtonSaveInsert.Location = new System.Drawing.Point(454, 350);
             this.lciButtonSaveInsert.Name = "lciButtonSaveInsert";
             this.lciButtonSaveInsert.Size = new System.Drawing.Size(100, 26);
-            this.lciButtonSaveInsert.Text = "lciButtonSaveInsert";
             this.lciButtonSaveInsert.TextSize = new System.Drawing.Size(0, 0);
-            this.lciButtonSaveInsert.TextToControlDistance = 0;
             this.lciButtonSaveInsert.TextVisible = false;
             // 
             // lciButtonCancel
@@ -827,9 +819,7 @@
             this.lciButtonCancel.Location = new System.Drawing.Point(554, 350);
             this.lciButtonCancel.Name = "lciButtonCancel";
             this.lciButtonCancel.Size = new System.Drawing.Size(100, 26);
-            this.lciButtonCancel.Text = "lciButtonCancel";
             this.lciButtonCancel.TextSize = new System.Drawing.Size(0, 0);
-            this.lciButtonCancel.TextToControlDistance = 0;
             this.lciButtonCancel.TextVisible = false;
             // 
             // esiSecond
@@ -839,7 +829,6 @@
             this.esiSecond.Location = new System.Drawing.Point(0, 350);
             this.esiSecond.Name = "esiSecond";
             this.esiSecond.Size = new System.Drawing.Size(158, 26);
-            this.esiSecond.Text = "esiSecond";
             this.esiSecond.TextSize = new System.Drawing.Size(0, 0);
             // 
             // lciStoreID
@@ -850,9 +839,7 @@
             this.lciStoreID.Location = new System.Drawing.Point(158, 350);
             this.lciStoreID.Name = "lciStoreID";
             this.lciStoreID.Size = new System.Drawing.Size(196, 26);
-            this.lciStoreID.Text = "lciStoreID";
             this.lciStoreID.TextSize = new System.Drawing.Size(0, 0);
-            this.lciStoreID.TextToControlDistance = 0;
             this.lciStoreID.TextVisible = false;
             // 
             // depError
@@ -887,9 +874,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtPhone.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtAddressEN.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtAddressVN.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dteEndDate.Properties.VistaTimeProperties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dteEndDate.Properties.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dteEndDate.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dteBuildDate.Properties.VistaTimeProperties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dteBuildDate.Properties.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dteBuildDate.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtENName.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtVNName.Properties)).EndInit();

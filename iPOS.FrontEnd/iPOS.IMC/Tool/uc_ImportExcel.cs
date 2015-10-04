@@ -14,6 +14,7 @@ using Aspose.Cells;
 using System.Text.RegularExpressions;
 using System.Linq;
 using System.Threading.Tasks;
+using iPOS.DRO.Systems;
 
 namespace iPOS.IMC.Tool
 {
@@ -112,12 +113,12 @@ namespace iPOS.IMC.Tool
 
         private async void ShowRequireColumn()
         {
-            List<iPOS.DTO.Systems.SYS_tblReportCaptionDTO> captionList = await iPOS.BUS.Systems.SYS_tblReportCaptionBUS.GetReportCaption(CommonEngine.userInfo.Username, ConfigEngine.Language, strFunctionID, true);
-            if (captionList != null && captionList.Count > 0)
+            SYS_tblReportCaptionDRO captionList = await iPOS.BUS.Systems.SYS_tblReportCaptionBUS.GetReportCaption(CommonEngine.userInfo.Username, ConfigEngine.Language, strFunctionID, true);
+            if (captionList != null && captionList.ReportCaptionList.Count > 0)
             {
                 for (int i = 0; i < grvMainData.Columns.Count; i++)
                 {
-                    var tmp = (from caption in captionList
+                    var tmp = (from caption in captionList.ReportCaptionList
                                where caption.Caption.ToLower().Trim().Equals(grvMainData.Columns[i].FieldName.ToLower().Trim())
                                select caption).ToList();
                     if (tmp != null && tmp.Count > 0)
@@ -405,8 +406,8 @@ namespace iPOS.IMC.Tool
 
         private async void btnImportSelectedFile_Click(object sender, EventArgs e)
         {
-            List<iPOS.DTO.Systems.SYS_tblReportCaptionDTO> captionList = await iPOS.BUS.Systems.SYS_tblReportCaptionBUS.GetReportCaption(CommonEngine.userInfo.Username, ConfigEngine.Language, strFunctionID, true);
-            if (captionList != null && captionList.Count > 0)
+            SYS_tblReportCaptionDRO captionList = await iPOS.BUS.Systems.SYS_tblReportCaptionBUS.GetReportCaption(CommonEngine.userInfo.Username, ConfigEngine.Language, strFunctionID, true);
+            if (captionList != null && captionList.ReportCaptionList.Count > 0)
             {
                 DataTable dt = dsMainData.Tables[gluSeletedFiles.EditValue + ""];
                 DataRow[] dr = dtSelectedFile.Select("TableName='" + gluSeletedFiles.EditValue + "'");
@@ -433,8 +434,8 @@ namespace iPOS.IMC.Tool
         {
             foreach (DataRow dr in dtSelectedFile.Rows)
             {
-                List<iPOS.DTO.Systems.SYS_tblReportCaptionDTO> captionList = await iPOS.BUS.Systems.SYS_tblReportCaptionBUS.GetReportCaption(CommonEngine.userInfo.Username, ConfigEngine.Language, strFunctionID, true);
-                if (captionList != null && captionList.Count > 0)
+                SYS_tblReportCaptionDRO captionList = await iPOS.BUS.Systems.SYS_tblReportCaptionBUS.GetReportCaption(CommonEngine.userInfo.Username, ConfigEngine.Language, strFunctionID, true);
+                if (captionList != null && captionList.ReportCaptionList.Count > 0)
                 {
                     DataTable dt = dsMainData.Tables[dr["TableName"] + ""];
                     string tmp = dr["ColumnArray"] + "";

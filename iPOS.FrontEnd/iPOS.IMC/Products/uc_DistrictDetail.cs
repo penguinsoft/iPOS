@@ -10,6 +10,7 @@ using iPOS.IMC.Helper;
 using iPOS.Core.Helper;
 using System.Threading.Tasks;
 using iPOS.DTO.Products;
+using iPOS.DRO.Products;
 
 namespace iPOS.IMC.Products
 {
@@ -83,10 +84,10 @@ namespace iPOS.IMC.Products
 
         private async Task<bool> SaveDistrict(bool isEdit)
         {
-            string strError = "";
+            PRO_tblDistrictDRO result = new PRO_tblDistrictDRO();
             try
             {
-                PRO_tblDistrictDTO item = new PRO_tblDistrictDTO
+                result = await iPOS.BUS.Products.PRO_tblDistrictBUS.InsertUpdateDistrict(new PRO_tblDistrictDTO
                 {
                     DistrictID = isEdit ? txtDistrictID.Text : "0",
                     DistrictCode = txtDistrictCode.Text,
@@ -99,8 +100,7 @@ namespace iPOS.IMC.Products
                     UserID = CommonEngine.userInfo.UserID,
                     Activity = (isEdit) ? BaseConstant.COMMAND_UPDATE_EN : BaseConstant.COMMAND_INSERT_EN,
                     LanguageID = ConfigEngine.Language
-                };
-                strError = await iPOS.BUS.Products.PRO_tblDistrictBUS.InsertUpdateDistrict(item, new DTO.Systems.SYS_tblActionLogDTO
+                }, new DTO.Systems.SYS_tblActionLogDTO
                 {
                     Activity = BaseConstant.COMMAND_INSERT_EN,
                     UserID = CommonEngine.userInfo.UserID,
@@ -108,12 +108,19 @@ namespace iPOS.IMC.Products
                     ActionEN = isEdit ? BaseConstant.COMMAND_UPDATE_EN : BaseConstant.COMMAND_INSERT_EN,
                     ActionVN = isEdit ? BaseConstant.COMMAND_UPDATE_VI : BaseConstant.COMMAND_INSERT_VI,
                     FunctionID = "12",
-                    DescriptionVN = string.Format("Tài khoản '{0}' vừa {1} thành công quận huyện có mã quận huyện là '{2}'.", item.UserID, isEdit ? "cập nhật" : "thêm mới", txtDistrictCode.Text),
-                    DescriptionEN = string.Format("Account '{0}' has {1} district successfully with district code is '{2}'.", item.UserID, isEdit ? "updated" : "inserted", txtDistrictCode.Text)
+                    DescriptionVN = string.Format("Tài khoản '{0}' vừa {1} thành công quận huyện có mã quận huyện là '{2}'.", CommonEngine.userInfo.UserID, isEdit ? "cập nhật" : "thêm mới", txtDistrictCode.Text),
+                    DescriptionEN = string.Format("Account '{0}' has {1} district successfully with district code is '{2}'.", CommonEngine.userInfo.UserID, isEdit ? "updated" : "inserted", txtDistrictCode.Text)
                 });
-                if (!string.IsNullOrEmpty(strError))
+
+                if (result.ResponseItem.IsError)
                 {
-                    CommonEngine.ShowMessage(strError, 0);
+                    CommonEngine.ShowHTTPErrorMessage(result.ResponseItem);
+                    txtDistrictCode.Focus();
+                    return false;
+                }
+                if (!string.IsNullOrEmpty(result.ResponseItem.Message))
+                {
+                    CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
                     txtDistrictCode.Focus();
                     return false;
                 }

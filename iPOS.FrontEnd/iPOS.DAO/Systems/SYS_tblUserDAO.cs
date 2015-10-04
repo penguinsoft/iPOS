@@ -31,14 +31,14 @@ namespace iPOS.DAO.Systems
                         result.UserItem = response_collection.UserItem;
                     }
                 }
-
-                return result;
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
+                result.ResponseItem.Message = ex.Message;
             }
-            return null;
+
+            return result;
         }
 
         public async static Task<SYS_tblUserDRO> GetAllUsers(string url)
@@ -63,15 +63,14 @@ namespace iPOS.DAO.Systems
                         result.UserList = response_collection.UserList;
                     }
                 }
-
-                return result;
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
+                result.ResponseItem.Message = ex.Message;
             }
 
-            return null;
+            return result;
         }
 
         public async static Task<SYS_tblUserDRO> GetUserItem(string url)
@@ -96,15 +95,14 @@ namespace iPOS.DAO.Systems
                         result.UserItem = response_collection.UserItem;
                     }
                 }
-
-                return result;
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
+                result.ResponseItem.Message = ex.Message;
             }
 
-            return null;
+            return result;
         }
 
         public async static Task<SYS_tblUserDRO> InsertUpdateUser(string url, string json_data)
@@ -129,15 +127,14 @@ namespace iPOS.DAO.Systems
                         result.ResponseItem.Message = response_collection.ResponseItem.Message;
                     }
                 }
-
-                return result;
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
+                result.ResponseItem.Message = ex.Message;
             }
 
-            return null;
+            return result;
         }
 
         public async static Task<SYS_tblUserDRO> DeleteUser(string url)
@@ -162,15 +159,14 @@ namespace iPOS.DAO.Systems
                         result.ResponseItem.Message = response_collection.ResponseItem.Message;
                     }
                 }
-
-                return result;
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
+                result.ResponseItem.Message = ex.Message;
             }
 
-            return null;
+            return result;
         }
 
         public async static Task<SYS_tblUserDRO> ChangeUserPassword(string url)
@@ -195,15 +191,14 @@ namespace iPOS.DAO.Systems
                         result.ResponseItem.Message = response_collection.ResponseItem.Message;
                     }
                 }
-
-                return result;
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
+                result.ResponseItem.Message = ex.Message;
             }
 
-            return null;
+            return result;
         }
     }
 }

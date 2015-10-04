@@ -9,78 +9,132 @@ namespace iPOS.DAO.Products
 {
     public class PRO_tblStoreDAO : BaseDAO
     {
-        public async static Task<List<PRO_tblStoreDTO>> GetAllStores(string url)
+        public async static Task<PRO_tblStoreDRO> GetAllStores(string url)
         {
+            PRO_tblStoreDRO result = new PRO_tblStoreDRO();
             try
             {
                 var response_data = await HttpGet(url);
-                var response_collection = JsonConvert.DeserializeObject<PRO_tblStoreDRO>(response_data + "");
+                if (response_data.ToLower().StartsWith("error"))
+                {
+                    result.ResponseItem.IsError = true;
+                    string[] tmp = response_data.Split('|');
+                    result.ResponseItem.ErrorCode = tmp[1];
+                    result.ResponseItem.ErrorMessage = tmp[2];
+                }
+                else
+                {
+                    var response_collection = JsonConvert.DeserializeObject<PRO_tblStoreDRO>(response_data + "");
 
-                if (response_collection != null)
-                    return response_collection.StoreList;
+                    if (response_collection != null)
+                    {
+                        result.StoreList = response_collection.StoreList;
+                    }
+                }
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
+                result.ResponseItem.Message = ex.Message;
             }
 
-            return null;
+            return result;
         }
 
-        public async static Task<PRO_tblStoreDTO> GetStoreItem(string url)
+        public async static Task<PRO_tblStoreDRO> GetStoreItem(string url)
         {
+            PRO_tblStoreDRO result = new PRO_tblStoreDRO();
             try
             {
                 var response_data = await HttpGet(url);
-                var response_collection = JsonConvert.DeserializeObject<PRO_tblStoreDRO>(response_data + "");
+                if (response_data.ToLower().StartsWith("error"))
+                {
+                    result.ResponseItem.IsError = true;
+                    string[] tmp = response_data.Split('|');
+                    result.ResponseItem.ErrorCode = tmp[1];
+                    result.ResponseItem.ErrorMessage = tmp[2];
+                }
+                else
+                {
+                    var response_collection = JsonConvert.DeserializeObject<PRO_tblStoreDRO>(response_data + "");
 
-                if (response_collection != null)
-                    return response_collection.StoreItem;
+                    if (response_collection != null)
+                    {
+                        result.StoreItem = response_collection.StoreItem;
+                    }
+                }
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
+                result.ResponseItem.Message = ex.Message;
             }
 
-            return null;
+            return result;
         }
 
-        public async static Task<string> InsertUpdateStore(string url, string json_data)
+        public async static Task<PRO_tblStoreDRO> InsertUpdateStore(string url, string json_data)
         {
+            PRO_tblStoreDRO result = new PRO_tblStoreDRO();
             try
             {
                 var response_data = await HttpPost(url, json_data);
-                var response_collection = JsonConvert.DeserializeObject<PRO_tblStoreDRO>(response_data + "");
+                if (response_data.ToLower().StartsWith("error"))
+                {
+                    result.ResponseItem.IsError = true;
+                    string[] tmp = response_data.Split('|');
+                    result.ResponseItem.ErrorCode = tmp[1];
+                    result.ResponseItem.ErrorMessage = tmp[2];
+                }
+                else
+                {
+                    var response_collection = JsonConvert.DeserializeObject<PRO_tblStoreDRO>(response_data + "");
 
-                if (response_collection != null)
-                    return response_collection.Message;
+                    if (response_collection != null)
+                    {
+                        result.ResponseItem = response_collection.ResponseItem;
+                    }
+                }
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
-                return ex.Message;
+                result.ResponseItem.Message = ex.Message;
             }
 
-            return "";
+            return result;
         }
 
-        public async static Task<string> DeleteStore(string url)
+        public async static Task<PRO_tblStoreDRO> DeleteStore(string url)
         {
+            PRO_tblStoreDRO result = new PRO_tblStoreDRO();
             try
             {
                 var response_data = await HttpGet(url);
-                var response_collection = JsonConvert.DeserializeObject<PRO_tblStoreDRO>(response_data + "");
+                if (response_data.ToLower().StartsWith("error"))
+                {
+                    result.ResponseItem.IsError = true;
+                    string[] tmp = response_data.Split('|');
+                    result.ResponseItem.ErrorCode = tmp[1];
+                    result.ResponseItem.ErrorMessage = tmp[2];
+                }
+                else
+                {
+                    var response_collection = JsonConvert.DeserializeObject<PRO_tblStoreDRO>(response_data + "");
 
-                if (response_collection != null)
-                    return response_collection.Message; 
+                    if (response_collection != null)
+                    {
+                        result.ResponseItem = response_collection.ResponseItem;
+                    }
+                }
             }
             catch (Exception ex)
             {
                 logger.Error(ex);
-                return ex.Message;
+                result.ResponseItem.Message = ex.Message;
             }
 
-            return "";
+            return result;
         }
     }
 }

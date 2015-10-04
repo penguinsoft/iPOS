@@ -216,6 +216,7 @@
             // 
             // lblCreaterValue
             // 
+            this.lblCreaterValue.AllowHtmlText = DevExpress.Utils.DefaultBoolean.True;
             this.lblCreaterValue.Caption = "admin";
             this.lblCreaterValue.Id = 10;
             this.lblCreaterValue.Name = "lblCreaterValue";
@@ -230,6 +231,7 @@
             // 
             // lblCreateTimeValue
             // 
+            this.lblCreateTimeValue.AllowHtmlText = DevExpress.Utils.DefaultBoolean.True;
             this.lblCreateTimeValue.Caption = "01/01/2015";
             this.lblCreateTimeValue.Id = 12;
             this.lblCreateTimeValue.Name = "lblCreateTimeValue";
@@ -246,6 +248,7 @@
             // lblEditerValue
             // 
             this.lblEditerValue.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+            this.lblEditerValue.AllowHtmlText = DevExpress.Utils.DefaultBoolean.True;
             this.lblEditerValue.Caption = "admin";
             this.lblEditerValue.Id = 14;
             this.lblEditerValue.Name = "lblEditerValue";
@@ -262,6 +265,7 @@
             // lblEditTimeValue
             // 
             this.lblEditTimeValue.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+            this.lblEditTimeValue.AllowHtmlText = DevExpress.Utils.DefaultBoolean.True;
             this.lblEditTimeValue.Caption = "01/01/2015";
             this.lblEditTimeValue.Id = 16;
             this.lblEditTimeValue.Name = "lblEditTimeValue";
@@ -352,7 +356,7 @@
             this.gcolStallCode.Name = "gcolStallCode";
             this.gcolStallCode.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolStallCode.Visible = true;
-            this.gcolStallCode.VisibleIndex = 0;
+            this.gcolStallCode.VisibleIndex = 1;
             this.gcolStallCode.Width = 116;
             // 
             // gcolStallName
@@ -362,7 +366,7 @@
             this.gcolStallName.Name = "gcolStallName";
             this.gcolStallName.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolStallName.Visible = true;
-            this.gcolStallName.VisibleIndex = 1;
+            this.gcolStallName.VisibleIndex = 2;
             this.gcolStallName.Width = 240;
             // 
             // gcolStoreName
@@ -397,7 +401,7 @@
             this.gcolUsedString.Name = "gcolUsedString";
             this.gcolUsedString.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolUsedString.Visible = true;
-            this.gcolUsedString.VisibleIndex = 3;
+            this.gcolUsedString.VisibleIndex = 4;
             this.gcolUsedString.Width = 72;
             // 
             // gcolRank
@@ -411,7 +415,7 @@
             this.gcolRank.Name = "gcolRank";
             this.gcolRank.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolRank.Visible = true;
-            this.gcolRank.VisibleIndex = 2;
+            this.gcolRank.VisibleIndex = 3;
             this.gcolRank.Width = 72;
             // 
             // gcolNote
@@ -421,7 +425,7 @@
             this.gcolNote.Name = "gcolNote";
             this.gcolNote.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolNote.Visible = true;
-            this.gcolNote.VisibleIndex = 4;
+            this.gcolNote.VisibleIndex = 5;
             this.gcolNote.Width = 332;
             // 
             // gcolCreater
