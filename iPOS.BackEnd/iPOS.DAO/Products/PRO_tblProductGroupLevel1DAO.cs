@@ -49,22 +49,21 @@ namespace iPOS.DAO.Products
 
         public List<PRO_tblProductGroupLevel1DTO> GetDataCombobox(string username, string language_id)
         {
-            //List<PRO_tblStallDTO> result = new List<PRO_tblStallDTO>();
-            //try
-            //{
-            //    DataTable data = db.GetDataTable("PRO_spfrmStall", new string[] { "Activity", "Username", "LanguageID", "WarehouseID" }, new object[] { BaseConstant.COMMAND_GET_COMBO_BOX, username, language_id, warehouse_id });
-            //    if (data != null && data.Rows.Count > 0)
-            //    {
-            //        result = ConvertEngine.ConvertDataTableToObjectList<PRO_tblStallDTO>(data);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    logger.Error(ex);
-            //}
+            List<PRO_tblProductGroupLevel1DTO> result = new List<PRO_tblProductGroupLevel1DTO>();
+            try
+            {
+                DataTable data = db.GetDataTable("PRO_spfrmProductGroupLevel1", new string[] { "Activity", "Username", "LanguageID" }, new object[] { BaseConstant.COMMAND_GET_COMBO_BOX, username, language_id });
+                if (data != null && data.Rows.Count > 0)
+                {
+                    result = ConvertEngine.ConvertDataTableToObjectList<PRO_tblProductGroupLevel1DTO>(data);
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+            }
 
-            //return result;
-            throw new NotImplementedException();
+            return result;
         }
 
         public PRO_tblProductGroupLevel1DTO GetDataByID(string username, string language_id, string level1_id)

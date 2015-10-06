@@ -29,5 +29,10 @@ namespace iPOS.DTO.Products
         public string FullLevel2Name { get; set; }
 
         public string Level1Name { get; set; }
+
+        public string UsedString
+        {
+            get { return Used ? "X" : ""; }
+        }
     }
 }

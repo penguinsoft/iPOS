@@ -32,6 +32,7 @@
             this.gcolEditTime = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridLevel2 = new DevExpress.XtraGrid.GridControl();
             this.grvLevel2 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gcolLevel1Name = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolLevel2Code = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolLevel2ShortCode = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolLevel2Name = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -66,7 +67,6 @@
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
-            this.gcolLevel1Name = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.gridLevel2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grvLevel2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barMain)).BeginInit();
@@ -99,6 +99,8 @@
             // 
             // grvLevel2
             // 
+            this.grvLevel2.Appearance.GroupRow.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.grvLevel2.Appearance.GroupRow.Options.UseFont = true;
             this.grvLevel2.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.gcolLevel1Name,
             this.gcolLevel2Code,
@@ -117,6 +119,7 @@
             this.grvLevel2.GroupCount = 1;
             this.grvLevel2.IndicatorWidth = 40;
             this.grvLevel2.Name = "grvLevel2";
+            this.grvLevel2.OptionsBehavior.AutoExpandAllGroups = true;
             this.grvLevel2.OptionsBehavior.Editable = false;
             this.grvLevel2.OptionsSelection.CheckBoxSelectorColumnWidth = 30;
             this.grvLevel2.OptionsSelection.MultiSelect = true;
@@ -125,6 +128,19 @@
             this.grvLevel2.OptionsView.ShowAutoFilterRow = true;
             this.grvLevel2.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.gcolLevel1Name, DevExpress.Data.ColumnSortOrder.Ascending)});
+            this.grvLevel2.CustomDrawRowIndicator += new DevExpress.XtraGrid.Views.Grid.RowIndicatorCustomDrawEventHandler(this.grvLevel2_CustomDrawRowIndicator);
+            this.grvLevel2.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.grvLevel2_FocusedRowChanged);
+            this.grvLevel2.FocusedRowLoaded += new DevExpress.XtraGrid.Views.Base.RowEventHandler(this.grvLevel2_FocusedRowLoaded);
+            this.grvLevel2.DoubleClick += new System.EventHandler(this.grvLevel2_DoubleClick);
+            // 
+            // gcolLevel1Name
+            // 
+            this.gcolLevel1Name.Caption = "Ngành hàng";
+            this.gcolLevel1Name.FieldName = "Level1Name";
+            this.gcolLevel1Name.Fixed = DevExpress.XtraGrid.Columns.FixedStyle.Left;
+            this.gcolLevel1Name.Name = "gcolLevel1Name";
+            this.gcolLevel1Name.Visible = true;
+            this.gcolLevel1Name.VisibleIndex = 1;
             // 
             // gcolLevel2Code
             // 
@@ -294,6 +310,7 @@
             this.btnInsert.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N));
             this.btnInsert.Name = "btnInsert";
             this.btnInsert.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
+            this.btnInsert.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnInsert_ItemClick);
             // 
             // btnUpdate
             // 
@@ -302,6 +319,7 @@
             this.btnUpdate.Id = 1;
             this.btnUpdate.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F2);
             this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnUpdate_ItemClick);
             // 
             // btnDelete
             // 
@@ -310,6 +328,7 @@
             this.btnDelete.Id = 2;
             this.btnDelete.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.Delete);
             this.btnDelete.Name = "btnDelete";
+            this.btnDelete.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnDelete_ItemClick);
             // 
             // btnPrint
             // 
@@ -318,6 +337,7 @@
             this.btnPrint.Id = 3;
             this.btnPrint.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P));
             this.btnPrint.Name = "btnPrint";
+            this.btnPrint.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnPrint_ItemClick);
             // 
             // btnReload
             // 
@@ -326,6 +346,7 @@
             this.btnReload.Id = 4;
             this.btnReload.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F5);
             this.btnReload.Name = "btnReload";
+            this.btnReload.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnReload_ItemClick);
             // 
             // btnImport
             // 
@@ -334,6 +355,7 @@
             this.btnImport.Id = 5;
             this.btnImport.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I));
             this.btnImport.Name = "btnImport";
+            this.btnImport.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnImport_ItemClick);
             // 
             // btnExport
             // 
@@ -342,6 +364,7 @@
             this.btnExport.Id = 6;
             this.btnExport.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E));
             this.btnExport.Name = "btnExport";
+            this.btnExport.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnExport_ItemClick);
             // 
             // btnClose
             // 
@@ -350,6 +373,7 @@
             this.btnClose.Id = 7;
             this.btnClose.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W));
             this.btnClose.Name = "btnClose";
+            this.btnClose.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnClose_ItemClick);
             // 
             // barBottom
             // 
@@ -465,15 +489,6 @@
             this.barDockControlRight.Location = new System.Drawing.Point(881, 40);
             this.barDockControlRight.Size = new System.Drawing.Size(0, 461);
             // 
-            // gcolLevel1Name
-            // 
-            this.gcolLevel1Name.Caption = "Ngành hàng";
-            this.gcolLevel1Name.FieldName = "Level1Name";
-            this.gcolLevel1Name.Fixed = DevExpress.XtraGrid.Columns.FixedStyle.Left;
-            this.gcolLevel1Name.Name = "gcolLevel1Name";
-            this.gcolLevel1Name.Visible = true;
-            this.gcolLevel1Name.VisibleIndex = 1;
-            // 
             // uc_Level2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -486,6 +501,7 @@
             this.DoubleBuffered = true;
             this.Name = "uc_Level2";
             this.Size = new System.Drawing.Size(881, 526);
+            this.Load += new System.EventHandler(this.uc_Level2_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gridLevel2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grvLevel2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barMain)).EndInit();

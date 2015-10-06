@@ -11,6 +11,7 @@ using iPOS.IMC.Helper;
 using iPOS.Core.Helper;
 using System.Threading.Tasks;
 using iPOS.DRO.Products;
+using iPOS.BUS.Products;
 
 namespace iPOS.IMC.Products
 {
@@ -35,7 +36,14 @@ namespace iPOS.IMC.Products
         private async void LoadStore()
         {
             gluStore.DataBindings.Clear();
-            gluStore.Properties.DataSource = await iPOS.BUS.Products.PRO_tblStoreBUS.GetAllStores(CommonEngine.userInfo.UserID, ConfigEngine.Language, true, null);
+            PRO_tblStoreDRO stores = await PRO_tblStoreBUS.GetAllStores(CommonEngine.userInfo.UserID, ConfigEngine.Language, true, null);
+            if (stores.ResponseItem.IsError)
+            {
+                CommonEngine.ShowHTTPErrorMessage(stores.ResponseItem);
+                gluStore.Properties.DataSource = null;
+                return;
+            }
+            gluStore.Properties.DataSource = stores.StoreList;
             gluStore.Properties.ValueMember = "StoreID";
             gluStore.Properties.DisplayMember = "FullStoreName";
         }
@@ -43,7 +51,14 @@ namespace iPOS.IMC.Products
         private async void LoadWarehouseByStoreID(string store_id)
         {
             gluWarehouse.DataBindings.Clear();
-            gluWarehouse.Properties.DataSource = await iPOS.BUS.Products.PRO_tblWarehouseBUS.GetAllWarehouses(CommonEngine.userInfo.UserID, ConfigEngine.Language, true, store_id, "", "", null);
+            PRO_tblWarehouseDRO warehouses = await PRO_tblWarehouseBUS.GetAllWarehouses(CommonEngine.userInfo.UserID, ConfigEngine.Language, true, store_id, "", "", null);
+            if (warehouses.ResponseItem.IsError)
+            {
+                CommonEngine.ShowHTTPErrorMessage(warehouses.ResponseItem);
+                gluWarehouse.Properties.DataSource = null;
+                return;
+            }
+            gluWarehouse.Properties.DataSource = warehouses.WarehouseList;
             gluWarehouse.Properties.ValueMember = "WarehouseID";
             gluWarehouse.Properties.DisplayMember = "FullWarehouseName";
         }

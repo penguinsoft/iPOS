@@ -49,6 +49,8 @@
   <ItemGroup>
     <Compile Include="BaseBUS.cs" />
     <Compile Include="Products\PRO_tblDistrictBUS.cs" />
+    <Compile Include="Products\PRO_tblLevel3BUS.cs" />
+    <Compile Include="Products\PRO_tblLevel2BUS.cs" />
     <Compile Include="Products\PRO_tblLevel1BUS.cs" />
     <Compile Include="Products\PRO_tblProvinceBUS.cs" />
     <Compile Include="Products\PRO_tblStallBUS.cs" />

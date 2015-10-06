@@ -45,6 +45,8 @@
     <Compile Include="BaseDRO.cs" />
     <Compile Include="Products\PRO_tblDistrictDRO.cs" />
     <Compile Include="Products\PRO_tblLevel1DRO.cs" />
+    <Compile Include="Products\PRO_tblLevel2DRO.cs" />
+    <Compile Include="Products\PRO_tblLevel3DRO.cs" />
     <Compile Include="Products\PRO_tblProvinceDRO.cs" />
     <Compile Include="Products\PRO_tblStallDRO.cs" />
     <Compile Include="Products\PRO_tblStoreDRO.cs" />

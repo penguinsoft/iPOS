@@ -134,6 +134,18 @@
     <Compile Include="Products\uc_Level2.Designer.cs">
       <DependentUpon>uc_Level2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Products\uc_Level3Detail.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Products\uc_Level3Detail.Designer.cs">
+      <DependentUpon>uc_Level3Detail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Products\uc_Level2Detail.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Products\uc_Level2Detail.Designer.cs">
+      <DependentUpon>uc_Level2Detail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Products\uc_Level3.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -262,6 +274,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Products\uc_Level2.resx">
       <DependentUpon>uc_Level2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Products\uc_Level3Detail.resx">
+      <DependentUpon>uc_Level3Detail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Products\uc_Level2Detail.resx">
+      <DependentUpon>uc_Level2Detail.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Products\uc_Level3.resx">
       <DependentUpon>uc_Level3.cs</DependentUpon>

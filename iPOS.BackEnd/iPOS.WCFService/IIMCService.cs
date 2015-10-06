@@ -270,7 +270,7 @@ namespace iPOS.WCFService
         [WebInvoke(Method = "POST", UriTemplate = "InsertUpdateLevel2",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
                 BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        PRO_tblProductGroupLevel2DRO InsertUpdateLevel2(PRO_tblProductGroupLevel2DCO Level2);
+        PRO_tblProductGroupLevel2DRO InsertUpdateLevel2(PRO_tblProductGroupLevel2DCO level2);
 
         [OperationContract]
         [WebInvoke(Method = "GET", UriTemplate = "DeleteLevel2?Username={Username}&LanguageID={LanguageID}&Level2IDList={Level2IDList}",
@@ -293,7 +293,7 @@ namespace iPOS.WCFService
         [WebInvoke(Method = "POST", UriTemplate = "InsertUpdateLevel3",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
                 BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        PRO_tblProductGroupLevel3DRO InsertUpdateLevel3(PRO_tblProductGroupLevel3DCO Level3);
+        PRO_tblProductGroupLevel3DRO InsertUpdateLevel3(PRO_tblProductGroupLevel3DCO level3);
 
         [OperationContract]
         [WebInvoke(Method = "GET", UriTemplate = "DeleteLevel3?Username={Username}&LanguageID={LanguageID}&Level3IDList={Level3IDList}",

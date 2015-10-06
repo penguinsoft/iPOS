@@ -77,7 +77,7 @@ namespace iPOS.DAO.Products
             string strError = "";
             try
             {
-                strError = db.sExecuteSQL("PRO_spfrmProductGroupLevel2", new string[] { "Activity", "Username", "LanguageID", "Level1Code", "Level2ShortCode", "Level1ID", "VNName", "ENName", "Rank", "Used", "Note", "Description" }, new object[] { item.Activity, item.UserID, item.LanguageID, item.Level2Code, item.Level2ShortCode, item.Level1ID, item.VNName, item.ENName, item.Rank, item.Used, item.Note, item.Description });
+                strError = db.sExecuteSQL("PRO_spfrmProductGroupLevel2", new string[] { "Activity", "Username", "LanguageID", "Level2Code", "Level2ShortCode", "Level1ID", "VNName", "ENName", "Rank", "Used", "Note", "Description" }, new object[] { item.Activity, item.UserID, item.LanguageID, item.Level2Code, item.Level2ShortCode, item.Level1ID, item.VNName, item.ENName, item.Rank, item.Used, item.Note, item.Description });
 
                 if (!string.IsNullOrEmpty(strError))
                     logger.Error(strError);

@@ -11,6 +11,7 @@ using iPOS.Core.Helper;
 using iPOS.DTO.Products;
 using System.Threading.Tasks;
 using iPOS.DRO.Products;
+using iPOS.BUS.Products;
 
 namespace iPOS.IMC.Products
 {
@@ -36,7 +37,14 @@ namespace iPOS.IMC.Products
         private async void LoadStore()
         {
             gluStore.DataBindings.Clear();
-            gluStore.Properties.DataSource = await iPOS.BUS.Products.PRO_tblStoreBUS.GetAllStores(CommonEngine.userInfo.UserID, ConfigEngine.Language, true, null);
+            PRO_tblStoreDRO stores = await PRO_tblStoreBUS.GetAllStores(CommonEngine.userInfo.UserID, ConfigEngine.Language, true, null);
+            if (stores.ResponseItem.IsError)
+            {
+                CommonEngine.ShowHTTPErrorMessage(stores.ResponseItem);
+                gluStore.Properties.DataSource = null;
+                return;
+            }
+            gluStore.Properties.DataSource = stores.StoreList;
             gluStore.Properties.ValueMember = "StoreID";
             gluStore.Properties.DisplayMember = "FullStoreName";
         }
@@ -44,7 +52,14 @@ namespace iPOS.IMC.Products
         private async void LoadProvince()
         {
             gluProvince.DataBindings.Clear();
-            gluProvince.Properties.DataSource = await iPOS.BUS.Products.PRO_tblProvinceBUS.GetAllProvinces(CommonEngine.userInfo.UserID, ConfigEngine.Language, true, null);
+            PRO_tblProvinceDRO provinces = await PRO_tblProvinceBUS.GetAllProvinces(CommonEngine.userInfo.UserID, ConfigEngine.Language, true, null);
+            if (provinces.ResponseItem.IsError)
+            {
+                CommonEngine.ShowHTTPErrorMessage(provinces.ResponseItem);
+                gluProvince.Properties.DataSource = null;
+                return;
+            }
+            gluProvince.Properties.DataSource = provinces.ProvinceList;
             gluProvince.Properties.ValueMember = "ProvinceID";
             gluProvince.Properties.DisplayMember = "FullProvinceName";
         }
@@ -52,7 +67,14 @@ namespace iPOS.IMC.Products
         private async void LoadDistrictByProvince(string province_id)
         {
             gluDistrict.DataBindings.Clear();
-            gluDistrict.Properties.DataSource = await iPOS.BUS.Products.PRO_tblDistrictBUS.GetAllDistricts(CommonEngine.userInfo.UserID, ConfigEngine.Language, true, province_id, null);
+            PRO_tblDistrictDRO districts = await PRO_tblDistrictBUS.GetAllDistricts(CommonEngine.userInfo.UserID, ConfigEngine.Language, true, province_id, null);
+            if (districts.ResponseItem.IsError)
+            {
+                CommonEngine.ShowHTTPErrorMessage(districts.ResponseItem);
+                gluDistrict.Properties.DataSource = null;
+                return;
+            }
+            gluDistrict.Properties.DataSource = districts.DistrictList;
             gluDistrict.Properties.ValueMember = "DistrictID";
             gluDistrict.Properties.DisplayMember = "FullDistrictName";
 

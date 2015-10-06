@@ -132,5 +132,15 @@ namespace iPOS.IMC
         {
             CommonEngine.OpenMdiChildForm(this, new uc_Level1(ConfigEngine.Language), tabMain);
         }
+
+        private void btnLevel2_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            CommonEngine.OpenMdiChildForm(this, new uc_Level2(ConfigEngine.Language), tabMain);
+        }
+
+        private void btnLevel3_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
     }
 }
