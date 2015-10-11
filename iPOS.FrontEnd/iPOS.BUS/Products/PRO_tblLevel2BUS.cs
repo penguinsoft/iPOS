@@ -94,7 +94,7 @@ namespace iPOS.BUS.Products
             PRO_tblLevel2DRO result = new PRO_tblLevel2DRO();
             try
             {
-                string url = string.Format(@"{0}/DeleteLevel1?Username={1}&LanguageID={2}&Level2IDList={3}", GetBaseUrl(), username, language_id, level2_id_list);
+                string url = string.Format(@"{0}/DeleteLevel2?Username={1}&LanguageID={2}&Level2IDList={3}", GetBaseUrl(), username, language_id, level2_id_list);
 
                 result = await PRO_tblLevel2DAO.DeleteLevel2(url);
                 if (string.IsNullOrEmpty(result.ResponseItem.Message)) result.ResponseItem = await SYS_tblActionLogBUS.InsertUpdateLog(actionLog);

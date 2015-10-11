@@ -84,8 +84,11 @@ namespace iPOS.IMC.Products
 
             foreach (int index in grvLevel2.GetSelectedRows())
             {
-                level2_code_list = string.Join("$", level2_code_list, grvLevel2.GetRowCellDisplayText(index, gcolLevel2Code));
-                level2_id_list = string.Join("$", level2_id_list, grvLevel2.GetRowCellDisplayText(index, gcolLevel2ID));
+                if (index >= 0)
+                {
+                    level2_code_list = string.Join("$", level2_code_list, grvLevel2.GetRowCellDisplayText(index, gcolLevel2Code));
+                    level2_id_list = string.Join("$", level2_id_list, grvLevel2.GetRowCellDisplayText(index, gcolLevel2ID));
+                }
             }
 
             if (level2_code_list.Length > 0) level2_code_list = level2_code_list.Substring(1);
@@ -198,7 +201,7 @@ namespace iPOS.IMC.Products
 
         private void btnExport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            CommonEngine.QuickExportGridViewData(ConvertEngine.ConvertObjectListToDataTable<PRO_tblLevel2DTO>(gridLevel2.DataSource as List<PRO_tblLevel2DTO>), grvLevel2, "Product_Sector");
+            CommonEngine.QuickExportGridViewData(ConvertEngine.ConvertObjectListToDataTable<PRO_tblLevel2DTO>(gridLevel2.DataSource as List<PRO_tblLevel2DTO>), grvLevel2, "Product_Group");
         }
 
         private void btnClose_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)

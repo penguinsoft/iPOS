@@ -11,9 +11,9 @@ namespace iPOS.DAO.Products
 {
     public interface IPRO_tblProductGroupLevel3DAO
     {
-        List<PRO_tblProductGroupLevel3DTO> LoadAllData(string username, string language_id, string level1_id, string level2_id);
+        List<PRO_tblProductGroupLevel3DTO> LoadAllData(string username, string language_id, string level1_id, string Level3_id);
 
-        List<PRO_tblProductGroupLevel3DTO> GetDataCombobox(string username, string language_id, string level1_id, string level2_id);
+        List<PRO_tblProductGroupLevel3DTO> GetDataCombobox(string username, string language_id, string level1_id, string Level3_id);
 
         PRO_tblProductGroupLevel3DTO GetDataByID(string username, string language_id, string level3_id);
 
@@ -28,12 +28,12 @@ namespace iPOS.DAO.Products
 
     public class PRO_tblProductGroupLevel3DAO : BaseDAO, IPRO_tblProductGroupLevel3DAO
     {
-        public List<PRO_tblProductGroupLevel3DTO> LoadAllData(string username, string language_id, string level1_id, string level2_id)
+        public List<PRO_tblProductGroupLevel3DTO> LoadAllData(string username, string language_id, string level1_id, string Level3_id)
         {
             List<PRO_tblProductGroupLevel3DTO> result = new List<PRO_tblProductGroupLevel3DTO>();
             try
             {
-                DataTable data = db.GetDataTable("PRO_spfrmProductGroupLevel3", new string[] { "Activity", "Username", "LanguageID", "Level1ID", "Level2ID" }, new object[] { BaseConstant.COMMAND_LOAD_ALL_DATA_EN, username, language_id, level1_id, level2_id });
+                DataTable data = db.GetDataTable("PRO_spfrmProductGroupLevel3", new string[] { "Activity", "Username", "LanguageID", "Level1ID", "Level3ID" }, new object[] { BaseConstant.COMMAND_LOAD_ALL_DATA_EN, username, language_id, level1_id, Level3_id });
                 if (data != null && data.Rows.Count > 0)
                 {
                     result = ConvertEngine.ConvertDataTableToObjectList<PRO_tblProductGroupLevel3DTO>(data);
@@ -47,7 +47,7 @@ namespace iPOS.DAO.Products
             return result;
         }
 
-        public List<PRO_tblProductGroupLevel3DTO> GetDataCombobox(string username, string language_id, string level1_id, string level2_id)
+        public List<PRO_tblProductGroupLevel3DTO> GetDataCombobox(string username, string language_id, string level1_id, string Level3_id)
         {
             throw new NotImplementedException();
         }
@@ -77,7 +77,7 @@ namespace iPOS.DAO.Products
             string strError = "";
             try
             {
-                strError = db.sExecuteSQL("PRO_spfrmProductGroupLevel3", new string[] { "Activity", "Username", "LanguageID", "Level3Code", "Level3ShortCode", "Level1ID", "Level2ID", "VNName", "ENName", "Rank", "Used", "Note", "Description" }, new object[] { item.Activity, item.UserID, item.LanguageID, item.Level3Code, item.Level1ID, item.Level2ID, item.VNName, item.ENName, item.Rank, item.Used, item.Note, item.Description });
+                strError = db.sExecuteSQL("PRO_spfrmProductGroupLevel3", new string[] { "Activity", "Username", "LanguageID", "Level3Code", "Level3ShortCode", "Level1ID", "Level2ID", "VNName", "ENName", "Rank", "Used", "Note", "Description" }, new object[] { item.Activity, item.UserID, item.LanguageID, item.Level3Code, item.Level3ShortCode, item.Level1ID, item.Level2ID, item.VNName, item.ENName, item.Rank, item.Used, item.Note, item.Description });
 
                 if (!string.IsNullOrEmpty(strError))
                     logger.Error(strError);
@@ -140,7 +140,7 @@ namespace iPOS.DAO.Products
             string strError = "";
             try
             {
-                strError = db.sExecuteSQL("PRO_spfrmProductGroupLevel2", new string[] { "Activity", "Username", "LanguageID", "Level2ID" }, new object[] { BaseConstant.COMMAND_DELETE_LIST_EN, username, language_id, level3_id_list });
+                strError = db.sExecuteSQL("PRO_spfrmProductGroupLevel3", new string[] { "Activity", "Username", "LanguageID", "Level3IDList" }, new object[] { BaseConstant.COMMAND_DELETE_LIST_EN, username, language_id, level3_id_list });
 
                 if (!string.IsNullOrEmpty(strError))
                     logger.Error(strError);

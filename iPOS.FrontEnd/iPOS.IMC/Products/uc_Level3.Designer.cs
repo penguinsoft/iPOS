@@ -48,11 +48,12 @@
             this.btnReload = new DevExpress.XtraBars.BarLargeButtonItem();
             this.gcolLevel1Name = new DevExpress.XtraGrid.Columns.GridColumn();
             this.btnDelete = new DevExpress.XtraBars.BarLargeButtonItem();
-            this.gridLevel2 = new DevExpress.XtraGrid.GridControl();
-            this.grvLevel2 = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.gcolLevel2Code = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gcolLevel2ShortCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridLevel3 = new DevExpress.XtraGrid.GridControl();
+            this.grvLevel3 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gcolLevel2Name = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gcolLevel3Code = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gcolLevel3ShortCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gcolLevel3Name = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolRank = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolUsedString = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolDescription = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -61,14 +62,14 @@
             this.gcolCreateTime = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolEditer = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolEditTime = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gcolLevel2ID = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gcolLevel3ID = new DevExpress.XtraGrid.Columns.GridColumn();
             this.barMain = new DevExpress.XtraBars.BarManager(this.components);
             this.barTop = new DevExpress.XtraBars.Bar();
             this.btnInsert = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnUpdate = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
-            ((System.ComponentModel.ISupportInitialize)(this.gridLevel2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.grvLevel2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridLevel3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grvLevel3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barMain)).BeginInit();
             this.SuspendLayout();
             // 
@@ -79,6 +80,7 @@
             this.btnPrint.Id = 3;
             this.btnPrint.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P));
             this.btnPrint.Name = "btnPrint";
+            this.btnPrint.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnPrint_ItemClick);
             // 
             // btnImport
             // 
@@ -87,6 +89,7 @@
             this.btnImport.Id = 5;
             this.btnImport.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I));
             this.btnImport.Name = "btnImport";
+            this.btnImport.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnImport_ItemClick);
             // 
             // btnExport
             // 
@@ -95,6 +98,7 @@
             this.btnExport.Id = 6;
             this.btnExport.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E));
             this.btnExport.Name = "btnExport";
+            this.btnExport.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnExport_ItemClick);
             // 
             // btnClose
             // 
@@ -103,6 +107,7 @@
             this.btnClose.Id = 7;
             this.btnClose.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W));
             this.btnClose.Name = "btnClose";
+            this.btnClose.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnClose_ItemClick);
             // 
             // barBottom
             // 
@@ -218,6 +223,7 @@
             this.btnReload.Id = 4;
             this.btnReload.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F5);
             this.btnReload.Name = "btnReload";
+            this.btnReload.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnReload_ItemClick);
             // 
             // gcolLevel1Name
             // 
@@ -235,33 +241,37 @@
             this.btnDelete.Id = 2;
             this.btnDelete.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.Delete);
             this.btnDelete.Name = "btnDelete";
+            this.btnDelete.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnDelete_ItemClick);
             // 
-            // gridLevel2
+            // gridLevel3
             // 
-            this.gridLevel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridLevel2.EmbeddedNavigator.Buttons.Append.Visible = false;
-            this.gridLevel2.EmbeddedNavigator.Buttons.CancelEdit.Visible = false;
-            this.gridLevel2.EmbeddedNavigator.Buttons.Edit.Visible = false;
-            this.gridLevel2.EmbeddedNavigator.Buttons.EndEdit.Visible = false;
-            this.gridLevel2.EmbeddedNavigator.Buttons.Remove.Visible = false;
-            this.gridLevel2.EmbeddedNavigator.TextStringFormat = "{0}/{1}";
-            this.gridLevel2.Location = new System.Drawing.Point(0, 40);
-            this.gridLevel2.MainView = this.grvLevel2;
-            this.gridLevel2.MenuManager = this.barMain;
-            this.gridLevel2.Name = "gridLevel2";
-            this.gridLevel2.Size = new System.Drawing.Size(882, 462);
-            this.gridLevel2.TabIndex = 8;
-            this.gridLevel2.UseEmbeddedNavigator = true;
-            this.gridLevel2.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.grvLevel2});
+            this.gridLevel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridLevel3.EmbeddedNavigator.Buttons.Append.Visible = false;
+            this.gridLevel3.EmbeddedNavigator.Buttons.CancelEdit.Visible = false;
+            this.gridLevel3.EmbeddedNavigator.Buttons.Edit.Visible = false;
+            this.gridLevel3.EmbeddedNavigator.Buttons.EndEdit.Visible = false;
+            this.gridLevel3.EmbeddedNavigator.Buttons.Remove.Visible = false;
+            this.gridLevel3.EmbeddedNavigator.TextStringFormat = "{0}/{1}";
+            this.gridLevel3.Location = new System.Drawing.Point(0, 40);
+            this.gridLevel3.MainView = this.grvLevel3;
+            this.gridLevel3.MenuManager = this.barMain;
+            this.gridLevel3.Name = "gridLevel3";
+            this.gridLevel3.Size = new System.Drawing.Size(882, 462);
+            this.gridLevel3.TabIndex = 8;
+            this.gridLevel3.UseEmbeddedNavigator = true;
+            this.gridLevel3.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.grvLevel3});
             // 
-            // grvLevel2
+            // grvLevel3
             // 
-            this.grvLevel2.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.grvLevel3.Appearance.GroupRow.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.grvLevel3.Appearance.GroupRow.Options.UseFont = true;
+            this.grvLevel3.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.gcolLevel1Name,
-            this.gcolLevel2Code,
-            this.gcolLevel2ShortCode,
             this.gcolLevel2Name,
+            this.gcolLevel3Code,
+            this.gcolLevel3ShortCode,
+            this.gcolLevel3Name,
             this.gcolRank,
             this.gcolUsedString,
             this.gcolDescription,
@@ -270,57 +280,72 @@
             this.gcolCreateTime,
             this.gcolEditer,
             this.gcolEditTime,
-            this.gcolLevel2ID});
-            this.grvLevel2.GridControl = this.gridLevel2;
-            this.grvLevel2.GroupCount = 1;
-            this.grvLevel2.IndicatorWidth = 40;
-            this.grvLevel2.Name = "grvLevel2";
-            this.grvLevel2.OptionsBehavior.Editable = false;
-            this.grvLevel2.OptionsSelection.CheckBoxSelectorColumnWidth = 30;
-            this.grvLevel2.OptionsSelection.MultiSelect = true;
-            this.grvLevel2.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CheckBoxRowSelect;
-            this.grvLevel2.OptionsSelection.ShowCheckBoxSelectorInGroupRow = DevExpress.Utils.DefaultBoolean.True;
-            this.grvLevel2.OptionsView.ShowAutoFilterRow = true;
-            this.grvLevel2.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
-            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.gcolLevel1Name, DevExpress.Data.ColumnSortOrder.Ascending)});
-            // 
-            // gcolLevel2Code
-            // 
-            this.gcolLevel2Code.AppearanceCell.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.gcolLevel2Code.AppearanceCell.Options.UseFont = true;
-            this.gcolLevel2Code.Caption = "Mã nhóm hàng";
-            this.gcolLevel2Code.FieldName = "Level2Code";
-            this.gcolLevel2Code.Fixed = DevExpress.XtraGrid.Columns.FixedStyle.Left;
-            this.gcolLevel2Code.Name = "gcolLevel2Code";
-            this.gcolLevel2Code.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
-            this.gcolLevel2Code.Visible = true;
-            this.gcolLevel2Code.VisibleIndex = 1;
-            this.gcolLevel2Code.Width = 103;
-            // 
-            // gcolLevel2ShortCode
-            // 
-            this.gcolLevel2ShortCode.AppearanceCell.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.gcolLevel2ShortCode.AppearanceCell.Options.UseFont = true;
-            this.gcolLevel2ShortCode.AppearanceCell.Options.UseTextOptions = true;
-            this.gcolLevel2ShortCode.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.gcolLevel2ShortCode.Caption = "Mã tắt";
-            this.gcolLevel2ShortCode.FieldName = "Level2ShortCode";
-            this.gcolLevel2ShortCode.Fixed = DevExpress.XtraGrid.Columns.FixedStyle.Left;
-            this.gcolLevel2ShortCode.Name = "gcolLevel2ShortCode";
-            this.gcolLevel2ShortCode.Visible = true;
-            this.gcolLevel2ShortCode.VisibleIndex = 2;
-            this.gcolLevel2ShortCode.Width = 93;
+            this.gcolLevel3ID});
+            this.grvLevel3.GridControl = this.gridLevel3;
+            this.grvLevel3.GroupCount = 2;
+            this.grvLevel3.IndicatorWidth = 40;
+            this.grvLevel3.Name = "grvLevel3";
+            this.grvLevel3.OptionsBehavior.AutoExpandAllGroups = true;
+            this.grvLevel3.OptionsBehavior.Editable = false;
+            this.grvLevel3.OptionsSelection.CheckBoxSelectorColumnWidth = 30;
+            this.grvLevel3.OptionsSelection.MultiSelect = true;
+            this.grvLevel3.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CheckBoxRowSelect;
+            this.grvLevel3.OptionsSelection.ShowCheckBoxSelectorInGroupRow = DevExpress.Utils.DefaultBoolean.True;
+            this.grvLevel3.OptionsView.ShowAutoFilterRow = true;
+            this.grvLevel3.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
+            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.gcolLevel1Name, DevExpress.Data.ColumnSortOrder.Ascending),
+            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.gcolLevel2Name, DevExpress.Data.ColumnSortOrder.Ascending)});
+            this.grvLevel3.CustomDrawRowIndicator += new DevExpress.XtraGrid.Views.Grid.RowIndicatorCustomDrawEventHandler(this.grvLevel3_CustomDrawRowIndicator);
+            this.grvLevel3.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.grvLevel3_FocusedRowChanged);
+            this.grvLevel3.FocusedRowLoaded += new DevExpress.XtraGrid.Views.Base.RowEventHandler(this.grvLevel3_FocusedRowLoaded);
+            this.grvLevel3.DoubleClick += new System.EventHandler(this.grvLevel3_DoubleClick);
             // 
             // gcolLevel2Name
             // 
-            this.gcolLevel2Name.Caption = "Tên nhóm hàng";
+            this.gcolLevel2Name.Caption = "Nhóm hàng";
             this.gcolLevel2Name.FieldName = "Level2Name";
             this.gcolLevel2Name.Fixed = DevExpress.XtraGrid.Columns.FixedStyle.Left;
             this.gcolLevel2Name.Name = "gcolLevel2Name";
-            this.gcolLevel2Name.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolLevel2Name.Visible = true;
-            this.gcolLevel2Name.VisibleIndex = 3;
-            this.gcolLevel2Name.Width = 187;
+            this.gcolLevel2Name.VisibleIndex = 4;
+            // 
+            // gcolLevel3Code
+            // 
+            this.gcolLevel3Code.AppearanceCell.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.gcolLevel3Code.AppearanceCell.Options.UseFont = true;
+            this.gcolLevel3Code.Caption = "Mã phân nhóm";
+            this.gcolLevel3Code.FieldName = "Level3Code";
+            this.gcolLevel3Code.Fixed = DevExpress.XtraGrid.Columns.FixedStyle.Left;
+            this.gcolLevel3Code.Name = "gcolLevel3Code";
+            this.gcolLevel3Code.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gcolLevel3Code.Visible = true;
+            this.gcolLevel3Code.VisibleIndex = 1;
+            this.gcolLevel3Code.Width = 103;
+            // 
+            // gcolLevel3ShortCode
+            // 
+            this.gcolLevel3ShortCode.AppearanceCell.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.gcolLevel3ShortCode.AppearanceCell.Options.UseFont = true;
+            this.gcolLevel3ShortCode.AppearanceCell.Options.UseTextOptions = true;
+            this.gcolLevel3ShortCode.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.gcolLevel3ShortCode.Caption = "Mã tắt";
+            this.gcolLevel3ShortCode.FieldName = "Level3ShortCode";
+            this.gcolLevel3ShortCode.Fixed = DevExpress.XtraGrid.Columns.FixedStyle.Left;
+            this.gcolLevel3ShortCode.Name = "gcolLevel3ShortCode";
+            this.gcolLevel3ShortCode.Visible = true;
+            this.gcolLevel3ShortCode.VisibleIndex = 2;
+            this.gcolLevel3ShortCode.Width = 93;
+            // 
+            // gcolLevel3Name
+            // 
+            this.gcolLevel3Name.Caption = "Tên phân nhóm";
+            this.gcolLevel3Name.FieldName = "Level3Name";
+            this.gcolLevel3Name.Fixed = DevExpress.XtraGrid.Columns.FixedStyle.Left;
+            this.gcolLevel3Name.Name = "gcolLevel3Name";
+            this.gcolLevel3Name.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
+            this.gcolLevel3Name.Visible = true;
+            this.gcolLevel3Name.VisibleIndex = 3;
+            this.gcolLevel3Name.Width = 187;
             // 
             // gcolRank
             // 
@@ -389,11 +414,11 @@
             this.gcolEditTime.FieldName = "EditTime";
             this.gcolEditTime.Name = "gcolEditTime";
             // 
-            // gcolLevel2ID
+            // gcolLevel3ID
             // 
-            this.gcolLevel2ID.Caption = "Level2ID";
-            this.gcolLevel2ID.FieldName = "Level2ID";
-            this.gcolLevel2ID.Name = "gcolLevel2ID";
+            this.gcolLevel3ID.Caption = "Level3ID";
+            this.gcolLevel3ID.FieldName = "Level3ID";
+            this.gcolLevel3ID.Name = "gcolLevel3ID";
             // 
             // barMain
             // 
@@ -458,6 +483,7 @@
             this.btnInsert.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N));
             this.btnInsert.Name = "btnInsert";
             this.btnInsert.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
+            this.btnInsert.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnInsert_ItemClick);
             // 
             // btnUpdate
             // 
@@ -466,6 +492,7 @@
             this.btnUpdate.Id = 1;
             this.btnUpdate.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F2);
             this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnUpdate_ItemClick);
             // 
             // barDockControlRight
             // 
@@ -478,7 +505,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.gridLevel2);
+            this.Controls.Add(this.gridLevel3);
             this.Controls.Add(this.barDockControlLeft);
             this.Controls.Add(this.barDockControlRight);
             this.Controls.Add(this.barDockControlBottom);
@@ -486,8 +513,9 @@
             this.DoubleBuffered = true;
             this.Name = "uc_Level3";
             this.Size = new System.Drawing.Size(882, 527);
-            ((System.ComponentModel.ISupportInitialize)(this.gridLevel2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.grvLevel2)).EndInit();
+            this.Load += new System.EventHandler(this.uc_Level3_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.gridLevel3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grvLevel3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barMain)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -515,11 +543,11 @@
         private DevExpress.XtraBars.BarLargeButtonItem btnReload;
         private DevExpress.XtraGrid.Columns.GridColumn gcolLevel1Name;
         private DevExpress.XtraBars.BarLargeButtonItem btnDelete;
-        private DevExpress.XtraGrid.GridControl gridLevel2;
-        private DevExpress.XtraGrid.Views.Grid.GridView grvLevel2;
-        private DevExpress.XtraGrid.Columns.GridColumn gcolLevel2Code;
-        private DevExpress.XtraGrid.Columns.GridColumn gcolLevel2ShortCode;
-        private DevExpress.XtraGrid.Columns.GridColumn gcolLevel2Name;
+        private DevExpress.XtraGrid.GridControl gridLevel3;
+        private DevExpress.XtraGrid.Views.Grid.GridView grvLevel3;
+        private DevExpress.XtraGrid.Columns.GridColumn gcolLevel3Code;
+        private DevExpress.XtraGrid.Columns.GridColumn gcolLevel3ShortCode;
+        private DevExpress.XtraGrid.Columns.GridColumn gcolLevel3Name;
         private DevExpress.XtraGrid.Columns.GridColumn gcolRank;
         private DevExpress.XtraGrid.Columns.GridColumn gcolUsedString;
         private DevExpress.XtraGrid.Columns.GridColumn gcolDescription;
@@ -528,11 +556,12 @@
         private DevExpress.XtraGrid.Columns.GridColumn gcolCreateTime;
         private DevExpress.XtraGrid.Columns.GridColumn gcolEditer;
         private DevExpress.XtraGrid.Columns.GridColumn gcolEditTime;
-        private DevExpress.XtraGrid.Columns.GridColumn gcolLevel2ID;
+        private DevExpress.XtraGrid.Columns.GridColumn gcolLevel3ID;
         private DevExpress.XtraBars.BarManager barMain;
         private DevExpress.XtraBars.Bar barTop;
         private DevExpress.XtraBars.BarLargeButtonItem btnInsert;
         private DevExpress.XtraBars.BarLargeButtonItem btnUpdate;
         private DevExpress.XtraBars.BarDockControl barDockControlRight;
+        private DevExpress.XtraGrid.Columns.GridColumn gcolLevel2Name;
     }
 }

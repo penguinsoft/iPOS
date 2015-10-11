@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseDRO.cs" />
+    <Compile Include="Products\PRO_tblUnitDCO.cs" />
     <Compile Include="Systems\SYS_tblUserLevelDCO.cs" />
     <Compile Include="Tools\OBJ_FileDCO.cs" />
     <Compile Include="Products\PRO_tblDistrictDCO.cs" />

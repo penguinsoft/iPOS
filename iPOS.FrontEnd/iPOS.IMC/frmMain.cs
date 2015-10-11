@@ -140,7 +140,7 @@ namespace iPOS.IMC
 
         private void btnLevel3_ItemClick(object sender, ItemClickEventArgs e)
         {
-
+            CommonEngine.OpenMdiChildForm(this, new uc_Level3(ConfigEngine.Language), tabMain);
         }
     }
 }

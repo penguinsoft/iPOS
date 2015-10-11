@@ -49,7 +49,21 @@ namespace iPOS.DAO.Products
 
         public List<PRO_tblProductGroupLevel2DTO> GetDataCombobox(string username, string language_id, string level1_id)
         {
-            throw new NotImplementedException();
+            List<PRO_tblProductGroupLevel2DTO> result = new List<PRO_tblProductGroupLevel2DTO>();
+            try
+            {
+                DataTable data = db.GetDataTable("PRO_spfrmProductGroupLevel2", new string[] { "Activity", "Username", "LanguageID", "Level1ID" }, new object[] { BaseConstant.COMMAND_GET_COMBO_BOX, username, language_id, level1_id });
+                if (data != null && data.Rows.Count > 0)
+                {
+                    result = ConvertEngine.ConvertDataTableToObjectList<PRO_tblProductGroupLevel2DTO>(data);
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+            }
+
+            return result;
         }
 
         public PRO_tblProductGroupLevel2DTO GetDataByID(string username, string language_id, string level2_id)
@@ -140,7 +154,7 @@ namespace iPOS.DAO.Products
             string strError = "";
             try
             {
-                strError = db.sExecuteSQL("PRO_spfrmProductGroupLevel2", new string[] { "Activity", "Username", "LanguageID", "Level2ID" }, new object[] { BaseConstant.COMMAND_DELETE_LIST_EN, username, language_id, level2_id_list });
+                strError = db.sExecuteSQL("PRO_spfrmProductGroupLevel2", new string[] { "Activity", "Username", "LanguageID", "Level2IDList" }, new object[] { BaseConstant.COMMAND_DELETE_LIST_EN, username, language_id, level2_id_list });
 
                 if (!string.IsNullOrEmpty(strError))
                     logger.Error(strError);

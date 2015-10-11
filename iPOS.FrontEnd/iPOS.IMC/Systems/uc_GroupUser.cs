@@ -173,6 +173,7 @@ namespace iPOS.IMC.Systems
             if (curItem.Count > 0)
             {
                 SYS_tblGroupUserDRO item = await SYS_tblGroupUserBUS.GetGroupUserItem(CommonEngine.userInfo.Username, ConfigEngine.Language, curItem[0].GroupID);
+                
                 if (item != null && item.GroupUserItem != null)
                     CommonEngine.OpenInputForm(new uc_GroupUserDetail(this, item.GroupUserItem), new Size(450, 290), true);
             }
