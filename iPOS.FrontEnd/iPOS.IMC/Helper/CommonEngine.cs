@@ -71,12 +71,15 @@ namespace iPOS.IMC.Helper
             XtraMessageBox.Show(string.Format("Request error: {0}\n{1}", res.ErrorCode, res.ErrorMessage), title, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        public static void CheckValidResponseItem(iPOS.DRO.ResponseItem res)
+        public static bool CheckValidResponseItem(iPOS.DRO.ResponseItem res)
         {
-            //if (res.IsError) { 
-            //    ShowHTTPErrorMessage(res);
-            //    return;
-            //}
+            if (res.IsError)
+            {
+                ShowHTTPErrorMessage(res);
+                return false;
+            }
+
+            return true;
         }
 
         public static void OpenInputForm(XtraUserControl uc, Size size)

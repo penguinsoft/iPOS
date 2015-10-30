@@ -73,6 +73,10 @@
     <Reference Include="DevExpress.XtraNavBar.v15.1, Version=15.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraTreeList.v15.1, Version=15.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraWizard.v15.1, Version=15.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -188,6 +192,12 @@
     <Compile Include="Products\uc_StoreDetail.Designer.cs">
       <DependentUpon>uc_StoreDetail.cs</DependentUpon>
     </Compile>
+    <Compile Include="Products\uc_UnitDetail.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Products\uc_UnitDetail.Designer.cs">
+      <DependentUpon>uc_UnitDetail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Products\uc_Warehouse.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -237,6 +247,12 @@
     </Compile>
     <Compile Include="Systems\uc_UserPermission.Designer.cs">
       <DependentUpon>uc_UserPermission.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tool\frmWait.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tool\frmWait.Designer.cs">
+      <DependentUpon>frmWait.cs</DependentUpon>
     </Compile>
     <Compile Include="Tool\frmWaiting.cs">
       <SubType>Form</SubType>
@@ -302,6 +318,9 @@
     <EmbeddedResource Include="Products\uc_StoreDetail.resx">
       <DependentUpon>uc_StoreDetail.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Products\uc_UnitDetail.resx">
+      <DependentUpon>uc_UnitDetail.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Products\uc_Warehouse.resx">
       <DependentUpon>uc_Warehouse.cs</DependentUpon>
     </EmbeddedResource>
@@ -336,6 +355,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Systems\uc_UserPermission.resx">
       <DependentUpon>uc_UserPermission.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tool\frmWait.resx">
+      <DependentUpon>frmWait.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Tool\frmWaiting.resx">
       <DependentUpon>frmWaiting.cs</DependentUpon>
@@ -373,6 +395,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="logo.ico" />
+    <None Include="Resources\loading_square_48.GIF" />
     <Content Include="Resources\user_info_32.png" />
     <None Include="Resources\loading_48.GIF" />
     <None Include="Resources\user_16.png" />
@@ -441,35 +464,6 @@
       <Project>{49580846-f792-4556-ad07-a237db2f4761}</Project>
       <Name>iPOS.DTO</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <COMReference Include="Microsoft.Office.Core">
-      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
-      <VersionMajor>2</VersionMajor>
-      <VersionMinor>5</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="Microsoft.Office.Interop.Excel">
-      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>7</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="VBIDE">
-      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
-      <VersionMajor>5</VersionMajor>
-      <VersionMinor>3</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

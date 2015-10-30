@@ -48,8 +48,7 @@ namespace iPOS.IMC.Products
                     DescriptionVN = string.Format("Tài khoản '{0}' vừa tải thành công dữ liệu quầy bán.", CommonEngine.userInfo.UserID),
                     DescriptionEN = string.Format("Account '{0}' downloaded successfully data of stalls.", CommonEngine.userInfo.UserID)
                 });
-                if (stalls.ResponseItem.IsError)
-                    CommonEngine.ShowHTTPErrorMessage(stalls.ResponseItem);
+                if (!CommonEngine.CheckValidResponseItem(stalls.ResponseItem)) return;
                 gridStall.DataSource = stalls.StallList != null ? stalls.StallList : null;
                 barFooter.Visible = (stalls.StallList != null && stalls.StallList.Count > 0) ? true : false;
             }
@@ -124,11 +123,7 @@ namespace iPOS.IMC.Products
                         });
                 }
 
-                if (result.ResponseItem.IsError)
-                {
-                    CommonEngine.ShowHTTPErrorMessage(result.ResponseItem);
-                    return;
-                }
+                if (!CommonEngine.CheckValidResponseItem(result.ResponseItem)) return;
                 if (!result.ResponseItem.Message.Equals("ready"))
                     if (string.IsNullOrEmpty(result.ResponseItem.Message)) GetAllStall("", "");
                     else CommonEngine.ShowMessage(result.ResponseItem.Message, 0);

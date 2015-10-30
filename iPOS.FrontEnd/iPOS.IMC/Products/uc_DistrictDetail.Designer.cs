@@ -57,9 +57,9 @@
             this.lciVNName = new DevExpress.XtraLayout.LayoutControlItem();
             this.lciENName = new DevExpress.XtraLayout.LayoutControlItem();
             this.lciProvince = new DevExpress.XtraLayout.LayoutControlItem();
-            this.lciNote = new DevExpress.XtraLayout.LayoutControlItem();
             this.lciRank = new DevExpress.XtraLayout.LayoutControlItem();
             this.lciUsed = new DevExpress.XtraLayout.LayoutControlItem();
+            this.lciNote = new DevExpress.XtraLayout.LayoutControlItem();
             this.depError = new DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.logDetail)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciDistrictCode)).BeginInit();
@@ -83,9 +83,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.lciVNName)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciENName)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciProvince)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lciNote)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciRank)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciUsed)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lciNote)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.depError)).BeginInit();
             this.SuspendLayout();
             // 
@@ -103,7 +103,6 @@
             this.logDetail.Location = new System.Drawing.Point(0, 0);
             this.logDetail.Name = "logDetail";
             this.logDetail.Size = new System.Drawing.Size(431, 243);
-            this.logDetail.Text = "logDetail";
             // 
             // lciDistrictCode
             // 
@@ -118,7 +117,7 @@
             // txtDistrictCode
             // 
             this.txtDistrictCode.EnterMoveNextControl = true;
-            this.txtDistrictCode.Location = new System.Drawing.Point(115, 33);
+            this.txtDistrictCode.Location = new System.Drawing.Point(115, 32);
             this.txtDistrictCode.Name = "txtDistrictCode";
             this.txtDistrictCode.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
             this.txtDistrictCode.Properties.Appearance.Options.UseFont = true;
@@ -194,7 +193,7 @@
             // 
             this.chkUsed.EditValue = true;
             this.chkUsed.EnterMoveNextControl = true;
-            this.chkUsed.Location = new System.Drawing.Point(235, 129);
+            this.chkUsed.Location = new System.Drawing.Point(235, 128);
             this.chkUsed.Name = "chkUsed";
             this.chkUsed.Properties.Caption = "Đang sử dụng?";
             this.chkUsed.Size = new System.Drawing.Size(182, 19);
@@ -209,7 +208,7 @@
             0,
             0});
             this.speRank.EnterMoveNextControl = true;
-            this.speRank.Location = new System.Drawing.Point(115, 129);
+            this.speRank.Location = new System.Drawing.Point(115, 128);
             this.speRank.Name = "speRank";
             this.speRank.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
@@ -219,24 +218,26 @@
             // 
             // mmoNote
             // 
-            this.mmoNote.Location = new System.Drawing.Point(115, 153);
+            this.mmoNote.Location = new System.Drawing.Point(115, 152);
             this.mmoNote.Name = "mmoNote";
-            this.mmoNote.Size = new System.Drawing.Size(302, 76);
+            this.mmoNote.Size = new System.Drawing.Size(302, 77);
             this.mmoNote.StyleController = this.locMain;
             this.mmoNote.TabIndex = 8;
             // 
             // gluProvince
             // 
             this.gluProvince.EnterMoveNextControl = true;
-            this.gluProvince.Location = new System.Drawing.Point(115, 105);
+            this.gluProvince.Location = new System.Drawing.Point(115, 104);
             this.gluProvince.Name = "gluProvince";
             this.gluProvince.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Plus)});
             this.gluProvince.Properties.NullText = "[Chọn tỉnh thành]";
             this.gluProvince.Properties.View = this.gluProvinceView;
             this.gluProvince.Size = new System.Drawing.Size(302, 20);
             this.gluProvince.StyleController = this.locMain;
             this.gluProvince.TabIndex = 7;
+            this.gluProvince.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.gluProvince_ButtonClick);
             this.gluProvince.EditValueChanged += new System.EventHandler(this.gluProvince_EditValueChanged);
             // 
             // gluProvinceView
@@ -289,7 +290,7 @@
             // txtENName
             // 
             this.txtENName.EnterMoveNextControl = true;
-            this.txtENName.Location = new System.Drawing.Point(115, 81);
+            this.txtENName.Location = new System.Drawing.Point(115, 80);
             this.txtENName.Name = "txtENName";
             this.txtENName.Properties.MaxLength = 150;
             this.txtENName.Size = new System.Drawing.Size(302, 20);
@@ -300,7 +301,7 @@
             // txtVNName
             // 
             this.txtVNName.EnterMoveNextControl = true;
-            this.txtVNName.Location = new System.Drawing.Point(115, 57);
+            this.txtVNName.Location = new System.Drawing.Point(115, 56);
             this.txtVNName.Name = "txtVNName";
             this.txtVNName.Properties.MaxLength = 150;
             this.txtVNName.Size = new System.Drawing.Size(302, 20);
@@ -324,7 +325,6 @@
             this.logMain.Name = "logMain";
             this.logMain.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
             this.logMain.Size = new System.Drawing.Size(431, 269);
-            this.logMain.Text = "logMain";
             this.logMain.TextVisible = false;
             // 
             // emptySpaceItem2
@@ -337,7 +337,6 @@
             this.emptySpaceItem2.Name = "emptySpaceItem2";
             this.emptySpaceItem2.Size = new System.Drawing.Size(58, 26);
             this.emptySpaceItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            this.emptySpaceItem2.Text = "emptySpaceItem2";
             this.emptySpaceItem2.TextSize = new System.Drawing.Size(0, 0);
             // 
             // lciButtonSaveClose
@@ -347,9 +346,7 @@
             this.lciButtonSaveClose.Location = new System.Drawing.Point(131, 243);
             this.lciButtonSaveClose.Name = "lciButtonSaveClose";
             this.lciButtonSaveClose.Size = new System.Drawing.Size(100, 26);
-            this.lciButtonSaveClose.Text = "lciButtonSaveClose";
             this.lciButtonSaveClose.TextSize = new System.Drawing.Size(0, 0);
-            this.lciButtonSaveClose.TextToControlDistance = 0;
             this.lciButtonSaveClose.TextVisible = false;
             // 
             // lciButtonSaveInsert
@@ -359,9 +356,7 @@
             this.lciButtonSaveInsert.Location = new System.Drawing.Point(231, 243);
             this.lciButtonSaveInsert.Name = "lciButtonSaveInsert";
             this.lciButtonSaveInsert.Size = new System.Drawing.Size(100, 26);
-            this.lciButtonSaveInsert.Text = "lciButtonSaveInsert";
             this.lciButtonSaveInsert.TextSize = new System.Drawing.Size(0, 0);
-            this.lciButtonSaveInsert.TextToControlDistance = 0;
             this.lciButtonSaveInsert.TextVisible = false;
             // 
             // lciButtonCancel
@@ -371,9 +366,7 @@
             this.lciButtonCancel.Location = new System.Drawing.Point(331, 243);
             this.lciButtonCancel.Name = "lciButtonCancel";
             this.lciButtonCancel.Size = new System.Drawing.Size(100, 26);
-            this.lciButtonCancel.Text = "lciButtonCancel";
             this.lciButtonCancel.TextSize = new System.Drawing.Size(0, 0);
-            this.lciButtonCancel.TextToControlDistance = 0;
             this.lciButtonCancel.TextVisible = false;
             // 
             // lciDistrictID
@@ -387,9 +380,7 @@
             this.lciDistrictID.Name = "lciDistrictID";
             this.lciDistrictID.Size = new System.Drawing.Size(73, 26);
             this.lciDistrictID.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            this.lciDistrictID.Text = "lciDistrictID";
             this.lciDistrictID.TextSize = new System.Drawing.Size(0, 0);
-            this.lciDistrictID.TextToControlDistance = 0;
             this.lciDistrictID.TextVisible = false;
             // 
             // lciVNName
@@ -422,16 +413,6 @@
             this.lciProvince.Text = "Tỉnh thành:";
             this.lciProvince.TextSize = new System.Drawing.Size(98, 13);
             // 
-            // lciNote
-            // 
-            this.lciNote.Control = this.mmoNote;
-            this.lciNote.CustomizationFormText = "lciNote";
-            this.lciNote.Location = new System.Drawing.Point(0, 120);
-            this.lciNote.Name = "lciNote";
-            this.lciNote.Size = new System.Drawing.Size(407, 80);
-            this.lciNote.Text = "Ghi chú:";
-            this.lciNote.TextSize = new System.Drawing.Size(98, 13);
-            // 
             // lciRank
             // 
             this.lciRank.Control = this.speRank;
@@ -450,10 +431,18 @@
             this.lciUsed.Name = "lciUsed";
             this.lciUsed.Padding = new DevExpress.XtraLayout.Utils.Padding(10, 2, 2, 2);
             this.lciUsed.Size = new System.Drawing.Size(194, 24);
-            this.lciUsed.Text = "lciUsed";
             this.lciUsed.TextSize = new System.Drawing.Size(0, 0);
-            this.lciUsed.TextToControlDistance = 0;
             this.lciUsed.TextVisible = false;
+            // 
+            // lciNote
+            // 
+            this.lciNote.Control = this.mmoNote;
+            this.lciNote.CustomizationFormText = "lciNote";
+            this.lciNote.Location = new System.Drawing.Point(0, 120);
+            this.lciNote.Name = "lciNote";
+            this.lciNote.Size = new System.Drawing.Size(407, 81);
+            this.lciNote.Text = "Ghi chú:";
+            this.lciNote.TextSize = new System.Drawing.Size(98, 13);
             // 
             // depError
             // 
@@ -489,9 +478,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.lciVNName)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciENName)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciProvince)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lciNote)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciRank)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lciUsed)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lciNote)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.depError)).EndInit();
             this.ResumeLayout(false);
 

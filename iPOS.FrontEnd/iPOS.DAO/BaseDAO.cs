@@ -38,6 +38,7 @@ namespace iPOS.DAO
                 if (ex.InnerException.Message.ToLower().Contains("unable to connect to the remote server"))
                     logger.Error(ex);
                 logger.Error(ex);
+                result = MessageEngine.GetHTTPStatusCodes("InternalServerError", ConfigEngine.Language);
             }
 
             return result;
@@ -62,6 +63,7 @@ namespace iPOS.DAO
             catch (Exception ex)
             {
                 logger.Error(ex);
+                result = MessageEngine.GetHTTPStatusCodes("InternalServerError", ConfigEngine.Language);
             }
 
             return result;

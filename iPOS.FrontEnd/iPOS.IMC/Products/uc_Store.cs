@@ -48,8 +48,7 @@ namespace iPOS.IMC.Products
                     DescriptionVN = string.Format("Tài khoản '{0}' vừa tải thành công dữ liệu cửa hàng.", CommonEngine.userInfo.UserID),
                     DescriptionEN = string.Format("Account '{0}' downloaded successfully data of stores.", CommonEngine.userInfo.UserID)
                 });
-                if (stores.ResponseItem.IsError)
-                    CommonEngine.ShowHTTPErrorMessage(stores.ResponseItem);
+                if (!CommonEngine.CheckValidResponseItem(stores.ResponseItem)) return;
                 gridStore.DataSource = stores.StoreList != null ? stores.StoreList : null;
                 barFooter.Visible = (stores.StoreList != null && stores.StoreList.Count > 0) ? true : false;
             }

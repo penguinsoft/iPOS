@@ -51,8 +51,7 @@ namespace iPOS.IMC.Products
                     DescriptionVN = string.Format("Tài khoản '{0}' vừa tải thành công dữ liệu tỉnh thành.", CommonEngine.userInfo.UserID),
                     DescriptionEN = string.Format("Account '{0}' downloaded successfully data of provinces.", CommonEngine.userInfo.UserID)
                 });
-                if (list.ResponseItem.IsError)
-                    CommonEngine.ShowHTTPErrorMessage(list.ResponseItem);
+                if (!CommonEngine.CheckValidResponseItem(list.ResponseItem)) return;
                 gridProvince.DataSource = list.ProvinceList != null ? list.ProvinceList : null;
                 barBottom.Visible = (list.ProvinceList != null && list.ProvinceList.Count > 0) ? true : false;
             }
@@ -127,11 +126,7 @@ namespace iPOS.IMC.Products
                         });
                 }
 
-                if (result.ResponseItem.IsError)
-                {
-                    CommonEngine.ShowHTTPErrorMessage(result.ResponseItem);
-                    return;
-                }
+                if (!CommonEngine.CheckValidResponseItem(result.ResponseItem)) return;
                 if (!result.ResponseItem.Message.Equals("ready"))
                     if (string.IsNullOrEmpty(result.ResponseItem.Message)) GetAllProvinces();
                     else CommonEngine.ShowMessage(result.ResponseItem.Message, 0);

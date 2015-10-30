@@ -51,10 +51,7 @@ namespace iPOS.IMC.Systems
                     DescriptionVN = string.Format("Tài khoản '{0}' vừa tải thành công dữ liệu người dùng.", CommonEngine.userInfo.UserID),
                     DescriptionEN = string.Format("Account '{0}' downloaded successfully data of users.", CommonEngine.userInfo.UserID)
                 });
-                if (users.ResponseItem.IsError)
-                {
-                    CommonEngine.ShowHTTPErrorMessage(users.ResponseItem);
-                }
+                if (!CommonEngine.CheckValidResponseItem(users.ResponseItem)) return;
                 gridUser.DataSource = users.UserList;
                 barBottom.Visible = (users != null && users.UserList.Count > 0) ? true : false;
                 CommonEngine.LoadUserPermission("10", btnDelete, btnPrint, btnImport, btnExport);
@@ -125,11 +122,7 @@ namespace iPOS.IMC.Systems
                         });
                 }
 
-                if (result.ResponseItem.IsError)
-                {
-                    CommonEngine.ShowHTTPErrorMessage(result.ResponseItem);
-                    return;
-                }
+                if (!CommonEngine.CheckValidResponseItem(result.ResponseItem)) return;
                 if (!result.ResponseItem.Message.Equals("ready"))
                     if (string.IsNullOrEmpty(result.ResponseItem.Message)) GetAllUsers();
                     else CommonEngine.ShowMessage(result.ResponseItem.Message, 0);

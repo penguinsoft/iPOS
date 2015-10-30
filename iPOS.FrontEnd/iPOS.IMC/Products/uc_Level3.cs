@@ -49,8 +49,7 @@ namespace iPOS.IMC.Products
                     DescriptionVN = string.Format("Tài khoản '{0}' vừa tải thành công dữ liệu phân nhóm hàng.", CommonEngine.userInfo.UserID),
                     DescriptionEN = string.Format("Account '{0}' downloaded successfully data of product subgroup.", CommonEngine.userInfo.UserID)
                 });
-                if (level3s.ResponseItem.IsError)
-                    CommonEngine.ShowHTTPErrorMessage(level3s.ResponseItem);
+                if (!CommonEngine.CheckValidResponseItem(level3s.ResponseItem)) return;
                 gridLevel3.DataSource = level3s.Level3List != null ? level3s.Level3List : null;
                 barBottom.Visible = (level3s.Level3List != null && level3s.Level3List.Count > 0) ? true : false;
             }
@@ -131,11 +130,7 @@ namespace iPOS.IMC.Products
                             });
                     }
 
-                    if (result.ResponseItem.IsError)
-                    {
-                        CommonEngine.ShowHTTPErrorMessage(result.ResponseItem);
-                        return;
-                    }
+                    if (!CommonEngine.CheckValidResponseItem(result.ResponseItem)) return;
                     if (!result.ResponseItem.Message.Equals("ready"))
                         if (string.IsNullOrEmpty(result.ResponseItem.Message)) GetAllLevel3();
                         else CommonEngine.ShowMessage(result.ResponseItem.Message, 0);

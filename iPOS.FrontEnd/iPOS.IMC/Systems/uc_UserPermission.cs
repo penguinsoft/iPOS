@@ -74,11 +74,9 @@ namespace iPOS.IMC.Systems
             {
                 trlUser.BeginUnboundLoad();
                 SYS_tblGroupUserDRO groupUser = await SYS_tblGroupUserBUS.GetAllGroupUsers(CommonEngine.userInfo.UserID, ConfigEngine.Language, false, null);
+                if (!CommonEngine.CheckValidResponseItem(groupUser.ResponseItem)) return;
                 SYS_tblUserDRO users = await SYS_tblUserBUS.GetAllUsers(CommonEngine.userInfo.UserID, ConfigEngine.Language, null);
-                if (groupUser.ResponseItem.IsError)
-                {
-                    CommonEngine.ShowHTTPErrorMessage(groupUser.ResponseItem);
-                }
+                if (!CommonEngine.CheckValidResponseItem(users.ResponseItem)) return;
                 foreach (var item in groupUser.GroupUserList)
                 {
                     groupNode = trlUser.AppendNode(new object[] { string.Format(@"{0} - {1}", item.GroupCode, item.GroupName), item.GroupID }, -1);
@@ -100,10 +98,7 @@ namespace iPOS.IMC.Systems
         {
             SYS_tblUserLevelDRO userLevel = new SYS_tblUserLevelDRO();
             userLevel = await SYS_tblUserLevelBUS.GetAllUserLevel(CommonEngine.userInfo.UserID, ConfigEngine.Language);
-            if (userLevel.ResponseItem.IsError)
-            {
-                CommonEngine.ShowHTTPErrorMessage(userLevel.ResponseItem);
-            }
+            if (!CommonEngine.CheckValidResponseItem(userLevel.ResponseItem)) return;
             gluUserLevel.DataSource = userLevel.UserLevelList;
             gluUserLevel.DisplayMember = "UserLevelName";
             gluUserLevel.ValueMember = "UserLevelID";
@@ -141,11 +136,7 @@ namespace iPOS.IMC.Systems
                 TreeListNode child_node;
                 trlPermission.BeginUnboundLoad();
                 SYS_tblPermissionDRO permissionList = await SYS_tblPermissionBUS.GetPermissionList(CommonEngine.userInfo.UserID, ConfigEngine.Language, id, parent_id, is_user);
-                if (permissionList.ResponseItem.IsError)
-                {
-                    CommonEngine.ShowHTTPErrorMessage(permissionList.ResponseItem);
-                }
-                else
+                if (CommonEngine.CheckValidResponseItem(permissionList.ResponseItem))
                 {
                     foreach (var item in permissionList.PermissionList)
                     {
@@ -210,9 +201,13 @@ namespace iPOS.IMC.Systems
                     DescriptionVN = strMessage.Replace("$IsError$", "thành công"),
                     DescriptionEN = strMessage.Replace("$IsError$", "successfully")
                 });
-                if (string.IsNullOrEmpty(result.ResponseItem.Message))
-                    CommonEngine.ShowMessage(strMessage.Replace("$IsError$", ConfigEngine.Language.Equals("vi") ? "thành công" : "successfully").Trim(), MessageType.Success);
-                else CommonEngine.ShowMessage(strMessage.Replace("$IsError$", ConfigEngine.Language.Equals("vi") ? "thất bại" : "failed").Trim(), MessageType.Error);
+                if (CommonEngine.CheckValidResponseItem(result.ResponseItem))
+                {
+                    if (string.IsNullOrEmpty(result.ResponseItem.Message))
+                        CommonEngine.ShowMessage(strMessage.Replace("$IsError$", ConfigEngine.Language.Equals("vi") ? "thành công" : "successfully").Trim(), MessageType.Success);
+                    else CommonEngine.ShowMessage(strMessage.Replace("$IsError$", ConfigEngine.Language.Equals("vi") ? "thất bại" : "failed").Trim(), MessageType.Error);
+                }
+                else return;
             }
             catch (Exception ex)
             {

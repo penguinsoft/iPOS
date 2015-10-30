@@ -340,11 +340,13 @@
             this.gluGroupUser.Location = new System.Drawing.Point(105, 80);
             this.gluGroupUser.Name = "gluGroupUser";
             this.gluGroupUser.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Plus)});
             this.gluGroupUser.Properties.View = this.gluViewGroupUser;
             this.gluGroupUser.Size = new System.Drawing.Size(329, 20);
             this.gluGroupUser.StyleController = this.locMain;
             this.gluGroupUser.TabIndex = 5;
+            this.gluGroupUser.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.gluGroupUser_ButtonClick);
             this.gluGroupUser.EditValueChanged += new System.EventHandler(this.gluGroupUser_EditValueChanged);
             // 
             // gluViewGroupUser

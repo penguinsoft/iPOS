@@ -23,6 +23,8 @@ namespace iPOS.IMC
             //UserLookAndFeel.Default.SetSkinStyle("DevExpress Style");
             UserLookAndFeel.Default.SetSkinStyle("Office 2007 Blue");
 
+            //Application.Run(new iPOS.IMC.Tool.frmWaiting());
+
             if (!File.Exists(Application.StartupPath + @"\Config.ini"))
             {
                 MessageBox.Show("Thieu file Config");

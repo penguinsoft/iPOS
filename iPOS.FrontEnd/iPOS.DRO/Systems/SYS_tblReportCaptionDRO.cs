@@ -55,6 +55,18 @@ namespace iPOS.DRO.Systems
 
         [DataMember]
         public string TableName { get; set; }
+
+        [DataMember]
+        public bool IsComment { get; set; }
+
+        [DataMember]
+        public string CommentVN { get; set; }
+
+        [DataMember]
+        public string CommentEN { get; set; }
+
+        [DataMember]
+        public string Comment { get; set; }
     }
 
     [DataContract]

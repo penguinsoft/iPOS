@@ -51,8 +51,7 @@ namespace iPOS.IMC.Products
                     DescriptionVN = string.Format("Tài khoản '{0}' vừa tải thành công dữ liệu quận huyện.", CommonEngine.userInfo.UserID),
                     DescriptionEN = string.Format("Account '{0}' downloaded successfully data of districts.", CommonEngine.userInfo.UserID)
                 });
-                if (list.ResponseItem.IsError)
-                    CommonEngine.ShowHTTPErrorMessage(list.ResponseItem);
+                if (!CommonEngine.CheckValidResponseItem(list.ResponseItem)) return;
                 gridDistrict.DataSource = (list.DistrictList != null) ? list.DistrictList : null;
                 barBottom.Visible = (list.DistrictList != null && list.DistrictList.Count > 0) ? true : false;
             }
@@ -127,11 +126,7 @@ namespace iPOS.IMC.Products
                             DescriptionEN = string.Format("Account '{0}' has deleted district successfully with district code is '{1}'.", CommonEngine.userInfo.UserID, district_code_list)
                         });
                 }
-                if (result.ResponseItem.IsError)
-                {
-                    CommonEngine.ShowHTTPErrorMessage(result.ResponseItem);
-                    return;
-                }
+                if (!CommonEngine.CheckValidResponseItem(result.ResponseItem)) return;
 
                 if (!result.ResponseItem.Message.Equals("ready"))
                     if (string.IsNullOrEmpty(result.ResponseItem.Message)) GetAllDistrict();

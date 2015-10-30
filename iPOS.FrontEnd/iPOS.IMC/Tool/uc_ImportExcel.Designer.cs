@@ -131,7 +131,7 @@
             // 
             this.wwpStepOne.Controls.Add(this.locStepOne);
             this.wwpStepOne.Name = "wwpStepOne";
-            this.wwpStepOne.Size = new System.Drawing.Size(834, 345);
+            this.wwpStepOne.Size = new System.Drawing.Size(834, 339);
             this.wwpStepOne.Text = "Chọn tệp dữ liệu Excel cần nhập";
             // 
             // locStepOne
@@ -144,18 +144,25 @@
             this.locStepOne.Location = new System.Drawing.Point(0, 0);
             this.locStepOne.Name = "locStepOne";
             this.locStepOne.Root = this.logStepOne;
-            this.locStepOne.Size = new System.Drawing.Size(834, 345);
+            this.locStepOne.Size = new System.Drawing.Size(834, 339);
             this.locStepOne.TabIndex = 0;
             this.locStepOne.Text = "layoutControl1";
             // 
             // gridSeletedFiles
             // 
             this.gridSeletedFiles.AllowDrop = true;
-            this.gridSeletedFiles.Location = new System.Drawing.Point(15, 66);
+            this.gridSeletedFiles.EmbeddedNavigator.Buttons.Append.Visible = false;
+            this.gridSeletedFiles.EmbeddedNavigator.Buttons.CancelEdit.Visible = false;
+            this.gridSeletedFiles.EmbeddedNavigator.Buttons.Edit.Visible = false;
+            this.gridSeletedFiles.EmbeddedNavigator.Buttons.EndEdit.Visible = false;
+            this.gridSeletedFiles.EmbeddedNavigator.Buttons.Remove.Visible = false;
+            this.gridSeletedFiles.EmbeddedNavigator.TextStringFormat = "{0} / {1}";
+            this.gridSeletedFiles.Location = new System.Drawing.Point(15, 65);
             this.gridSeletedFiles.MainView = this.grvSeletedFiles;
             this.gridSeletedFiles.Name = "gridSeletedFiles";
-            this.gridSeletedFiles.Size = new System.Drawing.Size(804, 264);
+            this.gridSeletedFiles.Size = new System.Drawing.Size(804, 259);
             this.gridSeletedFiles.TabIndex = 7;
+            this.gridSeletedFiles.UseEmbeddedNavigator = true;
             this.gridSeletedFiles.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.grvSeletedFiles});
             this.gridSeletedFiles.DragDrop += new System.Windows.Forms.DragEventHandler(this.gridSeletedFiles_DragDrop);
@@ -251,7 +258,7 @@
             this.btnBrowseFile.Name = "btnBrowseFile";
             this.btnBrowseFile.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, global::iPOS.IMC.Properties.Resources.browse_16, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "", null, null, true),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, global::iPOS.IMC.Properties.Resources.import_file_16, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, false, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, global::iPOS.IMC.Properties.Resources.import_file_16, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "", null, null, true)});
             this.btnBrowseFile.Size = new System.Drawing.Size(481, 22);
             this.btnBrowseFile.StyleController = this.locStepOne;
             this.btnBrowseFile.TabIndex = 4;
@@ -269,8 +276,7 @@
             this.logSelectedFiles});
             this.logStepOne.Location = new System.Drawing.Point(0, 0);
             this.logStepOne.Name = "logStepOne";
-            this.logStepOne.Size = new System.Drawing.Size(834, 345);
-            this.logStepOne.Text = "logStepOne";
+            this.logStepOne.Size = new System.Drawing.Size(834, 339);
             this.logStepOne.TextVisible = false;
             // 
             // lciBrowseFile
@@ -298,9 +304,7 @@
             this.layoutControlItem2.Padding = new DevExpress.XtraLayout.Utils.Padding(5, 5, 5, 5);
             this.layoutControlItem2.Size = new System.Drawing.Size(139, 32);
             this.layoutControlItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            this.layoutControlItem2.Text = "layoutControlItem2";
             this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem2.TextToControlDistance = 0;
             this.layoutControlItem2.TextVisible = false;
             // 
             // layoutControlItem3
@@ -314,9 +318,7 @@
             this.layoutControlItem3.Padding = new DevExpress.XtraLayout.Utils.Padding(5, 5, 5, 5);
             this.layoutControlItem3.Size = new System.Drawing.Size(100, 32);
             this.layoutControlItem3.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            this.layoutControlItem3.Text = "layoutControlItem3";
             this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem3.TextToControlDistance = 0;
             this.layoutControlItem3.TextVisible = false;
             // 
             // logSelectedFiles
@@ -327,7 +329,7 @@
             this.logSelectedFiles.Location = new System.Drawing.Point(0, 32);
             this.logSelectedFiles.Name = "logSelectedFiles";
             this.logSelectedFiles.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
-            this.logSelectedFiles.Size = new System.Drawing.Size(814, 293);
+            this.logSelectedFiles.Size = new System.Drawing.Size(814, 287);
             this.logSelectedFiles.Text = "Tập tin đã chọn từ máy tính";
             // 
             // lciSelectedFiles
@@ -336,17 +338,15 @@
             this.lciSelectedFiles.CustomizationFormText = "layoutControlItem4";
             this.lciSelectedFiles.Location = new System.Drawing.Point(0, 0);
             this.lciSelectedFiles.Name = "lciSelectedFiles";
-            this.lciSelectedFiles.Size = new System.Drawing.Size(808, 268);
-            this.lciSelectedFiles.Text = "lciSelectedFiles";
+            this.lciSelectedFiles.Size = new System.Drawing.Size(808, 263);
             this.lciSelectedFiles.TextSize = new System.Drawing.Size(0, 0);
-            this.lciSelectedFiles.TextToControlDistance = 0;
             this.lciSelectedFiles.TextVisible = false;
             // 
             // wwpStepTwo
             // 
             this.wwpStepTwo.Controls.Add(this.locStepTwo);
             this.wwpStepTwo.Name = "wwpStepTwo";
-            this.wwpStepTwo.Size = new System.Drawing.Size(834, 345);
+            this.wwpStepTwo.Size = new System.Drawing.Size(834, 339);
             this.wwpStepTwo.Text = "Nhập dữ liệu vào hệ thống";
             // 
             // locStepTwo
@@ -360,14 +360,14 @@
             this.locStepTwo.Name = "locStepTwo";
             this.locStepTwo.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(240, 216, 250, 350);
             this.locStepTwo.Root = this.logStepTwo;
-            this.locStepTwo.Size = new System.Drawing.Size(834, 345);
+            this.locStepTwo.Size = new System.Drawing.Size(834, 339);
             this.locStepTwo.TabIndex = 0;
             this.locStepTwo.Text = "layoutControl1";
             // 
             // btnImportAllFiles
             // 
             this.btnImportAllFiles.Image = global::iPOS.IMC.Properties.Resources.import_all_16;
-            this.btnImportAllFiles.Location = new System.Drawing.Point(523, 318);
+            this.btnImportAllFiles.Location = new System.Drawing.Point(523, 312);
             this.btnImportAllFiles.Name = "btnImportAllFiles";
             this.btnImportAllFiles.Size = new System.Drawing.Size(153, 22);
             this.btnImportAllFiles.StyleController = this.locStepTwo;
@@ -378,7 +378,7 @@
             // btnImportSelectedFile
             // 
             this.btnImportSelectedFile.Image = global::iPOS.IMC.Properties.Resources.import_16;
-            this.btnImportSelectedFile.Location = new System.Drawing.Point(686, 318);
+            this.btnImportSelectedFile.Location = new System.Drawing.Point(686, 312);
             this.btnImportSelectedFile.Name = "btnImportSelectedFile";
             this.btnImportSelectedFile.Size = new System.Drawing.Size(143, 22);
             this.btnImportSelectedFile.StyleController = this.locStepTwo;
@@ -388,7 +388,7 @@
             // 
             // gluSeletedFiles
             // 
-            this.gluSeletedFiles.Location = new System.Drawing.Point(106, 318);
+            this.gluSeletedFiles.Location = new System.Drawing.Point(106, 312);
             this.gluSeletedFiles.Name = "gluSeletedFiles";
             this.gluSeletedFiles.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -413,6 +413,8 @@
             this.gcolFileName.Caption = "Tệp tin";
             this.gcolFileName.FieldName = "FileName";
             this.gcolFileName.Name = "gcolFileName";
+            this.gcolFileName.OptionsColumn.AllowMove = false;
+            this.gcolFileName.OptionsFilter.AutoFilterCondition = DevExpress.XtraGrid.Columns.AutoFilterCondition.Contains;
             this.gcolFileName.Visible = true;
             this.gcolFileName.VisibleIndex = 0;
             // 
@@ -421,16 +423,21 @@
             this.gcolTableName.Caption = "TableName";
             this.gcolTableName.FieldName = "TableName";
             this.gcolTableName.Name = "gcolTableName";
-            this.gcolTableName.Visible = true;
-            this.gcolTableName.VisibleIndex = 1;
             // 
             // gridMainData
             // 
-            this.gridMainData.Location = new System.Drawing.Point(5, 24);
+            this.gridMainData.EmbeddedNavigator.Buttons.Append.Visible = false;
+            this.gridMainData.EmbeddedNavigator.Buttons.CancelEdit.Visible = false;
+            this.gridMainData.EmbeddedNavigator.Buttons.Edit.Visible = false;
+            this.gridMainData.EmbeddedNavigator.Buttons.EndEdit.Visible = false;
+            this.gridMainData.EmbeddedNavigator.Buttons.Remove.Visible = false;
+            this.gridMainData.EmbeddedNavigator.TextStringFormat = "{0} / {1}";
+            this.gridMainData.Location = new System.Drawing.Point(5, 23);
             this.gridMainData.MainView = this.grvMainData;
             this.gridMainData.Name = "gridMainData";
-            this.gridMainData.Size = new System.Drawing.Size(824, 284);
+            this.gridMainData.Size = new System.Drawing.Size(824, 279);
             this.gridMainData.TabIndex = 4;
+            this.gridMainData.UseEmbeddedNavigator = true;
             this.gridMainData.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.grvMainData});
             // 
@@ -461,8 +468,7 @@
             this.logStepTwo.Location = new System.Drawing.Point(0, 0);
             this.logStepTwo.Name = "Root";
             this.logStepTwo.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
-            this.logStepTwo.Size = new System.Drawing.Size(834, 345);
-            this.logStepTwo.Text = "Root";
+            this.logStepTwo.Size = new System.Drawing.Size(834, 339);
             this.logStepTwo.TextVisible = false;
             // 
             // logGridMainData
@@ -473,8 +479,7 @@
             this.logGridMainData.Location = new System.Drawing.Point(0, 0);
             this.logGridMainData.Name = "logGridMainData";
             this.logGridMainData.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
-            this.logGridMainData.Size = new System.Drawing.Size(834, 313);
-            this.logGridMainData.Text = "logGridMainData";
+            this.logGridMainData.Size = new System.Drawing.Size(834, 307);
             // 
             // lciGridMainData
             // 
@@ -482,17 +487,15 @@
             this.lciGridMainData.CustomizationFormText = "lciGridMainData";
             this.lciGridMainData.Location = new System.Drawing.Point(0, 0);
             this.lciGridMainData.Name = "lciGridMainData";
-            this.lciGridMainData.Size = new System.Drawing.Size(828, 288);
-            this.lciGridMainData.Text = "lciGridMainData";
+            this.lciGridMainData.Size = new System.Drawing.Size(828, 283);
             this.lciGridMainData.TextSize = new System.Drawing.Size(0, 0);
-            this.lciGridMainData.TextToControlDistance = 0;
             this.lciGridMainData.TextVisible = false;
             // 
             // lciFileList
             // 
             this.lciFileList.Control = this.gluSeletedFiles;
             this.lciFileList.CustomizationFormText = "Chọn tập tin dữ liệu:";
-            this.lciFileList.Location = new System.Drawing.Point(0, 313);
+            this.lciFileList.Location = new System.Drawing.Point(0, 307);
             this.lciFileList.MaxSize = new System.Drawing.Size(277, 32);
             this.lciFileList.MinSize = new System.Drawing.Size(277, 32);
             this.lciFileList.Name = "lciFileList";
@@ -506,42 +509,37 @@
             // 
             this.lciButtonImportFile.Control = this.btnImportSelectedFile;
             this.lciButtonImportFile.CustomizationFormText = "lciButtonImportFile";
-            this.lciButtonImportFile.Location = new System.Drawing.Point(681, 313);
+            this.lciButtonImportFile.Location = new System.Drawing.Point(681, 307);
             this.lciButtonImportFile.MaxSize = new System.Drawing.Size(153, 32);
             this.lciButtonImportFile.MinSize = new System.Drawing.Size(153, 32);
             this.lciButtonImportFile.Name = "lciButtonImportFile";
             this.lciButtonImportFile.Padding = new DevExpress.XtraLayout.Utils.Padding(5, 5, 5, 5);
             this.lciButtonImportFile.Size = new System.Drawing.Size(153, 32);
             this.lciButtonImportFile.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            this.lciButtonImportFile.Text = "lciButtonImportFile";
             this.lciButtonImportFile.TextSize = new System.Drawing.Size(0, 0);
-            this.lciButtonImportFile.TextToControlDistance = 0;
             this.lciButtonImportFile.TextVisible = false;
             // 
             // lciButtonImportAllFile
             // 
             this.lciButtonImportAllFile.Control = this.btnImportAllFiles;
             this.lciButtonImportAllFile.CustomizationFormText = "lciButtonImportAllFile";
-            this.lciButtonImportAllFile.Location = new System.Drawing.Point(518, 313);
+            this.lciButtonImportAllFile.Location = new System.Drawing.Point(518, 307);
             this.lciButtonImportAllFile.Name = "lciButtonImportAllFile";
             this.lciButtonImportAllFile.Padding = new DevExpress.XtraLayout.Utils.Padding(5, 5, 5, 5);
             this.lciButtonImportAllFile.Size = new System.Drawing.Size(163, 32);
-            this.lciButtonImportAllFile.Text = "lciButtonImportAllFile";
             this.lciButtonImportAllFile.TextSize = new System.Drawing.Size(0, 0);
-            this.lciButtonImportAllFile.TextToControlDistance = 0;
             this.lciButtonImportAllFile.TextVisible = false;
             // 
             // emptySpaceItem1
             // 
             this.emptySpaceItem1.AllowHotTrack = false;
             this.emptySpaceItem1.CustomizationFormText = "emptySpaceItem1";
-            this.emptySpaceItem1.Location = new System.Drawing.Point(277, 313);
+            this.emptySpaceItem1.Location = new System.Drawing.Point(277, 307);
             this.emptySpaceItem1.MaxSize = new System.Drawing.Size(241, 32);
             this.emptySpaceItem1.MinSize = new System.Drawing.Size(241, 32);
             this.emptySpaceItem1.Name = "emptySpaceItem1";
             this.emptySpaceItem1.Size = new System.Drawing.Size(241, 32);
             this.emptySpaceItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            this.emptySpaceItem1.Text = "emptySpaceItem1";
             this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
             // 
             // wwpStepThree
@@ -557,7 +555,7 @@
             this.wwpStepThree.Controls.Add(this.lblResult2);
             this.wwpStepThree.Controls.Add(this.lblResult1);
             this.wwpStepThree.Name = "wwpStepThree";
-            this.wwpStepThree.Size = new System.Drawing.Size(834, 345);
+            this.wwpStepThree.Size = new System.Drawing.Size(834, 339);
             this.wwpStepThree.Text = "Thôn tin kết quả nhập dữ liệu từ tập tin Excel";
             // 
             // lblResult6

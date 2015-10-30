@@ -310,6 +310,7 @@
             this.barFooter.OptionsBar.DrawDragBorder = false;
             this.barFooter.OptionsBar.UseWholeRow = true;
             this.barFooter.Text = "Status bar";
+            this.barFooter.Visible = false;
             // 
             // lblCreater
             // 

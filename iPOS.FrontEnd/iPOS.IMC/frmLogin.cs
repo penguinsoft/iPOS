@@ -68,12 +68,8 @@ namespace iPOS.IMC
             try
             {
                 SYS_tblUserDRO user = await UserBUS.CheckLogin(txtUsername.Text.Trim(), EncryptEngine.Encrypt(txtPassword.Text.Trim()), ConfigEngine.Language);
-                if (user.ResponseItem.IsError)
-                {
-                    CommonEngine.ShowHTTPErrorMessage(user.ResponseItem);
-                    return false;
-                }
-                else
+
+                if (CommonEngine.CheckValidResponseItem(user.ResponseItem))
                 {
                     if (user.UserItem != null)
                     {
@@ -96,6 +92,7 @@ namespace iPOS.IMC
                         return false;
                     }
                 }
+                else return false;
             }
             catch (Exception ex)
             {

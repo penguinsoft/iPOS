@@ -189,13 +189,17 @@ namespace iPOS.IMC.Systems
                     DescriptionVN = string.Format("Tài khoản '{0}' vừa cập nhật thành công người dùng có tên tài khoản '{1}'.", CommonEngine.userInfo.UserID, txtUsername.Text.Trim()),
                     DescriptionEN = string.Format("Account '{0}' has updated user successfully with username is '{1}'.", CommonEngine.userInfo.UserID, txtUsername.Text.Trim())
                 });
-                if (!string.IsNullOrEmpty(result.ResponseItem.Message))
+                if (CommonEngine.CheckValidResponseItem(result.ResponseItem))
                 {
-                    CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
-                    txtUsername.Focus();
-                    return false;
+                    if (!string.IsNullOrEmpty(result.ResponseItem.Message))
+                    {
+                        CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
+                        txtUsername.Focus();
+                        return false;
+                    }
+                    else parent_form.GetAllUsers();
                 }
-                else parent_form.GetAllUsers();
+                else return false;
             }
             catch (Exception ex)
             {
@@ -256,6 +260,15 @@ namespace iPOS.IMC.Systems
         private void gluGroupUser_EditValueChanged(object sender, EventArgs e)
         {
             depError.SetError(gluGroupUser, string.IsNullOrEmpty(gluGroupUser.EditValue + "") ? LanguageEngine.GetMessageCaption("000003", ConfigEngine.Language) : null);
+        }
+
+        private async void gluGroupUser_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
+        {
+            if (e.Button.Index == 1)
+            {
+                CommonEngine.OpenInputForm(new uc_GroupUserDetail(), new Size(450, 290), false);
+                await LoadGroupUser(null);
+            }
         }
 
         private void gluEmployee_EditValueChanged(object sender, EventArgs e)

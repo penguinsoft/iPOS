@@ -77,7 +77,9 @@ namespace iPOS.IMC.Products
         private async Task LoadProvince()
         {
             gluProvince.DataBindings.Clear();
-            gluProvince.Properties.DataSource = await iPOS.BUS.Products.PRO_tblProvinceBUS.GetAllProvinces(CommonEngine.userInfo.UserID, ConfigEngine.Language, true, null);
+            PRO_tblProvinceDRO provinces = await iPOS.BUS.Products.PRO_tblProvinceBUS.GetAllProvinces(CommonEngine.userInfo.UserID, ConfigEngine.Language, true, null);
+            if (!CommonEngine.CheckValidResponseItem(provinces.ResponseItem)) return;
+            gluProvince.Properties.DataSource = provinces.ProvinceList;
             gluProvince.Properties.ValueMember = "ProvinceID";
             gluProvince.Properties.DisplayMember = "FullProvinceName";
         }
@@ -124,7 +126,7 @@ namespace iPOS.IMC.Products
                     txtDistrictCode.Focus();
                     return false;
                 }
-                else parent_form.GetAllDistrict();
+                else if (parent_form != null) parent_form.GetAllDistrict();
             }
             catch (Exception ex)
             {
@@ -226,6 +228,15 @@ namespace iPOS.IMC.Products
         private void gluProvince_EditValueChanged(object sender, EventArgs e)
         {
             depError.SetError(gluProvince, (string.IsNullOrEmpty(gluProvince.EditValue + "") || gluProvince.EditValue.Equals("0")) ? LanguageEngine.GetMessageCaption("000003", ConfigEngine.Language) : null);
+        }
+
+        private async void gluProvince_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
+        {
+            if (e.Button.Index == 1)
+            {
+                CommonEngine.OpenInputForm(new uc_ProvinceDetail(), new Size(435, 265), false);
+                await LoadProvince();
+            }
         }
 
         private async void btnSaveClose_Click(object sender, EventArgs e)

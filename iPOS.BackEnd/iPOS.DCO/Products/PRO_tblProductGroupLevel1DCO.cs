@@ -7,7 +7,7 @@ namespace iPOS.DCO.Products
     [DataContract]
     public class PRO_tblProductGroupLevel1DCO
     {
-        [DataMember]
+        [DataMember(Order = 1)]
         public Int32 Level1ID { get; set; }
 
         [DataMember]

@@ -107,7 +107,7 @@ namespace iPOS.IMC.Products
                     txtProvinceCode.Focus();
                     return false;
                 }
-                else parent_form.GetAllProvinces();
+                else if (parent_form != null) parent_form.GetAllProvinces();
             }
             catch (Exception ex)
             {

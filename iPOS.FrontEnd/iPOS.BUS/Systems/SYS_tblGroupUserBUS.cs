@@ -56,7 +56,7 @@ namespace iPOS.BUS.Systems
                 string url = string.Format(@"{0}/InsertUpdateGroupUser", GetBaseUrl());
                 var postData = new SYS_tblGroupUserDCO
                 {
-                    GroupID = item.GroupID,
+                    GroupID = string.IsNullOrEmpty(item.GroupID) ? "0" : item.GroupID,
                     GroupCode = item.GroupCode,
                     VNName = item.VNName,
                     ENName = item.ENName,

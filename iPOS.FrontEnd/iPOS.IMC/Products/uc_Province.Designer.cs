@@ -388,6 +388,7 @@
             this.barBottom.OptionsBar.DrawDragBorder = false;
             this.barBottom.OptionsBar.UseWholeRow = true;
             this.barBottom.Text = "Status bar";
+            this.barBottom.Visible = false;
             // 
             // lblCreater
             // 

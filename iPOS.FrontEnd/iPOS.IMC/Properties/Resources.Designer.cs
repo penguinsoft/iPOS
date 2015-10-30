@@ -313,6 +313,16 @@ namespace iPOS.IMC.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap loading_square_48 {
+            get {
+                object obj = ResourceManager.GetObject("loading_square_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap lockscreen_32 {
             get {
                 object obj = ResourceManager.GetObject("lockscreen_32", resourceCulture);

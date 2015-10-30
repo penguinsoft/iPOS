@@ -140,7 +140,7 @@ namespace iPOS.IMC.Products
                     txtLevel2Code.Focus();
                     return false;
                 }
-                else parent_form.GetAllLevel2();
+                else if (parent_form != null) parent_form.GetAllLevel2();
             }
             catch (Exception ex)
             {
@@ -207,6 +207,7 @@ namespace iPOS.IMC.Products
         public uc_Level2Detail()
         {
             InitializeComponent();
+            Initialize();
         }
 
         public uc_Level2Detail(uc_Level2 _parent_form, PRO_tblLevel2DTO item = null)
@@ -253,6 +254,15 @@ namespace iPOS.IMC.Products
         private void gluLevel1_EditValueChanged(object sender, EventArgs e)
         {
             depError.SetError(gluLevel1, (string.IsNullOrEmpty(gluLevel1.EditValue + "") || gluLevel1.EditValue.Equals("0")) ? LanguageEngine.GetMessageCaption("000003", ConfigEngine.Language) : null);
+        }
+
+        private void gluLevel1_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
+        {
+            if (e.Button.Index == 1)
+            {
+                CommonEngine.OpenInputForm(new uc_Level1Detail(), new Size(450, 300), false);
+                LoadLevel1();
+            }
         }
 
         private async void btnSaveClose_Click(object sender, EventArgs e)

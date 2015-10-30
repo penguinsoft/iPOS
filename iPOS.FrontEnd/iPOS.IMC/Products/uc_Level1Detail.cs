@@ -116,7 +116,7 @@ namespace iPOS.IMC.Products
                     txtLevel1Code.Focus();
                     return false;
                 }
-                else parent_form.GetAllLevel1();
+                else if (parent_form != null) parent_form.GetAllLevel1();
             }
             catch (Exception ex)
             {
@@ -183,11 +183,13 @@ namespace iPOS.IMC.Products
         public uc_Level1Detail()
         {
             InitializeComponent();
+            Initialize();
         }
 
         public uc_Level1Detail(uc_Level1 _parent_form, PRO_tblLevel1DTO item = null)
         {
             InitializeComponent();
+            Initialize();
             parent_form = _parent_form;
 
             if (item != null)

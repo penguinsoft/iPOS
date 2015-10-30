@@ -51,12 +51,8 @@ namespace iPOS.IMC.Systems
                     DescriptionVN = string.Format("Tài khoản '{0}' vừa tải thành công dữ liệu nhóm người dùng.", CommonEngine.userInfo.UserID),
                     DescriptionEN = string.Format("Account '{0}' downloaded successfully data of group users.", CommonEngine.userInfo.UserID)
                 });
-                if (list.ResponseItem.IsError)
-                {
-                    CommonEngine.ShowHTTPErrorMessage(list.ResponseItem);
-                    return;
-                }
-                else gridGroupUser.DataSource = list.GroupUserList;
+                if (!CommonEngine.CheckValidResponseItem(list.ResponseItem)) return;
+                gridGroupUser.DataSource = list.GroupUserList;
                 barBottom.Visible = (list != null && list.GroupUserList.Count > 0) ? true : false;
                 CommonEngine.LoadUserPermission("9", btnDelete, btnPrint, btnImport, btnExport);
             }
@@ -133,14 +129,10 @@ namespace iPOS.IMC.Systems
                             });
                     }
 
-                    if (result.ResponseItem.IsError)
-                    {
-                        CommonEngine.ShowHTTPErrorMessage(result.ResponseItem);
-                        return;
-                    }
+                    if (!CommonEngine.CheckValidResponseItem(result.ResponseItem)) return;
                     if (!result.ResponseItem.Message.Equals("ready"))
                         if (string.IsNullOrEmpty(result.ResponseItem.Message)) GetAllGroupUsers();
-                        else CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
+                        else CommonEngine.ShowMessage(result.ResponseItem.Message, IMC.Helper.MessageType.Error);
                 }
                 catch (Exception ex)
                 {

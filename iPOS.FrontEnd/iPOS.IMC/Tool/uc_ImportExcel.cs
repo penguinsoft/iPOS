@@ -21,7 +21,7 @@ namespace iPOS.IMC.Tool
     public partial class uc_ImportExcel : DevExpress.XtraEditors.XtraUserControl
     {
         #region [Declare Variables]
-        DataTable dtSelectedFile;
+        List<SelectedFile> fileList;
         string strTemplate = "", strStoreProcedure = "", strFunctionID = "", strModuleID = "";
         bool isClickCheckFile = false, isImportAnyFile = false;
         int total_file = 0, correct_file = 0, invalid_file = 0, total_row = 0, inserted_row = 0, updated_row = 0, invalid_row = 0, normal_row = 0;
@@ -45,9 +45,9 @@ namespace iPOS.IMC.Tool
 
         private void Initialize()
         {
-            dtSelectedFile = CreateSelectedFileDataTable();
+            fileList = new List<SelectedFile>();
             gridSeletedFiles.DataBindings.Clear();
-            gridSeletedFiles.DataSource = dtSelectedFile;
+            gridSeletedFiles.DataSource = fileList;
             wwpStepOne.AllowNext = false;
             btnBrowseFile.Properties.Buttons[1].Enabled = false;
             dsMainData = new DataSet();
@@ -80,22 +80,6 @@ namespace iPOS.IMC.Tool
             styleUpdateFormat.ApplyToRow = true;
             #endregion
             grvMainData.FormatConditions.AddRange(new DevExpress.XtraGrid.StyleFormatCondition[] { styleInsertFormat, styleUpdateFormat });
-        }
-
-        private DataTable CreateSelectedFileDataTable()
-        {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("FileName", typeof(string));
-            dt.Columns.Add("DateModified", typeof(DateTime));
-            dt.Columns.Add("FileSize", typeof(string));
-            dt.Columns.Add("FilePath", typeof(string));
-            dt.Columns.Add("Note", typeof(string));
-            dt.Columns.Add("IsValid", typeof(bool));
-            dt.Columns.Add("SheetName", typeof(string));
-            dt.Columns.Add("TableName", typeof(string));
-            dt.Columns.Add("ColumnArray", typeof(string));
-
-            return dt;
         }
 
         private void ShowDataTable(DataTable dt)
@@ -132,28 +116,30 @@ namespace iPOS.IMC.Tool
         {
             try
             {
-                total_file = dtSelectedFile.Rows.Count;
-                correct_file = dtSelectedFile.Select("IsValid=True").Length;
+                total_file = fileList.Count;
+                correct_file = (from item in fileList
+                                where item.IsValid == true
+                                select item).ToList().Count;
                 invalid_file = total_file - correct_file;
 
-                DataRow[] drDeleted = dtSelectedFile.Select("IsValid=False");
-                foreach (DataRow dr in drDeleted)
-                    dr.Delete();
-                dtSelectedFile.AcceptChanges();
+                fileList = (from item in fileList
+                            where item.IsValid
+                            select item).ToList();
+                grvSeletedFiles.RefreshData();
 
                 gluSeletedFiles.DataBindings.Clear();
-                gluSeletedFiles.Properties.DataSource = dtSelectedFile;
+                gluSeletedFiles.Properties.DataSource = fileList;
                 gluSeletedFiles.Properties.ValueMember = "TableName";
                 gluSeletedFiles.Properties.DisplayMember = "FileName";
-                if (dtSelectedFile.Rows.Count > 0) gluSeletedFiles.EditValue = dtSelectedFile.Rows[0]["TableName"];
+                if (fileList.Count > 0) gluSeletedFiles.EditValue = fileList[0].TableName;
 
                 DataSet temp = new DataSet();
                 string column_array = "";
-                foreach (DataRow dr in dtSelectedFile.Rows)
+                foreach (var file in fileList)
                 {
                     column_array = "";
-                    ReportEngine.GetDataExcel(ref dsMainData, strFunctionID, dr["FilePath"] + "", dr["TableName"] + "", dr["SheetName"] + "", ref column_array);
-                    dr["ColumnArray"] = column_array.Substring(0, column_array.Length - 1);
+                    ReportEngine.GetDataExcel(ref dsMainData, strFunctionID, file.FilePath, file.TableName, file.SheetName, ref column_array);
+                    file.CollumArray = column_array.Substring(0, column_array.Length - 1);
                 }
 
                 if (dsMainData.Tables.Count > 0)
@@ -170,39 +156,46 @@ namespace iPOS.IMC.Tool
 
         private async Task<bool> CheckValidTemplate()
         {
-            Workbook wb;
+            //Workbook wb;
             bool temp = false;
             FileInfo file;
-            foreach (DataRow dr in dtSelectedFile.Rows)
+            var sheetName = "";
+
+            foreach (var item in fileList)
             {
                 try
                 {
-                    file = new FileInfo(dr["FilePath"] + "");
+                    if (!CommonEngine.CheckExistsUnicodeChar(item.FileName))
+                    {
+                        item.IsValid = false;
+                        item.Note = LanguageEngine.GetMessageCaption("000021", ConfigEngine.Language);
+                    }
+                    file = new FileInfo(item.FilePath);
                     if (file.Exists)
                     {
-                        wb = new Workbook(file.FullName);
-                        temp = await ReportEngine.CheckValidImportTemplate(CommonEngine.userInfo.Username, ConfigEngine.Language, strStoreProcedure, dr["FileName"] + "", strModuleID, strFunctionID, wb.Worksheets[0]);
-
+                        //wb = new Workbook(file.FullName);
+                        //temp = await ReportEngine.CheckValidImportTemplate(CommonEngine.userInfo.Username, ConfigEngine.Language, strStoreProcedure, item.FileName, strModuleID, strFunctionID, wb.Worksheets[0]);
+                        temp = await ReportEngine.CheckValidImportTemplate(CommonEngine.userInfo.UserID, ConfigEngine.Language, strStoreProcedure, file.Name, strModuleID, strFunctionID, file.FullName);
                         if (!temp)
                         {
-                            dr["IsValid"] = false;
-                            dr["Note"] = "Invalid template!";
+                            item.IsValid = false;
+                            item.Note = ConfigEngine.Language.Equals("vi") ? "Mẫu không hợp lệ!" : "Invalid template!";
                         }
                         else
                         {
-                            dr["IsValid"] = true;
-                            dr["Note"] = "OK!";
-                            dr["SheetName"] = wb.Worksheets[0].Name;
-                            string tmp = dr["FileName"] + "";
+                            item.IsValid = true;
+                            item.Note = ConfigEngine.Language.Equals("vi") ? "Mẫu hợp lệ!" : "Valid template!";
+                            item.SheetName = sheetName; // wb.Worksheets[0].Name;
+                            string tmp = item.FileName;
                             tmp = tmp.Substring(0, tmp.LastIndexOf('.'));
                             tmp = Regex.Replace(tmp, @"[^a-zA-Z0-9\s-().\[\]]", "");
-                            dr["TableName"] = tmp;
+                            item.TableName = tmp;
                         }
                     }
                     else
                     {
-                        dr["IsValid"] = false;
-                        dr["Note"] = "File not exists!";
+                        item.IsValid = false;
+                        item.Note = ConfigEngine.Language.Equals("vi") ? "Tập tin không tồn tại!" : "File not exists!";
                     }
                 }
                 catch (Exception ex)
@@ -210,6 +203,7 @@ namespace iPOS.IMC.Tool
                     CommonEngine.ShowExceptionMessage(ex);
                 }
             }
+            grvSeletedFiles.RefreshData();
 
             return true;
         }
@@ -236,7 +230,6 @@ namespace iPOS.IMC.Tool
         {
             if (e.Button.Index == 0)
             {
-                string files = "";
                 OpenFileDialog ofd = new OpenFileDialog();
                 ofd.Filter = "Microsoft Excel 97 - 2003 (*.xls)|*.xls|Microsoft Excel 2007 (*.xlsx)|*.xlsx";
                 ofd.Title = ConfigEngine.Language.Equals("vi") ? "Chọn tệp dữ liệu" : "Choose data file";
@@ -244,23 +237,27 @@ namespace iPOS.IMC.Tool
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
                     foreach (string file in ofd.FileNames)
-                        files += file + ";";
-                    btnBrowseFile.EditValue = files.Equals("") ? string.Empty : files.Substring(0, files.Length - 1);
-                    btnBrowseFile.Properties.Buttons[1].Enabled = files.Equals("") ? false : true;
+                    {
+                        var _file = new FileInfo(file);
+                        if (_file.Exists)
+                        {
+                            var files = (from item in fileList
+                                         where item.FilePath.ToLower().Equals(_file.FullName.ToLower())
+                                         select item).ToList();
+                            if (files != null && files.Count > 0) continue;
+                            fileList.Add(new SelectedFile
+                            {
+                                FileName = _file.Name,
+                                DateModified = _file.LastWriteTime,
+                                FileSize = CommonEngine.StrFormatByteSize(_file.Length),
+                                FilePath = _file.FullName,
+                                IsValid = false
+                            });
+                        }
+                    }
+                    grvSeletedFiles.RefreshData();
+                    wwpStepOne.AllowNext = string.IsNullOrEmpty(ofd.FileNames.ToString()) ? false : true;
                 }
-            }
-            else if (e.Button.Index == 1)
-            {
-                FileInfo file;
-                foreach (string item in btnBrowseFile.EditValue.ToString().Split(';'))
-                {
-                    file = new FileInfo(item.ToString());
-                    if (file.Exists)
-                        if (dtSelectedFile.Select("FilePath='" + item + "'").Length == 0)
-                            dtSelectedFile.Rows.Add(new object[] { file.Name, file.LastWriteTime, CommonEngine.StrFormatByteSize(file.Length), file.FullName, "", false });
-                }
-                btnBrowseFile.Text = "";
-                wwpStepOne.AllowNext = dtSelectedFile.Rows.Count > 0;
             }
         }
 
@@ -277,8 +274,14 @@ namespace iPOS.IMC.Tool
                 {
                     file = new FileInfo(obj.ToString());
                     if (file.Exists)
-                        if (dtSelectedFile.Select("FilePath='" + obj + "'").Length == 0)
-                            dtSelectedFile.Rows.Add(new object[] { file.Name, file.LastWriteTime, CommonEngine.StrFormatByteSize(file.Length), file.FullName, "" });
+                        fileList.Add(new SelectedFile
+                        {
+                            FileName = file.Name,
+                            DateModified = file.LastWriteTime,
+                            FileSize = CommonEngine.StrFormatByteSize(file.Length),
+                            FilePath = file.FullName,
+                            IsValid = false
+                        });
                 }
             }
             catch (Exception ex)
@@ -289,7 +292,7 @@ namespace iPOS.IMC.Tool
             {
                 Cursor.Current = saveCursor;
             }
-            wwpStepOne.AllowNext = dtSelectedFile.Rows.Count > 0;
+            wwpStepOne.AllowNext = fileList.Count > 0;
         }
 
         private void gridSeletedFiles_DragEnter(object sender, DragEventArgs e)
@@ -308,14 +311,18 @@ namespace iPOS.IMC.Tool
 
         private void grvSeletedFiles_KeyDown(object sender, KeyEventArgs e)
         {
-            if (dtSelectedFile.Rows.Count > 0)
+            if (fileList.Count > 0)
                 if (e.KeyData == Keys.Delete)
-                    dtSelectedFile.Rows.RemoveAt(grvSeletedFiles.FocusedRowHandle);
+                    fileList.RemoveAt(grvSeletedFiles.FocusedRowHandle);
+            grvSeletedFiles.RefreshData();
         }
 
         private async void btnCheckValid_Click(object sender, EventArgs e)
         {
+            frmWaiting frm = new frmWaiting();
+            frm.Show();
             isClickCheckFile = await CheckValidTemplate();
+            frm.Close();
         }
 
         private void btnDownloadTemplate_Click(object sender, EventArgs e)
@@ -349,7 +356,7 @@ namespace iPOS.IMC.Tool
                 }
                 if (isClickCheckFile)
                 {
-                    if (dtSelectedFile.Select("IsValid=False").Length > 0)
+                    if (fileList.Count(entry => entry.IsValid == false) > 0)
                     {
                         if (CommonEngine.ShowConfirmMessageAlert(ConfigEngine.Language.Equals("vi") ? "Có tập tin bị lỗi, bạn có muốn tiếp tục không?" : "Having corrupted file(s), do you want to continue?"))
                         {
@@ -410,15 +417,21 @@ namespace iPOS.IMC.Tool
             if (captionList != null && captionList.ReportCaptionList.Count > 0)
             {
                 DataTable dt = dsMainData.Tables[gluSeletedFiles.EditValue + ""];
-                DataRow[] dr = dtSelectedFile.Select("TableName='" + gluSeletedFiles.EditValue + "'");
-                if (dr != null && dr.Length > 0)
+                var file = (from _file in fileList
+                            where _file.TableName.Equals(gluSeletedFiles.EditValue)
+                            select _file).ToList();
+
+                if (file != null && file.Count > 0)
                 {
-                    string tmp = dr[0]["ColumnArray"] + "";
+                    string tmp = file[0].CollumArray;
                     if (!string.IsNullOrEmpty(tmp))
                     {
+                        SYS_tblImportFileConfigDRO result;
                         for (int i = 0; i < dt.Rows.Count; i++)
                         {
-                            dt.Rows[i]["Return Message"] = await iPOS.BUS.Systems.SYS_tblImportFileConfigBUS.ImportDataRow(CommonEngine.userInfo.Username, ConfigEngine.Language, strStoreProcedure, dt.Rows[i], tmp);
+                            result = await iPOS.BUS.Systems.SYS_tblImportFileConfigBUS.ImportDataRow(CommonEngine.userInfo.Username, ConfigEngine.Language, strStoreProcedure, dt.Rows[i], tmp);
+                            if (!CommonEngine.CheckValidResponseItem(result.ResponseItem)) continue;
+                            dt.Rows[i]["Return Message"] = result.ResponseItem.Message;
                         }
                     }
 
@@ -432,13 +445,13 @@ namespace iPOS.IMC.Tool
 
         private async void btnImportAllFiles_Click(object sender, EventArgs e)
         {
-            foreach (DataRow dr in dtSelectedFile.Rows)
+            foreach (var file in fileList)
             {
                 SYS_tblReportCaptionDRO captionList = await iPOS.BUS.Systems.SYS_tblReportCaptionBUS.GetReportCaption(CommonEngine.userInfo.Username, ConfigEngine.Language, strFunctionID, true);
                 if (captionList != null && captionList.ReportCaptionList.Count > 0)
                 {
-                    DataTable dt = dsMainData.Tables[dr["TableName"] + ""];
-                    string tmp = dr["ColumnArray"] + "";
+                    DataTable dt = dsMainData.Tables[file.TableName];
+                    string tmp = file.CollumArray;
                     if (tmp.Length > 0)
                     {
                         for (int i = 0; i < dt.Rows.Count; i++)
@@ -453,4 +466,19 @@ namespace iPOS.IMC.Tool
         }
         #endregion
     }
+
+    #region [SelectedFile]
+    public class SelectedFile
+    {
+        public string FileName { get; set; }
+        public DateTime DateModified { get; set; }
+        public string FileSize { get; set; }
+        public string FilePath { get; set; }
+        public string Note { get; set; }
+        public bool IsValid { get; set; }
+        public string SheetName { get; set; }
+        public string TableName { get; set; }
+        public string CollumArray { get; set; }
+    }
+    #endregion
 }

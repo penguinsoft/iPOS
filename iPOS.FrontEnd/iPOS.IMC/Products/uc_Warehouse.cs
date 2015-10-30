@@ -49,8 +49,7 @@ namespace iPOS.IMC.Products
                     DescriptionVN = string.Format("Tài khoản '{0}' vừa tải thành công dữ liệu kho hàng.", CommonEngine.userInfo.UserID),
                     DescriptionEN = string.Format("Account '{0}' downloaded successfully data of warehouses.", CommonEngine.userInfo.UserID)
                 });
-                if (warehouses.ResponseItem.IsError)
-                    CommonEngine.ShowHTTPErrorMessage(warehouses.ResponseItem);
+                if (!CommonEngine.CheckValidResponseItem(warehouses.ResponseItem)) return;
                 gridWarehouse.DataSource = warehouses.WarehouseList != null ? warehouses.WarehouseList : null;
                 barFooter.Visible = (warehouses.WarehouseList != null && warehouses.WarehouseList.Count > 0) ? true : false;
             }
@@ -125,11 +124,7 @@ namespace iPOS.IMC.Products
                         });
                 }
 
-                if (result.ResponseItem.IsError)
-                {
-                    CommonEngine.ShowHTTPErrorMessage(result.ResponseItem);
-                    return;
-                }
+                if (!CommonEngine.CheckValidResponseItem(result.ResponseItem)) return;
                 if (!result.ResponseItem.Message.Equals("ready"))
                     if (string.IsNullOrEmpty(result.ResponseItem.Message)) GetAllWarehouse("");
                     else CommonEngine.ShowMessage(result.ResponseItem.Message, 0);

@@ -114,13 +114,18 @@ namespace iPOS.IMC.Systems
                     DescriptionVN = string.Format("Tài khoản '{0}' vừa thêm mới thành công nhóm người dùng có mã '{1}'.", CommonEngine.userInfo.UserID, txtGroupCode.Text),
                     DescriptionEN = string.Format("Account '{0}' has inserted new group user successfully with group code is '{1}'.", CommonEngine.userInfo.UserID, txtGroupCode.Text)
                 });
-                if (!string.IsNullOrEmpty(result.ResponseItem.Message))
+
+                if (CommonEngine.CheckValidResponseItem(result.ResponseItem))
                 {
-                    CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
-                    txtGroupCode.Focus();
-                    return false;
+                    if (!string.IsNullOrEmpty(result.ResponseItem.Message))
+                    {
+                        CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
+                        txtGroupCode.Focus();
+                        return false;
+                    }
+                    else if (parent_form != null) parent_form.GetAllGroupUsers();
                 }
-                else parent_form.GetAllGroupUsers();
+                else return false;
             }
             catch (Exception ex)
             {
@@ -136,6 +141,7 @@ namespace iPOS.IMC.Systems
         {
             InitializeComponent();
             Initialize();
+            CommonEngine.LoadUserPermission("9", txtGroupID, btnSaveClose, btnSaveInsert);
         }
 
         public uc_GroupUserDetail(uc_GroupUser _parent_form, SYS_tblGroupUserDTO item = null)

@@ -27,6 +27,14 @@ namespace iPOS.DTO.Systems
         public string DataType { get; set; }
 
         public string TableName { get; set; }
+
+        public bool IsComment { get; set; }
+
+        public string CommentVN { get; set; }
+
+        public string CommentEN { get; set; }
+
+        public string Comment { get; set; }
     }
 
     public class ComboDynamicItemDTO
