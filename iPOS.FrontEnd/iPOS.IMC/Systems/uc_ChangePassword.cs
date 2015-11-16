@@ -73,8 +73,15 @@ namespace iPOS.IMC.Systems
 
         public uc_ChangePassword()
         {
+            CommonEngine.ShowWaitForm(this);
             InitializeComponent();
             Initialize();
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            CommonEngine.CloseWaitForm();
         }
 
         private void txtOldPassword_EditValueChanged(object sender, EventArgs e)
@@ -104,6 +111,7 @@ namespace iPOS.IMC.Systems
         {
             if (CheckValidate())
             {
+                CommonEngine.ShowWaitForm(this);
                 SYS_tblUserDRO result = new SYS_tblUserDRO();
                 try
                 {
@@ -120,6 +128,8 @@ namespace iPOS.IMC.Systems
                         DescriptionVN = string.Format("Tài khoản '{0}' vừa đổi mật khẩu thành công vào lúc {1}.", txtUsername.Text, DateTime.Now),
                         DescriptionEN = string.Format("Account '{0}' has change password successfully at {1}.", txtUsername.Text, DateTime.Now)
                     });
+
+                    CommonEngine.CloseWaitForm();
                     if (string.IsNullOrEmpty(result.ResponseItem.Message))
                     {
                         CommonEngine.userInfo.Password = EncryptEngine.Encrypt(txtNewPassword.Text);

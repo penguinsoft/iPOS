@@ -27,15 +27,13 @@ namespace iPOS.IMC.Systems
         #region [Personal Methods]
         public void ChangeLanguage(string language)
         {
-            LanguageEngine.ChangeCaptionBarLargeButtonItem(this.Name, language, new DevExpress.XtraBars.BarLargeButtonItem[] { btnInsert, btnUpdate, btnDelete, btnPrint, btnReload, btnImport, btnExport, btnClose });
+            LanguageEngine.ChangeCaptionBarLargeButtonItem(this.Name, language, new DevExpress.XtraBars.BarLargeButtonItem[] { btnInsert, btnDuplicated, btnUpdate, btnDelete, btnPrint, btnReload, btnImport, btnExport, btnClose });
             LanguageEngine.ChangeCaptionBarStaticItem(this.Name, language, new DevExpress.XtraBars.BarStaticItem[] { lblCreater, lblCreateTime, lblEditer, lblEditTime });
             LanguageEngine.ChangeCaptionGroupPanelTextGridView(this.Name, language, grvGroupUser);
             LanguageEngine.ChangeCaptionGridColumn(this.Name, language, new DevExpress.XtraGrid.Columns.GridColumn[] { gcolGroupCode, gcolGroupName, gcolActiveString, gcolIsDefaultString, gcolNote });
-
-            GetAllGroupUsers();
         }
 
-        public async void GetAllGroupUsers()
+        public async Task GetAllGroupUsers()
         {
             try
             {
@@ -101,6 +99,8 @@ namespace iPOS.IMC.Systems
                     if (group_id_list.Contains("$"))
                     {
                         if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000012", ConfigEngine.Language).Replace("$Count$", group_id_list.Split('$').Length.ToString())))
+                        {
+                            CommonEngine.ShowWaitForm(this);
                             result = await SYS_tblGroupUserBUS.DeleteGroupUser(group_id_list, group_code_list, CommonEngine.userInfo.UserID, ConfigEngine.Language, new SYS_tblActionLogDTO
                             {
                                 Activity = BaseConstant.COMMAND_INSERT_EN,
@@ -112,10 +112,13 @@ namespace iPOS.IMC.Systems
                                 DescriptionVN = string.Format("Tài khoản '{0}' vừa xóa thành công nhóm người dùng có mã '{1}'.", CommonEngine.userInfo.UserID, group_code_list.Replace("$", ", ")),
                                 DescriptionEN = string.Format("Account '{0}' has deleted group user successfully with group code are '{1}'.", CommonEngine.userInfo.UserID, group_code_list.Replace("$", ", "))
                             });
+                        }
                     }
                     else
                     {
                         if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000005", ConfigEngine.Language)))
+                        {
+                            CommonEngine.ShowWaitForm(this);
                             result = await SYS_tblGroupUserBUS.DeleteGroupUser(group_id_list, group_code_list, CommonEngine.userInfo.UserID, ConfigEngine.Language, new SYS_tblActionLogDTO
                             {
                                 Activity = BaseConstant.COMMAND_DELETE_EN,
@@ -127,16 +130,21 @@ namespace iPOS.IMC.Systems
                                 DescriptionVN = string.Format("Tài khoản '{0}' vừa xóa thành công nhóm người dùng có mã '{1}'.", CommonEngine.userInfo.UserID, group_code_list),
                                 DescriptionEN = string.Format("Account '{0}' has deleted group user successfully with group code is '{1}'.", CommonEngine.userInfo.UserID, group_code_list)
                             });
+                        }
                     }
 
                     if (!CommonEngine.CheckValidResponseItem(result.ResponseItem)) return;
                     if (!result.ResponseItem.Message.Equals("ready"))
-                        if (string.IsNullOrEmpty(result.ResponseItem.Message)) GetAllGroupUsers();
+                        if (string.IsNullOrEmpty(result.ResponseItem.Message)) await GetAllGroupUsers();
                         else CommonEngine.ShowMessage(result.ResponseItem.Message, IMC.Helper.MessageType.Error);
                 }
                 catch (Exception ex)
                 {
                     CommonEngine.ShowExceptionMessage(ex);
+                }
+                finally
+                {
+                    CommonEngine.CloseWaitForm();
                 }
             }
             else CommonEngine.ShowMessage("000027", IMC.Helper.MessageType.Warning, true);
@@ -151,8 +159,15 @@ namespace iPOS.IMC.Systems
 
         public uc_GroupUser(string language)
         {
+            CommonEngine.ShowWaitForm(this);
             InitializeComponent();
             ChangeLanguage(language);
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            CommonEngine.CloseWaitForm();
         }
 
         private void btnInsert_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -160,11 +175,31 @@ namespace iPOS.IMC.Systems
             CommonEngine.OpenInputForm(new uc_GroupUserDetail(this), new Size(450, 290), false);
         }
 
+        private async void btnDuplicated_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            if (curItem.Count > 0)
+            {
+                this.Cursor = Cursors.WaitCursor;
+                SYS_tblGroupUserDRO item = await SYS_tblGroupUserBUS.GetGroupUserItem(CommonEngine.userInfo.Username, ConfigEngine.Language, curItem[0].GroupID);
+                if (!CommonEngine.CheckValidResponseItem(item.ResponseItem)) return;
+                this.Cursor = Cursors.Default;
+
+                if (item != null && item.GroupUserItem != null)
+                {
+                    item.GroupUserItem.GroupID = "";
+                    CommonEngine.OpenInputForm(new uc_GroupUserDetail(this, item.GroupUserItem), new Size(450, 290), false);
+                }
+            }
+        }
+
         private async void btnUpdate_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             if (curItem.Count > 0)
             {
+                this.Cursor = Cursors.WaitCursor;
                 SYS_tblGroupUserDRO item = await SYS_tblGroupUserBUS.GetGroupUserItem(CommonEngine.userInfo.Username, ConfigEngine.Language, curItem[0].GroupID);
+                if (!CommonEngine.CheckValidResponseItem(item.ResponseItem)) return;
+                this.Cursor = Cursors.Default;
                 
                 if (item != null && item.GroupUserItem != null)
                     CommonEngine.OpenInputForm(new uc_GroupUserDetail(this, item.GroupUserItem), new Size(450, 290), true);
@@ -173,7 +208,9 @@ namespace iPOS.IMC.Systems
 
         private async void btnDelete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            CommonEngine.ShowWaitForm(this);
             await DeleteGroupUser();
+            CommonEngine.CloseWaitForm();
         }
 
         private void btnPrint_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -181,14 +218,17 @@ namespace iPOS.IMC.Systems
 
         }
 
-        private void btnReload_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private async void btnReload_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            GetAllGroupUsers();
+            CommonEngine.ShowWaitForm(this);
+            await GetAllGroupUsers();
+            CommonEngine.CloseWaitForm();
         }
 
-        private void btnImport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private async void btnImport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             CommonEngine.OpenImportExcelForm("SYS_GroupUser_FileSelect.xlsx", "SYS_spfrmGroupUserImport", "SYS", "9");
+            await GetAllGroupUsers();
         }
 
         private void btnExport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -201,9 +241,9 @@ namespace iPOS.IMC.Systems
             this.ParentForm.Close();
         }
 
-        private void uc_GroupUser_Load(object sender, EventArgs e)
+        private async void uc_GroupUser_Load(object sender, EventArgs e)
         {
-            GetAllGroupUsers();
+            await GetAllGroupUsers();
         }
 
         private void grvGroupUser_CustomDrawRowIndicator(object sender, DevExpress.XtraGrid.Views.Grid.RowIndicatorCustomDrawEventArgs e)

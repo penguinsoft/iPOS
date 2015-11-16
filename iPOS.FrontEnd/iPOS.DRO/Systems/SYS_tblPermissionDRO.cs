@@ -79,5 +79,8 @@ namespace iPOS.DRO.Systems
 
         [DataMember]
         public System.Nullable<DateTime> EditTime { get; set; }
+
+        [DataMember]
+        public string ParentID { get; set; }
     }
 }

@@ -84,11 +84,11 @@ namespace iPOS.IMC.Systems
                 this.ParentForm.Text = LanguageEngine.GetOpenFormText(this.Name, ConfigEngine.Language, false);
                 txtGroupCode.Focus();
             }
-            CommonEngine.LoadUserPermission("9", txtGroupID, btnSaveClose, btnSaveInsert);
         }
 
         private async Task<bool> SaveGroupUser(bool isEdit)
         {
+            CommonEngine.ShowWaitForm(this.ParentForm);
             try
             {
                 SYS_tblGroupUserDRO result = await SYS_tblGroupUserBUS.InsertUpdateGroupUser(new SYS_tblGroupUserDTO
@@ -119,19 +119,29 @@ namespace iPOS.IMC.Systems
                 {
                     if (!string.IsNullOrEmpty(result.ResponseItem.Message))
                     {
+                        CommonEngine.CloseWaitForm();
                         CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
                         txtGroupCode.Focus();
                         return false;
                     }
-                    else if (parent_form != null) parent_form.GetAllGroupUsers();
+                    else if (parent_form != null) await parent_form.GetAllGroupUsers();
                 }
-                else return false;
+                else
+                {
+                    CommonEngine.CloseWaitForm();
+                    return false;
+                }
             }
             catch (Exception ex)
             {
                 CommonEngine.ShowExceptionMessage(ex);
                 return false;
             }
+            finally
+            {
+                CommonEngine.CloseWaitForm();
+            }
+
             return true;
         }
         #endregion
@@ -146,13 +156,46 @@ namespace iPOS.IMC.Systems
 
         public uc_GroupUserDetail(uc_GroupUser _parent_form, SYS_tblGroupUserDTO item = null)
         {
+            CommonEngine.ShowWaitForm(this);
             InitializeComponent();
             Initialize();
-            CommonEngine.LoadUserPermission("9", txtGroupID, btnSaveClose, btnSaveInsert);
             parent_form = _parent_form;
 
             if (item != null)
                 LoadDataToEdit(item);
+            CommonEngine.LoadUserPermission("9", txtGroupID, btnSaveClose, btnSaveInsert);
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            CommonEngine.CloseWaitForm();
+            BeginInvoke(new MethodInvoker(() =>
+            {
+                if (!string.IsNullOrEmpty(txtGroupID.Text))
+                    txtVNName.Focus();
+            }));
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == (Keys.Control | Keys.S))
+            {
+                btnSaveClose_Click(null, null);
+                return true;
+            }
+            else if (keyData == (Keys.Control | Keys.Shift | Keys.S))
+            {
+                btnSaveInsert_Click(null, null);
+                return true;
+            }
+            else if (keyData == Keys.Escape)
+            {
+                btnCancel_Click(null, null);
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+
         }
 
         private void txtGroupCode_EditValueChanged(object sender, EventArgs e)

@@ -10,7 +10,6 @@ using iPOS.Core.Helper;
 using LanguageEngine = iPOS.IMC.Helper.LanguageEngine;
 using System.IO;
 using iPOS.IMC.Helper;
-using Aspose.Cells;
 using System.Text.RegularExpressions;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,7 +22,7 @@ namespace iPOS.IMC.Tool
         #region [Declare Variables]
         List<SelectedFile> fileList;
         string strTemplate = "", strStoreProcedure = "", strFunctionID = "", strModuleID = "";
-        bool isClickCheckFile = false, isImportAnyFile = false;
+        bool isClickCheckFile = false, isImportAnyFile = false, isGetFileData = false;
         int total_file = 0, correct_file = 0, invalid_file = 0, total_row = 0, inserted_row = 0, updated_row = 0, invalid_row = 0, normal_row = 0;
         DataSet dsMainData;
         #endregion
@@ -65,6 +64,7 @@ namespace iPOS.IMC.Tool
             styleInsertFormat.Column = grvMainData.Columns["Return Message"];
             styleInsertFormat.Condition = DevExpress.XtraGrid.FormatConditionEnum.Equal;
             styleInsertFormat.Value1 = "Inserted";
+            styleInsertFormat.Value2 = "Đã thêm mới";
             styleInsertFormat.ApplyToRow = true;
             #endregion
             #region [Updated Style Format]
@@ -76,7 +76,7 @@ namespace iPOS.IMC.Tool
             styleUpdateFormat.Appearance.Options.UseForeColor = true;
             styleUpdateFormat.Column = grvMainData.Columns["Return Message"];
             styleUpdateFormat.Condition = DevExpress.XtraGrid.FormatConditionEnum.Equal;
-            styleUpdateFormat.Value1 = "Updated";
+            styleUpdateFormat.Value1 = ConfigEngine.Language.Equals("vi") ? "Đã cập nhật" : "Updated";
             styleUpdateFormat.ApplyToRow = true;
             #endregion
             grvMainData.FormatConditions.AddRange(new DevExpress.XtraGrid.StyleFormatCondition[] { styleInsertFormat, styleUpdateFormat });
@@ -84,18 +84,26 @@ namespace iPOS.IMC.Tool
 
         private void ShowDataTable(DataTable dt)
         {
-            grvMainData.OptionsBehavior.AutoPopulateColumns = true;
-            gridMainData.DataBindings.Clear();
-            gridMainData.DataSource = dt;
-            if (grvMainData.Columns.ColumnByFieldName("Return Message") != null)
+            gridMainData.BeginUpdate();
+            try
             {
-                grvMainData.Columns["Return Message"].VisibleIndex = 0;
-                grvMainData.Columns["Return Message"].Fixed = DevExpress.XtraGrid.Columns.FixedStyle.Left;
+                grvMainData.Columns.Clear();
+                gridMainData.DataSource = null;
+                gridMainData.DataSource = dt;
+                if (grvMainData.Columns.ColumnByFieldName("Return Message") != null)
+                {
+                    grvMainData.Columns["Return Message"].VisibleIndex = 0;
+                    grvMainData.Columns["Return Message"].Fixed = DevExpress.XtraGrid.Columns.FixedStyle.Left;
+                }
+                grvMainData.BestFitColumns();
             }
-            grvMainData.BestFitColumns();
+            finally
+            {
+                gridMainData.EndUpdate();
+            }
         }
 
-        private async void ShowRequireColumn()
+        private async Task ShowRequireColumn()
         {
             SYS_tblReportCaptionDRO captionList = await iPOS.BUS.Systems.SYS_tblReportCaptionBUS.GetReportCaption(CommonEngine.userInfo.Username, ConfigEngine.Language, strFunctionID, true);
             if (captionList != null && captionList.ReportCaptionList.Count > 0)
@@ -103,7 +111,7 @@ namespace iPOS.IMC.Tool
                 for (int i = 0; i < grvMainData.Columns.Count; i++)
                 {
                     var tmp = (from caption in captionList.ReportCaptionList
-                               where caption.Caption.ToLower().Trim().Equals(grvMainData.Columns[i].FieldName.ToLower().Trim())
+                               where caption.CaptionEN.ToLower().Trim().Equals(grvMainData.Columns[i].FieldName.ToLower().Trim()) || caption.CaptionVN.ToLower().Trim().Equals(grvMainData.Columns[i].FieldName.ToLower().Trim())
                                select caption).ToList();
                     if (tmp != null && tmp.Count > 0)
                         if (tmp[0].IsRequire)
@@ -112,7 +120,7 @@ namespace iPOS.IMC.Tool
             }
         }
 
-        private void GetDataToImport()
+        private async Task GetDataToImport()
         {
             try
             {
@@ -137,6 +145,7 @@ namespace iPOS.IMC.Tool
                 string column_array = "";
                 foreach (var file in fileList)
                 {
+                    CommonEngine.SetWaitFormInfo("Đang tải tập tin " + file.FileName, "Loading file data " + file.FileName, 1);
                     column_array = "";
                     ReportEngine.GetDataExcel(ref dsMainData, strFunctionID, file.FilePath, file.TableName, file.SheetName, ref column_array);
                     file.CollumArray = column_array.Substring(0, column_array.Length - 1);
@@ -144,8 +153,9 @@ namespace iPOS.IMC.Tool
 
                 if (dsMainData.Tables.Count > 0)
                 {
+                    isGetFileData = true;
                     ShowDataTable(dsMainData.Tables[gluSeletedFiles.EditValue + ""]);
-                    ShowRequireColumn();
+                    await ShowRequireColumn();
                 }
             }
             catch (Exception ex)
@@ -156,7 +166,6 @@ namespace iPOS.IMC.Tool
 
         private async Task<bool> CheckValidTemplate()
         {
-            //Workbook wb;
             bool temp = false;
             FileInfo file;
             var sheetName = "";
@@ -171,10 +180,9 @@ namespace iPOS.IMC.Tool
                         item.Note = LanguageEngine.GetMessageCaption("000021", ConfigEngine.Language);
                     }
                     file = new FileInfo(item.FilePath);
+                    CommonEngine.SetWaitFormInfo("Đang kiểm tra tập tin " + file.Name, "Checking file " + file.Name, 1);
                     if (file.Exists)
                     {
-                        //wb = new Workbook(file.FullName);
-                        //temp = await ReportEngine.CheckValidImportTemplate(CommonEngine.userInfo.Username, ConfigEngine.Language, strStoreProcedure, item.FileName, strModuleID, strFunctionID, wb.Worksheets[0]);
                         temp = await ReportEngine.CheckValidImportTemplate(CommonEngine.userInfo.UserID, ConfigEngine.Language, strStoreProcedure, file.Name, strModuleID, strFunctionID, file.FullName);
                         if (!temp)
                         {
@@ -185,7 +193,7 @@ namespace iPOS.IMC.Tool
                         {
                             item.IsValid = true;
                             item.Note = ConfigEngine.Language.Equals("vi") ? "Mẫu hợp lệ!" : "Valid template!";
-                            item.SheetName = sheetName; // wb.Worksheets[0].Name;
+                            item.SheetName = sheetName;
                             string tmp = item.FileName;
                             tmp = tmp.Substring(0, tmp.LastIndexOf('.'));
                             tmp = Regex.Replace(tmp, @"[^a-zA-Z0-9\s-().\[\]]", "");
@@ -256,7 +264,7 @@ namespace iPOS.IMC.Tool
                         }
                     }
                     grvSeletedFiles.RefreshData();
-                    wwpStepOne.AllowNext = string.IsNullOrEmpty(ofd.FileNames.ToString()) ? false : true;
+                    wwpStepOne.AllowNext = btnCheckValid.Enabled = string.IsNullOrEmpty(ofd.FileNames.ToString()) ? false : true;
                 }
             }
         }
@@ -274,6 +282,11 @@ namespace iPOS.IMC.Tool
                 {
                     file = new FileInfo(obj.ToString());
                     if (file.Exists)
+                    {
+                        var files = (from item in fileList
+                                     where item.FilePath.ToLower().Equals(file.FullName.ToLower())
+                                     select item).ToList();
+                        if (files != null && files.Count > 0) continue;
                         fileList.Add(new SelectedFile
                         {
                             FileName = file.Name,
@@ -282,6 +295,7 @@ namespace iPOS.IMC.Tool
                             FilePath = file.FullName,
                             IsValid = false
                         });
+                    }
                 }
             }
             catch (Exception ex)
@@ -292,7 +306,8 @@ namespace iPOS.IMC.Tool
             {
                 Cursor.Current = saveCursor;
             }
-            wwpStepOne.AllowNext = fileList.Count > 0;
+            grvSeletedFiles.RefreshData();
+            wwpStepOne.AllowNext = btnCheckValid.Enabled = fileList.Count > 0;
         }
 
         private void gridSeletedFiles_DragEnter(object sender, DragEventArgs e)
@@ -314,28 +329,31 @@ namespace iPOS.IMC.Tool
             if (fileList.Count > 0)
                 if (e.KeyData == Keys.Delete)
                     fileList.RemoveAt(grvSeletedFiles.FocusedRowHandle);
+
+            wwpStepOne.AllowNext = btnCheckValid.Enabled = !(fileList.Count == 0);
             grvSeletedFiles.RefreshData();
         }
-
+        
         private async void btnCheckValid_Click(object sender, EventArgs e)
         {
-            frmWaiting frm = new frmWaiting();
-            frm.Show();
+            CommonEngine.ShowWaitForm(this.ParentForm);
             isClickCheckFile = await CheckValidTemplate();
-            frm.Close();
+            CommonEngine.CloseWaitForm();
         }
 
         private void btnDownloadTemplate_Click(object sender, EventArgs e)
         {
+            CommonEngine.ShowWaitForm(this.ParentForm);
             ReportEngine.GetFileWithReportCaption(CommonEngine.userInfo.Username, ConfigEngine.Language, strTemplate, strFunctionID, strModuleID);
+            CommonEngine.CloseWaitForm();
         }
 
-        private void gluSeletedFiles_EditValueChanged(object sender, EventArgs e)
+        private async void gluSeletedFiles_EditValueChanged(object sender, EventArgs e)
         {
             if (dsMainData.Tables.Count > 0)
             {
                 ShowDataTable(dsMainData.Tables[gluSeletedFiles.EditValue + ""]);
-                ShowRequireColumn();
+                await ShowRequireColumn();
             }
         }
 
@@ -352,20 +370,40 @@ namespace iPOS.IMC.Tool
                 if (!isClickCheckFile)
                 {
                     CommonEngine.ShowMessage(ConfigEngine.Language.Equals("vi") ? "Hệ thống sẽ tự động kiểm tra tệp dữ liệu." : "System will auto check valid all data files.", MessageType.Success);
+                    e.Cancel = true;
+
+                    CommonEngine.ShowWaitForm(this.ParentForm);
                     isClickCheckFile = await CheckValidTemplate();
+                    CommonEngine.CloseWaitForm();
                 }
-                if (isClickCheckFile)
+                if (isClickCheckFile && !isGetFileData)
                 {
-                    if (fileList.Count(entry => entry.IsValid == false) > 0)
+                    var errorFiles = (from file in fileList
+                                      where file.IsValid == false
+                                      select file).ToList();
+                    if (errorFiles != null && errorFiles.Count > 0)
                     {
                         if (CommonEngine.ShowConfirmMessageAlert(ConfigEngine.Language.Equals("vi") ? "Có tập tin bị lỗi, bạn có muốn tiếp tục không?" : "Having corrupted file(s), do you want to continue?"))
                         {
+                            CommonEngine.ShowWaitForm(this.ParentForm);
+                            await GetDataToImport();
+                            CommonEngine.CloseWaitForm();
                             e.Cancel = false;
-                            GetDataToImport();
                         }
-                        else e.Cancel = true;
+                        else
+                        {
+                            e.Cancel = true;
+                            return;
+                        }
                     }
-                    else GetDataToImport();
+                    else
+                    {
+                        CommonEngine.ShowWaitForm(this.ParentForm);
+                        await GetDataToImport();
+                        CommonEngine.CloseWaitForm();
+                    }
+
+                    wzcMain.SelectedPage = wwpStepTwo;
                 }
 
                 wwpStepTwo.AllowNext = isImportAnyFile;
@@ -378,6 +416,7 @@ namespace iPOS.IMC.Tool
                     dsMainData.Tables.Clear();
                     e.Cancel = false;
                     isImportAnyFile = false;
+                    isGetFileData = false;
                 }
                 else e.Cancel = true;
             }
@@ -393,8 +432,12 @@ namespace iPOS.IMC.Tool
                     {
                         switch ((dr["Return Message"] + "").Trim())
                         {
-                            case "Inserted": inserted_row += 1; break;
-                            case "Updated": updated_row += 1; break;
+                            case "Inserted":
+                            case "Đã thêm mới":
+                                inserted_row += 1; break;
+                            case "Updated": 
+                            case "Đã cập nhật":
+                                updated_row += 1; break;
                             case "": normal_row += 1; break;
                             default: invalid_row += 1; break;
                         }
@@ -413,56 +456,86 @@ namespace iPOS.IMC.Tool
 
         private async void btnImportSelectedFile_Click(object sender, EventArgs e)
         {
-            SYS_tblReportCaptionDRO captionList = await iPOS.BUS.Systems.SYS_tblReportCaptionBUS.GetReportCaption(CommonEngine.userInfo.Username, ConfigEngine.Language, strFunctionID, true);
-            if (captionList != null && captionList.ReportCaptionList.Count > 0)
+            try
             {
-                DataTable dt = dsMainData.Tables[gluSeletedFiles.EditValue + ""];
-                var file = (from _file in fileList
-                            where _file.TableName.Equals(gluSeletedFiles.EditValue)
-                            select _file).ToList();
-
-                if (file != null && file.Count > 0)
+                CommonEngine.ShowWaitForm(this.ParentForm);
+                SYS_tblReportCaptionDRO captionList = await iPOS.BUS.Systems.SYS_tblReportCaptionBUS.GetReportCaption(CommonEngine.userInfo.Username, ConfigEngine.Language, strFunctionID, true);
+                if (captionList != null && captionList.ReportCaptionList.Count > 0)
                 {
-                    string tmp = file[0].CollumArray;
-                    if (!string.IsNullOrEmpty(tmp))
+                    DataTable dt = dsMainData.Tables[gluSeletedFiles.EditValue + ""];
+                    var file = (from _file in fileList
+                                where _file.TableName.Equals(gluSeletedFiles.EditValue)
+                                select _file).ToList();
+
+                    if (file != null && file.Count > 0)
                     {
-                        SYS_tblImportFileConfigDRO result;
-                        for (int i = 0; i < dt.Rows.Count; i++)
+                        string tmp = file[0].CollumArray;
+                        if (!string.IsNullOrEmpty(tmp))
                         {
-                            result = await iPOS.BUS.Systems.SYS_tblImportFileConfigBUS.ImportDataRow(CommonEngine.userInfo.Username, ConfigEngine.Language, strStoreProcedure, dt.Rows[i], tmp);
-                            if (!CommonEngine.CheckValidResponseItem(result.ResponseItem)) continue;
-                            dt.Rows[i]["Return Message"] = result.ResponseItem.Message;
+                            SYS_tblImportFileConfigDRO result;
+                            for (int i = 0; i < dt.Rows.Count; i++)
+                            {
+                                result = await iPOS.BUS.Systems.SYS_tblImportFileConfigBUS.ImportDataRow(CommonEngine.userInfo.Username, ConfigEngine.Language, strStoreProcedure, dt.Rows[i], tmp);
+                                if (!CommonEngine.CheckValidResponseItem(result.ResponseItem)) continue;
+                                dt.Rows[i]["Return Message"] = result.ResponseItem.Message;
+                            }
                         }
+
+                        grvMainData.BestFitColumns();
                     }
-
-                    grvMainData.BestFitColumns();
                 }
-
-                isImportAnyFile = true;
-                wwpStepTwo.AllowNext = isImportAnyFile;
             }
+            catch (Exception ex)
+            {
+                CommonEngine.ShowExceptionMessage(ex);
+            }
+            finally
+            {
+                CommonEngine.CloseWaitForm();
+            }
+
+            isImportAnyFile = true;
+            wwpStepTwo.AllowNext = isImportAnyFile;
         }
 
         private async void btnImportAllFiles_Click(object sender, EventArgs e)
         {
-            foreach (var file in fileList)
+            try
             {
-                SYS_tblReportCaptionDRO captionList = await iPOS.BUS.Systems.SYS_tblReportCaptionBUS.GetReportCaption(CommonEngine.userInfo.Username, ConfigEngine.Language, strFunctionID, true);
-                if (captionList != null && captionList.ReportCaptionList.Count > 0)
+                CommonEngine.ShowWaitForm(this.ParentForm);
+                foreach (var file in fileList)
                 {
-                    DataTable dt = dsMainData.Tables[file.TableName];
-                    string tmp = file.CollumArray;
-                    if (tmp.Length > 0)
+                    SYS_tblReportCaptionDRO captionList = await iPOS.BUS.Systems.SYS_tblReportCaptionBUS.GetReportCaption(CommonEngine.userInfo.Username, ConfigEngine.Language, strFunctionID, true);
+                    if (captionList != null && captionList.ReportCaptionList.Count > 0)
                     {
-                        for (int i = 0; i < dt.Rows.Count; i++)
+                        DataTable dt = dsMainData.Tables[file.TableName];
+                        string tmp = file.CollumArray;
+                        if (tmp.Length > 0)
                         {
-                            dt.Rows[i]["Return Message"] = await iPOS.BUS.Systems.SYS_tblImportFileConfigBUS.ImportDataRow(CommonEngine.userInfo.Username, ConfigEngine.Language, strStoreProcedure, dt.Rows[i], tmp);
+                            SYS_tblImportFileConfigDRO result;
+                            for (int i = 0; i < dt.Rows.Count; i++)
+                            {
+                                result = await iPOS.BUS.Systems.SYS_tblImportFileConfigBUS.ImportDataRow(CommonEngine.userInfo.Username, ConfigEngine.Language, strStoreProcedure, dt.Rows[i], tmp);
+                                if (!CommonEngine.CheckValidResponseItem(result.ResponseItem)) continue;
+                                dt.Rows[i]["Return Message"] = result.ResponseItem.Message;
+                            }
                         }
-                    }
 
-                    grvMainData.BestFitColumns();
+                        grvMainData.BestFitColumns();
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                CommonEngine.ShowExceptionMessage(ex);
+            }
+            finally
+            {
+                CommonEngine.CloseWaitForm();
+            }
+
+            isImportAnyFile = true;
+            wwpStepTwo.AllowNext = isImportAnyFile;
         }
         #endregion
     }

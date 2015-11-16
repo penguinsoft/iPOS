@@ -66,6 +66,9 @@ namespace iPOS.DCO.Systems
 
         [DataMember]
         public System.Nullable<DateTime> EditTime { get; set; }
+
+        [DataMember]
+        public string ParentID { get; set; }
     }
 
     [DataContract]

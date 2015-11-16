@@ -453,6 +453,7 @@ namespace iPOS.WCFService
                     {
                         Result = string.IsNullOrEmpty(temp) ? true : false,
                         Status = string.IsNullOrEmpty(temp) ? DCO.ResponseStatus.Success : DCO.ResponseStatus.Failure,
+                        Message = temp,
                         RequestUser = user.UserID,
                         TotalItemCount = string.IsNullOrEmpty(temp) ? 1 : 0
                     };
@@ -717,9 +718,8 @@ namespace iPOS.WCFService
         #endregion
 
         #region [SYS_tblPermission]
-        public SYS_tblPermissionDRO GetPermissionList(string Username, string LanguageID, string ID, string ParentID, bool IsUser)
+        public SYS_tblPermissionDRO GetPermissionList(string Username, string LanguageID, string ID, bool IsUser)
         {
-            if (string.IsNullOrEmpty(ParentID)) ParentID = "";
             SYS_tblPermissionDRO result = new SYS_tblPermissionDRO();
             try
             {
@@ -727,7 +727,7 @@ namespace iPOS.WCFService
                 {
                     List<SYS_tblPermissionDTO> temp = new List<SYS_tblPermissionDTO>();
                     var db = scope.Resolve<ISYS_tblPermissionDAO>();
-                    temp = db.GetAllPermisionList(Username, LanguageID, ID, ParentID, IsUser);
+                    temp = db.GetAllPermisionList(Username, LanguageID, ID, IsUser);
                     if (temp != null)
                     {
                         result.PermissionList = Mapper.Map<List<SYS_tblPermissionDCO>>(temp);

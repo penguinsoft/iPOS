@@ -232,6 +232,7 @@
             // 
             // btnCheckValid
             // 
+            this.btnCheckValid.Enabled = false;
             this.btnCheckValid.Image = global::iPOS.IMC.Properties.Resources.check_16;
             this.btnCheckValid.Location = new System.Drawing.Point(729, 15);
             this.btnCheckValid.Name = "btnCheckValid";
@@ -393,7 +394,7 @@
             this.gluSeletedFiles.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.gluSeletedFiles.Properties.View = this.gluViewSeletedFiles;
-            this.gluSeletedFiles.Size = new System.Drawing.Size(166, 20);
+            this.gluSeletedFiles.Size = new System.Drawing.Size(294, 20);
             this.gluSeletedFiles.StyleController = this.locStepTwo;
             this.gluSeletedFiles.TabIndex = 5;
             this.gluSeletedFiles.EditValueChanged += new System.EventHandler(this.gluSeletedFiles_EditValueChanged);
@@ -496,11 +497,10 @@
             this.lciFileList.Control = this.gluSeletedFiles;
             this.lciFileList.CustomizationFormText = "Chọn tập tin dữ liệu:";
             this.lciFileList.Location = new System.Drawing.Point(0, 307);
-            this.lciFileList.MaxSize = new System.Drawing.Size(277, 32);
-            this.lciFileList.MinSize = new System.Drawing.Size(277, 32);
+            this.lciFileList.MinSize = new System.Drawing.Size(161, 30);
             this.lciFileList.Name = "lciFileList";
             this.lciFileList.Padding = new DevExpress.XtraLayout.Utils.Padding(5, 5, 5, 5);
-            this.lciFileList.Size = new System.Drawing.Size(277, 32);
+            this.lciFileList.Size = new System.Drawing.Size(405, 32);
             this.lciFileList.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             this.lciFileList.Text = "Chọn tập tin dữ liệu:";
             this.lciFileList.TextSize = new System.Drawing.Size(98, 13);
@@ -534,11 +534,11 @@
             // 
             this.emptySpaceItem1.AllowHotTrack = false;
             this.emptySpaceItem1.CustomizationFormText = "emptySpaceItem1";
-            this.emptySpaceItem1.Location = new System.Drawing.Point(277, 307);
-            this.emptySpaceItem1.MaxSize = new System.Drawing.Size(241, 32);
-            this.emptySpaceItem1.MinSize = new System.Drawing.Size(241, 32);
+            this.emptySpaceItem1.Location = new System.Drawing.Point(405, 307);
+            this.emptySpaceItem1.MaxSize = new System.Drawing.Size(113, 32);
+            this.emptySpaceItem1.MinSize = new System.Drawing.Size(113, 32);
             this.emptySpaceItem1.Name = "emptySpaceItem1";
-            this.emptySpaceItem1.Size = new System.Drawing.Size(241, 32);
+            this.emptySpaceItem1.Size = new System.Drawing.Size(113, 32);
             this.emptySpaceItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
             // 

@@ -57,10 +57,6 @@
     <ApplicationIcon>logo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Aspose.Cells, Version=8.4.2.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Softs\Hell Demons\iPOS\trunk\iPOS\iPOS.Core\bin\Debug\Aspose.Cells.dll</HintPath>
-    </Reference>
     <Reference Include="DevExpress.BonusSkins.v15.1, Version=15.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Data.v15.1, Version=15.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Printing.v15.1.Core, Version=15.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
@@ -108,6 +104,9 @@
     <Compile Include="Helper\CommonEngine.cs" />
     <Compile Include="Helper\LanguageEngine.cs" />
     <Compile Include="Helper\ReportEngine.cs" />
+    <Compile Include="MyWaitForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Products\uc_District.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -248,12 +247,6 @@
     <Compile Include="Systems\uc_UserPermission.Designer.cs">
       <DependentUpon>uc_UserPermission.cs</DependentUpon>
     </Compile>
-    <Compile Include="Tool\frmWait.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Tool\frmWait.Designer.cs">
-      <DependentUpon>frmWait.cs</DependentUpon>
-    </Compile>
     <Compile Include="Tool\frmWaiting.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -275,6 +268,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmOpen.resx">
       <DependentUpon>frmOpen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyWaitForm.resx">
+      <DependentUpon>MyWaitForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Products\uc_District.resx">
       <DependentUpon>uc_District.cs</DependentUpon>
@@ -356,9 +352,6 @@
     <EmbeddedResource Include="Systems\uc_UserPermission.resx">
       <DependentUpon>uc_UserPermission.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tool\frmWait.resx">
-      <DependentUpon>frmWait.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Tool\frmWaiting.resx">
       <DependentUpon>frmWaiting.cs</DependentUpon>
     </EmbeddedResource>
@@ -394,8 +387,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="bin\Debug\loading.png" />
     <Content Include="logo.ico" />
     <None Include="Resources\loading_square_48.GIF" />
+    <None Include="Resources\duplicate_16.png" />
     <Content Include="Resources\user_info_32.png" />
     <None Include="Resources\loading_48.GIF" />
     <None Include="Resources\user_16.png" />

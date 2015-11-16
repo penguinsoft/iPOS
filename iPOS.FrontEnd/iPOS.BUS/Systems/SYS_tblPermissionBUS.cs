@@ -10,12 +10,12 @@ namespace iPOS.BUS.Systems
 {
     public class SYS_tblPermissionBUS : BaseBUS
     {
-        public async static Task<SYS_tblPermissionDRO> GetPermissionList(string username, string language_id, string id, string parent_id, bool is_user)
+        public async static Task<SYS_tblPermissionDRO> GetPermissionList(string username, string language_id, string id, bool is_user)
         {
             SYS_tblPermissionDRO result = new SYS_tblPermissionDRO();
             try
             {
-                string url = string.Format("{0}/GetPermissionList?Username={1}&LanguageID={2}&ID={3}&ParentID={4}&IsUser={5}", GetBaseUrl(), username, language_id, id, parent_id, is_user);
+                string url = string.Format("{0}/GetPermissionList?Username={1}&LanguageID={2}&ID={3}&IsUser={4}", GetBaseUrl(), username, language_id, id, is_user);
 
                 result = await SYS_tblPermissionDAO.GetPermissionList(url);
             }

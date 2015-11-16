@@ -55,6 +55,7 @@ namespace iPOS.IMC.Helper
         public static void ShowExceptionMessage(Exception ex)
         {
             logger.Error(ex);
+            CloseWaitForm();
             XtraMessageBox.Show(ex.Message, LanguageEngine.GetMessageCaption("ERROR_SYSTEM_TITLE_CAPTION", ConfigEngine.Language), MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
@@ -159,6 +160,45 @@ namespace iPOS.IMC.Helper
                 frm.Controls.Add(uc);
                 frm.Show();
             }
+        }
+
+        public static void ShowWaitForm(XtraForm form)
+        {
+            if (DevExpress.XtraSplashScreen.SplashScreenManager.Default != null && DevExpress.XtraSplashScreen.SplashScreenManager.Default.IsSplashFormVisible)
+                CloseWaitForm();
+            DevExpress.XtraSplashScreen.SplashScreenManager.ShowForm(form, typeof(iPOS.IMC.Tool.frmWaiting), true, true, false, DevExpress.XtraSplashScreen.SplashFormStartPosition.Default, new Point(0, 0), DevExpress.XtraSplashScreen.ParentFormState.Locked);
+        }
+
+        public static void ShowWaitForm(Form form)
+        {
+            if (DevExpress.XtraSplashScreen.SplashScreenManager.Default != null && DevExpress.XtraSplashScreen.SplashScreenManager.Default.IsSplashFormVisible)
+                CloseWaitForm();
+            DevExpress.XtraSplashScreen.SplashScreenManager.ShowForm(form, typeof(iPOS.IMC.Tool.frmWaiting), true, true, false, DevExpress.XtraSplashScreen.SplashFormStartPosition.Default, new Point(0, 0), DevExpress.XtraSplashScreen.ParentFormState.Locked);
+        }
+
+        public static void ShowWaitForm(UserControl form)
+        {
+            if (DevExpress.XtraSplashScreen.SplashScreenManager.Default != null && DevExpress.XtraSplashScreen.SplashScreenManager.Default.IsSplashFormVisible)
+                CloseWaitForm();
+            DevExpress.XtraSplashScreen.SplashScreenManager.ShowForm(form, typeof(iPOS.IMC.Tool.frmWaiting), true, true, DevExpress.XtraSplashScreen.SplashFormStartPosition.Default, new Point(0, 0), DevExpress.XtraSplashScreen.ParentFormState.Locked);
+        }
+
+        public static void ShowWaitForm(Form form, string description_vi, string description_en)
+        {
+            DevExpress.XtraSplashScreen.SplashScreenManager.ShowForm(form, typeof(iPOS.IMC.Tool.frmWaiting), true, true, false, DevExpress.XtraSplashScreen.SplashFormStartPosition.Default, new Point(0, 0), DevExpress.XtraSplashScreen.ParentFormState.Locked);
+            DevExpress.XtraSplashScreen.SplashScreenManager.Default.SetWaitFormDescription(ConfigEngine.Language.Equals("vi") ? description_vi : description_en);
+        }
+
+        public static void SetWaitFormInfo(string text_vi, string text_en, int type)
+        {
+            if (type == 0)
+                DevExpress.XtraSplashScreen.SplashScreenManager.Default.SetWaitFormCaption(ConfigEngine.Language.Equals("vi") ? text_vi : text_en);
+            else DevExpress.XtraSplashScreen.SplashScreenManager.Default.SetWaitFormDescription(ConfigEngine.Language.Equals("vi") ? text_vi : text_en);
+        }
+
+        public static void CloseWaitForm()
+        {
+            DevExpress.XtraSplashScreen.SplashScreenManager.CloseForm(false);
         }
 
         public static void ChangeDateTimeActionToCurrentData<T>(IEnumerable<T> item, BarStaticItem[] bar_static_items)
@@ -311,7 +351,7 @@ namespace iPOS.IMC.Helper
             }
         }
 
-        public async static void LoadUserPermission(string function_id, TextEdit txtID, SimpleButton btnSaveClose, SimpleButton btnSaveInsert)
+        public async static void LoadUserPermission(string function_id, TextEdit txtID, SimpleButton btnSaveClose, SimpleButton btnSaveInsert, bool isDuplicate = false)
         {
             iPOS.DRO.Systems.SYS_tblPermissionDRO permission = new iPOS.DRO.Systems.SYS_tblPermissionDRO();
             permission = await iPOS.BUS.Systems.SYS_tblPermissionBUS.GetPermissionItem(CommonEngine.userInfo.UserID, ConfigEngine.Language, function_id);
@@ -323,7 +363,7 @@ namespace iPOS.IMC.Helper
             }
             if (permission.PermissionItem != null)
             {
-                if (string.IsNullOrEmpty(txtID.Text))
+                if (string.IsNullOrEmpty(txtID.Text) || isDuplicate)
                     btnSaveClose.Enabled = btnSaveInsert.Enabled = permission.PermissionItem.AllowInsert;
                 else
                 {

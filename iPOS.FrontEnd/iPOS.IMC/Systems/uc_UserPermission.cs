@@ -16,6 +16,8 @@ using iPOS.Core.Helper;
 using System.Linq;
 using System.Threading.Tasks;
 using iPOS.DRO.Systems;
+using DevExpress.XtraTreeList;
+using DevExpress.XtraTreeList.ViewInfo;
 
 namespace iPOS.IMC.Systems
 {
@@ -23,6 +25,10 @@ namespace iPOS.IMC.Systems
     {
         #region [Declare Variables]
         TreeListNode groupNode, userNode, rootNode = null;
+        List<SYS_tblPermissionDTO> oldPermissionList;
+        List<SYS_tblGroupUserDTO> groupList;
+        List<SYS_tblUserDTO> userList;
+        bool isSecondLoad = false;
         #endregion
 
         #region [Personal Methods]
@@ -72,11 +78,14 @@ namespace iPOS.IMC.Systems
             trlUser.ClearNodes();
             try
             {
+                this.Cursor = Cursors.WaitCursor;
                 trlUser.BeginUnboundLoad();
                 SYS_tblGroupUserDRO groupUser = await SYS_tblGroupUserBUS.GetAllGroupUsers(CommonEngine.userInfo.UserID, ConfigEngine.Language, false, null);
                 if (!CommonEngine.CheckValidResponseItem(groupUser.ResponseItem)) return;
+                groupList = groupUser.GroupUserList;
                 SYS_tblUserDRO users = await SYS_tblUserBUS.GetAllUsers(CommonEngine.userInfo.UserID, ConfigEngine.Language, null);
                 if (!CommonEngine.CheckValidResponseItem(users.ResponseItem)) return;
+                userList = users.UserList;
                 foreach (var item in groupUser.GroupUserList)
                 {
                     groupNode = trlUser.AppendNode(new object[] { string.Format(@"{0} - {1}", item.GroupCode, item.GroupName), item.GroupID }, -1);
@@ -90,18 +99,33 @@ namespace iPOS.IMC.Systems
             catch (Exception ex)
             {
                 CommonEngine.ShowExceptionMessage(ex);
-                return;
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
             }
         }
 
         private async void LoadAllUserLevel()
         {
-            SYS_tblUserLevelDRO userLevel = new SYS_tblUserLevelDRO();
-            userLevel = await SYS_tblUserLevelBUS.GetAllUserLevel(CommonEngine.userInfo.UserID, ConfigEngine.Language);
-            if (!CommonEngine.CheckValidResponseItem(userLevel.ResponseItem)) return;
-            gluUserLevel.DataSource = userLevel.UserLevelList;
-            gluUserLevel.DisplayMember = "UserLevelName";
-            gluUserLevel.ValueMember = "UserLevelID";
+            try
+            {
+                this.Cursor = Cursors.WaitCursor;
+                SYS_tblUserLevelDRO userLevel = new SYS_tblUserLevelDRO();
+                userLevel = await SYS_tblUserLevelBUS.GetAllUserLevel(CommonEngine.userInfo.UserID, ConfigEngine.Language);
+                if (!CommonEngine.CheckValidResponseItem(userLevel.ResponseItem)) return;
+                gluUserLevel.DataSource = userLevel.UserLevelList;
+                gluUserLevel.DisplayMember = "UserLevelName";
+                gluUserLevel.ValueMember = "UserLevelID";
+            }
+            catch (Exception ex)
+            {
+                CommonEngine.ShowExceptionMessage(ex);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
         }
 
         private void LoadAllUser(TreeListNode group_node, string group_id, List<SYS_tblUserDTO> user_list)
@@ -109,6 +133,7 @@ namespace iPOS.IMC.Systems
             string strFullName = "";
             try
             {
+                this.Cursor = Cursors.WaitCursor;
                 trlUser.BeginUnboundLoad();
                 var users = (from user in user_list
                              where user.GroupID.Equals(group_id)
@@ -125,57 +150,98 @@ namespace iPOS.IMC.Systems
             catch (Exception ex)
             {
                 CommonEngine.ShowExceptionMessage(ex);
-                return;
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
             }
         }
 
-        private async Task LoadPermission(string id, string parent_id, TreeListNode parent_node, bool is_user)
+        private async Task LoadPermission(string id, TreeListNode parent_node, bool is_user)
         {
             try
             {
-                TreeListNode child_node;
+                if (isSecondLoad) CommonEngine.ShowWaitForm(this);
                 trlPermission.BeginUnboundLoad();
-                SYS_tblPermissionDRO permissionList = await SYS_tblPermissionBUS.GetPermissionList(CommonEngine.userInfo.UserID, ConfigEngine.Language, id, parent_id, is_user);
+                trlPermission.ClearNodes();
+                SYS_tblPermissionDRO permissionList = await SYS_tblPermissionBUS.GetPermissionList(CommonEngine.userInfo.UserID, ConfigEngine.Language, id, is_user);
                 if (CommonEngine.CheckValidResponseItem(permissionList.ResponseItem))
                 {
+                    oldPermissionList = new List<SYS_tblPermissionDTO>();
                     foreach (var item in permissionList.PermissionList)
                     {
-                        child_node = trlPermission.AppendNode(new object[] { item.FunctionName, item.AllowAll, item.AllowInsert, item.AllowUpdate, item.AllowDelete, item.AllowAccess, item.AllowPrint, item.AllowImport, item.AllowExport, item.UserLevelID, item.Note, item.ID, item.FunctionID, item.Creater, item.CreateTime, item.Editer, item.EditTime }, parent_node);
-                        await LoadPermission(id, item.FunctionID, child_node, is_user);
+                        oldPermissionList.Add(item);
                     }
+                    LoadPermission(permissionList.PermissionList, "", parent_node);
                 }
                 trlPermission.EndUnboundLoad();
                 trlPermission.ExpandAll();
+                if (isSecondLoad) CommonEngine.CloseWaitForm();
             }
             catch (Exception ex)
             {
                 CommonEngine.ShowExceptionMessage(ex);
-                return;
+            }
+
+            if (!isSecondLoad) isSecondLoad = true;
+        }
+
+        private void LoadPermission(List<SYS_tblPermissionDTO> permissions, string parent_id, TreeListNode parent_node)
+        {
+            try
+            {
+                TreeListNode child_node;
+                var tmp = permissions;
+                var nodes = (from per in tmp
+                             where per.ParentID == parent_id
+                             select per).ToList();
+                tmp.RemoveAll(per => per.ParentID == parent_id);
+                foreach (var node in nodes)
+                {
+                    child_node = trlPermission.AppendNode(new object[] { node.FunctionName, node.AllowAll, node.AllowInsert, node.AllowUpdate, node.AllowDelete, node.AllowAccess, node.AllowPrint, node.AllowImport, node.AllowExport, node.UserLevelID, node.Note, node.ID, node.FunctionID, node.Creater, node.CreateTime, node.Editer, node.EditTime }, parent_node);
+                    LoadPermission(tmp, node.FunctionID, child_node);
+                }
+            }
+            catch (Exception ex)
+            {
+                CommonEngine.ShowExceptionMessage(ex);
             }
         }
 
         private List<SYS_tblPermissionDTO> GetAllPermission(TreeListNodes nodes)
         {
             List<SYS_tblPermissionDTO> permissionList = new List<SYS_tblPermissionDTO>();
-            foreach (TreeListNode node in nodes)
+            try
             {
-                permissionList.Add(new SYS_tblPermissionDTO
+                this.Cursor = Cursors.WaitCursor;
+                foreach (TreeListNode node in nodes)
                 {
-                    ID = node.GetValue(tlcID) + "",
-                    FunctionID = node.GetValue(tlcFunctionID) + "",
-                    AllowAll = Convert.ToBoolean(node.GetValue(tlcAllowAll)),
-                    AllowInsert = Convert.ToBoolean(node.GetValue(tlcAllowAll)),
-                    AllowUpdate = Convert.ToBoolean(node.GetValue(tlcAllowUpdate)),
-                    AllowDelete = Convert.ToBoolean(node.GetValue(tlcAllowDelete)),
-                    AllowAccess = Convert.ToBoolean(node.GetValue(tlcAllowAccess)),
-                    AllowPrint = Convert.ToBoolean(node.GetValue(tlcAllowPrint)),
-                    AllowImport = Convert.ToBoolean(node.GetValue(tlcAllowImport)),
-                    AllowExport = Convert.ToBoolean(node.GetValue(tlcAllowExport)),
-                    UserLevelID = node.GetValue(tlcUserLevel) + "",
-                    Note = node.GetValue(tlcNote) + ""
-                });
+                    permissionList.Add(new SYS_tblPermissionDTO
+                    {
+                        ID = node.GetValue(tlcID) + "",
+                        FunctionID = node.GetValue(tlcFunctionID) + "",
+                        AllowAll = Convert.ToBoolean(node.GetValue(tlcAllowAll)),
+                        AllowInsert = Convert.ToBoolean(node.GetValue(tlcAllowInsert)),
+                        AllowUpdate = Convert.ToBoolean(node.GetValue(tlcAllowUpdate)),
+                        AllowDelete = Convert.ToBoolean(node.GetValue(tlcAllowDelete)),
+                        AllowAccess = Convert.ToBoolean(node.GetValue(tlcAllowAccess)),
+                        AllowPrint = Convert.ToBoolean(node.GetValue(tlcAllowPrint)),
+                        AllowImport = Convert.ToBoolean(node.GetValue(tlcAllowImport)),
+                        AllowExport = Convert.ToBoolean(node.GetValue(tlcAllowExport)),
+                        UserLevelID = node.GetValue(tlcUserLevel) + "",
+                        Note = node.GetValue(tlcNote) + ""
+                    });
 
-                permissionList.AddRange(GetAllPermission(node.Nodes));
+                    permissionList.AddRange(GetAllPermission(node.Nodes));
+                }
+            }
+            catch (Exception ex)
+            {
+                CommonEngine.ShowExceptionMessage(ex);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
             }
 
             return permissionList;
@@ -186,8 +252,26 @@ namespace iPOS.IMC.Systems
             List<SYS_tblPermissionDTO> permissionList = new List<SYS_tblPermissionDTO>();
             try
             {
+                CommonEngine.ShowWaitForm(this);
                 SYS_tblPermissionDRO result = new SYS_tblPermissionDRO();
                 permissionList = GetAllPermission(nodes);
+
+                foreach (var item in oldPermissionList)
+                {
+                    var _item = (from per in permissionList
+                                 where per.ID == item.ID && per.FunctionID == item.FunctionID
+                                 select per).FirstOrDefault();
+                    if (_item != null)
+                    {
+                        if (_item.AllowInsert == item.AllowInsert && _item.AllowUpdate == item.AllowUpdate
+                        && _item.AllowDelete == item.AllowDelete && _item.AllowPrint == item.AllowPrint
+                        && _item.AllowImport == item.AllowImport && _item.AllowExport == item.AllowExport
+                        && _item.AllowAll == item.AllowAll && _item.AllowAccess == item.AllowAccess
+                        && _item.UserLevelID == item.UserLevelID && _item.Note == item.Note)
+                            permissionList.Remove(_item);
+                    }
+                }
+
                 string strMessage = LanguageEngine.GetMessageCaption("000024", ConfigEngine.Language).Replace("$Type$", is_user ? (ConfigEngine.Language.Equals("vi") ? "người dùng" : "user") : (ConfigEngine.Language.Equals("vi") ? "nhóm người dùng" : "group user")).Replace("$Name$", trlUser.FocusedNode.GetDisplayText(tlcName));
 
                 result = await SYS_tblPermissionBUS.UpdatePermission(CommonEngine.userInfo.UserID, ConfigEngine.Language, permissionList, is_user, new SYS_tblActionLogDTO
@@ -201,18 +285,20 @@ namespace iPOS.IMC.Systems
                     DescriptionVN = strMessage.Replace("$IsError$", "thành công"),
                     DescriptionEN = strMessage.Replace("$IsError$", "successfully")
                 });
+                CommonEngine.CloseWaitForm();
                 if (CommonEngine.CheckValidResponseItem(result.ResponseItem))
                 {
                     if (string.IsNullOrEmpty(result.ResponseItem.Message))
                         CommonEngine.ShowMessage(strMessage.Replace("$IsError$", ConfigEngine.Language.Equals("vi") ? "thành công" : "successfully").Trim(), MessageType.Success);
                     else CommonEngine.ShowMessage(strMessage.Replace("$IsError$", ConfigEngine.Language.Equals("vi") ? "thất bại" : "failed").Trim(), MessageType.Error);
+
+                    await LoadPermission(trlUser.FocusedNode.GetDisplayText(tlcCode) + "", rootNode, trlUser.FocusedNode.Level == 0 ? false : true);
                 }
                 else return;
             }
             catch (Exception ex)
             {
                 CommonEngine.ShowExceptionMessage(ex);
-                return;
             }
         }
         #endregion
@@ -225,8 +311,15 @@ namespace iPOS.IMC.Systems
 
         public uc_UserPermission(string language)
         {
+            CommonEngine.ShowWaitForm(this);
             InitializeComponent();
             ChangeLanguage(language);
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            CommonEngine.CloseWaitForm();
         }
 
         private async void trlUser_FocusedNodeChanged(object sender, DevExpress.XtraTreeList.FocusedNodeChangedEventArgs e)
@@ -235,7 +328,8 @@ namespace iPOS.IMC.Systems
             {
                 trlPermission.ClearNodes();
                 TreeListNode node = trlUser.FocusedNode;
-                await LoadPermission(node.GetDisplayText(tlcCode) + "", "", rootNode, node.Level == 0 ? false : true);
+                //CommonEngine.ShowWaitForm(this);
+                await LoadPermission(node.GetDisplayText(tlcCode) + "", rootNode, node.Level == 0 ? false : true);
                 string result = "", tmpGroup = "", tmpUser = "";
                 if (node.Level.Equals(0))
                 {
@@ -255,6 +349,22 @@ namespace iPOS.IMC.Systems
                 CommonEngine.ShowExceptionMessage(ex);
                 return;
             }
+            finally
+            {
+                //CommonEngine.CloseWaitForm();
+            }
+        }
+
+        private void trlPermission_NodeCellStyle(object sender, DevExpress.XtraTreeList.GetCustomNodeCellStyleEventArgs e)
+        {
+            if (e.Column == tlcFunctionName && e.Node == trlPermission.FocusedNode)
+                e.Appearance.Font = new Font(e.Appearance.Font, FontStyle.Bold);
+        }
+
+        private void trlUser_NodeCellStyle(object sender, DevExpress.XtraTreeList.GetCustomNodeCellStyleEventArgs e)
+        {
+            if (e.Node == trlUser.FocusedNode)
+                e.Appearance.Font = new Font(e.Appearance.Font, FontStyle.Bold);
         }
 
         private async void btnSave_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -265,6 +375,40 @@ namespace iPOS.IMC.Systems
         private void btnClose_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             this.ParentForm.Close();
+        }
+
+        private void ttcUserInfo_GetActiveObjectInfo(object sender, DevExpress.Utils.ToolTipControllerGetActiveObjectInfoEventArgs e)
+        {
+            //if (e.SelectedControl is DevExpress.XtraTreeList.TreeList)
+            //{
+            //    TreeList tree = (TreeList)e.SelectedControl;
+            //    TreeListHitInfo hit = tree.CalcHitInfo(e.ControlMousePosition);
+            //    if (hit.HitInfoType == HitInfoType.Cell)
+            //    {
+            //        object cellInfo = new TreeListCellToolTipInfo(hit.Node, hit.Column, null);
+            //        string toolTip = "";
+            //        e.Info = new DevExpress.Utils.ToolTipControlInfo(cellInfo, toolTip);
+            //        //Group user
+            //        if (hit.Node.Level == 0)
+            //        {
+            //            var groupItem = (from item in groupList
+            //                             where item.GroupID == hit.Node.GetValue(tlcCode) + ""
+            //                             select item).FirstOrDefault();
+            //            e.Info.Title = hit.Node.GetDisplayText(tlcName) + "";
+            //            toolTip = string.Format("{0}: {1}\n{2}: {3}");
+            //        }
+
+            //        //string toolTip = string.Format("{0} (Column: {1}, Node ID: {2})", hit.Node[hit.Column], hit.Column.Caption, hit.Node.Id);
+
+            //        //e.Info = new DevExpress.Utils.ToolTipControlInfo(cellInfo, toolTip);
+
+            //        //e.Info.Title = "Item";
+            //        //e.Info.Text = toolTip;
+            //        //e.Info.IconType = DevExpress.Utils.ToolTipIconType.Information;
+
+            //    }
+
+            //}
         }
         #endregion
     }

@@ -28,63 +28,65 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmWaiting));
-            this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
-            this.pictureEdit1 = new DevExpress.XtraEditors.PictureEdit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureEdit1.Properties)).BeginInit();
+            this.components = new System.ComponentModel.Container();
+            this.lblCaption = new DevExpress.XtraEditors.LabelControl();
+            this.lblDescription = new DevExpress.XtraEditors.LabelControl();
+            this.picLoading = new DevExpress.XtraEditors.PictureEdit();
+            this.tmeTimer = new System.Windows.Forms.Timer(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.picLoading.Properties)).BeginInit();
             this.SuspendLayout();
             // 
-            // labelControl1
+            // lblCaption
             // 
-            this.labelControl1.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.labelControl1.Appearance.ForeColor = System.Drawing.Color.White;
-            this.labelControl1.Location = new System.Drawing.Point(93, 21);
-            this.labelControl1.Name = "labelControl1";
-            this.labelControl1.Size = new System.Drawing.Size(155, 13);
-            this.labelControl1.TabIndex = 2;
-            this.labelControl1.Text = "Vui lòng chờ trong giây lát...";
+            this.lblCaption.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.lblCaption.Appearance.ForeColor = System.Drawing.Color.Black;
+            this.lblCaption.Location = new System.Drawing.Point(93, 21);
+            this.lblCaption.Name = "lblCaption";
+            this.lblCaption.Size = new System.Drawing.Size(155, 13);
+            this.lblCaption.TabIndex = 2;
+            this.lblCaption.Text = "Vui lòng chờ trong giây lát...";
             // 
-            // labelControl2
+            // lblDescription
             // 
-            this.labelControl2.Appearance.ForeColor = System.Drawing.Color.White;
-            this.labelControl2.Location = new System.Drawing.Point(93, 40);
-            this.labelControl2.Name = "labelControl2";
-            this.labelControl2.Size = new System.Drawing.Size(100, 13);
-            this.labelControl2.TabIndex = 3;
-            this.labelControl2.Text = "Đang xử lý dữ liệu...";
+            this.lblDescription.Appearance.ForeColor = System.Drawing.Color.Black;
+            this.lblDescription.Location = new System.Drawing.Point(93, 40);
+            this.lblDescription.Name = "lblDescription";
+            this.lblDescription.Size = new System.Drawing.Size(100, 13);
+            this.lblDescription.TabIndex = 3;
+            this.lblDescription.Text = "Đang xử lý dữ liệu...";
             // 
-            // pictureEdit1
+            // picLoading
             // 
-            this.pictureEdit1.EditValue = ((object)(resources.GetObject("pictureEdit1.EditValue")));
-            this.pictureEdit1.Location = new System.Drawing.Point(26, 12);
-            this.pictureEdit1.Name = "pictureEdit1";
-            this.pictureEdit1.Properties.Appearance.BackColor = System.Drawing.Color.Transparent;
-            this.pictureEdit1.Properties.Appearance.Options.UseBackColor = true;
-            this.pictureEdit1.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            this.pictureEdit1.Size = new System.Drawing.Size(50, 50);
-            this.pictureEdit1.TabIndex = 0;
+            this.picLoading.Location = new System.Drawing.Point(26, 12);
+            this.picLoading.Name = "picLoading";
+            this.picLoading.Properties.AllowFocused = false;
+            this.picLoading.Properties.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.picLoading.Properties.Appearance.Options.UseBackColor = true;
+            this.picLoading.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            this.picLoading.Properties.NullText = " ";
+            this.picLoading.Properties.ShowMenu = false;
+            this.picLoading.Size = new System.Drawing.Size(50, 50);
+            this.picLoading.TabIndex = 0;
+            this.picLoading.Paint += new System.Windows.Forms.PaintEventHandler(this.picLoading_Paint);
+            // 
+            // tmeTimer
+            // 
+            this.tmeTimer.Enabled = true;
+            this.tmeTimer.Tick += new System.EventHandler(this.tmeTimer_Tick);
             // 
             // frmWaiting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImageLayoutStore = System.Windows.Forms.ImageLayout.Stretch;
-            this.BackgroundImageStore = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImageStore")));
-            this.ClientSize = new System.Drawing.Size(311, 74);
-            this.ControlBox = false;
-            this.Controls.Add(this.labelControl2);
-            this.Controls.Add(this.labelControl1);
-            this.Controls.Add(this.pictureEdit1);
+            this.ClientSize = new System.Drawing.Size(369, 74);
+            this.Controls.Add(this.lblDescription);
+            this.Controls.Add(this.lblCaption);
+            this.Controls.Add(this.picLoading);
             this.DoubleBuffered = true;
-            this.FormBorderEffect = DevExpress.XtraEditors.FormBorderEffect.Shadow;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmWaiting";
             this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmWaiting";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureEdit1.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picLoading.Properties)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -92,8 +94,9 @@
 
         #endregion
 
-        private DevExpress.XtraEditors.PictureEdit pictureEdit1;
-        private DevExpress.XtraEditors.LabelControl labelControl1;
-        private DevExpress.XtraEditors.LabelControl labelControl2;
+        private DevExpress.XtraEditors.PictureEdit picLoading;
+        private DevExpress.XtraEditors.LabelControl lblCaption;
+        private DevExpress.XtraEditors.LabelControl lblDescription;
+        private System.Windows.Forms.Timer tmeTimer;
     }
 }

@@ -26,12 +26,10 @@ namespace iPOS.IMC.Systems
         #region [Personal Methods]
         public void ChangeLanguage(string language)
         {
-            LanguageEngine.ChangeCaptionBarLargeButtonItem(this.Name, language, new DevExpress.XtraBars.BarLargeButtonItem[] { btnInsert, btnUpdate, btnDelete, btnPrint, btnReload, btnImport, btnExport, btnClose });
+            LanguageEngine.ChangeCaptionBarLargeButtonItem(this.Name, language, new DevExpress.XtraBars.BarLargeButtonItem[] { btnInsert, btnDuplicated, btnUpdate, btnDelete, btnPrint, btnReload, btnImport, btnExport, btnClose });
             LanguageEngine.ChangeCaptionBarStaticItem(this.Name, language, new DevExpress.XtraBars.BarStaticItem[] { lblCreater, lblCreateTime, lblEditer, lblEditTime });
             LanguageEngine.ChangeCaptionGroupPanelTextGridView(this.Name, language, grvUser);
             LanguageEngine.ChangeCaptionGridColumn(this.Name, language, new DevExpress.XtraGrid.Columns.GridColumn[] { gcolUsername, gcolGroupName, gcolFullName, gcolEmpCode, gcolEffectiveDate, gcolEmail, gcolNote });
-
-            GetAllUsers();
         }
 
         public async void GetAllUsers()
@@ -89,48 +87,62 @@ namespace iPOS.IMC.Systems
 
             SYS_tblUserDRO result = new SYS_tblUserDRO();
             result.ResponseItem.Message = "ready";
-            try
+            if (!string.IsNullOrEmpty(user_code_list))
             {
-                if (user_code_list.Contains("$"))
+                try
                 {
-                    if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000012", ConfigEngine.Language).Replace("$Count$", user_code_list.Split('$').Length.ToString())))
-                        result = await SYS_tblUserBUS.DeleteUser(user_code_list, CommonEngine.userInfo.Username, ConfigEngine.Language, new SYS_tblActionLogDTO
+                    if (user_code_list.Contains("$"))
+                    {
+                        if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000012", ConfigEngine.Language).Replace("$Count$", user_code_list.Split('$').Length.ToString())))
                         {
-                            Activity = BaseConstant.COMMAND_INSERT_EN,
-                            UserID = CommonEngine.userInfo.UserID,
-                            LanguageID = ConfigEngine.Language,
-                            ActionVN = BaseConstant.COMMAND_DELETE_VI,
-                            ActionEN = BaseConstant.COMMAND_DELETE_EN,
-                            FunctionID = "10",
-                            DescriptionVN = string.Format("Tài khoản '{0}' vừa xóa thành công người dùng có các tên tài khoản '{1}'.", CommonEngine.userInfo.UserID, user_code_list.Replace("$", ", ")),
-                            DescriptionEN = string.Format("Account '{0}' has deleted user successfully with username are '{1}'.", CommonEngine.userInfo.UserID, user_code_list.Replace("$", ", "))
-                        });
-                }
-                else
-                {
-                    if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000005", ConfigEngine.Language)))
-                        result = await SYS_tblUserBUS.DeleteUser(user_code_list, CommonEngine.userInfo.Username, ConfigEngine.Language, new SYS_tblActionLogDTO
+                            CommonEngine.ShowWaitForm(this.ParentForm);
+                            result = await SYS_tblUserBUS.DeleteUser(user_code_list, CommonEngine.userInfo.Username, ConfigEngine.Language, new SYS_tblActionLogDTO
+                            {
+                                Activity = BaseConstant.COMMAND_INSERT_EN,
+                                UserID = CommonEngine.userInfo.UserID,
+                                LanguageID = ConfigEngine.Language,
+                                ActionVN = BaseConstant.COMMAND_DELETE_VI,
+                                ActionEN = BaseConstant.COMMAND_DELETE_EN,
+                                FunctionID = "10",
+                                DescriptionVN = string.Format("Tài khoản '{0}' vừa xóa thành công người dùng có các tên tài khoản '{1}'.", CommonEngine.userInfo.UserID, user_code_list.Replace("$", ", ")),
+                                DescriptionEN = string.Format("Account '{0}' has deleted user successfully with username are '{1}'.", CommonEngine.userInfo.UserID, user_code_list.Replace("$", ", "))
+                            });
+                        }
+                    }
+                    else
+                    {
+                        if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000005", ConfigEngine.Language)))
                         {
-                            Activity = BaseConstant.COMMAND_INSERT_EN,
-                            UserID = CommonEngine.userInfo.UserID,
-                            LanguageID = ConfigEngine.Language,
-                            ActionVN = BaseConstant.COMMAND_DELETE_VI,
-                            ActionEN = BaseConstant.COMMAND_DELETE_EN,
-                            FunctionID = "10",
-                            DescriptionVN = string.Format("Tài khoản '{0}' vừa xóa thành công người dùng có tên tài khoản '{1}'.", CommonEngine.userInfo.UserID, user_code_list),
-                            DescriptionEN = string.Format("Account '{0}' has deleted user successfully with username is '{1}'.", CommonEngine.userInfo.UserID, user_code_list)
-                        });
-                }
+                            CommonEngine.ShowWaitForm(this.ParentForm);
+                            result = await SYS_tblUserBUS.DeleteUser(user_code_list, CommonEngine.userInfo.Username, ConfigEngine.Language, new SYS_tblActionLogDTO
+                            {
+                                Activity = BaseConstant.COMMAND_INSERT_EN,
+                                UserID = CommonEngine.userInfo.UserID,
+                                LanguageID = ConfigEngine.Language,
+                                ActionVN = BaseConstant.COMMAND_DELETE_VI,
+                                ActionEN = BaseConstant.COMMAND_DELETE_EN,
+                                FunctionID = "10",
+                                DescriptionVN = string.Format("Tài khoản '{0}' vừa xóa thành công người dùng có tên tài khoản '{1}'.", CommonEngine.userInfo.UserID, user_code_list),
+                                DescriptionEN = string.Format("Account '{0}' has deleted user successfully with username is '{1}'.", CommonEngine.userInfo.UserID, user_code_list)
+                            });
+                        }
+                    }
 
-                if (!CommonEngine.CheckValidResponseItem(result.ResponseItem)) return;
-                if (!result.ResponseItem.Message.Equals("ready"))
-                    if (string.IsNullOrEmpty(result.ResponseItem.Message)) GetAllUsers();
-                    else CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
+                    if (!CommonEngine.CheckValidResponseItem(result.ResponseItem)) return;
+                    if (!result.ResponseItem.Message.Equals("ready"))
+                        if (string.IsNullOrEmpty(result.ResponseItem.Message)) GetAllUsers();
+                        else CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
+                }
+                catch (Exception ex)
+                {
+                    CommonEngine.ShowExceptionMessage(ex);
+                }
+                finally
+                {
+                    CommonEngine.CloseWaitForm();
+                }
             }
-            catch (Exception ex)
-            {
-                CommonEngine.ShowExceptionMessage(ex);
-            }
+            else CommonEngine.ShowMessage("000027", IMC.Helper.MessageType.Warning, true);
         }
         #endregion
 
@@ -142,8 +154,15 @@ namespace iPOS.IMC.Systems
 
         public uc_User(string language)
         {
+            CommonEngine.ShowWaitForm(this);
             InitializeComponent();
             ChangeLanguage(language);
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            CommonEngine.CloseWaitForm();
         }
 
         private void btnInsert_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -151,11 +170,33 @@ namespace iPOS.IMC.Systems
             CommonEngine.OpenInputForm(new uc_UserDetail(this), new Size(455, 460), false);
         }
 
+        private async void btnDuplicated_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            if (curItem.Count > 0)
+            {
+                this.Cursor = Cursors.WaitCursor;
+                SYS_tblUserDRO item = await SYS_tblUserBUS.GetUserItem(CommonEngine.userInfo.UserID, ConfigEngine.Language, curItem[0].Username);
+                if (!CommonEngine.CheckValidResponseItem(item.ResponseItem)) return;
+
+                this.Cursor = Cursors.Default;
+
+                if (item != null && item.UserItem != null)
+                {
+                    CommonEngine.OpenInputForm(new uc_UserDetail(this, item.UserItem, true), new Size(455, 460), false);
+                }
+            }
+        }
+
         private async void btnUpdate_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             if (curItem.Count > 0)
             {
+                this.Cursor = Cursors.WaitCursor;
                 SYS_tblUserDRO item = await SYS_tblUserBUS.GetUserItem(CommonEngine.userInfo.UserID, ConfigEngine.Language, curItem[0].Username);
+                if (!CommonEngine.CheckValidResponseItem(item.ResponseItem)) return;
+
+                this.Cursor = Cursors.Default;
+
                 if (item != null && item.UserItem != null)
                     CommonEngine.OpenInputForm(new uc_UserDetail(this, item.UserItem), new Size(455, 460), true);
             }
@@ -173,12 +214,15 @@ namespace iPOS.IMC.Systems
 
         private void btnReload_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            CommonEngine.ShowWaitForm(this);
             GetAllUsers();
+            CommonEngine.CloseWaitForm();
         }
 
         private void btnImport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             CommonEngine.OpenImportExcelForm("SYS_User_FileSelect.xlsx", "SYS_spfrmUserImport", "SYS", "10");
+            btnReload_ItemClick(null, null);
         }
 
         private void btnExport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)

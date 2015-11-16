@@ -33,9 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Aspose.Cells">
-      <HintPath>..\..\..\..\..\..\Softs\Hell Demons\iPOS\trunk\iPOS\iPOS.Core\bin\Debug\Aspose.Cells.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -50,7 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\AsposeCellsStyle.cs" />
     <Compile Include="Extensions\ImageConverter.cs" />
     <Compile Include="Helper\BaseConstant.cs" />
     <Compile Include="Helper\CaptionEngine.cs" />

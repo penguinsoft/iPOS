@@ -22,6 +22,7 @@ namespace iPOS.IMC.Systems
     {
         #region [Declare Variables]
         private uc_User parent_form;
+        bool isDuplicate;
         #endregion
 
         #region [Personal Methods]
@@ -106,7 +107,7 @@ namespace iPOS.IMC.Systems
         private void LoadDataToEdit(SYS_tblUserDTO item)
         {
             txtUsername.EditValue = (item == null) ? null : item.Username;
-            txtUsername.Properties.ReadOnly = (item == null) ? false : true;
+            txtUsername.Properties.ReadOnly = (item == null || isDuplicate) ? false : true;
             txtPassword.EditValue = (item == null) ? null : iPOS.Core.Security.EncryptEngine.Decrypt(item.Password);
             //gluGroupUser.EditValue = "1";// (item == null) ? null : item.GroupID;
             chkIsEmployee.Checked = (item == null) ? false : (!string.IsNullOrEmpty(item.EmpID)) ? true : false;
@@ -132,29 +133,34 @@ namespace iPOS.IMC.Systems
 
         private async Task LoadGroupUser(SYS_tblUserDTO item)
         {
-            SYS_tblGroupUserDRO groupUsers = await iPOS.BUS.Systems.SYS_tblGroupUserBUS.GetAllGroupUsers(CommonEngine.userInfo.Username, ConfigEngine.Language, true, null);
-            gluGroupUser.DataBindings.Clear();
-            if (groupUsers.ResponseItem.IsError)
+            try
             {
-                CommonEngine.ShowHTTPErrorMessage(groupUsers.ResponseItem);
-            }
-            else gluGroupUser.Properties.DataSource = groupUsers.GroupUserList;
-            gluGroupUser.Properties.DisplayMember = "Note";
-            gluGroupUser.Properties.ValueMember = "GroupID";
+                SYS_tblGroupUserDRO groupUsers = await iPOS.BUS.Systems.SYS_tblGroupUserBUS.GetAllGroupUsers(CommonEngine.userInfo.Username, ConfigEngine.Language, true, null);
+                gluGroupUser.DataBindings.Clear();
+                if (!CommonEngine.CheckValidResponseItem(groupUsers.ResponseItem)) return;
+                else gluGroupUser.Properties.DataSource = groupUsers.GroupUserList;
+                gluGroupUser.Properties.DisplayMember = "Note";
+                gluGroupUser.Properties.ValueMember = "GroupID";
 
-            if (item == null && groupUsers.GroupUserList != null)
-            {
-                var groupDefault = (from groupUser in groupUsers.GroupUserList
-                                    where groupUser.IsDefault.Equals(true)
-                                    select groupUser).FirstOrDefault();
-                if (groupUsers.GroupUserList.Count > 0)
-                    gluGroupUser.EditValue = groupDefault.GroupID;
+                if (item == null && groupUsers.GroupUserList != null)
+                {
+                    var groupDefault = (from groupUser in groupUsers.GroupUserList
+                                        where groupUser.IsDefault.Equals(true)
+                                        select groupUser).FirstOrDefault();
+                    if (groupUsers.GroupUserList.Count > 0)
+                        gluGroupUser.EditValue = groupDefault.GroupID;
+                }
+                else gluGroupUser.EditValue = item.GroupID;
             }
-            else gluGroupUser.EditValue = item.GroupID;
+            catch (Exception ex)
+            {
+                CommonEngine.ShowExceptionMessage(ex);
+            }
         }
 
         private async Task<bool> SaveUser(bool isEdit)
         {
+            CommonEngine.ShowWaitForm(this);
             SYS_tblUserDRO result = new SYS_tblUserDRO();
             try
             {
@@ -193,18 +199,27 @@ namespace iPOS.IMC.Systems
                 {
                     if (!string.IsNullOrEmpty(result.ResponseItem.Message))
                     {
+                        CommonEngine.CloseWaitForm();
                         CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
                         txtUsername.Focus();
                         return false;
                     }
                     else parent_form.GetAllUsers();
                 }
-                else return false;
+                else
+                {
+                    CommonEngine.CloseWaitForm();
+                    return false;
+                }
             }
             catch (Exception ex)
             {
                 CommonEngine.ShowExceptionMessage(ex);
                 return false;
+            }
+            finally
+            {
+                CommonEngine.CloseWaitForm();
             }
 
             return true;
@@ -215,15 +230,26 @@ namespace iPOS.IMC.Systems
         public uc_UserDetail()
         {
             InitializeComponent();
+            Initialize(null);
+            CommonEngine.LoadUserPermission("10", txtUsername, btnSaveClose, btnSaveInsert);
         }
 
-        public uc_UserDetail(uc_User _parent_form, SYS_tblUserDTO item = null)
+        public uc_UserDetail(uc_User _parent_form, SYS_tblUserDTO item = null, bool _isDuplicate = false)
         {
+            CommonEngine.ShowWaitForm(this);
             InitializeComponent();
             Initialize(item);
             parent_form = _parent_form;
+            isDuplicate = _isDuplicate;
             if (item != null)
                 LoadDataToEdit(item);
+            CommonEngine.LoadUserPermission("10", txtUsername, btnSaveClose, btnSaveInsert, isDuplicate);
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            CommonEngine.CloseWaitForm();
         }
 
         private void chkIsEmployee_CheckedChanged(object sender, EventArgs e)
@@ -301,14 +327,14 @@ namespace iPOS.IMC.Systems
         private async void btnSaveClose_Click(object sender, EventArgs e)
         {
             if (CheckValidate())
-                if (await SaveUser(txtUsername.Properties.ReadOnly))
+                if (await SaveUser(txtUsername.Properties.ReadOnly || !isDuplicate))
                     this.ParentForm.Close();
         }
 
         private async void btnSaveInsert_Click(object sender, EventArgs e)
         {
             if (CheckValidate())
-                if (await SaveUser(txtUsername.Properties.ReadOnly))
+                if (await SaveUser(txtUsername.Properties.ReadOnly || !isDuplicate))
                     LoadDataToEdit(null);
         }
 

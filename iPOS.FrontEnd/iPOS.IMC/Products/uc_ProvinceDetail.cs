@@ -69,6 +69,7 @@ namespace iPOS.IMC.Products
         private async Task<bool> SaveProvince(bool isEdit)
         {
             PRO_tblProvinceDRO result = new PRO_tblProvinceDRO();
+            CommonEngine.ShowWaitForm(this);
             try
             {
                 result = await PRO_tblProvinceBUS.InsertUpdateProvince(new PRO_tblProvinceDTO
@@ -95,24 +96,31 @@ namespace iPOS.IMC.Products
                     DescriptionEN = string.Format("Account '{0}' has {1} province successfully with province code is '{2}'.", CommonEngine.userInfo.UserID, isEdit ? "updated" : "inserted", txtProvinceCode.Text)
                 });
 
-                if (result.ResponseItem.IsError)
+                if (CommonEngine.CheckValidResponseItem(result.ResponseItem))
                 {
-                    CommonEngine.ShowHTTPErrorMessage(result.ResponseItem);
-                    txtProvinceCode.Focus();
+                    if (!string.IsNullOrEmpty(result.ResponseItem.Message))
+                    {
+                        CommonEngine.CloseWaitForm();
+                        CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
+                        txtProvinceCode.Focus();
+                        return false;
+                    }
+                    else if (parent_form != null) parent_form.GetAllProvinces();
+                }
+                else
+                {
+                    CommonEngine.CloseWaitForm();
                     return false;
                 }
-                if (!string.IsNullOrEmpty(result.ResponseItem.Message))
-                {
-                    CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
-                    txtProvinceCode.Focus();
-                    return false;
-                }
-                else if (parent_form != null) parent_form.GetAllProvinces();
             }
             catch (Exception ex)
             {
                 CommonEngine.ShowExceptionMessage(ex);
                 return false;
+            }
+            finally
+            {
+                CommonEngine.CloseWaitForm();
             }
 
             return true;
@@ -135,10 +143,31 @@ namespace iPOS.IMC.Products
                 txtProvinceCode.Focus();
             }
         }
+        #endregion
+
+        #region [Form Events]
+        public uc_ProvinceDetail()
+        {
+            InitializeComponent();
+            Initialize();
+            CommonEngine.LoadUserPermission("8", txtProvinceID, btnSaveClose, btnSaveInsert);
+        }
+
+        public uc_ProvinceDetail(uc_Province _parent_form, PRO_tblProvinceDTO item = null)
+        {
+            CommonEngine.ShowWaitForm(this);
+            InitializeComponent();
+            Initialize();
+            parent_form = _parent_form;
+            if (item != null)
+                LoadDataToEdit(item);
+            CommonEngine.LoadUserPermission("8", txtProvinceID, btnSaveClose, btnSaveInsert);
+        }
 
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
+            CommonEngine.CloseWaitForm();
             BeginInvoke(new MethodInvoker(() =>
             {
                 if (!string.IsNullOrEmpty(txtProvinceID.Text))
@@ -165,23 +194,6 @@ namespace iPOS.IMC.Products
             }
             return base.ProcessCmdKey(ref msg, keyData);
 
-        }
-        #endregion
-
-        #region [Form Events]
-        public uc_ProvinceDetail()
-        {
-            InitializeComponent();
-            Initialize();
-        }
-
-        public uc_ProvinceDetail(uc_Province _parent_form, PRO_tblProvinceDTO item = null)
-        {
-            InitializeComponent();
-            Initialize();
-            parent_form = _parent_form;
-            if (item != null)
-                LoadDataToEdit(item);
         }
 
         private void txtProvinceCode_EditValueChanged(object sender, EventArgs e)

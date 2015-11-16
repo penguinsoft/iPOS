@@ -45,5 +45,7 @@ namespace iPOS.DTO.Systems
         public System.Nullable<DateTime> EditTime { get; set; }
 
         public string UserLevelName { get; set; }
+
+        public string ParentID { get; set; }
     }
 }

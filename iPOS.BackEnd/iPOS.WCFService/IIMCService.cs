@@ -101,9 +101,9 @@ namespace iPOS.WCFService
 
         #region [SYS_tblPermission]
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "GetPermissionList?Username={Username}&LanguageID={LanguageID}&ID={ID}&ParentID={ParentID}&IsUser={IsUser}",
+        [WebInvoke(Method = "GET", UriTemplate = "GetPermissionList?Username={Username}&LanguageID={LanguageID}&ID={ID}&IsUser={IsUser}",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        SYS_tblPermissionDRO GetPermissionList(string Username, string LanguageID, string ID, string ParentID, bool IsUser);
+        SYS_tblPermissionDRO GetPermissionList(string Username, string LanguageID, string ID, bool IsUser);
 
         [OperationContract]
         [WebInvoke(Method = "GET", UriTemplate = "GetPermissionItem?Username={Username}&LanguageID={LanguageID}&FunctionID={FunctionID}",

@@ -8,7 +8,7 @@ namespace iPOS.DAO.Systems
 {
     public interface ISYS_tblPermissionDAO
     {
-        List<SYS_tblPermissionDTO> GetAllPermisionList(string username, string language_id, string id, string parent_id, bool is_user);
+        List<SYS_tblPermissionDTO> GetAllPermisionList(string username, string language_id, string id, bool is_user);
 
 
         SYS_tblPermissionDTO GetPermissionItem(string username, string language_id, string function_id);
@@ -18,7 +18,7 @@ namespace iPOS.DAO.Systems
 
     public class SYS_tblPermissionDAO : BaseDAO, ISYS_tblPermissionDAO
     {
-        public List<SYS_tblPermissionDTO> GetAllPermisionList(string username, string language_id, string id, string parent_id, bool is_user)
+        public List<SYS_tblPermissionDTO> GetAllPermisionList(string username, string language_id, string id, bool is_user)
         {
             string strParameter = "", strActivity = "";
             strParameter = is_user ? "UsernameOther" : "GroupID";
@@ -26,7 +26,7 @@ namespace iPOS.DAO.Systems
             List<SYS_tblPermissionDTO> result = new List<SYS_tblPermissionDTO>();
             try
             {
-                DataTable data = db.GetDataTable("SYS_spfrmPermission", new string[] { "Activity", "Username", "LanguageID", strParameter, "FunctionID" }, new object[] { strActivity, username, language_id, id, parent_id });
+                DataTable data = db.GetDataTable("SYS_spfrmPermission", new string[] { "Activity", "Username", "LanguageID", strParameter }, new object[] { strActivity, username, language_id, id });
                 if (data != null && data.Rows.Count > 0)
                     result = ConvertEngine.ConvertDataTableToObjectList<SYS_tblPermissionDTO>(data);
             }

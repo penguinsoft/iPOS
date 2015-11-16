@@ -87,6 +87,7 @@ namespace iPOS.IMC.Products
         private async Task<bool> SaveDistrict(bool isEdit)
         {
             PRO_tblDistrictDRO result = new PRO_tblDistrictDRO();
+            CommonEngine.ShowWaitForm(this);
             try
             {
                 result = await iPOS.BUS.Products.PRO_tblDistrictBUS.InsertUpdateDistrict(new PRO_tblDistrictDTO
@@ -116,12 +117,14 @@ namespace iPOS.IMC.Products
 
                 if (result.ResponseItem.IsError)
                 {
+                    CommonEngine.CloseWaitForm();
                     CommonEngine.ShowHTTPErrorMessage(result.ResponseItem);
                     txtDistrictCode.Focus();
                     return false;
                 }
                 if (!string.IsNullOrEmpty(result.ResponseItem.Message))
                 {
+                    CommonEngine.CloseWaitForm();
                     CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
                     txtDistrictCode.Focus();
                     return false;
@@ -132,6 +135,10 @@ namespace iPOS.IMC.Products
             {
                 CommonEngine.ShowExceptionMessage(ex);
                 return false;
+            }
+            finally
+            {
+                CommonEngine.CloseWaitForm();
             }
 
             return true;
@@ -155,10 +162,31 @@ namespace iPOS.IMC.Products
                 txtDistrictCode.Focus();
             }
         }
+        #endregion
+
+        #region [Form Events]
+        public uc_DistrictDetail()
+        {
+            InitializeComponent();
+            Initialize();
+            CommonEngine.LoadUserPermission("12", txtDistrictID, btnSaveClose, btnSaveInsert);
+        }
+
+        public uc_DistrictDetail(uc_District _parent_form, PRO_tblDistrictDTO item = null)
+        {
+            CommonEngine.ShowWaitForm(this);
+            InitializeComponent();
+            Initialize();
+            parent_form = _parent_form;
+            if (item != null)
+                LoadDataToEdit(item);
+            CommonEngine.LoadUserPermission("12", txtDistrictID, btnSaveClose, btnSaveInsert);
+        }
 
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
+            CommonEngine.CloseWaitForm();
             BeginInvoke(new MethodInvoker(() =>
             {
                 if (!string.IsNullOrEmpty(txtDistrictID.Text))
@@ -185,23 +213,6 @@ namespace iPOS.IMC.Products
             }
             return base.ProcessCmdKey(ref msg, keyData);
 
-        }
-        #endregion
-
-        #region [Form Events]
-        public uc_DistrictDetail()
-        {
-            InitializeComponent();
-            Initialize();
-        }
-
-        public uc_DistrictDetail(uc_District _parent_form, PRO_tblDistrictDTO item = null)
-        {
-            InitializeComponent();
-            Initialize();
-            parent_form = _parent_form;
-            if (item != null)
-                LoadDataToEdit(item);
         }
 
         private void txtDistrictCode_EditValueChanged(object sender, EventArgs e)

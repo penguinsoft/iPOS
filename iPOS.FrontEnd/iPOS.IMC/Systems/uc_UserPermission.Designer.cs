@@ -80,6 +80,7 @@
             this.tlcEditer = new DevExpress.XtraTreeList.Columns.TreeListColumn();
             this.tlcEditTime = new DevExpress.XtraTreeList.Columns.TreeListColumn();
             this.grpMain = new DevExpress.XtraEditors.GroupControl();
+            this.ttcUserInfo = new DevExpress.Utils.ToolTipController(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.cboUserLevel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barMain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.docMain)).BeginInit();
@@ -265,6 +266,8 @@
             this.trlUser.Appearance.FocusedCell.Options.UseForeColor = true;
             this.trlUser.Appearance.FocusedRow.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
             this.trlUser.Appearance.FocusedRow.Options.UseFont = true;
+            this.trlUser.Appearance.SelectedRow.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.trlUser.Appearance.SelectedRow.Options.UseFont = true;
             this.trlUser.Columns.AddRange(new DevExpress.XtraTreeList.Columns.TreeListColumn[] {
             this.tlcName,
             this.tlcCode});
@@ -278,6 +281,8 @@
             this.trlUser.SelectImageList = this.imcGroupUser;
             this.trlUser.Size = new System.Drawing.Size(248, 428);
             this.trlUser.TabIndex = 9;
+            this.trlUser.ToolTipController = this.ttcUserInfo;
+            this.trlUser.NodeCellStyle += new DevExpress.XtraTreeList.GetCustomNodeCellStyleEventHandler(this.trlUser_NodeCellStyle);
             this.trlUser.FocusedNodeChanged += new DevExpress.XtraTreeList.FocusedNodeChangedEventHandler(this.trlUser_FocusedNodeChanged);
             // 
             // tlcName
@@ -340,6 +345,7 @@
             this.gluUserLevel});
             this.trlPermission.Size = new System.Drawing.Size(1058, 433);
             this.trlPermission.TabIndex = 10;
+            this.trlPermission.NodeCellStyle += new DevExpress.XtraTreeList.GetCustomNodeCellStyleEventHandler(this.trlPermission_NodeCellStyle);
             // 
             // tlcFunctionName
             // 
@@ -594,6 +600,15 @@
             this.grpMain.TabIndex = 12;
             this.grpMain.Text = "groupControl1";
             // 
+            // ttcUserInfo
+            // 
+            this.ttcUserInfo.AllowHtmlText = true;
+            this.ttcUserInfo.AppearanceTitle.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.ttcUserInfo.AppearanceTitle.Options.UseFont = true;
+            this.ttcUserInfo.InitialDelay = 1000;
+            this.ttcUserInfo.ShowBeak = true;
+            this.ttcUserInfo.GetActiveObjectInfo += new DevExpress.Utils.ToolTipControllerGetActiveObjectInfoEventHandler(this.ttcUserInfo_GetActiveObjectInfo);
+            // 
             // uc_UserPermission
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -684,5 +699,6 @@
         private DevExpress.XtraGrid.Columns.GridColumn gcolUserLevelID;
         private DevExpress.XtraEditors.Repository.RepositoryItemComboBox cboUserLevel;
         private DevExpress.XtraBars.BarStaticItem lblUserInfo;
+        private DevExpress.Utils.ToolTipController ttcUserInfo;
     }
 }
