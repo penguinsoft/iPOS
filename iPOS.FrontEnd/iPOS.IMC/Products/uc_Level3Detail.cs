@@ -118,6 +118,7 @@ namespace iPOS.IMC.Products
 
         private async Task<bool> SaveLevel3(bool isEdit)
         {
+            CommonEngine.ShowWaitForm(this);
             PRO_tblLevel3DRO result = new PRO_tblLevel3DRO();
             try
             {
@@ -149,24 +150,31 @@ namespace iPOS.IMC.Products
                     DescriptionEN = string.Format("Account '{0}' has {1} product subgroup successfully with subgroup code is '{2}'.", CommonEngine.userInfo.UserID, isEdit ? "updated" : "inserted", txtLevel3Code.Text)
                 });
 
-                if (result.ResponseItem.IsError)
+                if (CommonEngine.CheckValidResponseItem(result.ResponseItem))
                 {
-                    CommonEngine.ShowHTTPErrorMessage(result.ResponseItem);
-                    txtLevel3Code.Focus();
+                    if (!string.IsNullOrEmpty(result.ResponseItem.Message))
+                    {
+                        CommonEngine.CloseWaitForm();
+                        CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
+                        txtLevel3Code.Focus();
+                        return false;
+                    }
+                    else if (parent_form != null) parent_form.GetAllLevel3();
+                }
+                else
+                {
+                    CommonEngine.CloseWaitForm();
                     return false;
                 }
-                if (!string.IsNullOrEmpty(result.ResponseItem.Message))
-                {
-                    CommonEngine.ShowMessage(result.ResponseItem.Message, MessageType.Error);
-                    txtLevel3Code.Focus();
-                    return false;
-                }
-                else parent_form.GetAllLevel3();
             }
             catch (Exception ex)
             {
                 CommonEngine.ShowExceptionMessage(ex);
                 return false;
+            }
+            finally
+            {
+                CommonEngine.CloseWaitForm();
             }
 
             return true;
@@ -192,10 +200,30 @@ namespace iPOS.IMC.Products
                 txtLevel3Code.Focus();
             }
         }
+        #endregion
+
+        #region [Form Events]
+        public uc_Level3Detail()
+        {
+            InitializeComponent();
+        }
+
+        public uc_Level3Detail(uc_Level3 _parent_form, PRO_tblLevel3DTO item = null)
+        {
+            CommonEngine.ShowWaitForm(this);
+            InitializeComponent();
+            Initialize();
+            parent_form = _parent_form;
+
+            if (item != null)
+                LoadDataToEdit(item);
+            CommonEngine.LoadUserPermission("22", txtLevel3ID, btnSaveClose, btnSaveInsert);
+        }
 
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
+            CommonEngine.CloseWaitForm();
             BeginInvoke(new MethodInvoker(() =>
             {
                 if (!string.IsNullOrEmpty(txtLevel3ID.Text))
@@ -222,22 +250,6 @@ namespace iPOS.IMC.Products
             }
             return base.ProcessCmdKey(ref msg, keyData);
 
-        }
-        #endregion
-
-        public uc_Level3Detail()
-        {
-            InitializeComponent();
-        }
-
-        public uc_Level3Detail(uc_Level3 _parent_form, PRO_tblLevel3DTO item = null)
-        {
-            InitializeComponent();
-            Initialize();
-            parent_form = _parent_form;
-
-            if (item != null)
-                LoadDataToEdit(item);
         }
 
         private void txtLevel3Code_EditValueChanged(object sender, EventArgs e)
@@ -319,5 +331,6 @@ namespace iPOS.IMC.Products
         {
             this.ParentForm.Close();
         }
+        #endregion
     }
 }

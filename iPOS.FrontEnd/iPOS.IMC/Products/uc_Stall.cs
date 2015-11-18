@@ -27,7 +27,7 @@ namespace iPOS.IMC.Products
         #region [Personal Methods]
         public void ChangeLanguage(string language)
         {
-            LanguageEngine.ChangeCaptionBarLargeButtonItem(this.Name, language, new DevExpress.XtraBars.BarLargeButtonItem[] { btnInsert, btnUpdate, btnDelete, btnReload, btnPrint, btnImport, btnExport, btnClose });
+            LanguageEngine.ChangeCaptionBarLargeButtonItem(this.Name, language, new DevExpress.XtraBars.BarLargeButtonItem[] { btnInsert, btnDuplicated, btnUpdate, btnDelete, btnReload, btnPrint, btnImport, btnExport, btnClose });
             LanguageEngine.ChangeCaptionBarStaticItem(this.Name, language, new DevExpress.XtraBars.BarStaticItem[] { lblCreater, lblCreateTime, lblEditer, lblEditTime });
             LanguageEngine.ChangeCaptionGridView(this.Name, language, grvStall);
         }
@@ -51,6 +51,7 @@ namespace iPOS.IMC.Products
                 if (!CommonEngine.CheckValidResponseItem(stalls.ResponseItem)) return;
                 gridStall.DataSource = stalls.StallList != null ? stalls.StallList : null;
                 barFooter.Visible = (stalls.StallList != null && stalls.StallList.Count > 0) ? true : false;
+                CommonEngine.LoadUserPermission("19", btnDelete, btnPrint, btnImport, btnExport);
             }
             catch (Exception ex)
             {
@@ -90,48 +91,62 @@ namespace iPOS.IMC.Products
 
             PRO_tblStallDRO result = new PRO_tblStallDRO();
             result.ResponseItem.Message = "ready";
-            try
+            if (!string.IsNullOrEmpty(stall_id_list))
             {
-                if (stall_id_list.Contains("$"))
+                try
                 {
-                    if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000012", ConfigEngine.Language).Replace("$Count$", stall_id_list.Split('$').Length.ToString())))
-                        result = await PRO_tblStallBUS.DeleteStall(stall_id_list, CommonEngine.userInfo.Username, ConfigEngine.Language, new SYS_tblActionLogDTO
+                    if (stall_id_list.Contains("$"))
+                    {
+                        if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000012", ConfigEngine.Language).Replace("$Count$", stall_id_list.Split('$').Length.ToString())))
                         {
-                            Activity = BaseConstant.COMMAND_INSERT_EN,
-                            UserID = CommonEngine.userInfo.UserID,
-                            LanguageID = ConfigEngine.Language,
-                            ActionVN = BaseConstant.COMMAND_DELETE_VI,
-                            ActionEN = BaseConstant.COMMAND_DELETE_EN,
-                            FunctionID = "19",
-                            DescriptionVN = string.Format("Tài khoản '{0}' vừa xóa thành công những quầy bán có mã '{1}'.", CommonEngine.userInfo.UserID, stall_code_list.Replace("$", ", ")),
-                            DescriptionEN = string.Format("Account '{0}' has deleted stalls successfully with stall codes are '{1}'.", CommonEngine.userInfo.UserID, stall_code_list.Replace("$", ", "))
-                        });
-                }
-                else
-                {
-                    if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000005", ConfigEngine.Language)))
-                        result = await PRO_tblStallBUS.DeleteStall(stall_id_list, CommonEngine.userInfo.Username, ConfigEngine.Language, new SYS_tblActionLogDTO
+                            CommonEngine.ShowWaitForm(this);
+                            result = await PRO_tblStallBUS.DeleteStall(stall_id_list, CommonEngine.userInfo.Username, ConfigEngine.Language, new SYS_tblActionLogDTO
+                            {
+                                Activity = BaseConstant.COMMAND_INSERT_EN,
+                                UserID = CommonEngine.userInfo.UserID,
+                                LanguageID = ConfigEngine.Language,
+                                ActionVN = BaseConstant.COMMAND_DELETE_VI,
+                                ActionEN = BaseConstant.COMMAND_DELETE_EN,
+                                FunctionID = "19",
+                                DescriptionVN = string.Format("Tài khoản '{0}' vừa xóa thành công những quầy bán có mã '{1}'.", CommonEngine.userInfo.UserID, stall_code_list.Replace("$", ", ")),
+                                DescriptionEN = string.Format("Account '{0}' has deleted stalls successfully with stall codes are '{1}'.", CommonEngine.userInfo.UserID, stall_code_list.Replace("$", ", "))
+                            });
+                        }
+                    }
+                    else
+                    {
+                        if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000005", ConfigEngine.Language)))
                         {
-                            Activity = BaseConstant.COMMAND_INSERT_EN,
-                            UserID = CommonEngine.userInfo.UserID,
-                            LanguageID = ConfigEngine.Language,
-                            ActionVN = BaseConstant.COMMAND_DELETE_VI,
-                            ActionEN = BaseConstant.COMMAND_DELETE_EN,
-                            FunctionID = "19",
-                            DescriptionVN = string.Format("Tài khoản '{0}' vừa xóa thành công quầy bán có mã '{1}'.", CommonEngine.userInfo.UserID, stall_code_list),
-                            DescriptionEN = string.Format("Account '{0}' has deleted stall successfully with stall code is '{1}'.", CommonEngine.userInfo.UserID, stall_code_list)
-                        });
-                }
+                            CommonEngine.ShowWaitForm(this);
+                            result = await PRO_tblStallBUS.DeleteStall(stall_id_list, CommonEngine.userInfo.Username, ConfigEngine.Language, new SYS_tblActionLogDTO
+                            {
+                                Activity = BaseConstant.COMMAND_INSERT_EN,
+                                UserID = CommonEngine.userInfo.UserID,
+                                LanguageID = ConfigEngine.Language,
+                                ActionVN = BaseConstant.COMMAND_DELETE_VI,
+                                ActionEN = BaseConstant.COMMAND_DELETE_EN,
+                                FunctionID = "19",
+                                DescriptionVN = string.Format("Tài khoản '{0}' vừa xóa thành công quầy bán có mã '{1}'.", CommonEngine.userInfo.UserID, stall_code_list),
+                                DescriptionEN = string.Format("Account '{0}' has deleted stall successfully with stall code is '{1}'.", CommonEngine.userInfo.UserID, stall_code_list)
+                            });
+                        }
+                    }
 
-                if (!CommonEngine.CheckValidResponseItem(result.ResponseItem)) return;
-                if (!result.ResponseItem.Message.Equals("ready"))
-                    if (string.IsNullOrEmpty(result.ResponseItem.Message)) GetAllStall("", "");
-                    else CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
+                    if (!CommonEngine.CheckValidResponseItem(result.ResponseItem)) return;
+                    if (!result.ResponseItem.Message.Equals("ready"))
+                        if (string.IsNullOrEmpty(result.ResponseItem.Message)) GetAllStall("", "");
+                        else CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
+                }
+                catch (Exception ex)
+                {
+                    CommonEngine.ShowExceptionMessage(ex);
+                }
+                finally
+                {
+                    CommonEngine.CloseWaitForm();
+                }
             }
-            catch (Exception ex)
-            {
-                CommonEngine.ShowExceptionMessage(ex);
-            }
+            else CommonEngine.ShowMessage("000027", IMC.Helper.MessageType.Warning, true);
         }
         #endregion
 
@@ -143,8 +158,15 @@ namespace iPOS.IMC.Products
 
         public uc_Stall(string language)
         {
+            CommonEngine.ShowWaitForm(this);
             InitializeComponent();
             ChangeLanguage(language);
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            CommonEngine.CloseWaitForm();
         }
 
         private void btnInsert_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -152,12 +174,29 @@ namespace iPOS.IMC.Products
             CommonEngine.OpenInputForm(new uc_StallDetail(this), new Size(395, 300), false);
         }
 
+        private async void btnDuplicated_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            if (curItem.Count > 0)
+            {
+                PRO_tblStallDRO item = await PRO_tblStallBUS.GetStallItem(CommonEngine.userInfo.UserID, ConfigEngine.Language, curItem[0].StallID);
+                if (!CommonEngine.CheckValidResponseItem(item.ResponseItem)) return;
+
+                if (item != null && item.StallItem != null)
+                {
+                    item.StallItem.StallID = "";
+                    CommonEngine.OpenInputForm(new uc_StallDetail(this, item.StallItem), new Size(395, 300), false);
+                }
+            }
+        }
+
         private async void btnUpdate_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             if (curItem.Count > 0)
             {
                 PRO_tblStallDRO item = await PRO_tblStallBUS.GetStallItem(CommonEngine.userInfo.UserID, ConfigEngine.Language, curItem[0].StallID);
-                if (item.StallItem != null)
+                if (!CommonEngine.CheckValidResponseItem(item.ResponseItem)) return;
+
+                if (item != null && item.StallItem != null)
                     CommonEngine.OpenInputForm(new uc_StallDetail(this, item.StallItem), new Size(395, 300), true);
             }
         }
@@ -174,12 +213,15 @@ namespace iPOS.IMC.Products
 
         private void btnReload_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            CommonEngine.CloseWaitForm();
             GetAllStall("", "");
+            CommonEngine.CloseWaitForm();
         }
 
         private void btnImport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             CommonEngine.OpenImportExcelForm("PRO_Stall_FileSelect.xlsx", "PRO_spfrmStallImport", "PRO", "19");
+            btnReload_ItemClick(null, null);
         }
 
         private void btnExport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)

@@ -67,6 +67,7 @@
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
+            this.btnDuplicated = new DevExpress.XtraBars.BarLargeButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.gridLevel2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grvLevel2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barMain)).BeginInit();
@@ -273,9 +274,10 @@
             this.lblCreateTime,
             this.lblCreateTimeValue,
             this.lblEditTime,
-            this.lblEditTimeValue});
+            this.lblEditTimeValue,
+            this.btnDuplicated});
             this.barMain.MainMenu = this.barTop;
-            this.barMain.MaxItemId = 16;
+            this.barMain.MaxItemId = 17;
             this.barMain.StatusBar = this.barBottom;
             // 
             // barTop
@@ -286,7 +288,8 @@
             this.barTop.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
             this.barTop.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.KeyTip, this.btnInsert, "", false, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.Standard, "FSDFSD", ""),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnUpdate, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnDuplicated, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnUpdate, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnDelete, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnPrint, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(((DevExpress.XtraBars.BarLinkUserDefines)((DevExpress.XtraBars.BarLinkUserDefines.PaintStyle | DevExpress.XtraBars.BarLinkUserDefines.KeyTip))), this.btnReload, "", false, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph, "", ""),
@@ -490,6 +493,14 @@
             this.barDockControlRight.Location = new System.Drawing.Point(881, 40);
             this.barDockControlRight.Size = new System.Drawing.Size(0, 461);
             // 
+            // btnDuplicated
+            // 
+            this.btnDuplicated.Caption = "Nhân Đôi";
+            this.btnDuplicated.Glyph = global::iPOS.IMC.Properties.Resources.duplicate_16;
+            this.btnDuplicated.Id = 16;
+            this.btnDuplicated.Name = "btnDuplicated";
+            this.btnDuplicated.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnDuplicated_ItemClick);
+            // 
             // uc_Level2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -551,5 +562,6 @@
         private DevExpress.XtraBars.BarDockControl barDockControlLeft;
         private DevExpress.XtraBars.BarDockControl barDockControlRight;
         private DevExpress.XtraGrid.Columns.GridColumn gcolLevel1Name;
+        private DevExpress.XtraBars.BarLargeButtonItem btnDuplicated;
     }
 }

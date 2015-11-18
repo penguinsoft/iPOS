@@ -66,6 +66,7 @@
             this.gcolEditer = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolEditTime = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolStallID = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.btnDuplicated = new DevExpress.XtraBars.BarLargeButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.barMain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridStall)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grvStall)).BeginInit();
@@ -97,9 +98,10 @@
             this.lblEditer,
             this.lblEditerValue,
             this.lblEditTime,
-            this.lblEditTimeValue});
+            this.lblEditTimeValue,
+            this.btnDuplicated});
             this.barMain.MainMenu = this.barHeader;
-            this.barMain.MaxItemId = 17;
+            this.barMain.MaxItemId = 18;
             this.barMain.StatusBar = this.barFooter;
             // 
             // barHeader
@@ -110,7 +112,8 @@
             this.barHeader.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
             this.barHeader.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnInsert, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnUpdate, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnDuplicated, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnUpdate, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnDelete, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnPrint, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnReload, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
@@ -459,6 +462,14 @@
             this.gcolStallID.FieldName = "StallID";
             this.gcolStallID.Name = "gcolStallID";
             // 
+            // btnDuplicated
+            // 
+            this.btnDuplicated.Caption = "Nhân Đôi";
+            this.btnDuplicated.Glyph = global::iPOS.IMC.Properties.Resources.duplicate_16;
+            this.btnDuplicated.Id = 17;
+            this.btnDuplicated.Name = "btnDuplicated";
+            this.btnDuplicated.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnDuplicated_ItemClick);
+            // 
             // uc_Stall
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -519,5 +530,6 @@
         private DevExpress.XtraGrid.Columns.GridColumn gcolEditer;
         private DevExpress.XtraGrid.Columns.GridColumn gcolEditTime;
         private DevExpress.XtraGrid.Columns.GridColumn gcolStallID;
+        private DevExpress.XtraBars.BarLargeButtonItem btnDuplicated;
     }
 }

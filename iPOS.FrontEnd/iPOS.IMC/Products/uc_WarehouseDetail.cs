@@ -205,10 +205,30 @@ namespace iPOS.IMC.Products
                 txtWarehouseCode.Focus();
             }
         }
+        #endregion
+
+        #region [Form Events]
+        public uc_WarehouseDetail()
+        {
+            InitializeComponent();
+            CommonEngine.LoadUserPermission("18", txtWarehouseID, btnSaveClose, btnSaveInsert);
+        }
+
+        public uc_WarehouseDetail(uc_Warehouse _parent_form, PRO_tblWarehouseDTO item = null)
+        {
+            CommonEngine.ShowWaitForm(this);
+            InitializeComponent();
+            Initialize();
+            parent_form = _parent_form;
+            if (item != null)
+                LoadDataToEdit(item);
+            CommonEngine.LoadUserPermission("18", txtWarehouseID, btnSaveClose, btnSaveInsert);
+        }
 
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
+            CommonEngine.CloseWaitForm();
             BeginInvoke(new MethodInvoker(() =>
             {
                 if (!string.IsNullOrEmpty(txtWarehouseID.Text))
@@ -235,21 +255,6 @@ namespace iPOS.IMC.Products
             }
             return base.ProcessCmdKey(ref msg, keyData);
 
-        }
-        #endregion
-
-        public uc_WarehouseDetail()
-        {
-            InitializeComponent();
-        }
-
-        public uc_WarehouseDetail(uc_Warehouse _parent_form, PRO_tblWarehouseDTO item = null)
-        {
-            InitializeComponent();
-            Initialize();
-            parent_form = _parent_form;
-            if (item != null)
-                LoadDataToEdit(item);
         }
 
         private void txtWarehouseCode_EditValueChanged(object sender, EventArgs e)
@@ -302,5 +307,6 @@ namespace iPOS.IMC.Products
         {
             this.ParentForm.Close();
         }
+        #endregion
     }
 }

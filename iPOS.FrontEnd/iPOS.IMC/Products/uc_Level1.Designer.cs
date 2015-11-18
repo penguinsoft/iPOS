@@ -66,6 +66,7 @@
             this.gcolEditer = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolEditTime = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolLevel1ID = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.btnDuplicated = new DevExpress.XtraBars.BarLargeButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.barMain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridLevel1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grvLevel1)).BeginInit();
@@ -143,7 +144,8 @@
             this.barTop.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
             this.barTop.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.KeyTip, this.btnInsert, "", false, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.Standard, "FSDFSD", ""),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnUpdate, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnDuplicated, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnUpdate, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnDelete, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnPrint, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(((DevExpress.XtraBars.BarLinkUserDefines)((DevExpress.XtraBars.BarLinkUserDefines.PaintStyle | DevExpress.XtraBars.BarLinkUserDefines.KeyTip))), this.btnReload, "", false, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph, "", ""),
@@ -281,9 +283,10 @@
             this.lblCreateTime,
             this.lblCreateTimeValue,
             this.lblEditTime,
-            this.lblEditTimeValue});
+            this.lblEditTimeValue,
+            this.btnDuplicated});
             this.barMain.MainMenu = this.barTop;
-            this.barMain.MaxItemId = 16;
+            this.barMain.MaxItemId = 17;
             this.barMain.StatusBar = this.barBottom;
             // 
             // barDockControlTop
@@ -475,6 +478,14 @@
             this.gcolLevel1ID.FieldName = "Level1ID";
             this.gcolLevel1ID.Name = "gcolLevel1ID";
             // 
+            // btnDuplicated
+            // 
+            this.btnDuplicated.Caption = "Nhân Đôi";
+            this.btnDuplicated.Glyph = global::iPOS.IMC.Properties.Resources.duplicate_16;
+            this.btnDuplicated.Id = 16;
+            this.btnDuplicated.Name = "btnDuplicated";
+            this.btnDuplicated.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnDuplicated_ItemClick);
+            // 
             // uc_Level1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -536,5 +547,6 @@
         private DevExpress.XtraGrid.Columns.GridColumn gcolLevel1ID;
         private DevExpress.XtraGrid.Columns.GridColumn gcolLevel1ShortCode;
         private DevExpress.XtraGrid.Columns.GridColumn gcolDescription;
+        private DevExpress.XtraBars.BarLargeButtonItem btnDuplicated;
     }
 }

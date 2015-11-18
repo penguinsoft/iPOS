@@ -28,7 +28,7 @@ namespace iPOS.IMC.Products
         #region [Personal Methods]
         public void ChangeLanguage(string language)
         {
-            LanguageEngine.ChangeCaptionBarLargeButtonItem(this.Name, language, new DevExpress.XtraBars.BarLargeButtonItem[] { btnInsert, btnUpdate, btnDelete, btnPrint, btnReload, btnImport, btnExport, btnClose });
+            LanguageEngine.ChangeCaptionBarLargeButtonItem(this.Name, language, new DevExpress.XtraBars.BarLargeButtonItem[] { btnInsert, btnDuplicated, btnUpdate, btnDelete, btnPrint, btnReload, btnImport, btnExport, btnClose });
             LanguageEngine.ChangeCaptionBarStaticItem(this.Name, language, new DevExpress.XtraBars.BarStaticItem[] { lblCreater, lblCreateTime, lblEditer, lblEditTime });
             LanguageEngine.ChangeCaptionGridView(this.Name, language, grvLevel1);
         }
@@ -52,6 +52,7 @@ namespace iPOS.IMC.Products
                 if (!CommonEngine.CheckValidResponseItem(level1s.ResponseItem)) return;
                 gridLevel1.DataSource = level1s.Level1List != null ? level1s.Level1List : null;
                 barBottom.Visible = (level1s.Level1List != null && level1s.Level1List.Count > 0) ? true : false;
+                CommonEngine.LoadUserPermission("20", btnDelete, btnPrint, btnImport, btnExport);
             }
             catch (Exception ex)
             {
@@ -99,6 +100,8 @@ namespace iPOS.IMC.Products
                     if (level1_id_list.Contains("$"))
                     {
                         if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000012", ConfigEngine.Language).Replace("$Count$", level1_id_list.Split('$').Length.ToString())))
+                        {
+                            CommonEngine.ShowWaitForm(this);
                             result = await PRO_tblLevel1BUS.DeleteLevel1(CommonEngine.userInfo.Username, ConfigEngine.Language, level1_id_list, new SYS_tblActionLogDTO
                             {
                                 Activity = BaseConstant.COMMAND_INSERT_EN,
@@ -110,10 +113,13 @@ namespace iPOS.IMC.Products
                                 DescriptionVN = string.Format("Tài khoản '{0}' vừa xóa thành công những ngành hàng có mã '{1}'.", CommonEngine.userInfo.UserID, level1_code_list.Replace("$", ", ")),
                                 DescriptionEN = string.Format("Account '{0}' has deleted product sectors successfully with sector codes are '{1}'.", CommonEngine.userInfo.UserID, level1_code_list.Replace("$", ", "))
                             });
+                        }
                     }
                     else
                     {
                         if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000005", ConfigEngine.Language)))
+                        {
+                            CommonEngine.ShowWaitForm(this);
                             result = await PRO_tblLevel1BUS.DeleteLevel1(CommonEngine.userInfo.Username, ConfigEngine.Language, level1_id_list, new SYS_tblActionLogDTO
                             {
                                 Activity = BaseConstant.COMMAND_INSERT_EN,
@@ -125,6 +131,7 @@ namespace iPOS.IMC.Products
                                 DescriptionVN = string.Format("Tài khoản '{0}' vừa xóa thành công ngành hàng có mã '{1}'.", CommonEngine.userInfo.UserID, level1_code_list),
                                 DescriptionEN = string.Format("Account '{0}' has deleted product sector successfully with sector code is '{1}'.", CommonEngine.userInfo.UserID, level1_code_list)
                             });
+                        }
                     }
 
                     if (!CommonEngine.CheckValidResponseItem(result.ResponseItem)) return;
@@ -136,15 +143,16 @@ namespace iPOS.IMC.Products
                 {
                     CommonEngine.ShowExceptionMessage(ex);
                 }
+                finally
+                {
+                    CommonEngine.CloseWaitForm();
+                }
             }
-            else
-            {
-                CommonEngine.ShowMessage(LanguageEngine.GetMessageCaption("000027", ConfigEngine.Language), MessageType.Error);
-                return;
-            }
+            else CommonEngine.ShowMessage(LanguageEngine.GetMessageCaption("000027", ConfigEngine.Language), MessageType.Error);
         }
         #endregion
 
+        #region [Form Events]
         public uc_Level1()
         {
             InitializeComponent();
@@ -152,8 +160,15 @@ namespace iPOS.IMC.Products
 
         public uc_Level1(string language)
         {
+            CommonEngine.ShowWaitForm(this);
             InitializeComponent();
             ChangeLanguage(language);
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            CommonEngine.CloseWaitForm();
         }
 
         private void btnInsert_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -161,12 +176,29 @@ namespace iPOS.IMC.Products
             CommonEngine.OpenInputForm(new uc_Level1Detail(this), new Size(450, 300), false);
         }
 
+        private async void btnDuplicated_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            if (curItem.Count > 0)
+            {
+                PRO_tblLevel1DRO item = await PRO_tblLevel1BUS.GetLevel1ByID(CommonEngine.userInfo.UserID, ConfigEngine.Language, curItem[0].Level1ID);
+                if (!CommonEngine.CheckValidResponseItem(item.ResponseItem)) return;
+
+                if (item != null && item.Level1Item != null)
+                {
+                    item.Level1Item.Level1ID = "";
+                    CommonEngine.OpenInputForm(new uc_Level1Detail(this, item.Level1Item), new Size(450, 300), false);
+                }
+            }
+        }
+
         private async void btnUpdate_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             if (curItem.Count > 0)
             {
                 PRO_tblLevel1DRO item = await PRO_tblLevel1BUS.GetLevel1ByID(CommonEngine.userInfo.UserID, ConfigEngine.Language, curItem[0].Level1ID);
-                if (item.Level1Item != null)
+                if (!CommonEngine.CheckValidResponseItem(item.ResponseItem)) return;
+
+                if (item != null && item.Level1Item != null)
                     CommonEngine.OpenInputForm(new uc_Level1Detail(this, item.Level1Item), new Size(450, 300), true);
             }
         }
@@ -183,12 +215,15 @@ namespace iPOS.IMC.Products
 
         private void btnReload_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            CommonEngine.ShowWaitForm(this);
             GetAllLevel1();
+            CommonEngine.CloseWaitForm();
         }
 
         private void btnImport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             CommonEngine.OpenImportExcelForm("PRO_Level1_FileSelect.xlsx", "PRO_spfrmProductGroupLevel1Import", "PRO", "20");
+            btnReload_ItemClick(null, null);
         }
 
         private void btnExport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -226,5 +261,6 @@ namespace iPOS.IMC.Products
         {
             GetCurrentRow();
         }
+        #endregion
     }
 }

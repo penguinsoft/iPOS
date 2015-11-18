@@ -114,6 +114,7 @@ namespace iPOS.IMC.Products
 
         private async Task<bool> SaveStall(bool isEdit)
         {
+            CommonEngine.ShowWaitForm(this);
             PRO_tblStallDRO result = new PRO_tblStallDRO();
             try
             {
@@ -143,24 +144,31 @@ namespace iPOS.IMC.Products
                     DescriptionEN = string.Format("Account '{0}' has {1} stall successfully with stall code is '{2}'.", CommonEngine.userInfo.UserID, isEdit ? "updated" : "inserted", txtStallCode.Text)
                 });
 
-                if (result.ResponseItem.IsError)
+                if (CommonEngine.CheckValidResponseItem(result.ResponseItem))
                 {
-                    CommonEngine.ShowHTTPErrorMessage(result.ResponseItem);
-                    txtStallCode.Focus();
+                    if (!string.IsNullOrEmpty(result.ResponseItem.Message))
+                    {
+                        CommonEngine.CloseWaitForm();
+                        CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
+                        txtStallCode.Focus();
+                        return false;
+                    }
+                    else if (parent_form != null) parent_form.GetAllStall("", "");
+                }
+                else
+                {
+                    CommonEngine.CloseWaitForm();
                     return false;
                 }
-                if (!string.IsNullOrEmpty(result.ResponseItem.Message))
-                {
-                    CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
-                    txtStallCode.Focus();
-                    return false;
-                }
-                else parent_form.GetAllStall("", "");
             }
             catch (Exception ex)
             {
                 CommonEngine.ShowExceptionMessage(ex);
                 return false;
+            }
+            finally
+            {
+                CommonEngine.CloseWaitForm();
             }
 
             return true;
@@ -186,18 +194,54 @@ namespace iPOS.IMC.Products
         }
         #endregion
 
+        #region [Form Events]
         public uc_StallDetail()
         {
             InitializeComponent();
+            CommonEngine.LoadUserPermission("19", txtStallID, btnSaveClose, btnSaveInsert);
         }
 
         public uc_StallDetail(uc_Stall _parent_form, PRO_tblStallDTO item = null)
         {
+            CommonEngine.ShowWaitForm(this);
             InitializeComponent();
             Initialize();
             parent_form = _parent_form;
             if (item != null)
                 LoadDataToEdit(item);
+            CommonEngine.LoadUserPermission("19", txtStallID, btnSaveClose, btnSaveInsert);
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            CommonEngine.CloseWaitForm();
+            BeginInvoke(new MethodInvoker(() =>
+            {
+                if (!string.IsNullOrEmpty(txtStallID.Text))
+                    txtVNName.Focus();
+            }));
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == (Keys.Control | Keys.S))
+            {
+                btnSaveClose_Click(null, null);
+                return true;
+            }
+            else if (keyData == (Keys.Control | Keys.Shift | Keys.S))
+            {
+                btnSaveInsert_Click(null, null);
+                return true;
+            }
+            else if (keyData == Keys.Escape)
+            {
+                btnCancel_Click(null, null);
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+
         }
 
         private void txtStallCode_EditValueChanged(object sender, EventArgs e)
@@ -255,5 +299,6 @@ namespace iPOS.IMC.Products
         {
             this.ParentForm.Close();
         }
+        #endregion
     }
 }

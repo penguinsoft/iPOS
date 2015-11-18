@@ -224,6 +224,7 @@ namespace iPOS.IMC.Products
         private void btnImport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             CommonEngine.OpenImportExcelForm("PRO_District_FileSelect.xlsx", "PRO_spfrmDistrictImport", "PRO", "12");
+            btnReload_ItemClick(null, null);
         }
 
         private void btnExport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)

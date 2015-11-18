@@ -28,7 +28,7 @@ namespace iPOS.IMC.Products
         #region [Personal Methods]
         public void ChangeLanguage(string language)
         {
-            LanguageEngine.ChangeCaptionBarLargeButtonItem(this.Name, language, new DevExpress.XtraBars.BarLargeButtonItem[] { btnInsert, btnUpdate, btnDelete, btnPrint, btnReload, btnImport, btnExport, btnClose });
+            LanguageEngine.ChangeCaptionBarLargeButtonItem(this.Name, language, new DevExpress.XtraBars.BarLargeButtonItem[] { btnInsert, btnDuplicated, btnUpdate, btnDelete, btnPrint, btnReload, btnImport, btnExport, btnClose });
             LanguageEngine.ChangeCaptionBarStaticItem(this.Name, language, new DevExpress.XtraBars.BarStaticItem[] { lblCreater, lblCreateTime, lblEditer, lblEditTime });
             LanguageEngine.ChangeCaptionGridView(this.Name, language, grvLevel3);
         }
@@ -52,6 +52,7 @@ namespace iPOS.IMC.Products
                 if (!CommonEngine.CheckValidResponseItem(level3s.ResponseItem)) return;
                 gridLevel3.DataSource = level3s.Level3List != null ? level3s.Level3List : null;
                 barBottom.Visible = (level3s.Level3List != null && level3s.Level3List.Count > 0) ? true : false;
+                CommonEngine.LoadUserPermission("22", btnDelete, btnPrint, btnImport, btnExport);
             }
             catch (Exception ex)
             {
@@ -102,6 +103,8 @@ namespace iPOS.IMC.Products
                     if (level3_id_list.Contains("$"))
                     {
                         if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000012", ConfigEngine.Language).Replace("$Count$", level3_id_list.Split('$').Length.ToString())))
+                        {
+                            CommonEngine.ShowWaitForm(this);
                             result = await PRO_tblLevel2BUS.DeleteLevel2(CommonEngine.userInfo.Username, ConfigEngine.Language, level3_id_list, new SYS_tblActionLogDTO
                             {
                                 Activity = BaseConstant.COMMAND_INSERT_EN,
@@ -113,10 +116,13 @@ namespace iPOS.IMC.Products
                                 DescriptionVN = string.Format("Tài khoản '{0}' vừa xóa thành công những phân nhóm hàng có mã '{1}'.", CommonEngine.userInfo.UserID, level3_code_list.Replace("$", ", ")),
                                 DescriptionEN = string.Format("Account '{0}' has deleted product subgroups successfully with subgroup codes are '{1}'.", CommonEngine.userInfo.UserID, level3_code_list.Replace("$", ", "))
                             });
+                        }
                     }
                     else
                     {
                         if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000005", ConfigEngine.Language)))
+                        {
+                            CommonEngine.ShowWaitForm(this);
                             result = await PRO_tblLevel2BUS.DeleteLevel2(CommonEngine.userInfo.Username, ConfigEngine.Language, level3_id_list, new SYS_tblActionLogDTO
                             {
                                 Activity = BaseConstant.COMMAND_INSERT_EN,
@@ -128,6 +134,7 @@ namespace iPOS.IMC.Products
                                 DescriptionVN = string.Format("Tài khoản '{0}' vừa xóa thành công phân nhóm hàng có mã '{1}'.", CommonEngine.userInfo.UserID, level3_code_list),
                                 DescriptionEN = string.Format("Account '{0}' has deleted product subgroup successfully with subgroup code is '{1}'.", CommonEngine.userInfo.UserID, level3_code_list)
                             });
+                        }
                     }
 
                     if (!CommonEngine.CheckValidResponseItem(result.ResponseItem)) return;
@@ -138,6 +145,10 @@ namespace iPOS.IMC.Products
                 catch (Exception ex)
                 {
                     CommonEngine.ShowExceptionMessage(ex);
+                }
+                finally
+                {
+                    CommonEngine.CloseWaitForm();
                 }
             }
             else
@@ -155,8 +166,15 @@ namespace iPOS.IMC.Products
 
         public uc_Level3(string language)
         {
+            CommonEngine.ShowWaitForm(this);
             InitializeComponent();
             ChangeLanguage(language);
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            CommonEngine.CloseWaitForm();
         }
 
         private void btnInsert_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -164,12 +182,29 @@ namespace iPOS.IMC.Products
             CommonEngine.OpenInputForm(new uc_Level3Detail(this), new Size(450, 350), false);
         }
 
+        private async void btnDuplicated_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            if (curItem.Count > 0)
+            {
+                PRO_tblLevel3DRO item = await PRO_tblLevel3BUS.GetLevel3ByID(CommonEngine.userInfo.UserID, ConfigEngine.Language, curItem[0].Level3ID);
+                if (!CommonEngine.CheckValidResponseItem(item.ResponseItem)) return;
+
+                if (item != null && item.Level3Item != null)
+                {
+                    item.Level3Item.Level3ID = "";
+                    CommonEngine.OpenInputForm(new uc_Level3Detail(this, item.Level3Item), new Size(450, 320), false);
+                }
+            }
+        }
+
         private async void btnUpdate_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             if (curItem.Count > 0)
             {
                 PRO_tblLevel3DRO item = await PRO_tblLevel3BUS.GetLevel3ByID(CommonEngine.userInfo.UserID, ConfigEngine.Language, curItem[0].Level3ID);
-                if (item.Level3Item != null)
+                if (!CommonEngine.CheckValidResponseItem(item.ResponseItem)) return;
+
+                if (item != null && item.Level3Item != null)
                     CommonEngine.OpenInputForm(new uc_Level3Detail(this, item.Level3Item), new Size(450, 320), true);
             }
         }
@@ -186,12 +221,15 @@ namespace iPOS.IMC.Products
 
         private void btnReload_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            CommonEngine.ShowWaitForm(this);
             GetAllLevel3();
+            CommonEngine.CloseWaitForm();
         }
 
         private void btnImport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             CommonEngine.OpenImportExcelForm("PRO_Level3_FileSelect.xlsx", "PRO_spfrmProductGroupLevel3Import", "PRO", "22");
+            btnReload_ItemClick(null, null);
         }
 
         private void btnExport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)

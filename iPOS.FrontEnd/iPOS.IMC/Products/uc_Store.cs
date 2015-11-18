@@ -27,7 +27,7 @@ namespace iPOS.IMC.Products
         #region [Personal Methods]
         public void ChangeLanguage(string language)
         {
-            LanguageEngine.ChangeCaptionBarLargeButtonItem(this.Name, language, new DevExpress.XtraBars.BarLargeButtonItem[] { btnInsert, btnUpdate, btnDelete, btnPrint, btnReload, btnImport, btnExport, btnClose });
+            LanguageEngine.ChangeCaptionBarLargeButtonItem(this.Name, language, new DevExpress.XtraBars.BarLargeButtonItem[] { btnInsert, btnDuplicated, btnUpdate, btnDelete, btnPrint, btnReload, btnImport, btnExport, btnClose });
             LanguageEngine.ChangeCaptionBarStaticItem(this.Name, language, new DevExpress.XtraBars.BarStaticItem[] { lblCreater, lblCreateTime, lblEditer, lblEditTime });
             LanguageEngine.ChangeCaptionGridView(this.Name, language, grvStore);
         }
@@ -51,6 +51,7 @@ namespace iPOS.IMC.Products
                 if (!CommonEngine.CheckValidResponseItem(stores.ResponseItem)) return;
                 gridStore.DataSource = stores.StoreList != null ? stores.StoreList : null;
                 barFooter.Visible = (stores.StoreList != null && stores.StoreList.Count > 0) ? true : false;
+                CommonEngine.LoadUserPermission("13", btnDelete, btnPrint, btnImport, btnExport);
             }
             catch (Exception ex)
             {
@@ -91,52 +92,61 @@ namespace iPOS.IMC.Products
 
             PRO_tblStoreDRO result = new PRO_tblStoreDRO();
             result.ResponseItem.Message = "ready";
-            try
+            if (!string.IsNullOrEmpty(store_id_list))
             {
-                if (store_id_list.Contains("$"))
+                try
                 {
-                    if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000012", ConfigEngine.Language).Replace("$Count$", store_id_list.Split('$').Length.ToString())))
-                        result = await PRO_tblStoreBUS.DeleteStore(CommonEngine.userInfo.Username, ConfigEngine.Language, store_id_list, new SYS_tblActionLogDTO
+                    if (store_id_list.Contains("$"))
+                    {
+                        if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000012", ConfigEngine.Language).Replace("$Count$", store_id_list.Split('$').Length.ToString())))
                         {
-                            Activity = BaseConstant.COMMAND_INSERT_EN,
-                            UserID = CommonEngine.userInfo.UserID,
-                            LanguageID = ConfigEngine.Language,
-                            ActionVN = BaseConstant.COMMAND_DELETE_VI,
-                            ActionEN = BaseConstant.COMMAND_DELETE_EN,
-                            FunctionID = "13",
-                            DescriptionVN = string.Format("Tài khoản '{0}' vừa xóa thành công những cửa hàng có mã '{1}'.", CommonEngine.userInfo.UserID, store_code_list.Replace("$", ", ")),
-                            DescriptionEN = string.Format("Account '{0}' has deleted stores successfully with store codes are '{1}'.", CommonEngine.userInfo.UserID, store_code_list.Replace("$", ", "))
-                        });
-                }
-                else
-                {
-                    if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000005", ConfigEngine.Language)))
-                        result = await PRO_tblStoreBUS.DeleteStore(CommonEngine.userInfo.Username, ConfigEngine.Language, store_id_list, new SYS_tblActionLogDTO
+                            CommonEngine.ShowWaitForm(this);
+                            result = await PRO_tblStoreBUS.DeleteStore(CommonEngine.userInfo.Username, ConfigEngine.Language, store_id_list, new SYS_tblActionLogDTO
+                            {
+                                Activity = BaseConstant.COMMAND_INSERT_EN,
+                                UserID = CommonEngine.userInfo.UserID,
+                                LanguageID = ConfigEngine.Language,
+                                ActionVN = BaseConstant.COMMAND_DELETE_VI,
+                                ActionEN = BaseConstant.COMMAND_DELETE_EN,
+                                FunctionID = "13",
+                                DescriptionVN = string.Format("Tài khoản '{0}' vừa xóa thành công những cửa hàng có mã '{1}'.", CommonEngine.userInfo.UserID, store_code_list.Replace("$", ", ")),
+                                DescriptionEN = string.Format("Account '{0}' has deleted stores successfully with store codes are '{1}'.", CommonEngine.userInfo.UserID, store_code_list.Replace("$", ", "))
+                            });
+                        }
+                    }
+                    else
+                    {
+                        if (CommonEngine.ShowConfirmMessageAlert(LanguageEngine.GetMessageCaption("000005", ConfigEngine.Language)))
                         {
-                            Activity = BaseConstant.COMMAND_INSERT_EN,
-                            UserID = CommonEngine.userInfo.UserID,
-                            LanguageID = ConfigEngine.Language,
-                            ActionVN = BaseConstant.COMMAND_DELETE_VI,
-                            ActionEN = BaseConstant.COMMAND_DELETE_EN,
-                            FunctionID = "12",
-                            DescriptionVN = string.Format("Tài khoản '{0}' vừa xóa thành công cửa hàng có mã '{1}'.", CommonEngine.userInfo.UserID, store_code_list),
-                            DescriptionEN = string.Format("Account '{0}' has deleted store successfully with store code is '{1}'.", CommonEngine.userInfo.UserID, store_code_list)
-                        });
-                }
+                            CommonEngine.ShowWaitForm(this);
+                            result = await PRO_tblStoreBUS.DeleteStore(CommonEngine.userInfo.Username, ConfigEngine.Language, store_id_list, new SYS_tblActionLogDTO
+                            {
+                                Activity = BaseConstant.COMMAND_INSERT_EN,
+                                UserID = CommonEngine.userInfo.UserID,
+                                LanguageID = ConfigEngine.Language,
+                                ActionVN = BaseConstant.COMMAND_DELETE_VI,
+                                ActionEN = BaseConstant.COMMAND_DELETE_EN,
+                                FunctionID = "13",
+                                DescriptionVN = string.Format("Tài khoản '{0}' vừa xóa thành công cửa hàng có mã '{1}'.", CommonEngine.userInfo.UserID, store_code_list),
+                                DescriptionEN = string.Format("Account '{0}' has deleted store successfully with store code is '{1}'.", CommonEngine.userInfo.UserID, store_code_list)
+                            });
+                        }
+                    }
 
-                if (result.ResponseItem.IsError)
-                {
-                    CommonEngine.ShowHTTPErrorMessage(result.ResponseItem);
-                    return;
+                    if (result.ResponseItem.IsError)
+                    {
+                        CommonEngine.ShowHTTPErrorMessage(result.ResponseItem);
+                        return;
+                    }
+                    if (!result.ResponseItem.Message.Equals("ready"))
+                        if (string.IsNullOrEmpty(result.ResponseItem.Message)) GetAllStore();
+                        else CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
                 }
-                if (!result.ResponseItem.Message.Equals("ready"))
-                    if (string.IsNullOrEmpty(result.ResponseItem.Message)) GetAllStore();
-                    else CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
-            }
-            catch (Exception ex)
-            {
-                CommonEngine.ShowExceptionMessage(ex);
-            }
+                catch (Exception ex)
+                {
+                    CommonEngine.ShowExceptionMessage(ex);
+                }
+            } else CommonEngine.ShowMessage("000027", IMC.Helper.MessageType.Warning, true);
         }
         #endregion
 
@@ -148,8 +158,15 @@ namespace iPOS.IMC.Products
 
         public uc_Store(string language)
         {
+            CommonEngine.ShowWaitForm(this);
             InitializeComponent();
             ChangeLanguage(language);
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            CommonEngine.CloseWaitForm();
         }
 
         private void btnInsert_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -157,12 +174,29 @@ namespace iPOS.IMC.Products
             CommonEngine.OpenInputForm(new uc_StoreDetail(this), new Size(660, 400), false);
         }
 
+        private async void btnDuplicated_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            if (curItem.Count > 0)
+            {
+                PRO_tblStoreDRO item = await PRO_tblStoreBUS.GetStoreItem(CommonEngine.userInfo.UserID, ConfigEngine.Language, curItem[0].StoreID);
+                if (!CommonEngine.CheckValidResponseItem(item.ResponseItem)) return;
+
+                if (item != null && item.StoreItem != null)
+                {
+                    item.StoreItem.StoreID = "";
+                    CommonEngine.OpenInputForm(new uc_StoreDetail(this, item.StoreItem), new Size(660, 400), false);
+                }
+            }
+        }
+
         private async void btnUpdate_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             if (curItem.Count > 0)
             {
                 PRO_tblStoreDRO item = await PRO_tblStoreBUS.GetStoreItem(CommonEngine.userInfo.UserID, ConfigEngine.Language, curItem[0].StoreID);
-                if (item.StoreItem != null)
+                if (!CommonEngine.CheckValidResponseItem(item.ResponseItem)) return;
+
+                if (item != null && item.StoreItem != null)
                     CommonEngine.OpenInputForm(new uc_StoreDetail(this, item.StoreItem), new Size(660, 400), true);
             }
         }
@@ -179,12 +213,15 @@ namespace iPOS.IMC.Products
 
         private void btnReload_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            CommonEngine.ShowWaitForm(this);
             GetAllStore();
+            CommonEngine.CloseWaitForm();
         }
 
         private void btnImport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             CommonEngine.OpenImportExcelForm("PRO_Store_FileSelect.xlsx", "PRO_spfrmStoreImport", "PRO", "13");
+            btnReload_ItemClick(null, null);
         }
 
         private void btnExport_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)

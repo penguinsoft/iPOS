@@ -98,6 +98,7 @@ namespace iPOS.IMC.Products
 
         private async Task<bool> SaveLevel2(bool isEdit)
         {
+            CommonEngine.ShowWaitForm(this);
             PRO_tblLevel2DRO result = new PRO_tblLevel2DRO();
             try
             {
@@ -128,24 +129,31 @@ namespace iPOS.IMC.Products
                     DescriptionEN = string.Format("Account '{0}' has {1} product group successfully with group code is '{2}'.", CommonEngine.userInfo.UserID, isEdit ? "updated" : "inserted", txtLevel2Code.Text)
                 });
 
-                if (result.ResponseItem.IsError)
+                if (CommonEngine.CheckValidResponseItem(result.ResponseItem))
                 {
-                    CommonEngine.ShowHTTPErrorMessage(result.ResponseItem);
-                    txtLevel2Code.Focus();
+                    if (!string.IsNullOrEmpty(result.ResponseItem.Message))
+                    {
+                        CommonEngine.CloseWaitForm();
+                        CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
+                        txtLevel2Code.Focus();
+                        return false;
+                    }
+                    else if (parent_form != null) parent_form.GetAllLevel2("");
+                }
+                else
+                {
+                    CommonEngine.CloseWaitForm();
                     return false;
                 }
-                if (!string.IsNullOrEmpty(result.ResponseItem.Message))
-                {
-                    CommonEngine.ShowMessage(result.ResponseItem.Message, MessageType.Error);
-                    txtLevel2Code.Focus();
-                    return false;
-                }
-                else if (parent_form != null) parent_form.GetAllLevel2();
             }
             catch (Exception ex)
             {
                 CommonEngine.ShowExceptionMessage(ex);
                 return false;
+            }
+            finally
+            {
+                CommonEngine.CloseWaitForm();
             }
 
             return true;
@@ -170,10 +178,32 @@ namespace iPOS.IMC.Products
                 txtLevel2Code.Focus();
             }
         }
+        #endregion
+
+        #region [Form Events]
+        public uc_Level2Detail()
+        {
+            InitializeComponent();
+            Initialize();
+            CommonEngine.LoadUserPermission("21", txtLevel2ID, btnSaveClose, btnSaveInsert);
+        }
+
+        public uc_Level2Detail(uc_Level2 _parent_form, PRO_tblLevel2DTO item = null)
+        {
+            CommonEngine.ShowWaitForm(this);
+            InitializeComponent();
+            Initialize();
+            parent_form = _parent_form;
+
+            if (item != null)
+                LoadDataToEdit(item);
+            CommonEngine.LoadUserPermission("21", txtLevel2ID, btnSaveClose, btnSaveInsert);
+        }
 
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
+            CommonEngine.CloseWaitForm();
             BeginInvoke(new MethodInvoker(() =>
             {
                 if (!string.IsNullOrEmpty(txtLevel2ID.Text))
@@ -200,24 +230,6 @@ namespace iPOS.IMC.Products
             }
             return base.ProcessCmdKey(ref msg, keyData);
 
-        }
-        #endregion
-
-        #region [Form Events]
-        public uc_Level2Detail()
-        {
-            InitializeComponent();
-            Initialize();
-        }
-
-        public uc_Level2Detail(uc_Level2 _parent_form, PRO_tblLevel2DTO item = null)
-        {
-            InitializeComponent();
-            Initialize();
-            parent_form = _parent_form;
-
-            if (item != null)
-                LoadDataToEdit(item);
         }
 
         private void txtLevel2Code_EditValueChanged(object sender, EventArgs e)

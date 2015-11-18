@@ -116,6 +116,7 @@ namespace iPOS.IMC.Products
 
         private async Task<bool> SaveStore(bool isEdit)
         {
+            CommonEngine.ShowWaitForm(this.ParentForm);
             string file_name = "";
             PRO_tblStoreDRO result = new PRO_tblStoreDRO();
             try
@@ -163,24 +164,31 @@ namespace iPOS.IMC.Products
                     DescriptionEN = string.Format("Account '{0}' has {1} store successfully with store code is '{2}'.", CommonEngine.userInfo.UserID, isEdit ? "updated" : "inserted", txtStoreCode.Text)
                 });
 
-                if (result.ResponseItem.IsError)
+                if (CommonEngine.CheckValidResponseItem(result.ResponseItem))
                 {
-                    CommonEngine.ShowHTTPErrorMessage(result.ResponseItem);
-                    txtStoreCode.Focus();
+                    if (!string.IsNullOrEmpty(result.ResponseItem.Message))
+                    {
+                        CommonEngine.CloseWaitForm();
+                        CommonEngine.ShowMessage(result.ResponseItem.Message, 0);
+                        txtStoreCode.Focus();
+                        return false;
+                    }
+                    else if (parent_form != null) parent_form.GetAllStore();
+                }
+                else
+                {
+                    CommonEngine.CloseWaitForm();
                     return false;
                 }
-                if (!string.IsNullOrEmpty(result.ResponseItem.Message))
-                {
-                    CommonEngine.ShowMessage(result.ResponseItem.Message, MessageType.Error);
-                    txtStoreCode.Focus();
-                    return false;
-                }
-                else parent_form.GetAllStore();
             }
             catch (Exception ex)
             {
                 CommonEngine.ShowExceptionMessage(ex);
                 return false;
+            }
+            finally
+            {
+                CommonEngine.CloseWaitForm();
             }
 
             return true;
@@ -218,10 +226,30 @@ namespace iPOS.IMC.Products
                 txtStoreCode.Focus();
             }
         }
+        #endregion
+
+        #region [Form Events]
+        public uc_StoreDetail()
+        {
+            InitializeComponent();
+            CommonEngine.LoadUserPermission("13", txtStoreID, btnSaveClose, btnSaveInsert);
+        }
+
+        public uc_StoreDetail(uc_Store _parent_form, PRO_tblStoreDTO item = null)
+        {
+            CommonEngine.ShowWaitForm(this);
+            InitializeComponent();
+            Initialize();
+            parent_form = _parent_form;
+            if (item != null)
+                LoadDataToEdit(item);
+            CommonEngine.LoadUserPermission("13", txtStoreID, btnSaveClose, btnSaveInsert);
+        }
 
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
+            CommonEngine.CloseWaitForm();
             BeginInvoke(new MethodInvoker(() =>
             {
                 if (!string.IsNullOrEmpty(txtStoreID.Text))
@@ -248,22 +276,6 @@ namespace iPOS.IMC.Products
             }
             return base.ProcessCmdKey(ref msg, keyData);
 
-        }
-        #endregion
-
-        #region [Form Events]
-        public uc_StoreDetail()
-        {
-            InitializeComponent();
-        }
-
-        public uc_StoreDetail(uc_Store _parent_form, PRO_tblStoreDTO item = null)
-        {
-            InitializeComponent();
-            Initialize();
-            parent_form = _parent_form;
-            if (item != null)
-                LoadDataToEdit(item);
         }
 
         private void txtStoreCode_EditValueChanged(object sender, EventArgs e)
